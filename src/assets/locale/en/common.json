@@ -8,8 +8,12 @@
   "login_button": "Login",
   "email_address": "Email address",
   "password": "Password",
+  "name": "Name",
+  "confirm_password": "Confirm Password",
   "forgot_password": "Forgot password?",
   "create_an_account": "Create an account",
+  "continue": "Continue",
+  "password_not_match": "Password Not Match",
   "sign_in": {
     "title": "Login"
   },
