@@ -1,0 +1,9 @@
+@import '../../../styles/variables.scss';
+
+.mainFooter {
+  height: 46px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: $white-color;
+}

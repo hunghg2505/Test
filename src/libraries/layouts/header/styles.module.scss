@@ -1,0 +1,51 @@
+@import '../../../styles/variables.scss';
+
+.mainHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 12px;
+  padding-left: 6px;
+  position: relative;
+  border: 1px solid $black_color;
+  background: $white_color;
+  max-height: 60px;
+  box-sizing: border-box;
+
+  .logoView {
+    display: flex;
+    align-items: center;
+
+    .navbarIcon {
+      margin-right: 40px;
+    }
+  }
+
+  .welcomeUser {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%);
+  }
+
+  .avatarView {
+    display: flex;
+    align-items: center;
+
+    .profileUser {
+      display: flex;
+      align-items: center;
+      margin-right: 52px;
+
+      .avatar {
+        width: 39.92px;
+        height: 39.92px;
+        border-radius: 100%;
+      }
+
+      .titleProfile {
+        line-height: 15px;
+        margin-left: 14px;
+      }
+    }
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "messages": {
+    "success": "Success",
+    "errors": {
+      "require": "{{field}} must be require.",
+      "email_invalid": "Email invalid."
+    }
+  }
+}

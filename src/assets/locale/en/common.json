@@ -1,0 +1,22 @@
+{
+  "home": "Home Page Ne",
+  "welcome": "Welcome {{username}}",
+  "welcome_auth": "Ascend Consent Management",
+  "profile": "Profile",
+  "logout": "Logout",
+  "sign_up_button": "Sign Up",
+  "login_button": "Login",
+  "email_address": "Email address",
+  "password": "Password",
+  "forgot_password": "Forgot password?",
+  "create_an_account": "Create an account",
+  "sign_in": {
+    "title": "Login"
+  },
+  "sign_up": {
+    "title": "Sign up"
+  },
+  "forgot_password_page": {
+    "title": "Forgot password"
+  }
+}

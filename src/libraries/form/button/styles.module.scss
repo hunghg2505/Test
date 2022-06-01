@@ -1,0 +1,46 @@
+@import '../../../styles/variables.scss';
+
+.buttonForm {
+  border-radius: 5px;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 16px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: $white_color;
+  background: $black_color;
+  border: none;
+  outline: none;
+  padding: 0 44.4px;
+  box-shadow: unset;
+
+  &:hover,
+  &:focus {
+    background: $black_color;
+    border: none;
+    outline: none;
+  }
+
+  &::after {
+    box-shadow: none !important;
+  }
+}
+
+.buttonFormDark {
+  background: $black_color;
+  color: $white_color;
+}
+
+.buttonFormLight {
+  background: $background_button_light;
+  color: $grey_900;
+
+  &:hover,
+  &:focus {
+    background: $background_button_light;
+    color: $grey_900;
+    border: none;
+    outline: none;
+  }
+}
