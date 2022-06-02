@@ -4,11 +4,111 @@
   display: flex;
   flex-direction: row;
 
-  .siderView {
-
-  }
-  
   .mainLayout {
 
   }
 }
+
+
+.siderView {
+  background-color: $background_sider;
+
+  :global {
+    .ant-menu-root {
+      background-color: $background_sider;
+      padding: 40px 0 0 18px;
+    }
+
+    .ant-menu-title-content {
+      font-weight: 700;
+      font-size: 18px;
+      line-height: 24px;
+      color: $white_color;
+    }
+
+    .ant-menu-item {
+      height: initial;
+      padding: 0 !important;
+      margin: 0;
+      background-color: transparent !important;
+
+      &:hover .ant-menu-title-content {
+        color: $teal_800;
+      }
+
+      &:not(:last-child) {
+        margin: 0 0 25px !important;
+      }
+    }
+
+    .ant-menu-item-selected {
+      .ant-menu-title-content {
+        color: $teal_800;
+      }
+      &::after {
+        display: none !important;
+      }
+    }
+
+    .ant-menu-submenu {
+      margin-bottom: 25px;
+      .ant-menu-submenu-title {
+        margin: 0 !important;
+        padding: 0 !important;
+        background-color: transparent !important;
+        height: initial;
+      }
+      .ant-menu-submenu-arrow {
+        display: none !important;
+      }
+
+      .ant-menu-sub {
+        background-color: transparent !important;
+        padding: 10px 0 0 22px;
+        .ant-menu-item {
+          height: initial;
+          padding: 0 !important;
+          margin: 0;
+          background-color: transparent !important;
+          .ant-menu-title-content  {
+            font-weight: 700;
+            font-size: 12px;
+            line-height: 16px;
+          }
+
+          &:hover .ant-menu-title-content {
+            color: $teal_800;
+          }
+
+          &:not(:last-child) {
+            margin: 0 0 20px !important;
+          }
+        }
+      }
+    }
+  }
+}
+
+.menu2 {
+  margin: 76px 0 0;
+  padding: 0 0 0 18px !important;
+
+  :global {
+    .ant-menu-title-content a {
+      font-weight: 700;
+      font-size: 18px;
+      line-height: 24px;
+      color: #FFFFFF;
+      &:hover {
+        color: $teal_800;
+      }
+
+      @media (max-width: 768px){
+        color: rgba(0, 0, 0, 0.85);
+        font-size: 14px;
+        font-weight: normal;
+      }
+    }
+  }
+}
+

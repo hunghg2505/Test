@@ -28,30 +28,42 @@ const configRoutes: IRouter[] = [
     isAuth: true,
     children: [
       {
-        path: routePath.About,
-        element: lazy(() => import('modules/about')),
-        icons: React.createElement(QuestionCircleOutlined),
-        name: 'About',
-        haveChild: true,
-        children: [
-          {
-            path: routePath.About,
-            element: lazy(() => import('modules/about')),
-            name: 'About'
-          }
-        ]
+        path: routePath.Profile,
+        element: lazy(() => import('modules/profile')),
+        name: 'Profile'
       },
       {
-        path: routePath.AboutDetail,
-        element: lazy(() => import('modules/about/about-detail')),
-        name: 'About detail',
-        hiddenMenu: true
+        path: routePath.Reports,
+        element: lazy(() => import('modules/reports')),
+        name: 'Reports'
       },
       {
-        path: routePath.Contact,
-        element: lazy(() => import('modules/contact')),
-        icons: React.createElement(ContactsOutlined),
-        name: 'Contact'
+        path: routePath.DataSubjectManagement,
+        element: lazy(() => import('modules/dataSubjectManagement')),
+        name: 'Data Subject Management'
+      },
+      {
+        path: routePath.CaseManagement,
+        element: lazy(() => import('modules/caseManagement')),
+        name: 'Case Management',
+        haveChild: true
+        // children: [
+        //   {
+        //     path: routePath.Profile,
+        //     element: lazy(() => import('modules/profile')),
+        //     name: 'Assigned To You'
+        //   },
+        //   {
+        //     path: routePath.Profile,
+        //     element: lazy(() => import('modules/profile')),
+        //     name: 'Search Case'
+        //   }
+        // ]
+      },
+      {
+        path: routePath.ConsentManagement,
+        element: lazy(() => import('modules/consentManagement')),
+        name: 'Consent Management'
       },
 
       // Not Found
