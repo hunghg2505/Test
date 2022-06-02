@@ -1,0 +1,168 @@
+@import '../../../styles/variables.scss';
+
+.consentPage {
+  padding: 60px 33px 0 23px;
+  @media (max-width: 768px){
+    padding: 60px 0 0 0;
+  }
+}
+
+.consentHeader, .consentForm {
+  flex-flow: nowrap;
+  position: relative;
+  width: 100%;
+}
+
+.consentHeader {
+  width: 100%;
+
+  form {
+    flex: 1;
+    max-width: 667px;
+  }
+}
+
+.searchForm {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.searchForm {
+  background: #FFFFFF;
+  border: 1px solid $black_color;
+  border-radius: 12px;
+  padding: 10px;
+}
+
+.consentActions {
+  margin: 0 0 0 20px;
+  cursor: pointer;
+}
+
+.inputSearchForm {
+  flex: 1;
+  :global {
+    .ant-form-item-control-input {
+      min-height: initial;
+    }
+  }
+}
+
+.inputSearch {
+  border: none !important;
+  border-radius: none !important;
+  height: initial;
+  padding: 0 8px;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 19px;
+  color: $black_color;
+
+  ::-webkit-input-placeholder { /* Edge */
+    color: rgba(0, 0, 0, 0.5);;
+  }
+
+  :-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color: rgba(0, 0, 0, 0.5);;
+  }
+
+  ::placeholder {
+    color: rgba(0, 0, 0, 0.5);;
+  }
+}
+
+.btnSearchConsent {
+  padding: 0 15px;
+  height: 30px;
+  line-height: normal;
+  justify-content: center;
+  align-items: center;
+}
+
+.btnCreateConsent {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  @media (max-width: 1350px){
+    display: none;
+  }
+
+  a {
+    padding: 19px;
+    text-align: center;
+    background-color: $black_color;
+    color: $white_color;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 21px;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+}
+
+.consentContent {
+  margin: 110px 0 0;
+  text-align: center;
+  border: 1px solid $black_color;
+  background-color: $white_color;
+}
+
+.pagination {
+  padding: 12px 40px;
+
+  div:nth-child(2n + 1) {
+    cursor: pointer;
+  }
+}
+
+.paginationInfo {
+  margin: 0 18px;
+  padding: 4px 32px;
+  background: #C4C4C4;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 28px;
+  text-align: center;
+  color: #000000;
+}
+.consentContentEmpty {
+  .table {
+    display: none;
+  }
+}
+.table {
+  text-align: center;
+
+  :global {
+    .ant-table-thead {
+      background-color: #C4C4C4;
+      .ant-table-cell {
+        border-bottom: 1px solid $black_color;
+      }
+      .ant-table-cell:not(:last-child) {
+        border-right: 1px solid $black_color;
+      }
+    }
+    .ant-table-cell {
+      text-align: center;
+      vertical-align: middle;
+      font-size: 18px;
+      line-height: 21px;
+      color: $black_color;
+    }
+
+    .ant-table-tbody {
+      > tr.ant-table-row td {
+        border-bottom: 1px solid $black_color;
+      }
+      > tr.ant-table-row td:not(:last-child) {
+        border-right: 1px solid $black_color;
+      }
+    }
+  }
+}

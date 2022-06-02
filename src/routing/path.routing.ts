@@ -3,6 +3,8 @@ export const routePath = {
   About: '/about',
   AboutDetail: '/about/:id',
   Contact: '/contact',
+  Consent: '/consent',
+  ConsentDetail: '/consent/:id',
 
   // Auth Path
   Auth: '/auth',

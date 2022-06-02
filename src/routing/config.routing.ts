@@ -53,6 +53,18 @@ const configRoutes: IRouter[] = [
         icons: React.createElement(ContactsOutlined),
         name: 'Contact'
       },
+      {
+        path: routePath.Consent,
+        element: lazy(() => import('modules/consent')),
+        icons: React.createElement(ContactsOutlined),
+        name: 'Consent Management'
+      },
+      {
+        path: routePath.ConsentDetail,
+        element: lazy(() => import('modules/consent/[id]')),
+        name: 'Consent Management',
+        hiddenMenu: true
+      },
 
       // Not Found
       {

@@ -128,8 +128,7 @@ function MainLayout() {
             collapsed={!showSider !== undefined ? !showSider : false}
             onCollapse={() => {
               toggleSider && toggleSider();
-            }}
-          >
+            }}>
             <Menu
               onClick={onClickMenu}
               mode="inline"
@@ -148,8 +147,7 @@ function MainLayout() {
             visible={showSider}
             onClose={() => {
               toggleSider && toggleSider();
-            }}
-          >
+            }}>
             <Menu
               onClick={onClickMenu}
               mode="inline"
@@ -167,9 +165,9 @@ function MainLayout() {
             style={{
               padding: 24,
               margin: 0,
-              minHeight: 280
-            }}
-          >
+              minHeight: 280,
+              overflow: 'overlay'
+            }}>
             <Outlet />
           </Content>
         </Layout>
