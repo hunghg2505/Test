@@ -31,8 +31,7 @@ export default function InputForm({
       rules={rules}
       className={clsx(styles.customInputFormItem, {
         [classNameFormInput]: true
-      })}
-    >
+      })}>
       <Input
         className={clsx(styles.customInputForm, {
           [className]: true
