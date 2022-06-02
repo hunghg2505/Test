@@ -1,16 +1,16 @@
-import { Layout, Menu, Grid, Drawer } from 'antd';
+import { Drawer, Grid, Layout, Menu } from 'antd';
 import { Content } from 'antd/lib/layout/layout';
 import Sider from 'antd/lib/layout/Sider';
 import { ItemType } from 'antd/lib/menu/hooks/useItems';
 import useAuth from 'hooks/redux/auth/useAuth';
 import useDocument from 'hooks/redux/document/useDocument';
-import _ from 'lodash';
+import cloneDeep from 'lodash/cloneDeep';
 import withAuthClient from 'middlewares/withAuthClient';
 import { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
-import { Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import configRoutes, { IRouter } from 'routing/config.routing';
-import MainFooter from './footer/main.footer';
 import MainHeader from './header/main.header';
 import styles from './styles.module.scss';
 
@@ -23,6 +23,7 @@ function MainLayout() {
   const { document } = useDocument();
   const location = useLocation();
   const screens = useBreakpoint();
+  const { t } = useTranslation();
 
   const [menus, setMenus] = useState<ItemType[]>([]);
 
@@ -42,8 +43,7 @@ function MainLayout() {
 
   useEffect(() => {
     getMenu(configRoutes);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [configRoutes]);
+  }, []);
 
   useEffect(() => {
     const path = location?.pathname;
@@ -52,14 +52,13 @@ function MainLayout() {
       newDefaultSelected.push(path);
       setDefaultSelected(newDefaultSelected);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.pathname, menus]);
 
   // get list menu form router config
   const getMenu = (routes: IRouter[]) => {
-    const newRouterConfig = _.cloneDeep(routes);
+    const newRouterConfig = cloneDeep(routes);
     const routerNotAuth = newRouterConfig.find((x) => x.isAuth === true);
-    const menus: ItemType[] = [];
+    const menus: any[] = [];
     if (routerNotAuth) {
       const listChild = routerNotAuth.children || [];
       listChild.forEach((item) => {
@@ -103,6 +102,17 @@ function MainLayout() {
     setAuth(null);
   };
 
+  const menu2 = (
+    <Menu className={styles.menu2}>
+      <Menu.Item>
+        <div onClick={onLogout}>{t('logout')}</div>
+      </Menu.Item>
+      <Menu.Item>
+        <Link to={'/help'}>{t('help')}</Link>
+      </Menu.Item>
+    </Menu>
+  );
+
   return (
     <Layout className="max-height">
       <Helmet>
@@ -115,6 +125,7 @@ function MainLayout() {
         showSider={showSider}
         onLogout={onLogout}
         user={auth?.user}
+        isMobile={!!screens.md}
       />
 
       {/** Main Content */}
@@ -122,7 +133,7 @@ function MainLayout() {
         {/** screen is desktop */}
         {screens.md ? (
           <Sider
-            width={200}
+            width={236}
             className={styles.siderView}
             collapsedWidth={screens.md ? collapsedWidth : 0}
             collapsed={!showSider !== undefined ? !showSider : false}
@@ -133,10 +144,11 @@ function MainLayout() {
               onClick={onClickMenu}
               mode="inline"
               selectedKeys={defaultSelected}
-              style={{ height: '100%', borderRight: 0 }}
+              style={{ borderRight: 0 }}
               inlineCollapsed={!showSider}
               items={menus}
             />
+            {menu2}
           </Sider>
         ) : (
           <Drawer
@@ -152,9 +164,10 @@ function MainLayout() {
               onClick={onClickMenu}
               mode="inline"
               selectedKeys={defaultSelected}
-              style={{ height: '100%', borderRight: 0 }}
+              style={{ borderRight: 0 }}
               items={menus}
             />
+            {menu2}
           </Drawer>
         )}
 
@@ -174,7 +187,7 @@ function MainLayout() {
       </Layout>
 
       {/** Footer */}
-      <MainFooter />
+      {/* <MainFooter /> */}
     </Layout>
   );
 }

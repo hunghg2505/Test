@@ -19,6 +19,6 @@
   "forgot_password_page": {
     "title": "Forgot password"
   },
-
-  "create_consent": "Create Consent"
+  "create_consent": "Create Consent",
+  "help": "Help"
 }

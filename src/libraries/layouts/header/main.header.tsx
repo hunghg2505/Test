@@ -13,19 +13,22 @@ interface Props {
   showSider: boolean;
   toggleSider: () => void;
   onLogout: () => void;
+  isMobile: boolean;
 }
 
-export default function MainHeader({ showSider, user, toggleSider, onLogout }: Props) {
+export default function MainHeader({ isMobile, showSider, user, toggleSider, onLogout }: Props) {
   const { t } = useTranslation();
   return (
     <div className={styles.mainHeader}>
       <div className={styles.logoView}>
-        <Button
-          className={styles.navbarIcon}
-          type="link"
-          icon={showSider ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-          onClick={() => toggleSider && toggleSider()}
-        />
+        {!isMobile && (
+          <Button
+            className={styles.navbarIcon}
+            type="link"
+            icon={showSider ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+            onClick={() => toggleSider && toggleSider()}
+          />
+        )}
         <Logo />
       </div>
       <p className={styles.welcomeUser}>{t('welcome', { username: user?.email })}</p>
