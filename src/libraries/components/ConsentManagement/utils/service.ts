@@ -63,11 +63,16 @@ export const useConsentManagement = () => {
     onChangeCurrent(prev);
   };
 
+  const onSearchConsent = ({ search_consent }: { search_consent: string }) => {
+    run(search_consent);
+  };
+
   return {
     data,
     loading,
     run,
     onNext,
-    onPrev
+    onPrev,
+    onSearchConsent
   };
 };

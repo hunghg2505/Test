@@ -181,11 +181,7 @@ const CustomPagination = ({
 function ConsentManagement() {
   const { t } = useTranslation();
 
-  const { data, loading, run, onNext, onPrev } = useConsentManagement();
-
-  const onSearchConsent = (values: any) => {
-    run(values.search_consent);
-  };
+  const { data, loading, onNext, onPrev, onSearchConsent } = useConsentManagement();
 
   return (
     <ContainerLayout title="Consent Management">
