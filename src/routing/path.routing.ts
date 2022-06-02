@@ -1,8 +1,10 @@
 export const routePath = {
   HomePage: '/',
-  About: '/about',
-  AboutDetail: '/about/:id',
-  Contact: '/contact',
+  Profile: '/profile',
+  Reports: '/reports',
+  DataSubjectManagement: '/data-subject-management',
+  CaseManagement: '/case-management',
+  ConsentManagement: '/consent-management',
 
   // Auth Path
   Auth: '/auth',
