@@ -17,6 +17,8 @@ import styles from './styles.module.scss';
 const { useBreakpoint } = Grid;
 const collapsedWidth = '50px';
 
+const REGEX_DYNAMIC = /\/(consent)\/*/i;
+
 function MainLayout() {
   const navigate = useNavigate();
   const { auth, setAuth } = useAuth();
@@ -46,9 +48,11 @@ function MainLayout() {
   }, []);
 
   useEffect(() => {
-    const path = location?.pathname;
+    let path = location?.pathname;
+
     if (path) {
       const newDefaultSelected = [];
+      path = REGEX_DYNAMIC.test(path) ? '/consent' : path;
       newDefaultSelected.push(path);
       setDefaultSelected(newDefaultSelected);
     }
