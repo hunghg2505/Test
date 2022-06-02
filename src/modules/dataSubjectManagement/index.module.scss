@@ -1,0 +1,257 @@
+@import '../../styles/variables.scss';
+
+
+.dataSubjectPage {
+  padding: 54px 34px 0 44px;
+  @media (max-width: 768px){
+    padding: 60px 0 0 0;
+  }
+}
+
+
+.dataSubjectHeader, .searchForm {
+  flex-flow: nowrap;
+  position: relative;
+  width: 100%;
+}
+
+
+.dataSubjectHeader {
+  width: 100%;
+  form {
+    flex: 1;
+    max-width: 954px;
+  }
+}
+
+
+.searchForm {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.searchForm {
+  background: $white_color;
+  border: 1px solid $black_color;
+  border-radius: 12px;
+  padding: 7px 8px 7px 15px;
+
+  svg {
+    min-width: 29px;
+    min-height: 29px;
+  }
+}
+
+
+.btnSearchAdvanced {
+  margin: 0 0 0 30px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: $black_color;
+  border-radius: 10px;
+  padding: 12px 16px;
+  span {
+    margin: 0 0 0 17px;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 28px;
+    color: $white_color;
+  }
+}
+
+
+.inputSearchForm {
+  flex: 1;
+
+  :global {
+    .ant-form-item-control-input {
+      min-height: initial;
+    }
+  }
+}
+
+
+.inputSearch {
+  border: none !important;
+  border-radius: none !important;
+  height: initial;
+  padding: 0 15px;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 19px;
+  color: $black_color;
+
+  ::-webkit-input-placeholder { /* Edge */
+    color: rgba(0, 0, 0, 0.5);;
+  }
+
+  :-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color: rgba(0, 0, 0, 0.5);;
+  }
+
+  ::placeholder {
+    color: rgba(0, 0, 0, 0.5);;
+  }
+}
+
+
+.btnSearch{
+  padding: 14px 25px;
+  line-height: normal;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.dataSubjectContent {
+  margin: 128px 0 0;
+  text-align: center;
+  border: 1px solid $black_color;
+  background-color: $white_color;
+}
+
+.dataSubjectContentEmpty {
+  .table {
+    display: none;
+  }
+}
+
+.table {
+  text-align: center;
+
+  :global {
+    .ant-table-thead {
+      background-color: $gray_500;
+
+      .ant-table-cell {
+        border-bottom: 1px solid $black_color;
+        background-color: $gray_500;
+        font-weight: 700;
+        font-size: 24px;
+        line-height: 28px;
+        color: #000000;
+      }
+
+      .ant-table-cell:nth-child(2) {
+        border-bottom: 1px solid $black_color;
+      }
+
+      .ant-table-cell:not(:last-child) {
+        border-right: 1px solid $black_color;
+      }
+
+      tr:last-child {
+        .ant-table-cell:nth-child(2) {
+          border-right: 1px solid $black_color;
+        }
+      }
+    }
+
+    .ant-table-cell {
+      text-align: center;
+      vertical-align: middle;
+      font-size: 18px;
+      line-height: 21px;
+      color: $black_color;
+    }
+
+    .ant-table-tbody {
+      .ant-table-cell {
+        padding: 10px;
+      }
+      > tr.ant-table-row td {
+        border-bottom: 1px solid $black_color;
+      }
+      > tr.ant-table-row td:not(:last-child) {
+        border-right: 1px solid $black_color;
+      }
+    }
+  }
+}
+
+.action {
+  a {
+    background: #000000;
+    border-radius: 5px;
+    font-weight: 400;
+    padding: 12px;
+    font-size: 14px;
+    line-height: 16px;
+    color: #FFFFFF;
+  }
+}
+
+.formSearchAdvanced {
+  padding: 20px 20px 50px;
+  background-color: $white_color;
+  width: 744px;
+  box-shadow: 0 0 20px rgba(0,0,0,.2);
+  border-radius: 3px;
+  h4 {
+    font-weight: 700;
+    font-size: 24px;
+    color: $black_color;
+    margin: 0 0 17px;
+  }
+
+  :global {
+    label {
+      font-weight: 700 !important;
+      font-size: 18px !important;
+      line-height: 22px !important;
+      color: $black_color;
+    }
+
+    .ant-select-selector {
+      border: 1px solid $black_color !important;
+      padding: 8px 14px !important;
+      height: 50px !important;
+      border-radius: 5px !important;
+    }
+    .ant-select-selection-item {
+      font-weight: 400;
+      font-size: 18px;
+      line-height: 22px;
+      color: $black_color !important;
+    }
+  }
+
+  input {
+    border-radius: 5px !important;
+    border: 1px solid $black_color !important;
+    padding: 14px !important;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 22px;
+    color: $black_color !important;
+
+    ::-webkit-input-placeholder { /* Edge */
+      color: rgba(0, 0, 0, 0.6);
+    }
+
+    :-ms-input-placeholder { /* Internet Explorer 10-11 */
+      color: rgba(0, 0, 0, 0.6);
+    }
+
+    ::placeholder {
+      color: rgba(0, 0, 0, 0.6);
+    }
+  }
+}
+
+.btnSearchAdvancedDd {
+  width: 200px;
+  padding: 20px;
+  justify-content: center;
+  height: 60px;
+  margin: 50px 0 0 auto;
+  span {
+    font-weight: 400;
+    font-size: 18px;
+  }
+}
