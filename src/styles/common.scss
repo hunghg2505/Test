@@ -1,0 +1,157 @@
+@import './variables.scss';
+
+.heading1 {
+  font-size: $font-size-heading1;
+  line-height: 72px;
+}
+
+.heading2 {
+  font-size: $font-size-heading2;
+  line-height: 56px;
+}
+
+.heading3 {
+  font-size: $font-size-heading3;
+  line-height: 36px;
+}
+
+.heading4 {
+  font-size: $font-size-heading4;
+  line-height: 30px;
+}
+
+.body-large {
+  font-size: $font-size-body-large;
+  line-height: 27px;
+}
+
+.body-normal {
+  font-size: $font-size-body-normal;
+  line-height: 24px;
+}
+
+.body-small {
+  font-size: $font-size-body-small;
+  line-height: 21px;
+}
+
+.caption {
+  font-size: $font-size-caption;
+  line-height: 18px;
+}
+
+.primary {
+  color: $color-primary;
+}
+
+.bg-primary {
+  background-color: $color-primary;
+}
+
+.secondary {
+  color: $color-secondary;
+}
+
+.bg-secondary {
+  background-color: $color-secondary;
+}
+
+.info {
+  color: $color-info;
+}
+
+.bg-info {
+  background-color: $color-info;
+}
+
+.success {
+  color: $color-success;
+}
+
+.bg-success {
+  background-color: $color-success;
+}
+
+.warning {
+  color: $color-warning;
+}
+
+.bg-warning {
+  background-color: $color-warning;
+}
+
+.error {
+  color: $color-error;
+}
+
+.bg-error {
+  background-color: $color-error;
+}
+
+.black1 {
+  color: $color-black1;
+}
+
+.bg-black1 {
+  background-color: $color-black1;
+}
+
+.black2 {
+  color: $color-black2;
+}
+
+.bg-black2 {
+  background-color: $color-black2;
+}
+
+.black3 {
+  color: $color-black3;
+}
+
+.bg-black3 {
+  background-color: $color-black3;
+}
+
+.white {
+  color: $color-white;
+}
+
+.bg-white {
+  background-color: $color-white;
+}
+
+.gray1 {
+  color: $color-gray1;
+}
+
+.bg-gray1 {
+  color: $color-gray1;
+}
+
+.background-gray2 {
+  color: $color-gray2;
+}
+
+.gray3 {
+  color: $color-gray3;
+}
+
+.bg-gray3 {
+  background-color: $color-gray3;
+}
+
+.gray4 {
+  color: $color-gray4;
+}
+
+.bg-gray4 {
+  background-color: $color-gray4;
+}
+
+.gray5 {
+  color: $color-gray5;
+}
+
+.bg-gray5 {
+  background-color: $color-gray5;
+}
