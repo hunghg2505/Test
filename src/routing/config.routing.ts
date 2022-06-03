@@ -68,8 +68,14 @@ const configRoutes: IRouter[] = [
       },
       {
         path: routePath.ConsentManagement,
-        element: lazy(() => import('modules/consentManagement')),
+        element: lazy(() => import('modules/consentManagement/index')),
         name: 'Consent Management'
+      },
+      {
+        path: routePath.ConsentDetail,
+        element: lazy(() => import('modules/consentManagement/[id]')),
+        name: 'Consent Management',
+        hiddenMenu: true
       },
 
       // Not Found

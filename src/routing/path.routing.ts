@@ -5,7 +5,8 @@ export const routePath = {
   DataSubjectManagement: '/data-subject',
   DataSubjectDetail: '/data-subject/:id',
   CaseManagement: '/case-management',
-  ConsentManagement: '/consent-management',
+  ConsentManagement: '/consent',
+  ConsentDetail: '/consent/:id',
 
   // Auth Path
   Auth: '/auth',
