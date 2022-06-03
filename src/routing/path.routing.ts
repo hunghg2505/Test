@@ -2,7 +2,8 @@ export const routePath = {
   HomePage: '/',
   Profile: '/profile',
   Reports: '/reports',
-  DataSubjectManagement: '/data-subject-management',
+  DataSubjectManagement: '/data-subject',
+  DataSubjectDetail: '/data-subject/:id',
   CaseManagement: '/case-management',
   ConsentManagement: '/consent-management',
 

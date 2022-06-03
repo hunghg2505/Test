@@ -1,0 +1,31 @@
+@import '../../../../styles/variables.scss';
+
+.userInfoWrap {
+  flex-flow: nowrap;
+  max-width: 1420px;
+  margin: 100px auto;
+}
+
+.userInfo {
+  border: 1px solid $black_color;
+  border-radius: 5px;
+  padding: 18px;
+  background: #FFFFFF;
+  flex: 1;
+  max-width: 996px;
+}
+
+.label {
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 29px;
+  color: $black_color;
+  margin: 0 0 10px;
+}
+
+.content {
+  border: 1px solid $black_color;
+  border-radius: 5px;
+  padding: 10px 13px;
+}
+
