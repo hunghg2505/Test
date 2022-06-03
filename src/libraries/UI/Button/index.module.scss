@@ -1,0 +1,130 @@
+@import '../../../styles/variables.scss';
+
+.btn {
+  border-radius: 40px;
+  vertical-align: middle;
+  border: 0;
+  outline: none;
+  cursor: pointer;
+  height: initial;
+  transition: all 350ms;
+
+  span {
+    display: inline;
+    font-weight: 700;
+  }
+
+  &:global(.ant-btn-loading) {
+    &:before {
+      display: none;
+    }
+  }
+
+  &.disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+}
+
+.left {
+  text-align: left;
+}
+.center {
+  text-align: center;
+}
+.right {
+  text-align: right;
+}
+
+.default {
+  padding: 5.5px 16px;
+  span {
+    font-size: $font-size-body-small;
+  }
+  &:global(.ant-btn-loading) {
+    span.anticon.anticon-loading.anticon-spin {
+      font-size: 15px;
+    }
+  }
+}
+.small {
+  padding: 7px 16px;
+  span {
+    font-size: $font-size-body-small;
+  }
+  &:global(.ant-btn-loading) {
+    span.anticon.anticon-loading.anticon-spin {
+      font-size: 15px;
+    }
+  }
+}
+.large{
+  padding: 10px 24px;
+
+  span {
+    font-size: $font-size-body-normal;
+  }
+
+  &:global(.ant-btn-loading) {
+    span.anticon.anticon-loading.anticon-spin {
+      font-size: 20px;
+    }
+  }
+}
+
+.primary {
+  background-color: $color-primary;
+
+  span {
+    color: $color-primary-light;
+  }
+
+  &:hover, &:focus {
+    background-color: $color-primary-dark;
+  }
+
+  &.ghost {
+    background-color: $color-white;
+    border: 1px solid $color-primary;
+
+    span {
+      color: $color-primary;
+    }
+
+    &:hover, &:focus {
+      background-color: $color-primary-dark;
+      border-color: $color-primary-dark;
+      span {
+        color: $color-white;
+      }
+    }
+  }
+}
+
+.secondary {
+  background-color: $color-secondary;
+
+  span {
+    color: $color-white;
+  }
+
+  &:hover, &:focus {
+    background-color: $color-black1;
+  }
+  &.ghost {
+    background-color: $color-white;
+    border: 1px solid $color-secondary;
+
+    span {
+      color: $color-secondary;
+    }
+
+    &:hover, &:focus {
+      background-color: $color-black1;
+      border-color: $color-black1;
+      span {
+        color: $color-white;
+      }
+    }
+  }
+}
