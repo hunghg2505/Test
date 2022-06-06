@@ -1,0 +1,61 @@
+@import '../../../styles/variables.scss';
+
+
+.input {
+  background: $color-white;
+  border: 1px solid $color-gray6;
+  border-radius: 4px;
+  padding: 10px 16px;
+  margin: 0;
+  outline: none;
+  height: initial;
+  font-weight: 400;
+  font-size: $font-size-body-normal;
+  color: $color-secondary;
+  box-shadow: none;
+
+  &:hover, &:focus {
+    border-color: $color-secondary;
+    box-shadow: none;
+  }
+
+  ::-webkit-input-placeholder { /* Edge */
+    color: $color-gray5;
+  }
+
+  :-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color: $color-gray5;
+  }
+
+  ::placeholder {
+    color: $color-gray5;
+  }
+}
+
+
+.success {
+  border-color: $color-success;
+
+  &:hover, &:focus {
+    border-color: $color-success;
+    box-shadow: none;
+  }
+}
+
+.error {
+  border-color: $color-error;
+
+  &:hover, &:focus {
+    border-color: $color-error;
+    box-shadow: none;
+  }
+}
+
+.warning {
+  border-color: $color-warning;
+
+  &:hover, &:focus {
+    border-color: $color-warning;
+    box-shadow: none;
+  }
+}

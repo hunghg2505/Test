@@ -1,0 +1,49 @@
+@import '../../../styles/variables.scss';
+
+.select {
+
+
+  :global {
+    .ant-select-selector.ant-select-selector  {
+      border: 1px solid $color-gray6;
+      border-radius: 4px;
+      padding: 0 16px;
+      box-shadow: none !important;
+    }
+
+    .ant-select-selection-item.ant-select-selection-item {
+      font-weight: 400;
+      font-size: 14px;
+      color: $color-secondary;
+    }
+
+    .ant-select-selection-placeholder.ant-select-selection-placeholder {
+      font-weight: 400;
+      font-size: 14px;
+      color: $color-secondary;
+    }
+  }
+
+  &:hover {
+    :global {
+      .ant-select-selector.ant-select-selector  {
+        border-color: $color-secondary !important;
+      }
+    }
+  }
+
+  &:global(.ant-select-open) {
+    :global {
+      .ant-select-selector.ant-select-selector  {
+        border-color: $color-secondary !important;
+      }
+    }
+  }
+  &:global(.ant-select-focused) {
+    :global {
+      .ant-select-selector.ant-select-selector  {
+        border-color: $color-secondary !important;
+      }
+    }
+  }
+}

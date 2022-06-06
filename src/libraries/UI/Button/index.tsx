@@ -13,6 +13,7 @@ interface Props {
   className?: string;
   loading?: boolean;
   icon?: React.ReactNode;
+  suffixIcon?: React.ReactNode;
   align?: 'left' | 'center' | 'right';
   htmlType?: 'button' | 'submit' | 'reset' | undefined;
   size?: 'large' | 'small' | 'default';
@@ -26,6 +27,7 @@ const Button = ({
   size = 'small',
   align = 'center',
   icon,
+  suffixIcon,
   className = '',
   disabled = false,
   typeDisplay,
@@ -57,8 +59,11 @@ const Button = ({
         [className]: true
       })}>
       {children}
+      {suffixIcon}
     </ButtonAntd>
   );
 };
+
+Button.Name = 'Button';
 
 export default Button;
