@@ -5,8 +5,9 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styles from './styles.module.scss';
 import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
-import { Button } from 'antd';
 import { User } from 'types/common.types';
+import Button from 'libraries/UI/Button';
+import IconLogout from 'assets/icons/icon-logout';
 
 interface Props {
   user?: User;
@@ -20,7 +21,7 @@ export default function MainHeader({ isMobile, showSider, user, toggleSider, onL
   const { t } = useTranslation();
   return (
     <div className={styles.mainHeader}>
-      <div className={styles.logoView}>
+      {/* <div className={styles.logoView}>
         {!isMobile && (
           <Button
             className={styles.navbarIcon}
@@ -30,7 +31,7 @@ export default function MainHeader({ isMobile, showSider, user, toggleSider, onL
           />
         )}
         <Logo />
-      </div>
+      </div> */}
       <p className={styles.welcomeUser}>{t('welcome', { username: user?.email })}</p>
       <div className={styles.avatarView}>
         <div className={styles.profileUser}>
@@ -39,7 +40,9 @@ export default function MainHeader({ isMobile, showSider, user, toggleSider, onL
           </div>
           <p className={styles.titleProfile}>{t('profile')}</p>
         </div>
-        <ButtonForm onClick={onLogout} />
+        <Button onClick={onLogout} className={styles.btnLogout} suffixIcon={<IconLogout />}>
+          {t('logout')}
+        </Button>
       </div>
     </div>
   );

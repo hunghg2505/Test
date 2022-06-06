@@ -1,6 +1,6 @@
 {
   "home": "Home Page Ne",
-  "welcome": "Welcome {{username}}",
+  "welcome": "Welcome, #{{username}}",
   "welcome_auth": "Ascend Consent Management",
   "profile": "Profile",
   "logout": "Logout",

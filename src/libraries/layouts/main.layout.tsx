@@ -2,6 +2,7 @@ import { Drawer, Grid, Layout, Menu } from 'antd';
 import { Content } from 'antd/lib/layout/layout';
 import Sider from 'antd/lib/layout/Sider';
 import { ItemType } from 'antd/lib/menu/hooks/useItems';
+import Logo from 'assets/icons/logo';
 import useAuth from 'hooks/redux/auth/useAuth';
 import useDocument from 'hooks/redux/document/useDocument';
 import cloneDeep from 'lodash/cloneDeep';
@@ -123,27 +124,21 @@ function MainLayout() {
         <title>{document.title}</title>
       </Helmet>
 
-      {/** Header */}
-      <MainHeader
-        toggleSider={toggleSider}
-        showSider={showSider}
-        onLogout={onLogout}
-        user={auth?.user}
-        isMobile={!!screens.md}
-      />
-
       {/** Main Content */}
       <Layout className={styles.container}>
         {/** screen is desktop */}
         {screens.md ? (
           <Sider
-            width={236}
+            width={285}
             className={styles.siderView}
             collapsedWidth={screens.md ? collapsedWidth : 0}
             collapsed={!showSider !== undefined ? !showSider : false}
             onCollapse={() => {
               toggleSider && toggleSider();
             }}>
+            <div className={styles.logo}>
+              <Logo />
+            </div>
             <Menu
               onClick={onClickMenu}
               mode="inline"
@@ -180,11 +175,16 @@ function MainLayout() {
           <Content
             className="site-layout-background"
             style={{
-              padding: 24,
-              margin: 0,
-              minHeight: 280,
               overflow: 'overlay'
             }}>
+            {/** Header */}
+            <MainHeader
+              toggleSider={toggleSider}
+              showSider={showSider}
+              onLogout={onLogout}
+              user={auth?.user}
+              isMobile={!!screens.md}
+            />
             <Outlet />
           </Content>
         </Layout>

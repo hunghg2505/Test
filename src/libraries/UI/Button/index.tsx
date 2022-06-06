@@ -58,7 +58,7 @@ const Button = ({
         [styles['disabled']]: disabled,
         [className]: true
       })}>
-      {children}
+      {<>{children}</>}
       {suffixIcon}
     </ButtonAntd>
   );
