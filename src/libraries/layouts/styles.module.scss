@@ -44,14 +44,18 @@
         margin: 0 10px 0 0;
       }
 
-      &:hover .ant-menu-title-content {
-        color: $color-white;
-      }
+      &:hover {
+        .icon-reports path {
+          fill: $color-white !important;
+        }
+        .icon-profile path, .icon-data-subject path, .icon-case-management path {
+          stroke: $color-white !important;
+        }
 
-      // &:not(:last-child) {
-      //   margin: 0 !important;
-      //   padding: 0 !important;
-      // }
+        .ant-menu-title-content {
+          color: $color-white;
+        }
+      }
     }
 
     li.ant-menu-item.ant-menu-item-selected {
@@ -121,6 +125,28 @@
   border: none !important;
 
   :global {
+    .ant-menu-title-content {
+      display: flex;
+      align-items: center;
+      > div {
+        display: flex;
+        align-items: center;
+      }
+      svg {
+        margin: 0 10px 0 0;
+        path {
+          stroke: $color-gray4 !important;
+        }
+      }
+
+      &:hover {
+        svg {
+          path {
+            stroke: $color-white !important;
+          }
+        }
+      }
+    }
     .ant-menu-title-content a {
       font-weight: 400;
       font-size: 16px;

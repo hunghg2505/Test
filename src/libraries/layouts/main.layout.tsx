@@ -3,6 +3,7 @@ import { Content } from 'antd/lib/layout/layout';
 import Sider from 'antd/lib/layout/Sider';
 import { ItemType } from 'antd/lib/menu/hooks/useItems';
 import Logo from 'assets/icons/logo';
+import IconLogout from 'assets/icons/icon-logout';
 import useAuth from 'hooks/redux/auth/useAuth';
 import useDocument from 'hooks/redux/document/useDocument';
 import cloneDeep from 'lodash/cloneDeep';
@@ -14,6 +15,7 @@ import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import configRoutes, { IRouter } from 'routing/config.routing';
 import MainHeader from './header/main.header';
 import styles from './styles.module.scss';
+import IconInfo from 'assets/icons/icon-info';
 
 const { useBreakpoint } = Grid;
 const collapsedWidth = '50px';
@@ -110,9 +112,13 @@ function MainLayout() {
   const menu2 = (
     <Menu className={styles.menu2}>
       <Menu.Item>
-        <div onClick={onLogout}>{t('logout')}</div>
+        <div onClick={onLogout}>
+          <IconLogout />
+          {t('logout')}
+        </div>
       </Menu.Item>
       <Menu.Item>
+        <IconInfo />
         <Link to={'/help'}>{t('help')}</Link>
       </Menu.Item>
     </Menu>
