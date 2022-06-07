@@ -20,8 +20,6 @@ import IconInfo from 'assets/icons/icon-info';
 const { useBreakpoint } = Grid;
 const collapsedWidth = '50px';
 
-const REGEX_DYNAMIC = /\/(consent)\/*/i;
-
 function MainLayout() {
   const navigate = useNavigate();
   const { auth, setAuth } = useAuth();
@@ -55,7 +53,8 @@ function MainLayout() {
 
     if (path) {
       const newDefaultSelected = [];
-      path = REGEX_DYNAMIC.test(path) ? '/consent' : path;
+      path = path?.includes('consent') ? '/consent' : path;
+      path = path?.includes('data-subject') ? '/data-subject' : path;
       newDefaultSelected.push(path);
       setDefaultSelected(newDefaultSelected);
     }
@@ -125,7 +124,7 @@ function MainLayout() {
   );
 
   return (
-    <Layout className="max-height">
+    <Layout className="min-height">
       <Helmet>
         <title>{document.title}</title>
       </Helmet>

@@ -16,7 +16,7 @@ interface Props {
   suffixIcon?: React.ReactNode;
   align?: 'left' | 'center' | 'right';
   htmlType?: 'button' | 'submit' | 'reset' | undefined;
-  size?: 'large' | 'small' | 'default';
+  size?: 'large' | 'middle' | 'small' | 'default';
 }
 
 const Button = ({

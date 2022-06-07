@@ -173,8 +173,9 @@ const SearchDataSubjectAdvanced = ({ onSearchDataSubject, t }: any) => {
           </Col>
           <Col md={12}>
             <Form.Item label="Application">
-              <Select suffixIcon={<IconArrowDown />}>
+              <Select suffixIcon={<IconArrowDown />} placeholder="Please Select">
                 <Select.Option value="lucy">Lucy</Select.Option>
+                <Select.Option value="lucy1">Lucy1</Select.Option>
               </Select>
             </Form.Item>
           </Col>

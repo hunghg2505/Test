@@ -58,6 +58,19 @@
     }
   }
 }
+
+.middle {
+  padding: 9px 16px;
+  span {
+    font-size: $font-size-body-normal;
+  }
+  &:global(.ant-btn-loading) {
+    span.anticon.anticon-loading.anticon-spin {
+      font-size: 16px;
+    }
+  }
+}
+
 .large{
   padding: 10px 24px;
 
