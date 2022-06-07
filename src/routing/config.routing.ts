@@ -56,12 +56,6 @@ const configRoutes: IRouter[] = [
         hiddenMenu: true
       },
       {
-        path: routePath.DataSubjectDetail,
-        element: lazy(() => import('modules/dataSubjectManagement/[id]')),
-        name: 'Data Subject Management',
-        hiddenMenu: true
-      },
-      {
         path: routePath.CaseManagement,
         element: lazy(() => import('modules/caseManagement')),
         name: 'Case Management',
