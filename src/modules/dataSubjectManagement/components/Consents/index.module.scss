@@ -26,6 +26,12 @@
     padding: 0 !important;
     width: 100% !important;
   }
+
+  :global {
+    .ant-form-item {
+      flex: 1;
+    }
+  }
 }
 
 .searchContent {

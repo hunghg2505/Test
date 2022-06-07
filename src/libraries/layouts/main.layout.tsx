@@ -20,8 +20,6 @@ import IconInfo from 'assets/icons/icon-info';
 const { useBreakpoint } = Grid;
 const collapsedWidth = '50px';
 
-const REGEX_DYNAMIC = /\/(consent)\/*/i;
-
 function MainLayout() {
   const navigate = useNavigate();
   const { auth, setAuth } = useAuth();
