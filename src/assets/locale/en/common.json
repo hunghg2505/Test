@@ -1,6 +1,6 @@
 {
   "home": "Home Page Ne",
-  "welcome": "Welcome {{username}}",
+  "welcome": "Welcome, #{{username}}",
   "welcome_auth": "Ascend Consent Management",
   "profile": "Profile",
   "logout": "Logout",
@@ -19,6 +19,7 @@
   "forgot_password_page": {
     "title": "Forgot password"
   },
+  "create_consent": "Create Consent",
   "help": "Help",
   "advanced": "Advanced",
   "first_name": "First name",

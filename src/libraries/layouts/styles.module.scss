@@ -11,43 +11,73 @@
 
 
 .siderView {
-  background-color: $background_sider;
+  padding: 50px 0 60px;
+  .logo {
+    text-align: center;
+  }
+  background-color: $color-secondary;
 
   :global {
+    .ant-layout-sider-children {
+      display: flex;
+      flex-direction: column;
+    }
     .ant-menu-root {
-      background-color: $background_sider;
-      padding: 40px 0 0 18px;
+      background-color: $color-secondary;
+      padding: 42px 0 0;
     }
 
     .ant-menu-title-content {
-      font-weight: 700;
-      font-size: 18px;
+      font-weight: 400;
+      font-size: 16px;
       line-height: 24px;
-      color: $white_color;
+      color: $color-gray4;
     }
 
-    .ant-menu-item {
+    .ant-menu-item.ant-menu-item {
       height: initial;
-      padding: 0 !important;
+      padding: 10px 20px 10px 42px !important;
       margin: 0;
       background-color: transparent !important;
 
-      &:hover .ant-menu-title-content {
-        color: $teal_800;
+      > svg {
+        margin: 0 10px 0 0;
       }
 
-      &:not(:last-child) {
-        margin: 0 0 25px !important;
+      &:hover {
+        .icon-reports path {
+          fill: $color-white !important;
+        }
+        .icon-profile path, .icon-data-subject path, .icon-case-management path {
+          stroke: $color-white !important;
+        }
+
+        .ant-menu-title-content {
+          color: $color-white;
+        }
       }
     }
 
-    .ant-menu-item-selected {
+    li.ant-menu-item.ant-menu-item-selected {
+      background-color: $color-primary !important;
+
+      .icon-reports path {
+        fill: $color-white !important;
+      }
+      .icon-profile path, .icon-data-subject path, .icon-case-management path {
+        stroke: $color-white !important;
+      }
+
       .ant-menu-title-content {
-        color: $teal_800;
+        color: $color-white;
+        font-weight: 700;
+        font-size: 16px;
       }
       &::after {
         display: none !important;
       }
+
+
     }
 
     .ant-menu-submenu {
@@ -77,7 +107,7 @@
           }
 
           &:hover .ant-menu-title-content {
-            color: $teal_800;
+            color: $color-white;
           }
 
           &:not(:last-child) {
@@ -90,17 +120,39 @@
 }
 
 .menu2 {
-  margin: 76px 0 0;
-  padding: 0 0 0 18px !important;
+  margin-top: auto;
+  padding: 0 !important;
+  border: none !important;
 
   :global {
-    .ant-menu-title-content a {
-      font-weight: 700;
-      font-size: 18px;
-      line-height: 24px;
-      color: #FFFFFF;
+    .ant-menu-title-content {
+      display: flex;
+      align-items: center;
+      > div {
+        display: flex;
+        align-items: center;
+      }
+      svg {
+        margin: 0 10px 0 0;
+        path {
+          stroke: $color-gray4 !important;
+        }
+      }
+
       &:hover {
-        color: $teal_800;
+        svg {
+          path {
+            stroke: $color-white !important;
+          }
+        }
+      }
+    }
+    .ant-menu-title-content a {
+      font-weight: 400;
+      font-size: 16px;
+      color: $color-gray4;
+      &:hover {
+        color: $color-white;
       }
 
       @media (max-width: 768px){

@@ -1,8 +1,12 @@
 // Layout
 import { lazy } from 'react';
 import { routePath } from './path.routing';
-import { HomeOutlined, QuestionCircleOutlined, ContactsOutlined } from '@ant-design/icons';
+import { HomeOutlined } from '@ant-design/icons';
 import React from 'react';
+import IconProfile from 'assets/icons/icon-profile';
+import IconReports from 'assets/icons/icon-reports';
+import IconDataSubject from 'assets/icons/icon-data-subject';
+import IconCaseManagement from 'assets/icons/icon-case-management';
 
 export interface IRouter {
   icons?: JSX.Element | string | any;
@@ -30,17 +34,26 @@ const configRoutes: IRouter[] = [
       {
         path: routePath.Profile,
         element: lazy(() => import('modules/profile')),
-        name: 'Profile'
+        name: 'Profile',
+        icons: React.createElement(IconProfile)
       },
       {
         path: routePath.Reports,
         element: lazy(() => import('modules/reports')),
-        name: 'Reports'
+        name: 'Reports',
+        icons: React.createElement(IconReports)
       },
       {
         path: routePath.DataSubjectManagement,
         element: lazy(() => import('modules/dataSubjectManagement/index')),
-        name: 'Data Subject Management'
+        name: 'Data Subject Management',
+        icons: React.createElement(IconDataSubject)
+      },
+      {
+        path: routePath.DataSubjectDetail,
+        element: lazy(() => import('modules/dataSubjectManagement/[id]')),
+        name: 'Data Subject Management',
+        hiddenMenu: true
       },
       {
         path: routePath.DataSubjectDetail,
@@ -52,7 +65,9 @@ const configRoutes: IRouter[] = [
         path: routePath.CaseManagement,
         element: lazy(() => import('modules/caseManagement')),
         name: 'Case Management',
-        haveChild: true
+        icons: React.createElement(IconCaseManagement)
+        // haveChild: true,
+
         // children: [
         //   {
         //     path: routePath.Profile,
@@ -66,11 +81,17 @@ const configRoutes: IRouter[] = [
         //   }
         // ]
       },
-      {
-        path: routePath.ConsentManagement,
-        element: lazy(() => import('modules/consentManagement')),
-        name: 'Consent Management'
-      },
+      // {
+      //   path: routePath.ConsentManagement,
+      //   element: lazy(() => import('modules/consentManagement/index')),
+      //   name: 'Consent Management'
+      // },
+      // {
+      //   path: routePath.ConsentDetail,
+      //   element: lazy(() => import('modules/consentManagement/[id]')),
+      //   name: 'Consent Management',
+      //   hiddenMenu: true
+      // },
 
       // Not Found
       {

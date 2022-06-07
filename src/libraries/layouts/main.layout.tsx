@@ -2,6 +2,8 @@ import { Drawer, Grid, Layout, Menu } from 'antd';
 import { Content } from 'antd/lib/layout/layout';
 import Sider from 'antd/lib/layout/Sider';
 import { ItemType } from 'antd/lib/menu/hooks/useItems';
+import Logo from 'assets/icons/logo';
+import IconLogout from 'assets/icons/icon-logout';
 import useAuth from 'hooks/redux/auth/useAuth';
 import useDocument from 'hooks/redux/document/useDocument';
 import cloneDeep from 'lodash/cloneDeep';
@@ -13,6 +15,7 @@ import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import configRoutes, { IRouter } from 'routing/config.routing';
 import MainHeader from './header/main.header';
 import styles from './styles.module.scss';
+import IconInfo from 'assets/icons/icon-info';
 
 const { useBreakpoint } = Grid;
 const collapsedWidth = '50px';
@@ -46,9 +49,12 @@ function MainLayout() {
   }, []);
 
   useEffect(() => {
-    const path = location?.pathname;
+    let path = location?.pathname;
+
     if (path) {
       const newDefaultSelected = [];
+      path = path?.includes('consent') ? '/consent' : path;
+      path = path?.includes('data-subject') ? '/data-subject' : path;
       newDefaultSelected.push(path);
       setDefaultSelected(newDefaultSelected);
     }
@@ -105,41 +111,39 @@ function MainLayout() {
   const menu2 = (
     <Menu className={styles.menu2}>
       <Menu.Item>
-        <div onClick={onLogout}>{t('logout')}</div>
+        <div onClick={onLogout}>
+          <IconLogout />
+          {t('logout')}
+        </div>
       </Menu.Item>
       <Menu.Item>
+        <IconInfo />
         <Link to={'/help'}>{t('help')}</Link>
       </Menu.Item>
     </Menu>
   );
 
   return (
-    <Layout className="max-height">
+    <Layout className="min-height">
       <Helmet>
         <title>{document.title}</title>
       </Helmet>
-
-      {/** Header */}
-      <MainHeader
-        toggleSider={toggleSider}
-        showSider={showSider}
-        onLogout={onLogout}
-        user={auth?.user}
-        isMobile={!!screens.md}
-      />
 
       {/** Main Content */}
       <Layout className={styles.container}>
         {/** screen is desktop */}
         {screens.md ? (
           <Sider
-            width={236}
+            width={285}
             className={styles.siderView}
             collapsedWidth={screens.md ? collapsedWidth : 0}
             collapsed={!showSider !== undefined ? !showSider : false}
             onCollapse={() => {
               toggleSider && toggleSider();
             }}>
+            <div className={styles.logo}>
+              <Logo />
+            </div>
             <Menu
               onClick={onClickMenu}
               mode="inline"
@@ -176,10 +180,16 @@ function MainLayout() {
           <Content
             className="site-layout-background"
             style={{
-              padding: 24,
-              margin: 0,
-              minHeight: 280
+              overflow: 'overlay'
             }}>
+            {/** Header */}
+            <MainHeader
+              toggleSider={toggleSider}
+              showSider={showSider}
+              onLogout={onLogout}
+              user={auth?.user}
+              isMobile={!!screens.md}
+            />
             <Outlet />
           </Content>
         </Layout>
