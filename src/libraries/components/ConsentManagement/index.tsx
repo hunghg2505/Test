@@ -11,8 +11,8 @@ import { useConsentManagement } from './utils/service';
 
 import styles from './index.module.scss';
 import clsx from 'clsx';
-import CustomPagination from '../CustomPagination';
 import IconSearch from 'assets/icons/icon-search';
+import { paginationItemRender } from 'libraries/UI/Pagination';
 
 const ICON_ACTIONS = (
   <svg xmlns="http://www.w3.org/2000/svg" width={50} height={42} viewBox="0 0 50 42" fill="none">
@@ -127,7 +127,7 @@ const columns: ColumnsType<DataType> = [
 function ConsentManagement() {
   const { t } = useTranslation();
 
-  const { data, loading, onNext, onPrev, onSearchConsent } = useConsentManagement();
+  const { data, loading, onChange, onSearchConsent } = useConsentManagement();
 
   return (
     <ContainerLayout title="Consent Management">
@@ -169,18 +169,14 @@ function ConsentManagement() {
             className={styles.table}
             columns={columns}
             dataSource={data?.data}
-            pagination={false}
             loading={loading}
+            pagination={{
+              current: data?.current,
+              total: data?.list?.length,
+              onChange,
+              itemRender: paginationItemRender
+            }}
           />
-
-          {!loading && data?.data?.length ? (
-            <CustomPagination
-              current={data.current}
-              totalPage={data.total}
-              onNext={onNext}
-              onPrev={onPrev}
-            />
-          ) : null}
         </div>
       </div>
     </ContainerLayout>

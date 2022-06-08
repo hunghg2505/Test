@@ -111,8 +111,8 @@
 .dataSubjectContent {
   margin: 128px 0 0;
   text-align: center;
-  border: 1px solid $black_color;
-  background-color: $white_color;
+  // border: 1px solid $black_color;
+  // background-color: $white_color;
 }
 
 .dataSubjectContentEmpty {
@@ -125,58 +125,13 @@
   text-align: center;
 
   :global {
-    .ant-table-thead {
-      background-color: $gray_500;
 
-      .ant-table-cell {
-        border-bottom: 1px solid $black_color;
-        background-color: $gray_500;
-        font-weight: 700;
-        font-size: 24px;
-        line-height: 28px;
-        color: #000000;
-      }
-
-      .ant-table-cell:nth-child(2) {
-        border-bottom: 1px solid $black_color;
-      }
-
-      .ant-table-cell:not(:last-child) {
-        border-right: 1px solid $black_color;
-      }
-
-      tr:last-child {
-        .ant-table-cell:nth-child(2) {
-          border-right: 1px solid $black_color;
-        }
-      }
-    }
-
-    .ant-table-cell {
-      text-align: center;
-      vertical-align: middle;
-      font-size: 18px;
-      line-height: 21px;
-      color: $black_color;
-    }
-
-    .ant-table-tbody {
-      .ant-table-cell {
-        padding: 10px;
-      }
-      > tr.ant-table-row td {
-        border-bottom: 1px solid $black_color;
-      }
-      > tr.ant-table-row td:not(:last-child) {
-        border-right: 1px solid $black_color;
-      }
-    }
   }
 }
 
 .action {
   a {
-    background: #000000;
+    background: $color-secondary;
     border-radius: 5px;
     font-weight: 400;
     padding: 12px;

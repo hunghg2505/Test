@@ -53,16 +53,6 @@ export const useConsentManagement = () => {
     }
   };
 
-  const onNext = (next: number) => {
-    if (data.current >= data.total) return;
-    onChangeCurrent(next);
-  };
-
-  const onPrev = (prev: number) => {
-    if (data.current <= 1) return;
-    onChangeCurrent(prev);
-  };
-
   const onSearchConsent = ({ search_consent }: { search_consent: string }) => {
     run(search_consent);
   };
@@ -71,8 +61,7 @@ export const useConsentManagement = () => {
     data,
     loading,
     run,
-    onNext,
-    onPrev,
+    onChange: onChangeCurrent,
     onSearchConsent
   };
 };

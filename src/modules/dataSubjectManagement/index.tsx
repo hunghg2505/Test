@@ -5,7 +5,6 @@ import { useTranslation } from 'react-i18next';
 import clsx from 'clsx';
 import { Link } from 'react-router-dom';
 
-import CustomPagination from 'libraries/components/CustomPagination';
 import ButtonForm from 'libraries/form/button/button-form';
 import InputForm from 'libraries/form/input/input-form';
 import ContainerLayout from 'libraries/layouts/container.layout';
@@ -17,6 +16,7 @@ import { RegexUtils } from 'utils/regex-helper';
 import { useDataSubjectManagement } from './utils/service';
 
 import styles from './index.module.scss';
+import { paginationItemRender } from 'libraries/UI/Pagination';
 
 export interface DataType {
   key: string;
@@ -195,7 +195,7 @@ const SearchDataSubjectAdvanced = ({ onSearchDataSubject, t }: any) => {
 
 function DataSubjectManagement() {
   const { t } = useTranslation();
-  const { data, loading, onNext, onPrev, onSearchDataSubject } = useDataSubjectManagement();
+  const { data, loading, onChange, onSearchDataSubject } = useDataSubjectManagement();
 
   return (
     <ContainerLayout title="Data Subject Management">
@@ -239,18 +239,14 @@ function DataSubjectManagement() {
             className={styles.table}
             columns={columns}
             dataSource={data?.data}
-            pagination={false}
             loading={loading}
+            pagination={{
+              current: data?.current,
+              total: data?.list?.length,
+              onChange,
+              itemRender: paginationItemRender
+            }}
           />
-
-          {!loading && data?.data?.length ? (
-            <CustomPagination
-              current={data.current}
-              totalPage={data.total}
-              onNext={onNext}
-              onPrev={onPrev}
-            />
-          ) : null}
         </div>
       </div>
     </ContainerLayout>

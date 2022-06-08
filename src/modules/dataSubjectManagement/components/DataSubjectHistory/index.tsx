@@ -2,6 +2,7 @@ import { Row, Table } from 'antd';
 import { ColumnsType } from 'antd/lib/table';
 import clsx from 'clsx';
 import Button from 'libraries/UI/Button';
+import { paginationItemRender } from 'libraries/UI/Pagination';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styles from './index.module.scss';
@@ -102,7 +103,8 @@ function DataSubjectHistory() {
           pagination={{
             current: data?.current,
             total: data?.list?.length,
-            onChange
+            onChange,
+            itemRender: paginationItemRender
           }}
           loading={loading}
         />

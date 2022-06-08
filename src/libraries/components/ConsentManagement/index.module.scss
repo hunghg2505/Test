@@ -107,8 +107,8 @@
 .consentContent {
   margin: 110px 0 0;
   text-align: center;
-  border: 1px solid $black_color;
-  background-color: $white_color;
+  // border: 1px solid $black_color;
+  // background-color: $white_color;
 }
 
 .pagination {
@@ -119,17 +119,6 @@
   }
 }
 
-.paginationInfo {
-  margin: 0 18px;
-  padding: 4px 32px;
-  background: #C4C4C4;
-  font-style: normal;
-  font-weight: 700;
-  font-size: 24px;
-  line-height: 28px;
-  text-align: center;
-  color: #000000;
-}
 .consentContentEmpty {
   .table {
     display: none;
@@ -137,32 +126,4 @@
 }
 .table {
   text-align: center;
-
-  :global {
-    .ant-table-thead {
-      background-color: #C4C4C4;
-      .ant-table-cell {
-        border-bottom: 1px solid $black_color;
-      }
-      .ant-table-cell:not(:last-child) {
-        border-right: 1px solid $black_color;
-      }
-    }
-    .ant-table-cell {
-      text-align: center;
-      vertical-align: middle;
-      font-size: 18px;
-      line-height: 21px;
-      color: $black_color;
-    }
-
-    .ant-table-tbody {
-      > tr.ant-table-row td {
-        border-bottom: 1px solid $black_color;
-      }
-      > tr.ant-table-row td:not(:last-child) {
-        border-right: 1px solid $black_color;
-      }
-    }
-  }
 }
