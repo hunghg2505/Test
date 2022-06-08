@@ -82,18 +82,6 @@ export const useDataSubjectManagement = () => {
     }
   };
 
-  const onNext = (next: number) => {
-    if (data.current >= data.total) return;
-
-    onChangeCurrent(next);
-  };
-
-  const onPrev = (prev: number) => {
-    if (data.current <= 1) return;
-
-    onChangeCurrent(prev);
-  };
-
   const onSearchDataSubject = (values = {}) => {
     run({ ...values });
   };
@@ -102,8 +90,7 @@ export const useDataSubjectManagement = () => {
     data,
     loading,
     run,
-    onNext,
-    onPrev,
+    onChange: onChangeCurrent,
     onSearchDataSubject
   };
 };

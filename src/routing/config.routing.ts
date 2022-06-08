@@ -75,6 +75,18 @@ const configRoutes: IRouter[] = [
         //   }
         // ]
       },
+      {
+        path: routePath.ConsentManagement,
+        element: lazy(() => import('modules/consentManagement/index')),
+        name: 'Consent Management',
+        icons: React.createElement(IconDataSubject)
+      },
+      {
+        path: routePath.ConsentDetail,
+        element: lazy(() => import('modules/consentManagement/[id]')),
+        name: 'Consent Management Detail',
+        hiddenMenu: true
+      },
       // {
       //   path: routePath.ConsentManagement,
       //   element: lazy(() => import('modules/consentManagement/index')),

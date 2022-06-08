@@ -116,5 +116,57 @@ body {
       stroke: $color-gray6;
     }
   }
+}
 
+.ant-table {
+  text-align: center;
+
+    .ant-table-pagination.ant-pagination {
+      margin: 24px 0;
+    }
+    .ant-table-thead {
+      background-color: $color-secondary;
+
+      .ant-table-cell {
+        border-bottom: 1px solid transparent;
+        background-color: $color-secondary;
+        font-weight: 400;
+        font-size: 16px;
+        color: $color-white;
+      }
+
+      .ant-table-cell:nth-child(2) {
+        border-bottom: 1px solid transparent;
+      }
+
+      .ant-table-cell:not(:last-child) {
+        border-right: 1px solid transparent;
+      }
+
+      tr:last-child {
+        .ant-table-cell:nth-child(2) {
+          border-right: 1px solid transparent;
+        }
+      }
+    }
+
+    .ant-table-cell {
+      text-align: center;
+      vertical-align: middle;
+      font-size: 18px;
+      line-height: 21px;
+      color: $black_color;
+    }
+
+    .ant-table-tbody {
+      .ant-table-cell {
+        padding: 12px;
+      }
+      > tr.ant-table-row td {
+        border-bottom: 1px solid transparent;
+      }
+      > tr.ant-table-row td:not(:last-child) {
+        border-right: 1px solid transparent;
+      }
+    }
 }
