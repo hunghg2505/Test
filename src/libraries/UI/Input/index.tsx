@@ -13,6 +13,7 @@ interface Props {
   type?: 'input' | 'textarea' | 'password';
   value?: string | number;
   defaultValue?: string | number;
+  autoComplete?: 'on' | 'off';
   onChange?: (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
 }
 

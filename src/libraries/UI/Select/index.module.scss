@@ -7,20 +7,25 @@
     .ant-select-selector.ant-select-selector  {
       border: 1px solid $color-gray6;
       border-radius: 4px;
-      padding: 0 16px;
+      padding: 8px 16px;
       box-shadow: none !important;
+      height: initial !important;
     }
 
     .ant-select-selection-item.ant-select-selection-item {
       font-weight: 400;
       font-size: 14px;
       color: $color-secondary;
+      display: flex;
+      align-items: center;
     }
 
     .ant-select-selection-placeholder.ant-select-selection-placeholder {
       font-weight: 400;
       font-size: 14px;
       color: $color-secondary;
+      display: flex;
+      align-items: center;
     }
   }
 
