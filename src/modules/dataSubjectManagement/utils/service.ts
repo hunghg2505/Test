@@ -83,6 +83,7 @@ export const useDataSubjectManagement = () => {
   };
 
   const onSearchDataSubject = (values = {}) => {
+    if (!Object.values(values)?.filter((v) => v).length) return;
     run({ ...values });
   };
 

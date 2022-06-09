@@ -1,4 +1,4 @@
-import { Col, Dropdown, Form, Row, Select, Table } from 'antd';
+import { Col, Dropdown, Form, Row, Table } from 'antd';
 import type { ColumnsType } from 'antd/lib/table';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -10,13 +10,13 @@ import InputForm from 'libraries/form/input/input-form';
 import ContainerLayout from 'libraries/layouts/container.layout';
 import IconCross from 'assets/icons/icon-cross';
 import IconSearch from 'assets/icons/icon-search';
-import IconArrowDown from 'assets/icons/icon-arrow-down';
 
 import { RegexUtils } from 'utils/regex-helper';
 import { useDataSubjectManagement } from './utils/service';
 
 import styles from './index.module.scss';
 import { paginationItemRender } from 'libraries/UI/Pagination';
+import Select from 'libraries/UI/Select';
 
 export interface DataType {
   key: string;
@@ -105,12 +105,12 @@ const SearchDataSubjectAdvanced = ({ onSearchDataSubject, t }: any) => {
               label="First Name"
               name="first_name"
               placeholder="First Name"
-              rules={[
-                {
-                  required: true,
-                  message: t('messages.errors.require', { field: t('first_name') })
-                }
-              ]}
+              // rules={[
+              //   {
+              //     required: true,
+              //     message: t('messages.errors.require', { field: t('first_name') })
+              //   }
+              // ]}
             />
           </Col>
           <Col md={12}>
@@ -118,12 +118,12 @@ const SearchDataSubjectAdvanced = ({ onSearchDataSubject, t }: any) => {
               label="Last Name"
               name="last_name"
               placeholder="Last Name"
-              rules={[
-                {
-                  required: true,
-                  message: t('messages.errors.require', { field: t('last_name') })
-                }
-              ]}
+              // rules={[
+              //   {
+              //     required: true,
+              //     message: t('messages.errors.require', { field: t('last_name') })
+              //   }
+              // ]}
             />
           </Col>
 
@@ -132,12 +132,12 @@ const SearchDataSubjectAdvanced = ({ onSearchDataSubject, t }: any) => {
               label="Company"
               name="company"
               placeholder="Company"
-              rules={[
-                {
-                  required: true,
-                  message: t('messages.errors.require', { field: t('company') })
-                }
-              ]}
+              // rules={[
+              //   {
+              //     required: true,
+              //     message: t('messages.errors.require', { field: t('company') })
+              //   }
+              // ]}
             />
           </Col>
           <Col md={12}>
@@ -146,10 +146,10 @@ const SearchDataSubjectAdvanced = ({ onSearchDataSubject, t }: any) => {
               name="email"
               placeholder="Email"
               rules={[
-                {
-                  required: true,
-                  message: t('messages.errors.require', { field: t('email') })
-                },
+                // {
+                //   required: true,
+                //   message: t('messages.errors.require', { field: t('email') })
+                // },
                 {
                   pattern: new RegExp(RegexUtils.RegexConstants.REGEX_EMAIL),
                   message: `${t('messages.errors.email_invalid')}`
@@ -163,17 +163,17 @@ const SearchDataSubjectAdvanced = ({ onSearchDataSubject, t }: any) => {
               label="Mobile number"
               name="mobile_number"
               placeholder="Mobile number"
-              rules={[
-                {
-                  required: true,
-                  message: t('messages.errors.require', { field: t('mobile_number') })
-                }
-              ]}
+              // rules={[
+              //   {
+              //     required: true,
+              //     message: t('messages.errors.require', { field: t('mobile_number') })
+              //   }
+              // ]}
             />
           </Col>
           <Col md={12}>
-            <Form.Item label="Application">
-              <Select suffixIcon={<IconArrowDown />} placeholder="Please Select">
+            <Form.Item label="Application" name="application">
+              <Select placeholder="Please Select">
                 <Select.Option value="lucy">Lucy</Select.Option>
                 <Select.Option value="lucy1">Lucy1</Select.Option>
               </Select>

@@ -165,25 +165,25 @@
   }
 
   input {
-    border-radius: 5px !important;
-    border: 1px solid $black_color !important;
-    padding: 14px !important;
-    font-weight: 400;
-    font-size: 18px;
-    line-height: 22px;
-    color: $black_color !important;
+    // border-radius: 5px !important;
+    // border: 1px solid $black_color !important;
+    // padding: 14px !important;
+    // font-weight: 400;
+    // font-size: 18px;
+    // line-height: 22px;
+    // color: $black_color !important;
 
-    ::-webkit-input-placeholder { /* Edge */
-      color: rgba(0, 0, 0, 0.6);
-    }
+    // ::-webkit-input-placeholder { /* Edge */
+    //   color: rgba(0, 0, 0, 0.6);
+    // }
 
-    :-ms-input-placeholder { /* Internet Explorer 10-11 */
-      color: rgba(0, 0, 0, 0.6);
-    }
+    // :-ms-input-placeholder { /* Internet Explorer 10-11 */
+    //   color: rgba(0, 0, 0, 0.6);
+    // }
 
-    ::placeholder {
-      color: rgba(0, 0, 0, 0.6);
-    }
+    // ::placeholder {
+    //   color: rgba(0, 0, 0, 0.6);
+    // }
   }
 }
 

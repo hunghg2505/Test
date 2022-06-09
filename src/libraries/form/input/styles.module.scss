@@ -23,25 +23,25 @@
 }
 
 .customInputForm {
-  border: 1px solid $white_500;
-  border-radius: 16px;
-  padding: 12px 24px;
-  outline: none;
-  font-style: normal;
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 24px;
-  color: $white_500;
-  max-height: 48px;
+  // border: 1px solid $white_500;
+  // border-radius: 16px;
+  // padding: 12px 24px;
+  // outline: none;
+  // font-style: normal;
+  // font-weight: 400;
+  // font-size: 14px;
+  // line-height: 24px;
+  // color: $white_500;
+  // max-height: 48px;
 
-  &:focus {
-    border: 1px solid $white_500;
-    box-shadow: unset;
-  }
+  // &:focus {
+  //   border: 1px solid $white_500;
+  //   box-shadow: unset;
+  // }
 
-  &:hover {
-    border: 1px solid $white_500;
-  }
+  // &:hover {
+  //   border: 1px solid $white_500;
+  // }
 }
 
 // input password

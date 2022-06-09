@@ -10,8 +10,10 @@ interface IProps {
   className?: string;
   suffixIcon?: React.ReactNode;
   placeholder?: string;
+  value?: string | number;
   options?: { label: any; value: any }[];
   onSelect?: (value: any) => void;
+  onChange?: (value: any) => void;
 }
 
 const Select = ({
@@ -19,7 +21,8 @@ const Select = ({
   className,
   placeholder = 'Placeholder',
   options,
-  suffixIcon = <IconArrowDown2 />
+  suffixIcon = <IconArrowDown2 />,
+  ...props
 }: IProps) => {
   return (
     <SelectAntd
@@ -28,7 +31,8 @@ const Select = ({
       })}
       placeholder={placeholder}
       suffixIcon={suffixIcon}
-      options={options}>
+      options={options}
+      {...props}>
       <>{children}</>
     </SelectAntd>
   );
