@@ -1,0 +1,35 @@
+@import '../../../styles/variables.scss';
+
+.titlePage {
+  font-style: normal;
+  font-weight: 700;
+  font-size: 48px;
+  text-align: center;
+  color: $black_color;
+  margin: 86px 0 44px;
+}
+
+.signUpPage {
+  max-width: 410px;
+  margin: 0 auto;
+}
+
+.buttonSubmit {
+  width: 100%;
+  text-align: center;
+  justify-content: center;
+  margin: 0 0 8px;
+}
+
+.actionMore {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 16px;
+  text-align: center;
+  color: $grey_50;
+
+  a {
+    color: $teal_600;
+  }
+}
