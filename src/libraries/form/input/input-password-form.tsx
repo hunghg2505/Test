@@ -9,18 +9,20 @@ interface Props {
   rules?: Rule[];
   placeholder?: string;
   autoComplete?: 'on' | 'off';
+  dependencies?: string[];
 
   // custom
   classNameFormInput?: any;
   className?: any;
 }
+
 export default function InputPasswordForm({
   label,
   placeholder,
   name,
   rules,
   autoComplete = 'off',
-
+  dependencies,
   classNameFormInput,
   className
 }: Props) {
@@ -32,7 +34,7 @@ export default function InputPasswordForm({
       className={clsx(styles.customInputPasswordFormItem, {
         [classNameFormInput]: true
       })}
-    >
+      dependencies={dependencies}>
       <Input.Password
         className={clsx(styles.customInputPasswordForm, {
           [className]: true
