@@ -38,6 +38,8 @@ export default function SignInUtils(): Utils {
 
         setAuth({
           accessToken: r?.content?.accessToken,
+          refreshToken: r?.content?.refreshToken,
+          expireTime: Date.now() + r?.content?.expireTime * 1000,
           user: {
             email: values?.email_abc
           }

@@ -1,33 +1,34 @@
 import { API_PATH } from 'utils/api/constant';
 import localStorageUtils, { KeyStorage } from 'utils/local-storage.utils';
-import ApiUtils from '../api/api.utils';
+import { instance } from '../api/api.utils';
 
-const refreshTokenApi = (): Promise<any> => {
-  return ApiUtils.fetch(API_PATH.REFRESH_TOKEN);
+export const refreshTokenApi = async (): Promise<any> => {
+  try {
+    const tokenInfo: any = localStorageUtils.getObject(KeyStorage.AUTH, null);
+
+    const res: any = await instance.get(API_PATH.REFRESH_TOKEN, {
+      headers: {
+        Authorization: 'Bearer ' + tokenInfo?.refreshToken
+      }
+    });
+
+    const newTokenInfo: any = {
+      accessToken: res?.content?.accessToken,
+      refreshToken: res?.content?.refreshToken,
+      expireTime: Date.now() + res?.content?.expireTime * 1000
+    };
+
+    setTokenInfo({ ...tokenInfo, ...newTokenInfo });
+    return res?.content?.accessToken;
+  } catch (error) {
+    console.log('error refresh token', error);
+  }
 };
 
 export const getTokenInfo = async () => {
   try {
     const tokenInfo: any = localStorageUtils.getObject(KeyStorage.AUTH, null);
     if (tokenInfo && tokenInfo?.accessToken) {
-      const timeRefreshToken = Date.now() + 60 * 1000;
-      const expireTime = tokenInfo.expiresAt || 0;
-      if (timeRefreshToken < expireTime) {
-        return { ...tokenInfo };
-      } else {
-        if (tokenInfo.refreshToken) {
-          const result = await refreshTokenApi();
-          if (result) {
-            const newTokenInfo: any = {
-              accessToken: result?.data?.accessToken,
-              refreshToken: result?.data?.refresh_token,
-              expiresAt: result?.data?.expiresTime
-            };
-            setTokenInfo({ ...newTokenInfo });
-            return newTokenInfo;
-          }
-        }
-      }
       return tokenInfo as any;
     }
   } catch (error) {
@@ -38,7 +39,6 @@ export const getTokenInfo = async () => {
 
 export const setTokenInfo = (tokenInfo: any | null) => {
   localStorageUtils.setObject(KeyStorage.AUTH, {
-    ...tokenInfo,
-    expiresAt: Date.now() + Number(tokenInfo?.expiresAt) * 1000
+    ...tokenInfo
   });
 };
