@@ -4,7 +4,9 @@
     "errors": {
       "require": "{{field}} must be require.",
       "email_invalid": "Email invalid.",
-      "max": "Must be equal or less than {{max}} characters."
+      "max": "Must be equal or less than {{max}} characters.",
+      "min": "Must be equal or greater than {{min}} characters.",
+      "password_invalid": "Password invalid."
     }
   }
 }
