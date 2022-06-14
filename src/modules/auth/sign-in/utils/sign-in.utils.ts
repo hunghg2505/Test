@@ -37,7 +37,7 @@ export default function SignInUtils(): Utils {
         }
 
         setAuth({
-          token: r?.content?.accessToken,
+          accessToken: r?.content?.accessToken,
           user: {
             email: values?.email_abc
           }

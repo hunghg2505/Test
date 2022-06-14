@@ -9,13 +9,13 @@ const withUnAuthClient = (WrapperComponent: any) => (props: any) => {
   const { auth } = useAuth();
 
   useEffect(() => {
-    if (auth && auth.token && Object.keys(auth).length > 0) {
+    if (auth && auth.accessToken && Object.keys(auth).length > 0) {
       navigate(routePath.HomePage);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [auth]);
 
-  if (!auth || !auth?.token) {
+  if (!auth || !auth?.accessToken) {
     return <WrapperComponent {...props} />;
   }
   return <Loading />;

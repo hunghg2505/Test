@@ -18,7 +18,7 @@ function useInitAuth(config?: Config): void {
   const { auth } = useAuth();
 
   useEffect(() => {
-    if (!auth || !auth.token) {
+    if (!auth || !auth.accessToken) {
       localStorageUtils.remove(KeyStorage.AUTH);
       if (config?.noLogged?.redirect) {
         navigate(routePath.HomePage);

@@ -1,3 +1,5 @@
+import { API_PATH } from 'utils/api/constant';
+import ApiUtils from 'utils/api/api.utils';
 import { useMount, useRequest } from 'ahooks';
 
 const PAGE_SIZE = 10;
@@ -15,27 +17,40 @@ export interface IDataSubjectDetail {
   userInfo: IUserInfo;
 }
 
-// delay function js
+export const getDataManagementService = async (values: any): Promise<any> => {
+  const r: any = await ApiUtils.post(API_PATH.USER_PROFILES, {
+    firstname: values?.username,
+    limit: values?.limit || 10,
+    page: values?.page || 1,
+    ...values
+  });
 
-const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+  console.log('data', r);
 
-export const getDataManagementService = async (value: any): Promise<any> => {
-  await delay(1000);
-
-  const r = new Array(15).fill(0).map((_, i) => ({
-    key: `${i}`,
-    noId: '0345',
-    firstName: 'Dean',
-    lastName: 'Nguyen',
-    company: 'ABC Company',
-    email: 'abc@gmail.com',
-    phoneNumber: '+(84) 0123456789',
-    application: 'Application 1',
-    action: i
-  }));
+  // const r = new Array(15).fill(0).map((_, i) => ({
+  //   key: `${i}`,
+  //   noId: '0345',
+  //   firstName: 'Dean',
+  //   lastName: 'Nguyen',
+  //   company: 'ABC Company',
+  //   email: 'abc@gmail.com',
+  //   phoneNumber: '+(84) 0123456789',
+  //   application: 'Application 1',
+  //   action: i
+  // }));
 
   const formatData = {
-    list: r,
+    list: r?.content?.data?.map((item: any) => ({
+      key: `${item?.id}`,
+      noId: item?.laserCode || '',
+      firstName: item?.firstNameEn || '',
+      lastName: item?.lastNameEn || '',
+      company: 'ABC Company default',
+      email: item?.email || '',
+      phoneNumber: item?.mobile || '',
+      application: 'Application 1 default',
+      action: `${item?.id}`
+    })),
     current: 1
   };
 
@@ -50,15 +65,16 @@ export const getDataManagementService = async (value: any): Promise<any> => {
 };
 
 const getDataSubjectDetail = async (id: string): Promise<IDataSubjectDetail> => {
-  await delay(1000);
+  const r: any = await ApiUtils.fetch(API_PATH.USER_PROFILE_DETAIL(id));
+
   return {
     userInfo: {
       imageUrl: '',
-      firstName: 'Dean',
-      lastName: 'Nguyen',
+      firstName: r?.content?.firstNameEn || '',
+      lastName: r?.content?.lastNameEn || '',
       department: 'ABC Company',
-      email: 'abc@gmail.com',
-      address: '12 Street, District 1, HCM City'
+      email: r?.content?.email || '',
+      address: 'Default address'
     }
   };
 };
@@ -69,7 +85,7 @@ export const useDataSubjectManagement = () => {
   });
 
   useMount(() => {
-    run('');
+    // run('');
   });
 
   const onChangeCurrent = (current: number) => {
@@ -84,6 +100,8 @@ export const useDataSubjectManagement = () => {
 
   const onSearchDataSubject = (values = {}) => {
     if (!Object.values(values)?.filter((v) => v).length) return;
+    console.log('search', values);
+
     run({ ...values });
   };
 
