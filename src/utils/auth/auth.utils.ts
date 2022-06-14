@@ -1,4 +1,10 @@
+import { API_PATH } from 'utils/api/constant';
 import localStorageUtils, { KeyStorage } from 'utils/local-storage.utils';
+import ApiUtils from '../api/api.utils';
+
+const refreshTokenApi = (): Promise<any> => {
+  return ApiUtils.fetch(API_PATH.REFRESH_TOKEN);
+};
 
 export const getTokenInfo = async () => {
   try {
@@ -10,16 +16,16 @@ export const getTokenInfo = async () => {
         return { ...tokenInfo };
       } else {
         if (tokenInfo.refreshToken) {
-          // const result = await refreshTokenApi({ refresh_token: tokenInfo?.refreshToken });
-          // if (result) {
-          //   const newTokenInfo: any = {
-          //     accessToken: result.data.token,
-          //     refreshToken: result.data.refresh_token,
-          //     expiresAt: result.data.expires_at
-          //   };
-          //   setTokenInfo({ ...newTokenInfo });
-          //   return newTokenInfo;
-          // }
+          const result = await refreshTokenApi();
+          if (result) {
+            const newTokenInfo: any = {
+              accessToken: result?.data?.accessToken,
+              refreshToken: result?.data?.refresh_token,
+              expiresAt: result?.data?.expiresTime
+            };
+            setTokenInfo({ ...newTokenInfo });
+            return newTokenInfo;
+          }
         }
       }
       return tokenInfo as any;

@@ -17,6 +17,7 @@ interface Props {
   align?: 'left' | 'center' | 'right';
   htmlType?: 'button' | 'submit' | 'reset' | undefined;
   size?: 'large' | 'middle' | 'small' | 'default';
+  style?: React.CSSProperties;
 }
 
 const Button = ({
@@ -31,6 +32,7 @@ const Button = ({
   className = '',
   disabled = false,
   typeDisplay,
+  style = {},
   onClick
 }: Props) => {
   const onClickHandler = useCallback(
@@ -50,6 +52,7 @@ const Button = ({
       loading={loading}
       htmlType={htmlType}
       icon={icon}
+      style={style}
       className={clsx(styles.btn, {
         [styles[type]]: true,
         [styles[align]]: true,

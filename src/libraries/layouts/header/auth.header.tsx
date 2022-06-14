@@ -1,6 +1,6 @@
-import Logo from 'assets/icons/logo';
+import LogoWhite from 'assets/icons/logo-white';
 import clsx from 'clsx';
-import ButtonForm from 'libraries/form/button/button-form';
+import Button from 'libraries/UI/Button';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -40,24 +40,26 @@ export default function AuthHeader() {
   };
 
   return (
-    <div className={styles.mainHeader}>
+    <div className={styles.mainAuthHeader}>
       <div className={styles.logoView}>
-        <Logo />
+        <LogoWhite />
       </div>
-      <p className={styles.welcomeUser}>{t('welcome_auth')}</p>
       <div className={styles.avatarView}>
         {showButton.showBtnSignUp && (
           <div
             className={clsx({
               'mr-12': showButton.showBtnSignIn === true && showButton.showBtnSignUp === true
-            })}
-          >
-            <ButtonForm title={t('sign_up_button')} onClick={() => onGoTo(routePath.SignUp)} />
+            })}>
+            <Button style={{ padding: '10px 24px' }} onClick={() => onGoTo(routePath.SignUp)}>
+              {t('sign_up_button')}
+            </Button>
           </div>
         )}
         {showButton.showBtnSignIn && (
           <div>
-            <ButtonForm title={t('login_button')} onClick={() => onGoTo(routePath.SignIn)} />
+            <Button style={{ padding: '10px 24px' }} onClick={() => onGoTo(routePath.SignIn)}>
+              {t('login_button')}
+            </Button>
           </div>
         )}
       </div>

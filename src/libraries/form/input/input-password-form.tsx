@@ -1,6 +1,7 @@
-import { Form, Input } from 'antd';
+import { Form } from 'antd';
 import { Rule } from 'antd/lib/form';
 import clsx from 'clsx';
+import Input from 'libraries/UI/Input';
 import styles from './styles.module.scss';
 
 interface Props {
@@ -35,12 +36,13 @@ export default function InputPasswordForm({
         [classNameFormInput]: true
       })}
       dependencies={dependencies}>
-      <Input.Password
+      <Input
         className={clsx(styles.customInputPasswordForm, {
           [className]: true
         })}
         placeholder={placeholder}
         autoComplete={autoComplete}
+        type="password"
       />
     </Form.Item>
   );

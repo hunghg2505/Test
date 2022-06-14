@@ -51,6 +51,17 @@
   }
 }
 
+.mainAuthHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 50px;
+  position: relative;
+  background: $color-secondary;
+  // max-height: 60px;
+  box-sizing: border-box;
+}
+
 .btnLogout {
   display: flex;
   align-items: center;

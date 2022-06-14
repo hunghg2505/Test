@@ -1,35 +1,53 @@
 @import '../../../styles/variables.scss';
 
+.signUpPage {
+  padding: 0;
+  margin: 60px auto;
+  max-width: 423px;
+  text-align: center;
+}
+
 .titlePage {
   font-style: normal;
   font-weight: 700;
-  font-size: 48px;
-  text-align: center;
-  color: $black_color;
-  margin: 86px 0 44px;
+  font-size: 24px;
+  line-height: 36px;
+  margin: 0 0 60px;
+  color: $color-secondary;
 }
 
-.signUpPage {
-  max-width: 410px;
-  margin: 0 auto;
+.formWrap {
+  background-color: $color-white;
+  padding: 24px 40px;
+  text-align: center;
+  border: 1px solid $color-gray6;
+  box-shadow: 0px 5px 40px rgba(9, 44, 76, 0.02);
+  border-radius: 16px;
+}
+
+.titleSignUp {
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 36px;
+  color: $color-secondary;
+  margin: 0 0 32px;
 }
 
 .buttonSubmit {
   width: 100%;
-  text-align: center;
-  justify-content: center;
-  margin: 0 0 8px;
+  margin: 16px 0;
+  border-radius: 40px;
+  padding: 10px;
 }
 
 .actionMore {
   font-style: normal;
   font-weight: 400;
   font-size: 12px;
-  line-height: 16px;
   text-align: center;
-  color: $grey_50;
+  color: $color-gray1;
 
   a {
-    color: $teal_600;
+    color: $color-info;
   }
 }

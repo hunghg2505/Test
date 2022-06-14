@@ -8,6 +8,8 @@ export class RegexUtils {
 
     //eslint-disable-next-line
     static REGEX_PHONE = /^[0-9\+]{10,12}$/;
+
+    static REGEX_PASSWORD = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$/;
   };
 
   static isEmail(input: string): boolean {

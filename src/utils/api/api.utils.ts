@@ -1,6 +1,7 @@
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse, ResponseType } from 'axios';
 import { getTokenInfo } from 'utils/auth/auth.utils';
 import { ResponseCode } from './api.types';
+import { BACKEND_URL } from './constant';
 
 interface CustomHeaders {
   isAuth: boolean;
@@ -10,7 +11,7 @@ const REQ_TIMEOUT = 25 * 1000;
 export const __DEV__ = !process.env.NODE_ENV || process.env.NODE_ENV === 'development';
 
 const instance = axios.create({
-  baseURL: process.env.REACT_APP_API_DOMAIN,
+  baseURL: BACKEND_URL,
   timeout: REQ_TIMEOUT
 });
 

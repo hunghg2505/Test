@@ -22,7 +22,7 @@ function AuthLayout() {
       {/** Main Content */}
       <Layout className={styles.mainLayout}>
         <Content
-          className="site-layout-background"
+          className={styles.layoutAuthContent}
           style={{
             padding: 24,
             margin: 0,
@@ -33,7 +33,7 @@ function AuthLayout() {
       </Layout>
 
       {/** Footer */}
-      <AuthFooter />
+      {/* <AuthFooter /> */}
     </Layout>
   );
 }
