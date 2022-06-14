@@ -98,7 +98,13 @@ const SearchDataSubjectAdvanced = ({ onSearchDataSubject, t }: any) => {
   return (
     <div className={styles.formSearchAdvanced}>
       <h4>Advanced Search</h4>
-      <Form onFinish={onSearchDataSubject} layout="vertical">
+      <Form
+        onFinish={(values) => {
+          onSearchDataSubject({
+            advanceSearch: values
+          });
+        }}
+        layout="vertical">
         <Row gutter={[26, 32]}>
           <Col md={12}>
             <InputForm
@@ -116,7 +122,7 @@ const SearchDataSubjectAdvanced = ({ onSearchDataSubject, t }: any) => {
           <Col md={12}>
             <InputForm
               label="Last Name"
-              name="lastname"
+              name="lastNameEn"
               placeholder="Last Name"
               // rules={[
               //   {
@@ -233,7 +239,7 @@ function DataSubjectManagement() {
         </Row>
         <div
           className={clsx(styles.dataSubjectContent, {
-            [styles.dataSubjectContentEmpty]: !loading && !data?.list?.length
+            [styles.dataSubjectContentEmpty]: !loading && !data?.data?.length
           })}>
           <Table
             className={styles.table}
@@ -242,7 +248,7 @@ function DataSubjectManagement() {
             loading={loading}
             pagination={{
               current: data?.current,
-              total: data?.list?.length,
+              total: data?.total,
               onChange,
               itemRender: paginationItemRender
             }}

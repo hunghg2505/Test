@@ -4,6 +4,8 @@ import localStorageUtils, { KeyStorage } from 'utils/local-storage.utils';
 
 export interface LocalAuth {
   accessToken: string | null;
+  refreshToken: string | null;
+  expireTime: number | null;
   user?: User;
 }
 const localAuth = localStorageUtils.getObject(KeyStorage.AUTH) as LocalAuth | null;

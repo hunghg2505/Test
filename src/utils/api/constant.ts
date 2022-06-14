@@ -9,5 +9,6 @@ export const API_PATH = {
   // Data Subject Management
   FORGOT_ME: (id: string | number) => `/data-subject/forgot-me/${id}`,
   USER_PROFILE_DETAIL: (id: string | number) => `/data-subject/user-profiles/${id}`,
-  USER_PROFILES: '/data-subject/user-profiles'
+  USER_PROFILES: '/data-subject/user-profiles',
+  SUBJECT_HISTORY: '/data-subject/subject-histories'
 };

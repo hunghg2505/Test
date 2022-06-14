@@ -83,8 +83,11 @@ const ICON_GRID = (
   </svg>
 );
 
-function DataSubjectHistory() {
-  const { data, loading, onChange } = useDataSubjectHistory();
+function DataSubjectHistory({ userId, subjectId }: { userId: string; subjectId: string }) {
+  const { data, loading, onChange, reqForgotMe } = useDataSubjectHistory({
+    userId,
+    subjectId
+  });
 
   return (
     <div className={styles.dsHistoryWrap}>
@@ -94,22 +97,26 @@ function DataSubjectHistory() {
       </Row>
       <div
         className={clsx(styles.dataSubjectContent, {
-          [styles.dataSubjectContentEmpty]: !loading && !data?.list?.length
+          [styles.dataSubjectContentEmpty]: !loading && !data?.data?.length
         })}>
         <Table
           className={styles.table}
           columns={columns}
           dataSource={data?.data}
+          loading={loading}
           pagination={{
             current: data?.current,
-            total: data?.list?.length,
+            total: data?.total,
             onChange,
             itemRender: paginationItemRender
           }}
-          loading={loading}
         />
       </div>
-      <Button type="secondary" className={styles.btnForgotMe}>
+      <Button
+        type="secondary"
+        className={styles.btnForgotMe}
+        onClick={reqForgotMe.run}
+        loading={reqForgotMe.loading}>
         Forgot Me
       </Button>
     </div>

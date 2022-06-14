@@ -30,7 +30,7 @@ function DataSubjectDetail() {
     <ContainerLayout title="Data Subject Detail">
       <UserInfo userInfo={data?.userInfo} />
       <Consents />
-      <DataSubjectHistory />
+      <DataSubjectHistory userId={data?.userInfo?.id || ''} subjectId={id} />
     </ContainerLayout>
   );
 }

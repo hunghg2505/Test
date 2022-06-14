@@ -1,5 +1,5 @@
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse, ResponseType } from 'axios';
-import { getTokenInfo } from 'utils/auth/auth.utils';
+import { getTokenInfo, refreshTokenApi } from 'utils/auth/auth.utils';
 import { ResponseCode } from './api.types';
 import { BACKEND_URL } from './constant';
 
@@ -10,7 +10,7 @@ interface CustomHeaders {
 const REQ_TIMEOUT = 25 * 1000;
 export const __DEV__ = !process.env.NODE_ENV || process.env.NODE_ENV === 'development';
 
-const instance = axios.create({
+export const instance = axios.create({
   baseURL: BACKEND_URL,
   timeout: REQ_TIMEOUT
 });
@@ -30,6 +30,7 @@ export const getAccessToken = async () => {
 export const getHeader = async (customHeaders?: CustomHeaders) => {
   const header: any = customHeaders || {};
   const initCustomHeader = customHeaders ? customHeaders : initHeader;
+
   if (!initCustomHeader?.isAuth) {
     delete header.Authorization;
   } else {
@@ -53,13 +54,36 @@ instance.interceptors.response.use(
   (error: any) => errorHandler(error)
 );
 
+let isRefreshing = false;
+let refreshSubscribers: any[] = [];
+function subscribeTokenRefresh(cb: any) {
+  refreshSubscribers.push(cb);
+}
+
+function onRefreshed(token: any) {
+  refreshSubscribers.map((cb) => cb(token));
+}
+
 const errorHandler = (error: AxiosError) => {
   const resError: AxiosResponse<any> | undefined = error.response;
+  const originalRequest: any = error.config;
 
-  const config: any = error.config;
   if (resError?.data?.code === ResponseCode.UNAUTHORIZED) {
-    config._isRefreshToken = true;
-    console.log('error');
+    if (!isRefreshing) {
+      isRefreshing = true;
+      refreshTokenApi().then((data: any) => {
+        isRefreshing = false;
+        onRefreshed(data);
+      });
+    }
+
+    const retryOrigReq = new Promise((resolve, reject) => {
+      subscribeTokenRefresh(async (token: string) => {
+        originalRequest.headers['Authorization'] = 'Bearer ' + token;
+        resolve(instance.request(originalRequest));
+      });
+    });
+    return retryOrigReq;
   }
 
   if (__DEV__) {
