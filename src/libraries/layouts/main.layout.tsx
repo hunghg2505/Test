@@ -141,6 +141,9 @@ function MainLayout() {
             onCollapse={() => {
               toggleSider && toggleSider();
             }}>
+            <div className={styles.logo}>
+              <Logo />
+            </div>
             <Menu
               onClick={onClickMenu}
               mode="inline"
