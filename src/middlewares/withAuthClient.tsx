@@ -10,7 +10,7 @@ const withAuthClient = (WrapperComponent: any) => (props: any) => {
   const { auth } = useAuth();
 
   useEffect(() => {
-    if (!auth || !auth.token || auth.token.length <= 0) {
+    if (!auth || !auth.accessToken || auth.accessToken.length <= 0) {
       navigate(routePath.SignIn, {
         state: { callbackUrl: location.pathname }
       });

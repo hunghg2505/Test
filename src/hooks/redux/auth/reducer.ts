@@ -3,7 +3,7 @@ import { User } from 'types/common.types';
 import localStorageUtils, { KeyStorage } from 'utils/local-storage.utils';
 
 export interface LocalAuth {
-  token: string | null;
+  accessToken: string | null;
   user?: User;
 }
 const localAuth = localStorageUtils.getObject(KeyStorage.AUTH) as LocalAuth | null;

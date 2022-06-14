@@ -27,8 +27,8 @@ export const useSignUp = () => {
         email: data.email,
         username: data.name,
         password: data.password,
-        firstName: data.firstName || 'abc',
-        lastName: data.firstName || 'abc'
+        firstName: data?.firstName || 'abc',
+        lastName: data?.firstName || 'abc'
       });
     },
     {

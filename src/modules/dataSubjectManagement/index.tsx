@@ -98,12 +98,12 @@ const SearchDataSubjectAdvanced = ({ onSearchDataSubject, t }: any) => {
   return (
     <div className={styles.formSearchAdvanced}>
       <h4>Advanced Search</h4>
-      <Form onFinish={onSearchDataSubject} layout="vertical" autoComplete="off">
+      <Form onFinish={onSearchDataSubject} layout="vertical">
         <Row gutter={[26, 32]}>
           <Col md={12}>
             <InputForm
               label="First Name"
-              name="first_name"
+              name="firstname"
               placeholder="First Name"
               // rules={[
               //   {
@@ -116,7 +116,7 @@ const SearchDataSubjectAdvanced = ({ onSearchDataSubject, t }: any) => {
           <Col md={12}>
             <InputForm
               label="Last Name"
-              name="last_name"
+              name="lastname"
               placeholder="Last Name"
               // rules={[
               //   {
@@ -161,7 +161,7 @@ const SearchDataSubjectAdvanced = ({ onSearchDataSubject, t }: any) => {
           <Col md={12}>
             <InputForm
               label="Mobile number"
-              name="mobile_number"
+              name="mobile"
               placeholder="Mobile number"
               // rules={[
               //   {
@@ -206,7 +206,7 @@ function DataSubjectManagement() {
               <IconSearch />
 
               <InputForm
-                name="search_username"
+                name="username"
                 placeholder="Search username"
                 className={styles.inputSearch}
                 classNameFormInput={styles.inputSearchForm}

@@ -80,7 +80,7 @@ export default function SignUpPage() {
                       const regPassword = new RegExp(RegexUtils.RegexConstants.REGEX_PASSWORD);
 
                       if (!regPassword.test(value)) {
-                        return Promise.reject(t('messages.errors.password_invalid.aa'));
+                        return Promise.reject(t('messages.errors.password_invalid'));
                       }
 
                       return Promise.resolve();
