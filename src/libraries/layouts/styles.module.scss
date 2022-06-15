@@ -59,7 +59,7 @@
     }
 
     li.ant-menu-item.ant-menu-item-selected {
-      background-color: $color-primary !important;
+      background-color: rgba($color: #ffffff, $alpha: 0.1) !important;
 
       .icon-reports path {
         fill: $color-white !important;

@@ -2,10 +2,34 @@ import React from 'react';
 
 export default function IconCross() {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" width={30} height={30} viewBox="0 0 30 30" fill="none">
+    <svg xmlns="http://www.w3.org/2000/svg" width={20} height={20} viewBox="0 0 20 20" fill="none">
       <path
-        d="M12 0H1.5C0.6 0 0 0.6 0 1.5V12C0 12.9 0.6 13.5 1.5 13.5H12C12.9 13.5 13.5 12.9 13.5 12V1.5C13.5 0.6 12.9 0 12 0ZM12 16.5H1.5C0.6 16.5 0 17.1 0 18V28.5C0 29.4 0.6 30 1.5 30H12C12.9 30 13.5 29.4 13.5 28.5V18C13.5 17.1 12.9 16.5 12 16.5ZM28.5 0H18C17.1 0 16.5 0.6 16.5 1.5V12C16.5 12.9 17.1 13.5 18 13.5H28.5C29.4 13.5 30 12.9 30 12V1.5C30 0.6 29.4 0 28.5 0ZM28.5 16.5H18C17.1 16.5 16.5 17.1 16.5 18V28.5C16.5 29.4 17.1 30 18 30H28.5C29.4 30 30 29.4 30 28.5V18C30 17.1 29.4 16.5 28.5 16.5Z"
-        fill="white"
+        d="M17.5 11.6667H11.6667V17.5H17.5V11.6667Z"
+        stroke="#CF2A2B"
+        strokeWidth={2}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M8.33333 11.6667H2.5V17.5H8.33333V11.6667Z"
+        stroke="#CF2A2B"
+        strokeWidth={2}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M17.5 2.5H11.6667V8.33333H17.5V2.5Z"
+        stroke="#CF2A2B"
+        strokeWidth={2}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M8.33333 2.5H2.5V8.33333H8.33333V2.5Z"
+        stroke="#CF2A2B"
+        strokeWidth={2}
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );
