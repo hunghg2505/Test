@@ -1,3 +1,5 @@
+import { routePath } from 'routing/path.routing';
+import { useNavigate } from 'react-router-dom';
 import { useRequest, useMount } from 'ahooks';
 import moment from 'moment';
 import ApiUtils from 'utils/api/api.utils';
@@ -25,7 +27,7 @@ export const getDataSubjectHistoryService = async (value: any): Promise<any> => 
 };
 
 const forgotMeService = (id: any) => {
-  return ApiUtils.remove(API_PATH.FORGOT_ME(id));
+  return ApiUtils.remove(API_PATH.FORGET_ME(id));
 };
 
 export const useDataSubjectHistory = ({
@@ -35,6 +37,8 @@ export const useDataSubjectHistory = ({
   userId: string;
   subjectId: string;
 }) => {
+  const navigate = useNavigate();
+
   const { data, loading, run } = useRequest(
     async ({ current }) => getDataSubjectHistoryService({ userId, current }),
     {
@@ -49,7 +53,7 @@ export const useDataSubjectHistory = ({
   const reqForgotMe = useRequest(async () => forgotMeService(userId), {
     manual: true,
     onSuccess: (r) => {
-      console.log('forgot me success', r);
+      navigate(routePath.DataSubjectManagement);
     },
     onError: (e) => {
       console.log('forgot me error', e);
