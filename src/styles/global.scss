@@ -133,6 +133,9 @@ body {
         font-weight: 400;
         font-size: 16px;
         color: $color-white;
+        &::before {
+          display: none !important;
+        }
       }
 
       .ant-table-cell:nth-child(2) {
