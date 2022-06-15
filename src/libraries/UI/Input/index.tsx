@@ -3,6 +3,8 @@ import { Input as InputAntd } from 'antd';
 import clsx from 'clsx';
 
 import styles from './index.module.scss';
+import IconShowPassword from 'assets/icons/icon-show-password';
+import IconHiddenPassword from 'assets/icons/icon-hidden-password';
 
 interface Props {
   className?: string;
@@ -46,6 +48,13 @@ function Input({
         })}
         suffix={suffix}
         prefix={prefix}
+        iconRender={(visible) => {
+          if (visible) {
+            return IconShowPassword;
+          }
+
+          return IconHiddenPassword;
+        }}
         {...props}
       />
     );

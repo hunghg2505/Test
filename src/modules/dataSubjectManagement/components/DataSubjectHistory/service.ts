@@ -46,7 +46,7 @@ export const useDataSubjectHistory = ({
     run({ current: 1 });
   });
 
-  const reqForgotMe = useRequest(async () => forgotMeService(subjectId), {
+  const reqForgotMe = useRequest(async () => forgotMeService(userId), {
     manual: true,
     onSuccess: (r) => {
       console.log('forgot me success', r);
