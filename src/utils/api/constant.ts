@@ -7,7 +7,7 @@ export const API_PATH = {
   REFRESH_TOKEN: '/auth/refresh-token',
 
   // Data Subject Management
-  FORGOT_ME: (id: string | number) => `/data-subject/forgot-me/${id}`,
+  FORGET_ME: (id: string | number) => `/data-subject/forget-me/${id}`,
   USER_PROFILE_DETAIL: (id: string | number) => `/data-subject/user-profiles/${id}`,
   USER_PROFILES: '/data-subject/user-profiles',
   SUBJECT_HISTORY: '/data-subject/subject-histories'
