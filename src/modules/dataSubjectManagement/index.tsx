@@ -1,22 +1,21 @@
 import { Col, Dropdown, Form, Row, Table } from 'antd';
 import type { ColumnsType } from 'antd/lib/table';
-import React from 'react';
-import { useTranslation } from 'react-i18next';
 import clsx from 'clsx';
+import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
-import ButtonForm from 'libraries/form/button/button-form';
-import InputForm from 'libraries/form/input/input-form';
-import ContainerLayout from 'libraries/layouts/container.layout';
 import IconCross from 'assets/icons/icon-cross';
 import IconSearch from 'assets/icons/icon-search';
+import InputForm from 'libraries/form/input/input-form';
+import ContainerLayout from 'libraries/layouts/container.layout';
 
 import { RegexUtils } from 'utils/regex-helper';
 import { useDataSubjectManagement } from './utils/service';
 
-import styles from './index.module.scss';
+import Button from 'libraries/UI/Button';
 import { paginationItemRender } from 'libraries/UI/Pagination';
 import Select from 'libraries/UI/Select';
+import styles from './index.module.scss';
 
 export interface DataType {
   key: string;
@@ -38,24 +37,16 @@ const columns: ColumnsType<DataType> = [
     width: 70
   },
   {
-    title: 'Username',
-    // dataIndex: 'appId',
-    // key: 'appId',
-    width: 433,
-    children: [
-      {
-        title: 'First Name',
-        dataIndex: 'firstName',
-        key: 'firstName',
-        width: 216
-      },
-      {
-        title: 'Last Name',
-        dataIndex: 'lastName',
-        key: 'lastName',
-        width: 216
-      }
-    ]
+    title: 'First Name',
+    dataIndex: 'firstName',
+    key: 'firstName',
+    width: 216
+  },
+  {
+    title: 'Last Name',
+    dataIndex: 'lastName',
+    key: 'lastName',
+    width: 216
   },
   {
     title: 'Company',
@@ -97,7 +88,6 @@ const columns: ColumnsType<DataType> = [
 const SearchDataSubjectAdvanced = ({ onSearchDataSubject, t }: any) => {
   return (
     <div className={styles.formSearchAdvanced}>
-      <h4>Advanced Search</h4>
       <Form
         onFinish={(values) => {
           onSearchDataSubject({
@@ -105,8 +95,8 @@ const SearchDataSubjectAdvanced = ({ onSearchDataSubject, t }: any) => {
           });
         }}
         layout="vertical">
-        <Row gutter={[26, 32]}>
-          <Col md={12}>
+        <Row gutter={[0, 16]}>
+          <Col xs={24}>
             <InputForm
               label="First Name"
               name="firstname"
@@ -119,7 +109,7 @@ const SearchDataSubjectAdvanced = ({ onSearchDataSubject, t }: any) => {
               // ]}
             />
           </Col>
-          <Col md={12}>
+          <Col xs={24}>
             <InputForm
               label="Last Name"
               name="lastNameEn"
@@ -133,7 +123,7 @@ const SearchDataSubjectAdvanced = ({ onSearchDataSubject, t }: any) => {
             />
           </Col>
 
-          <Col md={12}>
+          <Col xs={24}>
             <InputForm
               label="Company"
               name="company"
@@ -146,7 +136,7 @@ const SearchDataSubjectAdvanced = ({ onSearchDataSubject, t }: any) => {
               // ]}
             />
           </Col>
-          <Col md={12}>
+          <Col xs={24}>
             <InputForm
               label="Email"
               name="email"
@@ -160,7 +150,7 @@ const SearchDataSubjectAdvanced = ({ onSearchDataSubject, t }: any) => {
             />
           </Col>
 
-          <Col md={12}>
+          <Col xs={24}>
             <InputForm
               label="Mobile number"
               name="mobile"
@@ -173,7 +163,7 @@ const SearchDataSubjectAdvanced = ({ onSearchDataSubject, t }: any) => {
               // ]}
             />
           </Col>
-          <Col md={12}>
+          <Col xs={24}>
             <Form.Item label="Application" name="application">
               <Select placeholder="Please Select">
                 <Select.Option value="lucy">Lucy</Select.Option>
@@ -183,13 +173,13 @@ const SearchDataSubjectAdvanced = ({ onSearchDataSubject, t }: any) => {
           </Col>
         </Row>
 
-        <ButtonForm
-          title={t('Search')}
+        <Button
           htmlType="submit"
-          buttonType="dark"
-          borderRadius={5}
+          type="secondary"
           className={styles.btnSearchAdvancedDd}
-        />
+          icon={<IconSearch />}>
+          {t('Search')}
+        </Button>
       </Form>
     </div>
   );
@@ -215,23 +205,22 @@ function DataSubjectManagement() {
                 classNameFormInput={styles.inputSearchForm}
               />
 
-              <ButtonForm
-                title={t('Search')}
+              <Button
                 htmlType="submit"
-                buttonType="dark"
-                borderRadius={5}
                 className={styles.btnSearch}
-              />
+                type="secondary"
+                icon={<IconSearch />}>
+                {t('Search')}
+              </Button>
             </Row>
           </Form>
 
           <Dropdown
             overlay={<SearchDataSubjectAdvanced onSearchDataSubject={onSearchDataSubject} t={t} />}
             trigger={['click']}>
-            <div className={styles.btnSearchAdvanced}>
-              <IconCross />
-              <span>{t('advanced')}</span>
-            </div>
+            <Button typeDisplay="ghost" className={styles.btnSearchAdvanced} icon={<IconCross />}>
+              {t('advanced')}
+            </Button>
           </Dropdown>
         </Row>
         <div

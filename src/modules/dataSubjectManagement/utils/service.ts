@@ -42,12 +42,13 @@ export const getDataManagementService = async (values: any): Promise<any> => {
     ...params
   });
 
+  const current = r?.content?.metadata?.currentPage || 1;
   return {
-    current: r?.content?.metadata?.currentPage || 1,
+    current,
     total: r?.content?.metadata?.total || 0,
-    data: r?.content?.data?.map((item: any) => ({
+    data: r?.content?.data?.map((item: any, idx: number) => ({
       key: `${item?.id}`,
-      noId: item?.laserCode || '',
+      noId: `${(current - 1) * 10 + idx + 1 || idx}`,
       firstName: item?.firstNameEn || '',
       lastName: item?.lastNameEn || '',
       company: 'ABC Company default',
