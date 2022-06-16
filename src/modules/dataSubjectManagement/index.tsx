@@ -9,7 +9,6 @@ import IconSearch from 'assets/icons/icon-search';
 import InputForm from 'libraries/form/input/input-form';
 import ContainerLayout from 'libraries/layouts/container.layout';
 
-import { RegexUtils } from 'utils/regex-helper';
 import { useDataSubjectManagement } from './utils/service';
 
 import { LoadingOutlined } from '@ant-design/icons';
@@ -116,8 +115,8 @@ const SearchDataSubjectAdvanced = ({ onSearchDataSubject, t }: any) => {
               placeholder="Email"
               rules={[
                 {
-                  pattern: new RegExp(RegexUtils.RegexConstants.REGEX_EMAIL),
-                  message: `${t('messages.errors.email_invalid')}`
+                  min: 3,
+                  message: t('messages.errors.min', { min: 3 })
                 }
               ]}
             />

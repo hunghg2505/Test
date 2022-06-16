@@ -50,17 +50,19 @@ export const getDataManagementService = async (values: any): Promise<any> => {
   return {
     current,
     total: r?.content?.metadata?.total || 0,
-    data: r?.content?.data?.map((item: any, idx: number) => ({
-      key: `${item?.id}`,
-      noId: `${(current - 1) * 10 + idx + 1 || idx}`,
-      firstName: item?.firstNameEn || '',
-      lastName: item?.lastNameEn || '',
-      company: 'ABC Company default',
-      email: item?.email || '',
-      phoneNumber: item?.mobile || '',
-      application: 'Application 1 default',
-      action: `${item?.id}`
-    })),
+    data: r?.content?.data
+      ?.sort((a: any, b: any) => a.firstNameEn.localeCompare(b.firstNameEn))
+      .map((item: any, idx: number) => ({
+        key: `${item?.id}`,
+        noId: `${(current - 1) * 10 + idx + 1 || idx}`,
+        firstName: item?.firstNameEn || '',
+        lastName: item?.lastNameEn || '',
+        company: 'ABC Company default',
+        email: item?.email || '',
+        phoneNumber: item?.mobile || '',
+        application: 'Application 1 default',
+        action: `${item?.id}`
+      })),
     params
   };
 };
