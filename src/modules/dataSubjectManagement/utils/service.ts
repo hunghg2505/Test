@@ -1,6 +1,8 @@
-import { API_PATH } from 'utils/api/constant';
+import { useRequest } from 'ahooks';
+import { debounce, get } from 'lodash';
+import moment from 'moment';
 import ApiUtils from 'utils/api/api.utils';
-import { useMount, useRequest } from 'ahooks';
+import { API_PATH } from 'utils/api/constant';
 
 export interface IUserInfo {
   id: string;
@@ -26,6 +28,8 @@ export interface IUserInfo {
 export interface IDataSubjectDetail {
   userInfo: IUserInfo;
 }
+
+const MIN_SEARCH_USER = 3;
 
 export const getDataManagementService = async (values: any): Promise<any> => {
   const { firstname = '', username = '', advanceSearch = {}, page = 1 } = values;
@@ -79,14 +83,38 @@ const getDataSubjectDetail = async (id: string): Promise<IDataSubjectDetail> => 
   };
 };
 
+const getUsers = async (value: any) => {
+  const params = {
+    firstname: value || '',
+    limit: 10,
+    page: 1
+  };
+
+  const res: any = await ApiUtils.fetch(API_PATH.SEARCH_USERS, params);
+  return res?.content?.data?.map((v: any, idx: number) => ({ id: idx, name: v.firstNameEn }));
+};
+
 export const useDataSubjectManagement = () => {
   const { data, loading, run } = useRequest(getDataManagementService, {
     manual: true
   });
 
-  useMount(() => {
-    // run('');
-  });
+  const requestSearchUsers = useRequest(
+    async (value: string) => {
+      return getUsers(value);
+    },
+    {
+      manual: true
+    }
+  );
+
+  const onSearchUsersDebounce = debounce(async (values: any[], callback: Function) => {
+    const value = get(values, '[0].value', '');
+    if (value?.length < MIN_SEARCH_USER) return;
+
+    await requestSearchUsers.runAsync(value);
+    if (callback) callback();
+  }, 350);
 
   const onChangeCurrent = (page: number) => {
     run({
@@ -95,10 +123,11 @@ export const useDataSubjectManagement = () => {
     });
   };
 
-  const onSearchDataSubject = (values = {}) => {
+  const onSearchDataSubject = (values = {}, callback: Function) => {
     if (!Object.values(values)?.filter((v) => v).length) return;
 
     run({ ...values });
+    if (callback) callback();
   };
 
   return {
@@ -106,7 +135,9 @@ export const useDataSubjectManagement = () => {
     loading,
     run,
     onChange: onChangeCurrent,
-    onSearchDataSubject
+    onSearchDataSubject,
+    requestSearchUsers,
+    onSearchUsersDebounce
   };
 };
 

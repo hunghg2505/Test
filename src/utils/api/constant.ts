@@ -10,5 +10,6 @@ export const API_PATH = {
   FORGET_ME: (id: string | number) => `/data-subject/forget-me/${id}`,
   USER_PROFILE_DETAIL: (id: string | number) => `/data-subject/user-profiles/${id}`,
   USER_PROFILES: '/data-subject/user-profiles',
-  SUBJECT_HISTORY: '/data-subject/subject-histories'
+  SUBJECT_HISTORY: '/data-subject/subject-histories',
+  SEARCH_USERS: '/data-subject/list-user'
 };

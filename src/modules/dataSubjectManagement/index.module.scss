@@ -218,28 +218,6 @@
       color: $color-gray4;
     }
   }
-
-  input {
-    // border-radius: 5px !important;
-    // border: 1px solid $black_color !important;
-    // padding: 14px !important;
-    // font-weight: 400;
-    // font-size: 18px;
-    // line-height: 22px;
-    // color: $black_color !important;
-
-    // ::-webkit-input-placeholder { /* Edge */
-    //   color: rgba(0, 0, 0, 0.6);
-    // }
-
-    // :-ms-input-placeholder { /* Internet Explorer 10-11 */
-    //   color: rgba(0, 0, 0, 0.6);
-    // }
-
-    // ::placeholder {
-    //   color: rgba(0, 0, 0, 0.6);
-    // }
-  }
 }
 
 .btnSearchAdvanced {
@@ -279,4 +257,60 @@
   &:focus svg path {
     stroke: $color-white !important;
   }
+}
+
+.formSearchWrap {
+  position: relative;
+}
+
+.listUsers {
+  position: absolute;
+  top: calc(100% + 14px);
+  width: 100%;
+  z-index: 2;
+  left: 0;
+  background: transparent;
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.06);
+  border-radius: 4px;
+  background-color: $color-white;
+  max-height: 440px;
+  overflow-y: overlay;
+  &::before {
+    content: "";
+    position: absolute;
+    top: -14px;
+    left: 0;
+    width: 100%;
+    background-color: transparent;
+    height: 14px;
+  }
+
+
+  li {
+    padding: 10px 14px;
+    background: $color-white;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 150%;
+    color: $color-gray4;
+    transition: all 300ms;
+    cursor: pointer;
+    min-height: 44px;
+
+    &:hover {
+      background: $color-gray6;
+      color: $color-secondary;
+    }
+  }
+
+  .active {
+    background: $color-gray6;
+    font-weight: 700;
+    font-size: 16px;
+    color: $color-secondary;
+  }
+}
+
+.loadingUser {
+  padding: 6px 12px;
 }
