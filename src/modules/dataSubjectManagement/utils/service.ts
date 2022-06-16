@@ -5,12 +5,9 @@ import ApiUtils from 'utils/api/api.utils';
 import { API_PATH } from 'utils/api/constant';
 
 export interface IUserInfo {
-  id: string;
-  imageUrl: string;
-  firstName: string;
-  lastName: string;
-  department: string;
-  email: string;
+  id?: string;
+  imageUrl?: string;
+  email?: string;
   address: string;
 
   firstNameEn?: string;
@@ -70,15 +67,22 @@ export const getDataManagementService = async (values: any): Promise<any> => {
 const getDataSubjectDetail = async (id: string): Promise<IDataSubjectDetail> => {
   const r: any = await ApiUtils.fetch(API_PATH.USER_PROFILE_DETAIL(id));
 
+  console.log('test', r);
+
   return {
     userInfo: {
       imageUrl: '',
-      id: `${r?.content?.id}`,
-      firstName: r?.content?.firstNameEn || '',
-      lastName: r?.content?.lastNameEn || '',
-      department: 'ABC Company',
+      firstNameEn: r?.content?.firstNameEn || '',
+      lastNameEn: r?.content?.firstNameEn || '',
+      firstNameTh: r?.content?.firstNameTh || '',
+      lastNameTh: r?.content?.lastNameTh || '',
       email: r?.content?.email || '',
-      address: 'Default address'
+      address: 'Test Address',
+      dateOfBirth: r?.content?.dateOfBirth || '',
+      nationality: r?.content?.nationality || '',
+      cardId: r?.content?.cardId || '',
+      passportNo: r?.content?.passportNo || '',
+      laserCode: r?.content?.laserCode || ''
     }
   };
 };

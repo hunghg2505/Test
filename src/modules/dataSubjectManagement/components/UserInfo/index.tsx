@@ -29,60 +29,54 @@ function UserInfo({ userInfo }: { userInfo?: IUserInfo }) {
       <Col className={styles.userInfo}>
         <Row gutter={[18, 25]}>
           <Col xs={12}>
-            <div className={styles.label}>{t('first_name')}</div>
-            <div className={styles.content}>{userInfo.firstName}</div>
+            <div className={styles.label}>{t('first_name_en')}</div>
+            <div className={styles.content}>{userInfo.firstNameEn}</div>
           </Col>
           <Col xs={12}>
-            <div className={styles.label}>{t('last_name')}</div>
-            <div className={styles.content}>{userInfo.lastName}</div>
+            <div className={styles.label}>{t('last_name_en')}</div>
+            <div className={styles.content}>{userInfo.lastNameEn}</div>
+          </Col>
+          <Col xs={12}>
+            <div className={styles.label}>{t('first_name_th')}</div>
+            <div className={styles.content}>{userInfo.firstNameTh}</div>
+          </Col>
+          <Col xs={12}>
+            <div className={styles.label}>{t('last_name_th')}</div>
+            <div className={styles.content}>{userInfo.lastNameTh}</div>
           </Col>
 
           <Col xs={12}>
-            <div className={styles.label}>Department</div>
-            <div className={styles.content}>{userInfo.department}</div>
+            <div className={styles.label}>{t('address')}</div>
+            <div className={styles.content}>{userInfo.address}</div>
           </Col>
           <Col xs={12}>
-            <div className={styles.label}>Work Email</div>
+            <div className={styles.label}>{t('birthday')}</div>
             <div className={styles.content}>{userInfo.email}</div>
           </Col>
 
           <Col xs={12}>
-            <div className={styles.label}>Address</div>
-            <div className={styles.content}>{userInfo.address}</div>
-          </Col>
-
-          <Col xs={12}></Col>
-
-          <Col xs={24} className={styles.line}></Col>
-
-          <Col xs={12}>
-            <div className={styles.label}>Field1</div>
-            <div className={styles.content}>Lorem Ipsum</div>
+            <div className={styles.label}>{t('email_address')}</div>
+            <div className={styles.content}>{userInfo.email}</div>
           </Col>
 
           <Col xs={12}>
-            <div className={styles.label}>Field2</div>
-            <div className={styles.content}>Lorem Ipsum</div>
+            <div className={styles.label}>{t('national_card_id')}</div>
+            <div className={styles.content}>{userInfo.cardId}</div>
           </Col>
 
           <Col xs={12}>
-            <div className={styles.label}>Field3</div>
-            <div className={styles.content}>Lorem Ipsum</div>
+            <div className={styles.label}>{t('nationality')}</div>
+            <div className={styles.content}>{userInfo.nationality}</div>
           </Col>
 
           <Col xs={12}>
-            <div className={styles.label}>Field4</div>
-            <div className={styles.content}>Lorem Ipsum</div>
+            <div className={styles.label}>{t('passport_number')}</div>
+            <div className={styles.content}>{userInfo.passportNo}</div>
           </Col>
 
-          <Col xs={12}>
-            <div className={styles.label}>Field5</div>
-            <div className={styles.content}>Lorem Ipsum</div>
-          </Col>
-
-          <Col xs={12}>
-            <div className={styles.label}>Field6</div>
-            <div className={styles.content}>Lorem Ipsum</div>
+          <Col xs={24}>
+            <div className={styles.label}>{t('laser_code')}</div>
+            <div className={styles.content}>{userInfo.laserCode}</div>
           </Col>
         </Row>
       </Col>
