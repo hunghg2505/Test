@@ -3,10 +3,12 @@
     "success": "Success",
     "errors": {
       "require": "{{field}} must be required.",
-      "email_invalid": "Email invalid.",
+      "email_invalid": "Invalid email.",
       "max": "Must be equal or less than {{max}} characters.",
       "min": "Please input at least {{min}} characters to search.",
-      "password_invalid": "Password invalid."
+      "min_password": "Password must contain at least {{min}} characters",
+      "max_name": "Name must be equal or less than {{max}} characters.",
+      "password_invalid": "Password must contain at least 8 characters, capital letters, lowercase letters, numbers and symbols"
     }
   }
 }

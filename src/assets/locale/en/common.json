@@ -13,7 +13,7 @@
   "forgot_password": "Forgot password?",
   "create_an_account": "Create an account",
   "continue": "Continue",
-  "password_not_match": "Password Not Match",
+  "password_not_match": "Confirm Password and Password do not match!",
   "sign_in": {
     "title": "Login"
   },
