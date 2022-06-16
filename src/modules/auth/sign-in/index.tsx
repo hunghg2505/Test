@@ -23,7 +23,7 @@ export default function SignInPage() {
           <Form layout="vertical" name="basic" onFinish={onLogin} autoComplete="off">
             <div className="mb-16">
               <InputForm
-                label={t('Username')}
+                label={t('email_address')}
                 name="email_abc"
                 rules={[
                   {

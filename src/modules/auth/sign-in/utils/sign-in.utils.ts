@@ -22,7 +22,7 @@ export default function SignInUtils(): Utils {
   const reqLogin = useRequest(
     async (values: any) => {
       const body: SignInReq = {
-        username: values?.email_abc,
+        email: values?.email_abc,
         password: values?.password_abc
       };
       // call api here

@@ -1,9 +1,11 @@
 import { Form } from 'antd';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import InputForm from 'libraries/form/input/input-form';
 import InputPasswordForm from 'libraries/form/input/input-password-form';
 import ContainerLayout from 'libraries/layouts/container.layout';
+import TermOfServiceModal from './components/TermOfServiceModal';
 import { RegexUtils } from 'utils/regex-helper';
 
 import styles from './styles.module.scss';
@@ -14,6 +16,8 @@ export default function SignUpPage() {
   const { t } = useTranslation();
 
   const reqSignUp = useSignUp();
+
+  const [isShowTermOfServiceModal, setIsShowTermOfServiceModal] = useState(false);
 
   const onSignUp = (values: any) => {
     reqSignUp.run(values);
@@ -121,13 +125,19 @@ export default function SignUpPage() {
           <div className={styles.actionMore}>
             <p>
               <span>By continuing, you’re agreeing to our </span>
-              <a href="/" target="_blank" rel="noopener noreferrer">
+              <p
+                onClick={() => setIsShowTermOfServiceModal(true)}
+                className={styles.termOfServiceText}>
                 Terms of Service
-              </a>
+              </p>
             </p>
           </div>
         </div>
       </div>
+      <TermOfServiceModal
+        onCloseTermOfServiceModal={() => setIsShowTermOfServiceModal(false)}
+        isShowTermOfServiceModal={isShowTermOfServiceModal}
+      />
     </ContainerLayout>
   );
 }
