@@ -276,7 +276,7 @@
   max-height: 440px;
   overflow-y: overlay;
   &::before {
-    content: "";
+    content: '';
     position: absolute;
     top: -14px;
     left: 0;
@@ -284,7 +284,6 @@
     background-color: transparent;
     height: 14px;
   }
-
 
   li {
     padding: 10px 14px;
@@ -313,4 +312,10 @@
 
 .loadingUser {
   padding: 6px 12px;
+}
+
+.noResultText {
+  text-align: center;
+  padding: 20px 0;
+  font-size: 20px;
 }

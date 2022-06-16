@@ -38,5 +38,6 @@
   "passport_number": "Passport Number",
   "mobile_number": "Mobile number",
   "laser_code": "Laser Code",
-  "company": "Company"
+  "company": "Company",
+  "no_result_found": "No result found"
 }

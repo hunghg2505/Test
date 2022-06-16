@@ -18,6 +18,7 @@ import { paginationItemRender } from 'libraries/UI/Pagination';
 import Select from 'libraries/UI/Select';
 import { forwardRef, useImperativeHandle, useRef, useState } from 'react';
 import styles from './index.module.scss';
+import { t } from 'i18next';
 
 export interface DataType {
   key: string;
@@ -174,13 +175,17 @@ const ListUsers = forwardRef(({ data, loading, onSearchDataSubject }: any, ref: 
         </div>
       ) : (
         <>
-          {data.map((item: any) => {
-            return (
-              <li onMouseDown={onSelect(item)} key={item.id}>
-                {item.name}
-              </li>
-            );
-          })}
+          {data?.length === 0 ? (
+            <p className={styles.noResultText}>{t('no_result_found')}</p>
+          ) : (
+            data.map((item: any) => {
+              return (
+                <li onMouseDown={onSelect(item)} key={item.id}>
+                  {item.name}
+                </li>
+              );
+            })
+          )}
         </>
       )}
     </ul>
@@ -265,19 +270,23 @@ function DataSubjectManagement() {
           className={clsx(styles.dataSubjectContent, {
             [styles.dataSubjectContentEmpty]: !loading && !data?.data?.length
           })}>
-          <Table
-            className={styles.table}
-            columns={columns}
-            dataSource={data?.data}
-            loading={loading}
-            pagination={{
-              current: data?.current,
-              total: data?.total,
-              showSizeChanger: false,
-              onChange,
-              itemRender: paginationItemRender
-            }}
-          />
+          {data?.data?.length === 0 ? (
+            <p className={styles.noResultText}>{t('no_result_found')}</p>
+          ) : (
+            <Table
+              className={styles.table}
+              columns={columns}
+              dataSource={data?.data}
+              loading={loading}
+              pagination={{
+                current: data?.current,
+                total: data?.total,
+                showSizeChanger: false,
+                onChange,
+                itemRender: paginationItemRender
+              }}
+            />
+          )}
         </div>
       </div>
     </ContainerLayout>
