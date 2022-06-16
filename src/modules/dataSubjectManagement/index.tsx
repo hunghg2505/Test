@@ -9,12 +9,14 @@ import IconSearch from 'assets/icons/icon-search';
 import InputForm from 'libraries/form/input/input-form';
 import ContainerLayout from 'libraries/layouts/container.layout';
 
-import { RegexUtils } from 'utils/regex-helper';
 import { useDataSubjectManagement } from './utils/service';
 
+import { LoadingOutlined } from '@ant-design/icons';
+import { useClickAway } from 'ahooks';
 import Button from 'libraries/UI/Button';
 import { paginationItemRender } from 'libraries/UI/Pagination';
 import Select from 'libraries/UI/Select';
+import { forwardRef, useImperativeHandle, useRef, useState } from 'react';
 import styles from './index.module.scss';
 
 export interface DataType {
@@ -97,44 +99,14 @@ const SearchDataSubjectAdvanced = ({ onSearchDataSubject, t }: any) => {
         layout="vertical">
         <Row gutter={[0, 16]}>
           <Col xs={24}>
-            <InputForm
-              label="First Name"
-              name="firstname"
-              placeholder="First Name"
-              // rules={[
-              //   {
-              //     required: true,
-              //     message: t('messages.errors.require', { field: t('first_name') })
-              //   }
-              // ]}
-            />
+            <InputForm label="First Name" name="firstname" placeholder="First Name" />
           </Col>
           <Col xs={24}>
-            <InputForm
-              label="Last Name"
-              name="lastNameEn"
-              placeholder="Last Name"
-              // rules={[
-              //   {
-              //     required: true,
-              //     message: t('messages.errors.require', { field: t('last_name') })
-              //   }
-              // ]}
-            />
+            <InputForm label="Last Name" name="lastNameEn" placeholder="Last Name" />
           </Col>
 
           <Col xs={24}>
-            <InputForm
-              label="Company"
-              name="company"
-              placeholder="Company"
-              // rules={[
-              //   {
-              //     required: true,
-              //     message: t('messages.errors.require', { field: t('company') })
-              //   }
-              // ]}
-            />
+            <InputForm label="Company" name="company" placeholder="Company" />
           </Col>
           <Col xs={24}>
             <InputForm
@@ -151,17 +123,7 @@ const SearchDataSubjectAdvanced = ({ onSearchDataSubject, t }: any) => {
           </Col>
 
           <Col xs={24}>
-            <InputForm
-              label="Mobile number"
-              name="mobile"
-              placeholder="Mobile number"
-              // rules={[
-              //   {
-              //     required: true,
-              //     message: t('messages.errors.require', { field: t('mobile_number') })
-              //   }
-              // ]}
-            />
+            <InputForm label="Mobile number" name="mobile" placeholder="Mobile number" />
           </Col>
           <Col xs={24}>
             <Form.Item label="Application" name="application">
@@ -185,34 +147,110 @@ const SearchDataSubjectAdvanced = ({ onSearchDataSubject, t }: any) => {
   );
 };
 
+const ListUsers = forwardRef(({ data, loading, onSearchDataSubject }: any, ref: any) => {
+  const [dropdownVisible, setDropdownVisible] = useState(false);
+
+  useImperativeHandle(ref, () => {
+    return {
+      closeListUser: () => setDropdownVisible(false),
+      openListUser: () => setDropdownVisible(true)
+    };
+  });
+
+  const onSelect = (item: any) => () => {
+    onSearchDataSubject({
+      firstname: item.name
+    });
+    setDropdownVisible(false);
+  };
+
+  if (!dropdownVisible || (!loading && !data)) return null;
+
+  return (
+    <ul className={styles.listUsers}>
+      {loading ? (
+        <div className={styles.loadingUser}>
+          <LoadingOutlined />
+        </div>
+      ) : (
+        <>
+          {data.map((item: any) => {
+            return (
+              <li onMouseDown={onSelect(item)} key={item.id}>
+                {item.name}
+              </li>
+            );
+          })}
+        </>
+      )}
+    </ul>
+  );
+});
+
 function DataSubjectManagement() {
   const { t } = useTranslation();
-  const { data, loading, onChange, onSearchDataSubject } = useDataSubjectManagement();
-  console.log(data?.data);
+
+  const {
+    data,
+    loading,
+    onChange,
+    onSearchDataSubject,
+    requestSearchUsers,
+    onSearchUsersDebounce
+  } = useDataSubjectManagement();
+  const [formSearch]: any = Form.useForm();
+
+  const refForm: any = useRef();
+  const refListUsers: any = useRef();
+
+  useClickAway(() => {
+    if (refListUsers.current?.closeListUser) refListUsers.current.closeListUser();
+  }, refForm);
+
+  const onFinish = (values: any) => {
+    onSearchDataSubject(values, () => {
+      if (refListUsers.current?.closeListUser) refListUsers.current.closeListUser();
+    });
+  };
+
+  const onFieldsChange = (values: any) => {
+    onSearchUsersDebounce(values, () => {
+      if (refListUsers.current?.openListUser) refListUsers.current.openListUser();
+    });
+  };
 
   return (
     <ContainerLayout title="Data Subject Management">
       <div className={styles.dataSubjectPage}>
         <Row justify="center" align="middle" className={styles.dataSubjectHeader}>
-          <Form onFinish={onSearchDataSubject}>
-            <Row justify="center" align="middle" className={styles.searchForm}>
-              <IconSearch />
+          <Form onFinish={onFinish} onFieldsChange={onFieldsChange} form={formSearch}>
+            <div ref={refForm} className={styles.formSearchWrap}>
+              <Row justify="center" align="middle" className={styles.searchForm}>
+                <IconSearch />
 
-              <InputForm
-                name="username"
-                placeholder="Search Firstname"
-                className={styles.inputSearch}
-                classNameFormInput={styles.inputSearchForm}
+                <InputForm
+                  name="username"
+                  placeholder="Search username"
+                  className={styles.inputSearch}
+                  classNameFormInput={styles.inputSearchForm}
+                />
+
+                <Button
+                  htmlType="submit"
+                  className={styles.btnSearch}
+                  type="secondary"
+                  icon={<IconSearch />}>
+                  {t('Search')}
+                </Button>
+              </Row>
+
+              <ListUsers
+                data={requestSearchUsers.data}
+                loading={requestSearchUsers.loading}
+                onSearchDataSubject={onSearchDataSubject}
+                ref={refListUsers}
               />
-
-              <Button
-                htmlType="submit"
-                className={styles.btnSearch}
-                type="secondary"
-                icon={<IconSearch />}>
-                {t('Search')}
-              </Button>
-            </Row>
+            </div>
           </Form>
 
           <Dropdown
