@@ -275,7 +275,7 @@ function DataSubjectManagement() {
 
                 <InputForm
                   name="username"
-                  placeholder="Search username"
+                  placeholder="Search Firstname"
                   className={styles.inputSearch}
                   classNameFormInput={styles.inputSearchForm}
                   rules={[
