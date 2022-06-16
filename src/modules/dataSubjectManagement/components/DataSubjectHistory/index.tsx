@@ -117,7 +117,7 @@ function DataSubjectHistory({ userId, subjectId }: { userId: string; subjectId: 
         className={styles.btnForgotMe}
         onClick={reqForgotMe.run}
         loading={reqForgotMe.loading}>
-        Forgot Me
+        Forget Me
       </Button>
     </div>
   );

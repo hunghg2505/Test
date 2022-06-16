@@ -71,6 +71,7 @@ const getDataSubjectDetail = async (id: string): Promise<IDataSubjectDetail> => 
 
   return {
     userInfo: {
+      id: r?.content?.id,
       imageUrl: '',
       firstNameEn: r?.content?.firstNameEn || '',
       lastNameEn: r?.content?.firstNameEn || '',
