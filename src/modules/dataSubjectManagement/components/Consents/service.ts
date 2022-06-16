@@ -6,7 +6,7 @@ const PAGE_SIZE = 6;
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 export const getContentService = async (value: any): Promise<any> => {
-  await delay(1000);
+  await delay(100);
 
   const r = new Array(10).fill(0).map((_, i) => ({
     key: `${i}`,
