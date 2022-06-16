@@ -1,6 +1,6 @@
 import { useRequest } from 'ahooks';
 import { debounce, get } from 'lodash';
-import moment from 'moment';
+import { useRef, useState } from 'react';
 import ApiUtils from 'utils/api/api.utils';
 import { API_PATH } from 'utils/api/constant';
 
@@ -29,11 +29,18 @@ export interface IDataSubjectDetail {
 const MIN_SEARCH_USER = 3;
 
 export const getDataManagementService = async (values: any): Promise<any> => {
-  const { firstname = '', username = '', advanceSearch = {}, page = 1 } = values;
+  const {
+    firstname = '',
+    username = '',
+    advanceSearch = {},
+    page = 1,
+    isEqualSearch = false
+  } = values;
   const { firstname: firstNameAdvance, ...rest } = advanceSearch;
 
   const params = {
     firstname: username || firstname || firstNameAdvance || '',
+    isEqualSearch,
     advanceSearch: rest || {}
   };
 
@@ -67,12 +74,11 @@ export const getDataManagementService = async (values: any): Promise<any> => {
 const getDataSubjectDetail = async (id: string): Promise<IDataSubjectDetail> => {
   const r: any = await ApiUtils.fetch(API_PATH.USER_PROFILE_DETAIL(id));
 
-  console.log('test', r);
-
   return {
     userInfo: {
       id: r?.content?.id,
       imageUrl: '',
+      id: r?.content?.id,
       firstNameEn: r?.content?.firstNameEn || '',
       lastNameEn: r?.content?.firstNameEn || '',
       firstNameTh: r?.content?.firstNameTh || '',
@@ -88,30 +94,76 @@ const getDataSubjectDetail = async (id: string): Promise<IDataSubjectDetail> => 
   };
 };
 
-const getUsers = async (value: any) => {
+const getUsers = async (value: any, page = 1) => {
   const params = {
     firstname: value || '',
     limit: 10,
-    page: 1
+    page
   };
 
   const res: any = await ApiUtils.fetch(API_PATH.SEARCH_USERS, params);
-  return res?.content?.data?.map((v: any, idx: number) => ({ id: idx, name: v.firstNameEn }));
+
+  return {
+    data: res?.content?.data?.map((v: any, idx: number) => ({ id: idx, name: v.firstNameEn })),
+    isLoadMore: +res?.content?.metadata?.currentPage < +res?.content?.metadata?.lastPage,
+    currentPage: +res?.content?.metadata?.currentPage,
+    value
+  };
 };
 
 export const useDataSubjectManagement = () => {
+  const refCancelRequest = useRef(false);
+
+  const [users, setUsers] = useState<{
+    data: any[];
+    isLoadMore: boolean;
+    currentPage: number;
+    value: string;
+  }>({
+    data: [],
+    isLoadMore: false,
+    currentPage: 1,
+    value: ''
+  });
+
   const { data, loading, run } = useRequest(getDataManagementService, {
     manual: true
   });
 
   const requestSearchUsers = useRequest(
-    async (value: string) => {
-      return getUsers(value);
+    async (value: string, page = 1) => {
+      if (refCancelRequest.current) throw Error('Block request');
+      return getUsers(value, page);
     },
     {
-      manual: true
+      manual: true,
+      refreshDeps: [refCancelRequest.current],
+      onError: (err: any) => {
+        refCancelRequest.current = false;
+      },
+      onSuccess: (r: any) => {
+        setUsers((prev) => ({
+          data: [...prev.data, ...r.data],
+          isLoadMore: r.isLoadMore,
+          currentPage: r.currentPage,
+          value: r.value
+        }));
+      }
     }
   );
+
+  const onResetUsers = () => {
+    setUsers({
+      data: [],
+      isLoadMore: false,
+      currentPage: 1,
+      value: ''
+    });
+  };
+
+  const onLoadMoreUsers = () => {
+    requestSearchUsers.run(users.value, users.currentPage + 1);
+  };
 
   const onSearchUsersDebounce = debounce(async (values: any[], callback: Function) => {
     const value = get(values, '[0].value', '');
@@ -130,6 +182,7 @@ export const useDataSubjectManagement = () => {
 
   const onSearchDataSubject = (values = {}, callback: Function) => {
     if (!Object.values(values)?.filter((v) => v).length) return;
+    if (get(values, 'type') === 'enter') refCancelRequest.current = true;
 
     run({ ...values });
     if (callback) callback();
@@ -142,7 +195,10 @@ export const useDataSubjectManagement = () => {
     onChange: onChangeCurrent,
     onSearchDataSubject,
     requestSearchUsers,
-    onSearchUsersDebounce
+    onSearchUsersDebounce,
+    users,
+    onResetUsers,
+    onLoadMoreUsers
   };
 };
 

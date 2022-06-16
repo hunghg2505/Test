@@ -1,4 +1,4 @@
-import { Col, Dropdown, Form, Row, Table } from 'antd';
+import { Dropdown, Form, Row, Table } from 'antd';
 import type { ColumnsType } from 'antd/lib/table';
 import clsx from 'clsx';
 import { useTranslation } from 'react-i18next';
@@ -11,14 +11,13 @@ import ContainerLayout from 'libraries/layouts/container.layout';
 
 import { useDataSubjectManagement } from './utils/service';
 
-import { LoadingOutlined } from '@ant-design/icons';
 import { useClickAway } from 'ahooks';
 import Button from 'libraries/UI/Button';
 import { paginationItemRender } from 'libraries/UI/Pagination';
-import Select from 'libraries/UI/Select';
-import { forwardRef, useImperativeHandle, useRef, useState } from 'react';
+import { useRef } from 'react';
+import SearchUsersAdvance from './components/SearchUsersAdvance';
+import SuggestListUsers from './components/SuggestListUsers';
 import styles from './index.module.scss';
-import { t } from 'i18next';
 
 export interface DataType {
   key: string;
@@ -88,150 +87,6 @@ const columns: ColumnsType<DataType> = [
   }
 ];
 
-const SearchDataSubjectAdvanced = ({ onSearchDataSubject, t }: any) => {
-  return (
-    <div className={styles.formSearchAdvanced}>
-      <Form
-        onFinish={(values) => {
-          onSearchDataSubject({
-            advanceSearch: values
-          });
-        }}
-        layout="vertical">
-        <Row gutter={[0, 16]}>
-          <Col xs={24}>
-            <InputForm
-              label="First Name"
-              name="firstname"
-              placeholder="First Name"
-              rules={[
-                {
-                  min: 3,
-                  message: t('messages.errors.min', { min: 3 })
-                }
-              ]}
-            />
-          </Col>
-          <Col xs={24}>
-            <InputForm
-              label="Last Name"
-              name="lastNameEn"
-              placeholder="Last Name"
-              rules={[
-                {
-                  min: 3,
-                  message: t('messages.errors.min', { min: 3 })
-                }
-              ]}
-            />
-          </Col>
-
-          <Col xs={24}>
-            <InputForm
-              label="Company"
-              name="company"
-              placeholder="Company"
-              rules={[
-                {
-                  min: 3,
-                  message: t('messages.errors.min', { min: 3 })
-                }
-              ]}
-            />
-          </Col>
-          <Col xs={24}>
-            <InputForm
-              label="Email"
-              name="email"
-              placeholder="Email"
-              rules={[
-                {
-                  min: 3,
-                  message: t('messages.errors.min', { min: 3 })
-                }
-              ]}
-            />
-          </Col>
-
-          <Col xs={24}>
-            <InputForm
-              label="Mobile number"
-              name="mobile"
-              placeholder="Mobile number"
-              rules={[
-                {
-                  min: 3,
-                  message: t('messages.errors.min', { min: 3 })
-                }
-              ]}
-            />
-          </Col>
-          <Col xs={24}>
-            <Form.Item label="Application" name="application">
-              <Select placeholder="Please Select">
-                <Select.Option value="lucy">Lucy</Select.Option>
-                <Select.Option value="lucy1">Lucy1</Select.Option>
-              </Select>
-            </Form.Item>
-          </Col>
-        </Row>
-
-        <Button
-          htmlType="submit"
-          type="secondary"
-          className={styles.btnSearchAdvancedDd}
-          icon={<IconSearch />}>
-          {t('Search')}
-        </Button>
-      </Form>
-    </div>
-  );
-};
-
-const ListUsers = forwardRef(({ data, loading, onSearchDataSubject }: any, ref: any) => {
-  const [dropdownVisible, setDropdownVisible] = useState(false);
-
-  useImperativeHandle(ref, () => {
-    return {
-      closeListUser: () => setDropdownVisible(false),
-      openListUser: () => setDropdownVisible(true)
-    };
-  });
-
-  const onSelect = (item: any) => () => {
-    onSearchDataSubject({
-      firstname: item.name
-    });
-    setDropdownVisible(false);
-  };
-
-  if (!dropdownVisible || (!loading && !data)) return null;
-
-  return (
-    <ul className={styles.listUsers}>
-      {loading ? (
-        <div className={styles.loadingUser}>
-          <LoadingOutlined />
-        </div>
-      ) : (
-        <>
-          {data?.length === 0 ? (
-            <p className={styles.noResultText}>{t('no_result_found')}</p>
-          ) : (
-            data.map((item: any) => {
-              return (
-                <li onMouseDown={onSelect(item)} key={item.id}>
-                  {item.name}
-                </li>
-              );
-            })
-          )}
-        </>
-      )}
-    </ul>
-  );
-});
-
 function DataSubjectManagement() {
   const { t } = useTranslation();
 
@@ -241,7 +96,10 @@ function DataSubjectManagement() {
     onChange,
     onSearchDataSubject,
     requestSearchUsers,
-    onSearchUsersDebounce
+    onSearchUsersDebounce,
+    users,
+    onResetUsers,
+    onLoadMoreUsers
   } = useDataSubjectManagement();
   const [formSearch]: any = Form.useForm();
 
@@ -249,12 +107,18 @@ function DataSubjectManagement() {
   const refListUsers: any = useRef();
 
   useClickAway(() => {
-    if (refListUsers.current?.closeListUser) refListUsers.current.closeListUser();
+    if (refListUsers.current?.closeListUser) {
+      refListUsers.current.closeListUser();
+      onResetUsers();
+    }
   }, refForm);
 
   const onFinish = (values: any) => {
-    onSearchDataSubject(values, () => {
-      if (refListUsers.current?.closeListUser) refListUsers.current.closeListUser();
+    onSearchDataSubject({ ...values, type: 'enter' }, () => {
+      if (refListUsers.current?.closeListUser) {
+        refListUsers.current.closeListUser();
+        onResetUsers();
+      }
     });
   };
 
@@ -295,17 +159,20 @@ function DataSubjectManagement() {
                 </Button>
               </Row>
 
-              <ListUsers
+              <SuggestListUsers
                 data={requestSearchUsers.data}
                 loading={requestSearchUsers.loading}
                 onSearchDataSubject={onSearchDataSubject}
                 ref={refListUsers}
+                users={users}
+                onLoadMoreUsers={onLoadMoreUsers}
+                onResetUsers={onResetUsers}
               />
             </div>
           </Form>
 
           <Dropdown
-            overlay={<SearchDataSubjectAdvanced onSearchDataSubject={onSearchDataSubject} t={t} />}
+            overlay={<SearchUsersAdvance onSearchDataSubject={onSearchDataSubject} t={t} />}
             trigger={['click']}>
             <Button typeDisplay="ghost" className={styles.btnSearchAdvanced} icon={<IconCross />}>
               {t('advanced')}
