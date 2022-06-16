@@ -39,5 +39,6 @@
   "mobile_number": "Mobile number",
   "laser_code": "Laser Code",
   "company": "Company",
-  "no_result_found": "No result found"
+  "no_result_found": "No result found",
+  "load_more": "Load More"
 }
