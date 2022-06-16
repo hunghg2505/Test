@@ -5,7 +5,7 @@
       "require": "{{field}} must be require.",
       "email_invalid": "Email invalid.",
       "max": "Must be equal or less than {{max}} characters.",
-      "min": "Must be equal or greater than {{min}} characters.",
+      "min": "Please input at least {{min}} characters to search.",
       "password_invalid": "Password invalid."
     }
   }

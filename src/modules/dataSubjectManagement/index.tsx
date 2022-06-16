@@ -152,13 +152,9 @@ const SearchDataSubjectAdvanced = ({ onSearchDataSubject, t }: any) => {
               name="email"
               placeholder="Email"
               rules={[
-                // {
-                //   required: true,
-                //   message: t('messages.errors.require', { field: t('email') })
-                // },
                 {
-                  pattern: new RegExp(RegexUtils.RegexConstants.REGEX_EMAIL),
-                  message: `${t('messages.errors.email_invalid')}`
+                  min: 3,
+                  message: t('messages.errors.min', { min: 3 })
                 }
               ]}
             />
@@ -202,6 +198,7 @@ const SearchDataSubjectAdvanced = ({ onSearchDataSubject, t }: any) => {
 function DataSubjectManagement() {
   const { t } = useTranslation();
   const { data, loading, onChange, onSearchDataSubject } = useDataSubjectManagement();
+  console.log(data?.data);
 
   return (
     <ContainerLayout title="Data Subject Management">
@@ -213,7 +210,7 @@ function DataSubjectManagement() {
 
               <InputForm
                 name="username"
-                placeholder="Search username"
+                placeholder="Search Firstname"
                 className={styles.inputSearch}
                 classNameFormInput={styles.inputSearchForm}
               />
