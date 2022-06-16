@@ -59,7 +59,7 @@ export default function SignUpPage() {
                   },
                   {
                     max: 50,
-                    message: t('messages.errors.max', { max: 50 })
+                    message: t('messages.errors.max_name', { max: 50 })
                   }
                 ]}
               />
