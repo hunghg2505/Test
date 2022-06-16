@@ -67,10 +67,21 @@
 
 .inputSearchForm {
   flex: 1;
+  position: relative;
 
   :global {
     .ant-form-item-control-input {
       min-height: initial;
+    }
+
+    .ant-form-item-explain {
+      position: absolute;
+      top: 25px;
+      left: 12px;
+    }
+
+    .ant-input-status-error:not(.ant-input-disabled):not(.ant-input-borderless).ant-input:focus {
+      box-shadow: none;
     }
   }
 }

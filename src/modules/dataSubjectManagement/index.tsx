@@ -100,14 +100,44 @@ const SearchDataSubjectAdvanced = ({ onSearchDataSubject, t }: any) => {
         layout="vertical">
         <Row gutter={[0, 16]}>
           <Col xs={24}>
-            <InputForm label="First Name" name="firstname" placeholder="First Name" />
+            <InputForm
+              label="First Name"
+              name="firstname"
+              placeholder="First Name"
+              rules={[
+                {
+                  min: 3,
+                  message: t('messages.errors.min', { min: 3 })
+                }
+              ]}
+            />
           </Col>
           <Col xs={24}>
-            <InputForm label="Last Name" name="lastNameEn" placeholder="Last Name" />
+            <InputForm
+              label="Last Name"
+              name="lastNameEn"
+              placeholder="Last Name"
+              rules={[
+                {
+                  min: 3,
+                  message: t('messages.errors.min', { min: 3 })
+                }
+              ]}
+            />
           </Col>
 
           <Col xs={24}>
-            <InputForm label="Company" name="company" placeholder="Company" />
+            <InputForm
+              label="Company"
+              name="company"
+              placeholder="Company"
+              rules={[
+                {
+                  min: 3,
+                  message: t('messages.errors.min', { min: 3 })
+                }
+              ]}
+            />
           </Col>
           <Col xs={24}>
             <InputForm
@@ -124,7 +154,17 @@ const SearchDataSubjectAdvanced = ({ onSearchDataSubject, t }: any) => {
           </Col>
 
           <Col xs={24}>
-            <InputForm label="Mobile number" name="mobile" placeholder="Mobile number" />
+            <InputForm
+              label="Mobile number"
+              name="mobile"
+              placeholder="Mobile number"
+              rules={[
+                {
+                  min: 3,
+                  message: t('messages.errors.min', { min: 3 })
+                }
+              ]}
+            />
           </Col>
           <Col xs={24}>
             <Form.Item label="Application" name="application">
@@ -238,6 +278,12 @@ function DataSubjectManagement() {
                   placeholder="Search username"
                   className={styles.inputSearch}
                   classNameFormInput={styles.inputSearchForm}
+                  rules={[
+                    {
+                      min: 3,
+                      message: t('messages.errors.min', { min: 3 })
+                    }
+                  ]}
                 />
 
                 <Button
