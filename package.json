@@ -38,6 +38,7 @@
   "scripts": {
     "start": "env-cmd -f .env.local react-scripts start",
     "build": "env-cmd -f .env.dev react-scripts build",
+    "build-local": "env-cmd -f .env react-scripts build",
     "format": "prettier --write \"./src/**/*.{ts,tsx,json}\"",
     "test": "react-scripts test --coverage --watchAll=false --maxWorkers=4",
     "eject": "react-scripts eject"
