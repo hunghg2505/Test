@@ -2,7 +2,7 @@
   "messages": {
     "success": "Success",
     "errors": {
-      "require": "{{field}} must be require.",
+      "require": "{{field}} must be required.",
       "email_invalid": "Email invalid.",
       "max": "Must be equal or less than {{max}} characters.",
       "min": "Please input at least {{min}} characters to search.",
