@@ -11,7 +11,7 @@ interface Props {
   placeholder?: string;
   autoComplete?: 'on' | 'off';
   dependencies?: string[];
-
+  normalize?: (value: any) => any;
   // custom
   classNameFormInput?: any;
   className?: any;
@@ -25,13 +25,15 @@ export default function InputPasswordForm({
   autoComplete = 'off',
   dependencies,
   classNameFormInput,
-  className
+  className,
+  normalize
 }: Props) {
   return (
     <Form.Item
       label={label}
       name={name}
       rules={rules}
+      normalize={normalize}
       className={clsx(styles.customInputPasswordFormItem, {
         [classNameFormInput]: true
       })}

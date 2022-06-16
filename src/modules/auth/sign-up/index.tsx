@@ -60,6 +60,15 @@ export default function SignUpPage() {
                   {
                     max: 50,
                     message: t('messages.errors.max', { max: 50 })
+                  },
+                  {
+                    validator: async (_, value: any) => {
+                      const val = value?.trim();
+                      if (!val)
+                        return Promise.reject(t('messages.errors.require', { field: t('name') }));
+
+                      Promise.resolve();
+                    }
                   }
                 ]}
               />
