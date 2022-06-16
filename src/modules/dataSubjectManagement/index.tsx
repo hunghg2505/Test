@@ -235,6 +235,7 @@ function DataSubjectManagement() {
             pagination={{
               current: data?.current,
               total: data?.total,
+              showSizeChanger: false,
               onChange,
               itemRender: paginationItemRender
             }}
