@@ -3,9 +3,25 @@ import IconSearch from 'assets/icons/icon-search';
 import InputForm from 'libraries/form/input/input-form';
 import Button from 'libraries/UI/Button';
 import Select from 'libraries/UI/Select';
+import { RegexUtils } from 'utils/regex-helper';
 import styles from '../../index.module.scss';
 
 const SearchUsersAdvance = ({ onSearchDataSubject, t }: any) => {
+  const [formSearch] = Form.useForm();
+
+  const onBlur = (name: string, msg?: string) => {
+    const username = formSearch.getFieldValue(name);
+
+    if (!username) {
+      const msgErr = msg || t('messages.errors.min', { min: 3 });
+      formSearch.setFields([
+        {
+          name,
+          errors: [msgErr]
+        }
+      ]);
+    }
+  };
   return (
     <div className={styles.formSearchAdvanced}>
       <Form
@@ -14,6 +30,7 @@ const SearchUsersAdvance = ({ onSearchDataSubject, t }: any) => {
             advanceSearch: values
           });
         }}
+        form={formSearch}
         layout="vertical">
         <Row gutter={[0, 16]}>
           <Col xs={24}>
@@ -27,6 +44,7 @@ const SearchUsersAdvance = ({ onSearchDataSubject, t }: any) => {
                   message: t('messages.errors.min', { min: 3 })
                 }
               ]}
+              onBlur={() => onBlur('firstname')}
             />
           </Col>
           <Col xs={24}>
@@ -40,6 +58,7 @@ const SearchUsersAdvance = ({ onSearchDataSubject, t }: any) => {
                   message: t('messages.errors.min', { min: 3 })
                 }
               ]}
+              onBlur={() => onBlur('lastNameEn')}
             />
           </Col>
 
@@ -54,9 +73,10 @@ const SearchUsersAdvance = ({ onSearchDataSubject, t }: any) => {
                   message: t('messages.errors.min', { min: 3 })
                 }
               ]}
+              onBlur={() => onBlur('company')}
             />
           </Col>
-          <Col xs={24}>
+          <Col xs={24} className={styles.emailFiled}>
             <InputForm
               label="Email"
               name="email"
@@ -65,8 +85,13 @@ const SearchUsersAdvance = ({ onSearchDataSubject, t }: any) => {
                 {
                   min: 3,
                   message: t('messages.errors.min', { min: 3 })
+                },
+                {
+                  pattern: new RegExp(RegexUtils.RegexConstants.REGEX_EMAIL),
+                  message: `${t('messages.errors.email_invalid')}`
                 }
               ]}
+              onBlur={() => onBlur('email')}
             />
           </Col>
 
@@ -81,6 +106,7 @@ const SearchUsersAdvance = ({ onSearchDataSubject, t }: any) => {
                   message: t('messages.errors.min', { min: 3 })
                 }
               ]}
+              onBlur={() => onBlur('mobile')}
             />
           </Col>
           <Col xs={24}>

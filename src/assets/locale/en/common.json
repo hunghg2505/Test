@@ -40,5 +40,7 @@
   "laser_code": "Laser Code",
   "company": "Company",
   "no_result_found": "No result found",
-  "load_more": "Load More"
+  "load_more": "Load More",
+  "search": "Search",
+  "create_case": "Create Case"
 }

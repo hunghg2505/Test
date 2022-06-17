@@ -17,6 +17,7 @@ interface Props {
   defaultValue?: string | number;
   autoComplete?: 'on' | 'off';
   onChange?: (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+  onBlur?: (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
 }
 
 function Input({

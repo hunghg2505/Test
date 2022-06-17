@@ -14,6 +14,7 @@ interface Props {
   // custom
   classNameFormInput?: any;
   className?: any;
+  onBlur?: (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
 }
 export default function InputForm({
   label,
@@ -23,7 +24,8 @@ export default function InputForm({
   autoComplete = 'off',
 
   classNameFormInput,
-  className
+  className,
+  onBlur
 }: Props) {
   return (
     <Form.Item
@@ -39,6 +41,7 @@ export default function InputForm({
         })}
         placeholder={placeholder}
         autoComplete={autoComplete}
+        onBlur={onBlur}
       />
     </Form.Item>
   );
