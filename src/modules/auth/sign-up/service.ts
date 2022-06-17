@@ -24,11 +24,11 @@ export const useSignUp = () => {
   return useRequest(
     async (data: any) => {
       return serviceSignUp({
-        email: data.email,
-        username: data.name,
-        password: data.password,
-        firstName: data.name || 'abc',
-        lastName: data?.firstName || 'abc'
+        email: data.email?.trim(),
+        username: data.name?.trim(),
+        password: data.password?.trim(),
+        firstName: data?.name?.trim() || 'abc',
+        lastName: data?.firstName?.trim() || 'abc'
       });
     },
     {
