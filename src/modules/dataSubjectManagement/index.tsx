@@ -146,6 +146,10 @@ function DataSubjectManagement() {
                   classNameFormInput={styles.inputSearchForm}
                   rules={[
                     {
+                      required: true,
+                      message: t('messages.errors.min', { min: 3 })
+                    },
+                    {
                       min: 3,
                       message: t('messages.errors.min', { min: 3 })
                     },
@@ -158,6 +162,18 @@ function DataSubjectManagement() {
                       message: t('messages.errors.min', { min: 3 })
                     }
                   ]}
+                  onBlur={() => {
+                    const username = formSearch.getFieldValue('username');
+
+                    if (!username) {
+                      formSearch.setFields([
+                        {
+                          name: 'username',
+                          errors: [t('messages.errors.min', { min: 3 })]
+                        }
+                      ]);
+                    }
+                  }}
                 />
 
                 <Button
@@ -183,7 +199,8 @@ function DataSubjectManagement() {
 
           <Dropdown
             overlay={<SearchUsersAdvance onSearchDataSubject={onSearchDataSubject} t={t} />}
-            trigger={['click']}>
+            trigger={['click']}
+            destroyPopupOnHide={true}>
             <Button typeDisplay="ghost" className={styles.btnSearchAdvanced} icon={<IconCross />}>
               {t('advanced')}
             </Button>

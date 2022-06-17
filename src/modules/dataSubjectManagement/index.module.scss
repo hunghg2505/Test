@@ -344,3 +344,11 @@
   padding: 20px 0;
   font-size: 20px;
 }
+
+.emailFiled {
+  :global {
+    .ant-form-item-explain-error + div {
+      display: none;
+    }
+  }
+}

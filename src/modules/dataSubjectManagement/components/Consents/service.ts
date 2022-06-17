@@ -1,12 +1,16 @@
+import ApiUtils from 'utils/api/api.utils';
 import { useRequest } from 'ahooks';
 
 const PAGE_SIZE = 6;
 
-// delay function js
-const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
-
 export const getContentService = async (value: any): Promise<any> => {
-  await delay(100);
+  const params = {
+    userId: '',
+    limit: PAGE_SIZE,
+    page: 1
+  };
+
+  // const r = await ApiUtils.fetch()
 
   const r = new Array(10).fill(0).map((_, i) => ({
     key: `${i}`,
@@ -30,6 +34,7 @@ export const getContentService = async (value: any): Promise<any> => {
       ]
     }
   }));
+
   const formatData = {
     list: r,
     current: 1

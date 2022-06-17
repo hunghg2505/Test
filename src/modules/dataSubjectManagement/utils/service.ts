@@ -130,7 +130,7 @@ export const useDataSubjectManagement = () => {
   });
 
   const requestSearchUsers = useRequest(
-    async (value: string | undefined, page = 1) => {
+    async (value: string | undefined, page = 1, isLoadMore = false) => {
       if (refCancelRequest.current) throw Error('Block request');
       return getUsers(value, page);
     },
@@ -140,13 +140,19 @@ export const useDataSubjectManagement = () => {
       onError: (err: any) => {
         refCancelRequest.current = false;
       },
-      onSuccess: (r: any) => {
-        setUsers((prev) => ({
-          data: [...prev.data, ...r.data],
-          isLoadMore: r.isLoadMore,
-          currentPage: r.currentPage,
-          value: r.value
-        }));
+      onSuccess: (r: any, params) => {
+        const isLoadMore = params[2];
+
+        setUsers((prev) => {
+          const newData = isLoadMore ? [...prev.data, ...r.data] : r.data;
+
+          return {
+            data: newData,
+            isLoadMore: r.isLoadMore,
+            currentPage: r.currentPage,
+            value: r.value
+          };
+        });
       }
     }
   );
@@ -169,14 +175,14 @@ export const useDataSubjectManagement = () => {
   };
 
   const onLoadMoreUsers = () => {
-    requestSearchUsers.run(users.value, users.currentPage + 1);
+    requestSearchUsers.run(users.value, users.currentPage + 1, true);
   };
 
   const onSearchUsersDebounce = debounce(async (values: any[], callback: Function) => {
     const value = get(values, '[0].value', '');
     if (value?.length < MIN_SEARCH_USER) return;
 
-    await requestSearchUsers.runAsync(value);
+    await requestSearchUsers.runAsync(value, 1, false);
     if (callback) callback();
   }, 350);
 
