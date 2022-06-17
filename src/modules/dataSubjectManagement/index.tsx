@@ -1,10 +1,9 @@
-import { Dropdown, Form, message, Row, Table } from 'antd';
+import { Form, Row, Table } from 'antd';
 import type { ColumnsType } from 'antd/lib/table';
 import clsx from 'clsx';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
-import IconCross from 'assets/icons/icon-cross';
 import IconSearch from 'assets/icons/icon-search';
 import InputForm from 'libraries/form/input/input-form';
 import ContainerLayout from 'libraries/layouts/container.layout';
@@ -194,27 +193,7 @@ function DataSubjectManagement() {
             </div>
           </Form>
 
-          <div style={{ position: 'relative' }}>
-            <Dropdown
-              overlay={<SearchUsersAdvance onSearchDataSubject={onSearchDataSubject} t={t} />}
-              trigger={['click']}
-              overlayClassName={styles.dropdownOverlay}
-              getPopupContainer={() =>
-                document.getElementById('searchAdvanceOverlay') as HTMLElement
-              }
-              destroyPopupOnHide={true}>
-              <Button typeDisplay="ghost" className={styles.btnSearchAdvanced} icon={<IconCross />}>
-                {t('advanced')}
-              </Button>
-            </Dropdown>
-            <div
-              id="searchAdvanceOverlay"
-              style={{
-                position: 'absolute',
-                top: '100%',
-                right: 0
-              }}></div>
-          </div>
+          <SearchUsersAdvance onSearchDataSubject={onSearchDataSubject} t={t} />
         </Row>
         <div
           className={clsx(styles.dataSubjectContent, {
