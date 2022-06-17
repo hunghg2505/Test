@@ -16,7 +16,6 @@ const SuggestListUsers = (
       openListUser: () => setDropdownVisible(true)
     };
   });
-  console.log('users.data', users.data);
 
   const onSelect = (item: any) => () => {
     onSearchDataSubject({
