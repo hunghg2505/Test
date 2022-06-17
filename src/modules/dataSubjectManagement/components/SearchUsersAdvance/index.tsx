@@ -42,6 +42,14 @@ const SearchUsersAdvance = ({ onSearchDataSubject, t }: any) => {
                 {
                   min: 3,
                   message: t('messages.errors.min', { min: 3 })
+                },
+                {
+                  max: 55,
+                  message: t('messages.errors.max', { max: 55 })
+                },
+                {
+                  required: true,
+                  message: t('messages.errors.min', { min: 3 })
                 }
               ]}
               onBlur={() => onBlur('firstname')}
@@ -56,6 +64,10 @@ const SearchUsersAdvance = ({ onSearchDataSubject, t }: any) => {
                 {
                   min: 3,
                   message: t('messages.errors.min', { min: 3 })
+                },
+                {
+                  max: 55,
+                  message: t('messages.errors.max', { max: 55 })
                 }
               ]}
               onBlur={() => onBlur('lastNameEn')}
@@ -71,6 +83,10 @@ const SearchUsersAdvance = ({ onSearchDataSubject, t }: any) => {
                 {
                   min: 3,
                   message: t('messages.errors.min', { min: 3 })
+                },
+                {
+                  max: 55,
+                  message: t('messages.errors.max', { max: 55 })
                 }
               ]}
               onBlur={() => onBlur('company')}
@@ -85,6 +101,10 @@ const SearchUsersAdvance = ({ onSearchDataSubject, t }: any) => {
                 {
                   min: 3,
                   message: t('messages.errors.min', { min: 3 })
+                },
+                {
+                  max: 55,
+                  message: t('messages.errors.max', { max: 55 })
                 },
                 {
                   pattern: new RegExp(RegexUtils.RegexConstants.REGEX_EMAIL),

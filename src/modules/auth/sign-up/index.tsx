@@ -62,13 +62,8 @@ export default function SignUpPage() {
                     message: t('messages.errors.max_name', { max: 50 })
                   },
                   {
-                    validator: async (_, value: any) => {
-                      const val = value?.trim();
-                      if (!val)
-                        return Promise.reject(t('messages.errors.require', { field: t('name') }));
-
-                      Promise.resolve();
-                    }
+                    whitespace: true,
+                    message: t('messages.errors.empty_name')
                   }
                 ]}
               />
