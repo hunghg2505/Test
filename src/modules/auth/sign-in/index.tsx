@@ -27,12 +27,20 @@ export default function SignInPage() {
                 name="email_abc"
                 rules={[
                   {
-                    required: true,
-                    message: t('messages.errors.require', { field: t('email_address') })
-                  },
-                  {
-                    pattern: new RegExp(RegexUtils.RegexConstants.REGEX_EMAIL),
-                    message: `${t('messages.errors.email_invalid')}`
+                    validator: async (_, value) => {
+                      if (!value) {
+                        return Promise.reject(
+                          t('messages.errors.require', { field: t('email_address') })
+                        );
+                      }
+
+                      const regexEmail = new RegExp(RegexUtils.RegexConstants.REGEX_EMAIL);
+                      if (!regexEmail.test(value.trim())) {
+                        return Promise.reject(t('messages.errors.email_invalid'));
+                      }
+
+                      return Promise.resolve();
+                    }
                   }
                 ]}
               />
