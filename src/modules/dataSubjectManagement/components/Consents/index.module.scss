@@ -96,7 +96,12 @@
   }
 
   :global {
-
+    .ant-collapse-header-text {
+      flex: 1;
+    }
+    .ant-collapse-expand-icon svg {
+      margin: 0 !important;
+    }
     .ant-collapse.ant-collapse {
       border: none;
       padding: 24px 24px 0;
