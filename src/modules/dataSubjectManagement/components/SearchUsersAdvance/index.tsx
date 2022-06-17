@@ -25,6 +25,14 @@ const SearchUsersAdvance = ({ onSearchDataSubject, t }: any) => {
                 {
                   min: 3,
                   message: t('messages.errors.min', { min: 3 })
+                },
+                {
+                  max: 55,
+                  message: t('messages.errors.max', { max: 55 })
+                },
+                {
+                  required: true,
+                  message: t('messages.errors.min', { min: 3 })
                 }
               ]}
             />
@@ -38,6 +46,10 @@ const SearchUsersAdvance = ({ onSearchDataSubject, t }: any) => {
                 {
                   min: 3,
                   message: t('messages.errors.min', { min: 3 })
+                },
+                {
+                  max: 55,
+                  message: t('messages.errors.max', { max: 55 })
                 }
               ]}
             />
@@ -52,6 +64,10 @@ const SearchUsersAdvance = ({ onSearchDataSubject, t }: any) => {
                 {
                   min: 3,
                   message: t('messages.errors.min', { min: 3 })
+                },
+                {
+                  max: 55,
+                  message: t('messages.errors.max', { max: 55 })
                 }
               ]}
             />
@@ -65,6 +81,10 @@ const SearchUsersAdvance = ({ onSearchDataSubject, t }: any) => {
                 {
                   min: 3,
                   message: t('messages.errors.min', { min: 3 })
+                },
+                {
+                  max: 55,
+                  message: t('messages.errors.max', { max: 55 })
                 }
               ]}
             />

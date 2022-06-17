@@ -1,4 +1,4 @@
-import { Dropdown, Form, Row, Table } from 'antd';
+import { Dropdown, Form, message, Row, Table } from 'antd';
 import type { ColumnsType } from 'antd/lib/table';
 import clsx from 'clsx';
 import { useTranslation } from 'react-i18next';
@@ -145,6 +145,14 @@ function DataSubjectManagement() {
                   rules={[
                     {
                       min: 3,
+                      message: t('messages.errors.min', { min: 3 })
+                    },
+                    {
+                      max: 55,
+                      message: t('messages.errors.max', { max: 55 })
+                    },
+                    {
+                      required: true,
                       message: t('messages.errors.min', { min: 3 })
                     }
                   ]}
