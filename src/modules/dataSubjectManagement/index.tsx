@@ -194,14 +194,27 @@ function DataSubjectManagement() {
             </div>
           </Form>
 
-          <Dropdown
-            overlay={<SearchUsersAdvance onSearchDataSubject={onSearchDataSubject} t={t} />}
-            trigger={['click']}
-            destroyPopupOnHide={true}>
-            <Button typeDisplay="ghost" className={styles.btnSearchAdvanced} icon={<IconCross />}>
-              {t('advanced')}
-            </Button>
-          </Dropdown>
+          <div style={{ position: 'relative' }}>
+            <Dropdown
+              overlay={<SearchUsersAdvance onSearchDataSubject={onSearchDataSubject} t={t} />}
+              trigger={['click']}
+              overlayClassName={styles.dropdownOverlay}
+              getPopupContainer={() =>
+                document.getElementById('searchAdvanceOverlay') as HTMLElement
+              }
+              destroyPopupOnHide={true}>
+              <Button typeDisplay="ghost" className={styles.btnSearchAdvanced} icon={<IconCross />}>
+                {t('advanced')}
+              </Button>
+            </Dropdown>
+            <div
+              id="searchAdvanceOverlay"
+              style={{
+                position: 'absolute',
+                top: '100%',
+                right: 0
+              }}></div>
+          </div>
         </Row>
         <div
           className={clsx(styles.dataSubjectContent, {
