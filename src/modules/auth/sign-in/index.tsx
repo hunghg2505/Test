@@ -29,11 +29,11 @@ export default function SignInPage() {
                   {
                     required: true,
                     message: t('messages.errors.require', { field: t('email_address') })
+                  },
+                  {
+                    pattern: new RegExp(RegexUtils.RegexConstants.REGEX_EMAIL),
+                    message: `${t('messages.errors.email_invalid')}`
                   }
-                  // {
-                  //   pattern: new RegExp(RegexUtils.RegexConstants.REGEX_EMAIL),
-                  //   message: `${t('messages.errors.email_invalid')}`
-                  // }
                 ]}
               />
             </div>
