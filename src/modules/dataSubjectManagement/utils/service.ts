@@ -117,7 +117,7 @@ export const useDataSubjectManagement = () => {
     data: any[];
     isLoadMore: boolean;
     currentPage: number;
-    value: string;
+    value?: string;
   }>({
     data: [],
     isLoadMore: false,
@@ -130,7 +130,7 @@ export const useDataSubjectManagement = () => {
   });
 
   const requestSearchUsers = useRequest(
-    async (value: string, page = 1) => {
+    async (value: string | undefined, page = 1) => {
       if (refCancelRequest.current) throw Error('Block request');
       return getUsers(value, page);
     },
@@ -157,6 +157,14 @@ export const useDataSubjectManagement = () => {
       isLoadMore: false,
       currentPage: 1,
       value: ''
+    });
+  };
+
+  const onResetData = () => {
+    setUsers({
+      data: [],
+      isLoadMore: false,
+      currentPage: 1
     });
   };
 
@@ -197,7 +205,8 @@ export const useDataSubjectManagement = () => {
     onSearchUsersDebounce,
     users,
     onResetUsers,
-    onLoadMoreUsers
+    onLoadMoreUsers,
+    onResetData
   };
 };
 
