@@ -99,8 +99,7 @@ function DataSubjectManagement() {
     onSearchUsersDebounce,
     users,
     onResetUsers,
-    onLoadMoreUsers,
-    onResetData
+    onLoadMoreUsers
   } = useDataSubjectManagement();
   const [formSearch]: any = Form.useForm();
 
@@ -124,7 +123,6 @@ function DataSubjectManagement() {
   };
 
   const onFieldsChange = (values: any) => {
-    onResetData();
     onSearchUsersDebounce(values, () => {
       if (refListUsers.current?.openListUser) refListUsers.current.openListUser();
     });
