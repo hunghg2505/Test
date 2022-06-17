@@ -154,10 +154,6 @@ function DataSubjectManagement() {
                     {
                       max: 55,
                       message: t('messages.errors.max', { max: 55 })
-                    },
-                    {
-                      required: true,
-                      message: t('messages.errors.min', { min: 3 })
                     }
                   ]}
                   onBlur={() => {
