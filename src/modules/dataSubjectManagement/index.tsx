@@ -19,6 +19,8 @@ import SearchUsersAdvance from './components/SearchUsersAdvance';
 import SuggestListUsers from './components/SuggestListUsers';
 import styles from './index.module.scss';
 
+const MIN_SEARCH_USER = 3;
+
 export interface DataType {
   key: string;
   noId: string;
@@ -123,6 +125,7 @@ function DataSubjectManagement() {
   };
 
   const onFieldsChange = (values: any) => {
+    if (values?.length < MIN_SEARCH_USER) refListUsers.current.closeListUser();
     onSearchUsersDebounce(values, () => {
       if (refListUsers.current?.openListUser) refListUsers.current.openListUser();
     });
