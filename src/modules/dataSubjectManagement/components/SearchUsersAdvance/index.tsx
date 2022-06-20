@@ -64,7 +64,7 @@ const SearchUsersAdvance = ({ onSearchDataSubject, t }: any) => {
         id="searchAdvanceOverlay"
         style={{
           position: 'absolute',
-          top: '100%',
+          top: '130%',
           right: 0,
           zIndex: 1
         }}>
@@ -87,6 +87,7 @@ const SearchUsersAdvance = ({ onSearchDataSubject, t }: any) => {
                     label="First Name"
                     name="firstname"
                     placeholder="First Name"
+                    maxLength={55}
                     rules={[
                       {
                         min: 3,
@@ -105,6 +106,7 @@ const SearchUsersAdvance = ({ onSearchDataSubject, t }: any) => {
                     label="Last Name"
                     name="lastNameEn"
                     placeholder="Last Name"
+                    maxLength={55}
                     rules={[
                       {
                         min: 3,
@@ -124,6 +126,7 @@ const SearchUsersAdvance = ({ onSearchDataSubject, t }: any) => {
                     label="Company"
                     name="company"
                     placeholder="Company"
+                    maxLength={55}
                     rules={[
                       {
                         min: 3,
@@ -142,6 +145,7 @@ const SearchUsersAdvance = ({ onSearchDataSubject, t }: any) => {
                     label="Email"
                     name="email"
                     placeholder="Email"
+                    maxLength={30}
                     rules={[
                       {
                         min: 3,
@@ -161,6 +165,7 @@ const SearchUsersAdvance = ({ onSearchDataSubject, t }: any) => {
                     label="Mobile number"
                     name="mobile"
                     placeholder="Mobile number"
+                    maxLength={55}
                     rules={[
                       {
                         min: 3,
