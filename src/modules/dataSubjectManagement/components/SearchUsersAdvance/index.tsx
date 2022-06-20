@@ -149,10 +149,6 @@ const SearchUsersAdvance = ({ onSearchDataSubject, t }: any) => {
                       {
                         max: 55,
                         message: t('messages.errors.max', { max: 55 })
-                      },
-                      {
-                        pattern: new RegExp(RegexUtils.RegexConstants.REGEX_EMAIL),
-                        message: `${t('messages.errors.email_invalid')}`
                       }
                     ]}
                     onBlur={() => onBlur('email')}
