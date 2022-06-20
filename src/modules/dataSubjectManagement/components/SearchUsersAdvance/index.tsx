@@ -64,7 +64,8 @@ const SearchUsersAdvance = ({ onSearchDataSubject, t }: any) => {
         style={{
           position: 'absolute',
           top: '100%',
-          right: 0
+          right: 0,
+          zIndex: 1
         }}>
         {_isTransitioning && (
           <div
@@ -93,10 +94,6 @@ const SearchUsersAdvance = ({ onSearchDataSubject, t }: any) => {
                       {
                         max: 55,
                         message: t('messages.errors.max', { max: 55 })
-                      },
-                      {
-                        required: true,
-                        message: t('messages.errors.min', { min: 3 })
                       }
                     ]}
                     onBlur={() => onBlur('firstname')}
