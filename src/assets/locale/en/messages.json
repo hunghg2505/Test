@@ -8,6 +8,7 @@
       "min": "Please input at least {{min}} characters to search.",
       "min_password": "Password must contain at least {{min}} characters",
       "max_name": "Name must be equal or less than {{max}} characters.",
+      "max_search_firstname": "User CAN NOT input more than {{max}} characters",
       "password_invalid": "Password must contain at least 8 characters, capital letters, lowercase letters, numbers and symbols",
       "empty_name": "Name cannot be empty."
     }

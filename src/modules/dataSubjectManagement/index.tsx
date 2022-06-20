@@ -155,7 +155,7 @@ function DataSubjectManagement() {
                     },
                     {
                       max: 55,
-                      message: t('messages.errors.max', { max: 55 })
+                      message: t('messages.errors.max_search_firstname', { max: 55 })
                     }
                   ]}
                   onBlur={() => {
