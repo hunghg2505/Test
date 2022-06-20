@@ -88,6 +88,30 @@ const ArrowUp = (
   </svg>
 );
 
+const ConsentOption = ({ value, onChange, dataConsent }: any) => {
+  const onChangeConsent = (checkedValues: any) => {
+    console.log('checked = ', checkedValues);
+    onChange(checkedValues);
+  };
+
+  if (!dataConsent?.length) {
+    return null;
+  }
+
+  return (
+    <Checkbox.Group onChange={onChangeConsent} defaultValue={['personalised-marketing-0']}>
+      {dataConsent.map((item: any) => {
+        return (
+          <Checkbox key={item.value} value={item.value}>
+            <h4>{item.title}</h4>
+            <div>{item.description}</div>
+          </Checkbox>
+        );
+      })}
+    </Checkbox.Group>
+  );
+};
+
 const ConsentsList = () => {
   const { data, loading, onChange } = useConsent();
 
@@ -127,16 +151,7 @@ const ConsentsList = () => {
                     </div>
                   }>
                   <Form.Item className={styles.panelContent} name={`FormItem_${key}`}>
-                    <Checkbox.Group>
-                      {dataConsent?.list?.map((item: any) => {
-                        return (
-                          <Checkbox key={item.value} value={item.value}>
-                            <h4>{item.title}</h4>
-                            <div>{item.description}</div>
-                          </Checkbox>
-                        );
-                      })}
-                    </Checkbox.Group>
+                    <ConsentOption dataConsent={dataConsent?.list} />
                   </Form.Item>
                 </Panel>
               );

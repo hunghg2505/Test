@@ -13,8 +13,6 @@ function DataSubjectDetail() {
 
   const { loading, data } = useDataSubjectDetail(`${id}`);
 
-  console.log('data', data);
-
   if (!id) {
     navigate('/data-subject');
     return null;
