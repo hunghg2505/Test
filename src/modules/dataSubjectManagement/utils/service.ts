@@ -150,7 +150,7 @@ export const useDataSubjectManagement = () => {
         refCancelRequest.current = false;
       },
       onSuccess: (r: any, params) => {
-        const isLoadMore = params[2];
+        const isLoadMore = params[3];
 
         setUsers((prev) => {
           const newData = isLoadMore ? [...prev.data, ...r.data] : r.data;
