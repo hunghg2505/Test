@@ -10,7 +10,7 @@ interface Props {
   rules?: Rule[];
   placeholder?: string;
   autoComplete?: 'on' | 'off';
-
+  maxLength?: number;
   // custom
   classNameFormInput?: any;
   className?: any;
@@ -22,7 +22,7 @@ export default function InputForm({
   name,
   rules,
   autoComplete = 'off',
-
+  maxLength,
   classNameFormInput,
   className,
   onBlur
@@ -39,6 +39,7 @@ export default function InputForm({
         className={clsx(styles.customInputForm, {
           [className]: true
         })}
+        maxLength={maxLength}
         placeholder={placeholder}
         autoComplete={autoComplete}
         onBlur={onBlur}

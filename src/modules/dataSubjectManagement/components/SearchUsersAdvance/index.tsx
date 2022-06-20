@@ -37,19 +37,20 @@ const SearchUsersAdvance = ({ onSearchDataSubject, t }: any) => {
     setIsShowSearch(!isShowSearch);
   };
 
-  const onBlur = (name: string, msg?: string) => {
-    const username = formSearch.getFieldValue(name);
+  // Currrent don't need onBlur
+  // const onBlur = (name: string, msg?: string) => {
+  //   const username = formSearch.getFieldValue(name);
 
-    if (!username) {
-      const msgErr = msg || t('messages.errors.min', { min: 3 });
-      formSearch.setFields([
-        {
-          name,
-          errors: [msgErr]
-        }
-      ]);
-    }
-  };
+  //   if (!username) {
+  //     const msgErr = msg || t('messages.errors.min', { min: 3 });
+  //     formSearch.setFields([
+  //       {
+  //         name,
+  //         errors: [msgErr]
+  //       }
+  //     ]);
+  //   }
+  // };
   return (
     <div style={{ position: 'relative' }} ref={refSearch}>
       <Button
@@ -63,7 +64,7 @@ const SearchUsersAdvance = ({ onSearchDataSubject, t }: any) => {
         id="searchAdvanceOverlay"
         style={{
           position: 'absolute',
-          top: '100%',
+          top: '130%',
           right: 0,
           zIndex: 1
         }}>
@@ -77,6 +78,7 @@ const SearchUsersAdvance = ({ onSearchDataSubject, t }: any) => {
                 onSearchDataSubject({
                   advanceSearch: values
                 });
+                setIsShowSearch(false);
               }}
               form={formSearch}
               layout="vertical">
@@ -86,6 +88,7 @@ const SearchUsersAdvance = ({ onSearchDataSubject, t }: any) => {
                     label="First Name"
                     name="firstname"
                     placeholder="First Name"
+                    maxLength={55}
                     rules={[
                       {
                         min: 3,
@@ -96,7 +99,7 @@ const SearchUsersAdvance = ({ onSearchDataSubject, t }: any) => {
                         message: t('messages.errors.max', { max: 55 })
                       }
                     ]}
-                    onBlur={() => onBlur('firstname')}
+                    // onBlur={() => onBlur('firstname')}
                   />
                 </Col>
                 <Col xs={24}>
@@ -104,6 +107,7 @@ const SearchUsersAdvance = ({ onSearchDataSubject, t }: any) => {
                     label="Last Name"
                     name="lastNameEn"
                     placeholder="Last Name"
+                    maxLength={55}
                     rules={[
                       {
                         min: 3,
@@ -114,7 +118,7 @@ const SearchUsersAdvance = ({ onSearchDataSubject, t }: any) => {
                         message: t('messages.errors.max', { max: 55 })
                       }
                     ]}
-                    onBlur={() => onBlur('lastNameEn')}
+                    // onBlur={() => onBlur('lastNameEn')}
                   />
                 </Col>
 
@@ -123,6 +127,7 @@ const SearchUsersAdvance = ({ onSearchDataSubject, t }: any) => {
                     label="Company"
                     name="company"
                     placeholder="Company"
+                    maxLength={55}
                     rules={[
                       {
                         min: 3,
@@ -133,7 +138,7 @@ const SearchUsersAdvance = ({ onSearchDataSubject, t }: any) => {
                         message: t('messages.errors.max', { max: 55 })
                       }
                     ]}
-                    onBlur={() => onBlur('company')}
+                    // onBlur={() => onBlur('company')}
                   />
                 </Col>
                 <Col xs={24} className={styles.emailFiled}>
@@ -141,6 +146,7 @@ const SearchUsersAdvance = ({ onSearchDataSubject, t }: any) => {
                     label="Email"
                     name="email"
                     placeholder="Email"
+                    maxLength={30}
                     rules={[
                       {
                         min: 3,
@@ -151,7 +157,7 @@ const SearchUsersAdvance = ({ onSearchDataSubject, t }: any) => {
                         message: t('messages.errors.max', { max: 55 })
                       }
                     ]}
-                    onBlur={() => onBlur('email')}
+                    // onBlur={() => onBlur('email')}
                   />
                 </Col>
 
@@ -160,13 +166,14 @@ const SearchUsersAdvance = ({ onSearchDataSubject, t }: any) => {
                     label="Mobile number"
                     name="mobile"
                     placeholder="Mobile number"
+                    maxLength={55}
                     rules={[
                       {
                         min: 3,
                         message: t('messages.errors.min', { min: 3 })
                       }
                     ]}
-                    onBlur={() => onBlur('mobile')}
+                    // onBlur={() => onBlur('mobile')}
                   />
                 </Col>
                 <Col xs={24}>

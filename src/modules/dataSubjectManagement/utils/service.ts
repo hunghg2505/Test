@@ -38,10 +38,18 @@ export const getDataManagementService = async (values: any): Promise<any> => {
   } = values;
   const { firstname: firstNameAdvance, ...rest } = advanceSearch;
 
+  const conditions: { [key: string]: any } = {};
+
+  for (const key in rest) {
+    if (rest[key]) {
+      conditions[key] = { searchString: rest[key], isEqualSearch: false };
+    }
+  }
+
   const params = {
     firstname: username || firstname || firstNameAdvance || '',
     isEqualSearch,
-    advanceSearch: rest || {}
+    advanceSearch: conditions || {}
   };
 
   const r: any = await ApiUtils.post(API_PATH.USER_PROFILES, {
@@ -79,7 +87,7 @@ const getDataSubjectDetail = async (id: string): Promise<IDataSubjectDetail> => 
       id: r?.content?.id,
       imageUrl: '',
       firstNameEn: r?.content?.firstNameEn || '',
-      lastNameEn: r?.content?.firstNameEn || '',
+      lastNameEn: r?.content?.lastNameEn || '',
       firstNameTh: r?.content?.firstNameTh || '',
       lastNameTh: r?.content?.lastNameTh || '',
       email: r?.content?.email || '',
@@ -93,9 +101,10 @@ const getDataSubjectDetail = async (id: string): Promise<IDataSubjectDetail> => 
   };
 };
 
-const getUsers = async (value: any, page = 1) => {
+const getUsers = async (value: any, page = 1, column: string) => {
   const params = {
-    firstname: value || '',
+    column,
+    searchString: value || '',
     limit: 10,
     page
   };
@@ -130,9 +139,9 @@ export const useDataSubjectManagement = () => {
   });
 
   const requestSearchUsers = useRequest(
-    async (value: string, page = 1, isLoadMore = false) => {
+    async (value: string, column, page = 1, isLoadMore = false) => {
       if (refCancelRequest.current) throw Error('Block request');
-      return getUsers(value, page);
+      return getUsers(value, page, column);
     },
     {
       manual: true,
@@ -141,7 +150,7 @@ export const useDataSubjectManagement = () => {
         refCancelRequest.current = false;
       },
       onSuccess: (r: any, params) => {
-        const isLoadMore = params[2];
+        const isLoadMore = params[3];
 
         setUsers((prev) => {
           const newData = isLoadMore ? [...prev.data, ...r.data] : r.data;
@@ -166,17 +175,20 @@ export const useDataSubjectManagement = () => {
     });
   };
 
-  const onLoadMoreUsers = () => {
-    requestSearchUsers.run(users.value, users.currentPage + 1, true);
+  const onLoadMoreUsers = (column: string) => {
+    requestSearchUsers.run(users.value, column, users.currentPage + 1, true);
   };
 
-  const onSearchUsersDebounce = debounce(async (values: any[], callback: Function) => {
-    const value = get(values, '[0].value', '');
-    if (value?.length < MIN_SEARCH_USER) return;
+  const onSearchUsersDebounce = debounce(
+    async (values: any[], callback: Function, column: string) => {
+      const value = get(values, '[0].value', '');
+      if (value?.length < MIN_SEARCH_USER) return;
 
-    await requestSearchUsers.runAsync(value, 1, false);
-    if (callback) callback();
-  }, 350);
+      await requestSearchUsers.runAsync(value, column, 1, false);
+      if (callback) callback();
+    },
+    350
+  );
 
   const onChangeCurrent = (page: number) => {
     run({
