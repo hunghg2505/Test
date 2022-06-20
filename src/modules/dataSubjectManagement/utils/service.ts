@@ -101,9 +101,10 @@ const getDataSubjectDetail = async (id: string): Promise<IDataSubjectDetail> => 
   };
 };
 
-const getUsers = async (value: any, page = 1) => {
+const getUsers = async (value: any, page = 1, column: string) => {
   const params = {
-    firstname: value || '',
+    column,
+    searchString: value || '',
     limit: 10,
     page
   };
@@ -138,9 +139,9 @@ export const useDataSubjectManagement = () => {
   });
 
   const requestSearchUsers = useRequest(
-    async (value: string, page = 1, isLoadMore = false) => {
+    async (value: string, column, page = 1, isLoadMore = false) => {
       if (refCancelRequest.current) throw Error('Block request');
-      return getUsers(value, page);
+      return getUsers(value, page, column);
     },
     {
       manual: true,
@@ -174,17 +175,20 @@ export const useDataSubjectManagement = () => {
     });
   };
 
-  const onLoadMoreUsers = () => {
-    requestSearchUsers.run(users.value, users.currentPage + 1, true);
+  const onLoadMoreUsers = (column: string) => {
+    requestSearchUsers.run(users.value, column, users.currentPage + 1, true);
   };
 
-  const onSearchUsersDebounce = debounce(async (values: any[], callback: Function) => {
-    const value = get(values, '[0].value', '');
-    if (value?.length < MIN_SEARCH_USER) return;
+  const onSearchUsersDebounce = debounce(
+    async (values: any[], callback: Function, column: string) => {
+      const value = get(values, '[0].value', '');
+      if (value?.length < MIN_SEARCH_USER) return;
 
-    await requestSearchUsers.runAsync(value, 1, false);
-    if (callback) callback();
-  }, 350);
+      await requestSearchUsers.runAsync(value, column, 1, false);
+      if (callback) callback();
+    },
+    350
+  );
 
   const onChangeCurrent = (page: number) => {
     run({

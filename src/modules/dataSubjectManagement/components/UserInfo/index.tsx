@@ -2,6 +2,7 @@ import { Button, Col, Row, Upload } from 'antd';
 import IconCamera from 'assets/icons/icon-camera';
 import { IUserInfo } from 'modules/dataSubjectManagement/utils/service';
 import React from 'react';
+import moment from 'moment';
 import { useTranslation } from 'react-i18next';
 
 import styles from './index.module.scss';
@@ -49,7 +50,9 @@ function UserInfo({ userInfo }: { userInfo?: IUserInfo }) {
           </Col>
           <Col xs={12}>
             <div className={styles.label}>{t('birthday')}</div>
-            <div className={styles.content}>{userInfo.dateOfBirth}</div>
+            <div className={styles.content}>
+              {moment(userInfo.dateOfBirth).format('MM/DD/YYYY')}
+            </div>
           </Col>
 
           <Col xs={12}>

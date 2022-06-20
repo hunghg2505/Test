@@ -125,9 +125,13 @@ function DataSubjectManagement() {
 
   const onFieldsChange = (values: any) => {
     if (values?.length < MIN_SEARCH_USER) refListUsers.current.closeListUser();
-    onSearchUsersDebounce(values, () => {
-      if (refListUsers.current?.openListUser) refListUsers.current.openListUser();
-    });
+    onSearchUsersDebounce(
+      values,
+      () => {
+        if (refListUsers.current?.openListUser) refListUsers.current.openListUser();
+      },
+      'firstNameEn'
+    );
   };
 
   return (
@@ -188,7 +192,7 @@ function DataSubjectManagement() {
                 onSearchDataSubject={onSearchDataSubject}
                 ref={refListUsers}
                 users={users}
-                onLoadMoreUsers={onLoadMoreUsers}
+                onLoadMoreUsers={() => onLoadMoreUsers('firstNameEn')}
                 onResetUsers={onResetUsers}
               />
             </div>
