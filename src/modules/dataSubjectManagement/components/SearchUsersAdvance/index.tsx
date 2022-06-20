@@ -75,8 +75,18 @@ const SearchUsersAdvance = ({ onSearchDataSubject, t }: any) => {
             style={shouldBeVisible ? _popoverVisibleStyles : _popoverStyles}>
             <Form
               onFinish={(values) => {
+                const conditions: { [key: string]: any } = {};
+
+                for (const key in values) {
+                  if (values[key] && key !== 'firstname') {
+                    conditions[key] = { searchString: values[key], isEqualSearch: false };
+                  }
+                }
                 onSearchDataSubject({
-                  advanceSearch: values
+                  advanceSearch: {
+                    firstname: values.firstname,
+                    ...conditions
+                  }
                 });
                 setIsShowSearch(false);
               }}

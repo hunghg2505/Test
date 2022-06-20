@@ -38,18 +38,10 @@ export const getDataManagementService = async (values: any): Promise<any> => {
   } = values;
   const { firstname: firstNameAdvance, ...rest } = advanceSearch;
 
-  const conditions: { [key: string]: any } = {};
-
-  for (const key in rest) {
-    if (rest[key]) {
-      conditions[key] = { searchString: rest[key], isEqualSearch: false };
-    }
-  }
-
   const params = {
     firstname: username || firstname || firstNameAdvance || '',
     isEqualSearch,
-    advanceSearch: conditions || {}
+    advanceSearch: { ...rest }
   };
 
   const r: any = await ApiUtils.post(API_PATH.USER_PROFILES, {
