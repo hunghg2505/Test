@@ -78,6 +78,7 @@ const SearchUsersAdvance = ({ onSearchDataSubject, t }: any) => {
                 onSearchDataSubject({
                   advanceSearch: values
                 });
+                setIsShowSearch(false);
               }}
               form={formSearch}
               layout="vertical">
