@@ -64,7 +64,8 @@ const SearchUsersAdvance = ({ onSearchDataSubject, t }: any) => {
         style={{
           position: 'absolute',
           top: '100%',
-          right: 0
+          right: 0,
+          zIndex: 1
         }}>
         {_isTransitioning && (
           <div
