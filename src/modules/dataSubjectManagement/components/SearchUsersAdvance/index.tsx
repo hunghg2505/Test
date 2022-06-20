@@ -37,19 +37,20 @@ const SearchUsersAdvance = ({ onSearchDataSubject, t }: any) => {
     setIsShowSearch(!isShowSearch);
   };
 
-  const onBlur = (name: string, msg?: string) => {
-    const username = formSearch.getFieldValue(name);
+  // Currrent don't need onBlur
+  // const onBlur = (name: string, msg?: string) => {
+  //   const username = formSearch.getFieldValue(name);
 
-    if (!username) {
-      const msgErr = msg || t('messages.errors.min', { min: 3 });
-      formSearch.setFields([
-        {
-          name,
-          errors: [msgErr]
-        }
-      ]);
-    }
-  };
+  //   if (!username) {
+  //     const msgErr = msg || t('messages.errors.min', { min: 3 });
+  //     formSearch.setFields([
+  //       {
+  //         name,
+  //         errors: [msgErr]
+  //       }
+  //     ]);
+  //   }
+  // };
   return (
     <div style={{ position: 'relative' }} ref={refSearch}>
       <Button
@@ -96,7 +97,7 @@ const SearchUsersAdvance = ({ onSearchDataSubject, t }: any) => {
                         message: t('messages.errors.max', { max: 55 })
                       }
                     ]}
-                    onBlur={() => onBlur('firstname')}
+                    // onBlur={() => onBlur('firstname')}
                   />
                 </Col>
                 <Col xs={24}>
@@ -114,7 +115,7 @@ const SearchUsersAdvance = ({ onSearchDataSubject, t }: any) => {
                         message: t('messages.errors.max', { max: 55 })
                       }
                     ]}
-                    onBlur={() => onBlur('lastNameEn')}
+                    // onBlur={() => onBlur('lastNameEn')}
                   />
                 </Col>
 
@@ -133,7 +134,7 @@ const SearchUsersAdvance = ({ onSearchDataSubject, t }: any) => {
                         message: t('messages.errors.max', { max: 55 })
                       }
                     ]}
-                    onBlur={() => onBlur('company')}
+                    // onBlur={() => onBlur('company')}
                   />
                 </Col>
                 <Col xs={24} className={styles.emailFiled}>
@@ -151,7 +152,7 @@ const SearchUsersAdvance = ({ onSearchDataSubject, t }: any) => {
                         message: t('messages.errors.max', { max: 55 })
                       }
                     ]}
-                    onBlur={() => onBlur('email')}
+                    // onBlur={() => onBlur('email')}
                   />
                 </Col>
 
@@ -166,7 +167,7 @@ const SearchUsersAdvance = ({ onSearchDataSubject, t }: any) => {
                         message: t('messages.errors.min', { min: 3 })
                       }
                     ]}
-                    onBlur={() => onBlur('mobile')}
+                    // onBlur={() => onBlur('mobile')}
                   />
                 </Col>
                 <Col xs={24}>
