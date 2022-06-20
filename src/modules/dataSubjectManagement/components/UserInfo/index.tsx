@@ -11,8 +11,6 @@ function UserInfo({ userInfo }: { userInfo?: IUserInfo }) {
 
   if (!userInfo) return null;
 
-  console.log(userInfo);
-
   return (
     <Row className={styles.userInfoWrap}>
       <Col className={styles.avatar}>
