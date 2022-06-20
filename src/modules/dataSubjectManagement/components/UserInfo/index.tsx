@@ -51,7 +51,7 @@ function UserInfo({ userInfo }: { userInfo?: IUserInfo }) {
           </Col>
           <Col xs={12}>
             <div className={styles.label}>{t('birthday')}</div>
-            <div className={styles.content}>{userInfo.email}</div>
+            <div className={styles.content}>{userInfo.dateOfBirth}</div>
           </Col>
 
           <Col xs={12}>
