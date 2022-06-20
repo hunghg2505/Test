@@ -16,6 +16,7 @@ interface Props {
   value?: string | number;
   defaultValue?: string | number;
   autoComplete?: 'on' | 'off';
+  maxLength?: number;
   onChange?: (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
   onBlur?: (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
 }
@@ -26,6 +27,7 @@ function Input({
   prefix = '',
   status = 'default',
   type = 'input',
+  maxLength,
   ...props
 }: Props) {
   if (type === 'textarea') {
@@ -69,6 +71,7 @@ function Input({
       })}
       suffix={suffix}
       prefix={prefix}
+      maxLength={maxLength}
       {...props}
     />
   );

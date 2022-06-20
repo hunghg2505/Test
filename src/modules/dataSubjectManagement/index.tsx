@@ -144,6 +144,7 @@ function DataSubjectManagement() {
                   placeholder="Search Firstname"
                   className={styles.inputSearch}
                   classNameFormInput={styles.inputSearchForm}
+                  maxLength={55}
                   rules={[
                     {
                       required: true,
