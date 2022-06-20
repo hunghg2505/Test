@@ -1,7 +1,8 @@
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse, ResponseType } from 'axios';
 import { getTokenInfo, refreshTokenApi } from 'utils/auth/auth.utils';
+import localStorageUtils, { KeyStorage } from 'utils/local-storage.utils';
 import { ResponseCode } from './api.types';
-import { BACKEND_URL } from './constant';
+import { API_PATH, BACKEND_URL } from './constant';
 
 interface CustomHeaders {
   isAuth: boolean;
@@ -69,6 +70,12 @@ const errorHandler = (error: AxiosError) => {
   const originalRequest: any = error.config;
 
   if (resError?.data?.code === ResponseCode.UNAUTHORIZED) {
+    if (originalRequest.url === API_PATH.REFRESH_TOKEN) {
+      localStorageUtils.setObject(KeyStorage.AUTH, 'null');
+      window.location.href = '/auth/sign-in';
+      return;
+    }
+
     if (!isRefreshing) {
       isRefreshing = true;
       refreshTokenApi().then((data: any) => {
