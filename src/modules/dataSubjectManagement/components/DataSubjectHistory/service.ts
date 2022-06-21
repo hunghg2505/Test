@@ -53,7 +53,7 @@ export const useDataSubjectHistory = ({
   const reqForgotMe = useRequest(async () => forgotMeService(userId), {
     manual: true,
     onSuccess: (r) => {
-      navigate(routePath.DataSubjectManagement);
+      navigate(-1);
     },
     onError: (e) => {
       console.log('forgot me error', e);

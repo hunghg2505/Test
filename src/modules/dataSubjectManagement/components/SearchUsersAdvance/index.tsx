@@ -77,13 +77,19 @@ const SearchUsersAdvance = ({ onSearchDataSubject, t }: any) => {
   useEffect(() => {
     const queryParams = queryString.parse(location.search);
     const conditions = formatAdvancedSearchObject(queryParams);
-
-    onSearchDataSubject({
-      advanceSearch: {
-        firstname: queryParams.firstname,
-        ...conditions
-      }
-    });
+    if (queryParams.firstnameexact) {
+      onSearchDataSubject({
+        firstname: queryParams.firstnameexact,
+        isEqualSearch: true
+      });
+    } else {
+      onSearchDataSubject({
+        advanceSearch: {
+          firstname: queryParams.firstname,
+          ...conditions
+        }
+      });
+    }
   }, []);
 
   return (
@@ -142,6 +148,24 @@ const SearchUsersAdvance = ({ onSearchDataSubject, t }: any) => {
                     placeholder="First Name"
                     maxLength={55}
                     rules={[
+                      ({ getFieldValue }) => ({
+                        validator(_, value) {
+                          if (
+                            !value &&
+                            !getFieldValue('lastNameEn') &&
+                            !getFieldValue('company') &&
+                            !getFieldValue('email') &&
+                            !getFieldValue('mobile') &&
+                            !getFieldValue('application')
+                          ) {
+                            return Promise.reject(
+                              t('messages.errors.require', { field: 'Firstname' })
+                            );
+                          }
+
+                          return Promise.resolve();
+                        }
+                      }),
                       {
                         min: 3,
                         message: t('messages.errors.min', { min: 3 })
