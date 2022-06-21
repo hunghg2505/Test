@@ -192,7 +192,25 @@ const SearchUsersAdvance = ({ onSearchDataSubject, t }: any) => {
                       {
                         max: 55,
                         message: t('messages.errors.max', { max: 55 })
-                      }
+                      },
+                      ({ getFieldError, isFieldValidating }) => ({
+                        validator() {
+                          if (
+                            isFieldValidating('lastNameEn') &&
+                            getFieldError('firstname').includes(
+                              t('messages.errors.require', { field: 'Firstname' })
+                            )
+                          ) {
+                            formSearch.setFields([
+                              {
+                                name: 'firstname',
+                                errors: []
+                              }
+                            ]);
+                          }
+                          return Promise.resolve();
+                        }
+                      })
                     ]}
                     // onBlur={() => onBlur('lastNameEn')}
                   />
@@ -212,7 +230,25 @@ const SearchUsersAdvance = ({ onSearchDataSubject, t }: any) => {
                       {
                         max: 55,
                         message: t('messages.errors.max', { max: 55 })
-                      }
+                      },
+                      ({ getFieldError, isFieldValidating }) => ({
+                        validator() {
+                          if (
+                            isFieldValidating('company') &&
+                            getFieldError('firstname').includes(
+                              t('messages.errors.require', { field: 'Firstname' })
+                            )
+                          ) {
+                            formSearch.setFields([
+                              {
+                                name: 'firstname',
+                                errors: []
+                              }
+                            ]);
+                          }
+                          return Promise.resolve();
+                        }
+                      })
                     ]}
                     // onBlur={() => onBlur('company')}
                   />
@@ -231,7 +267,25 @@ const SearchUsersAdvance = ({ onSearchDataSubject, t }: any) => {
                       {
                         max: 55,
                         message: t('messages.errors.max', { max: 55 })
-                      }
+                      },
+                      ({ getFieldError, isFieldValidating }) => ({
+                        validator() {
+                          if (
+                            isFieldValidating('email') &&
+                            getFieldError('firstname').includes(
+                              t('messages.errors.require', { field: 'Firstname' })
+                            )
+                          ) {
+                            formSearch.setFields([
+                              {
+                                name: 'firstname',
+                                errors: []
+                              }
+                            ]);
+                          }
+                          return Promise.resolve();
+                        }
+                      })
                     ]}
                     // onBlur={() => onBlur('email')}
                   />
@@ -247,13 +301,57 @@ const SearchUsersAdvance = ({ onSearchDataSubject, t }: any) => {
                       {
                         min: 3,
                         message: t('messages.errors.min', { min: 3 })
-                      }
+                      },
+                      {
+                        max: 55,
+                        message: t('messages.errors.max', { max: 55 })
+                      },
+                      ({ getFieldError, isFieldValidating }) => ({
+                        validator() {
+                          if (
+                            isFieldValidating('mobile') &&
+                            getFieldError('firstname').includes(
+                              t('messages.errors.require', { field: 'Firstname' })
+                            )
+                          ) {
+                            formSearch.setFields([
+                              {
+                                name: 'firstname',
+                                errors: []
+                              }
+                            ]);
+                          }
+                          return Promise.resolve();
+                        }
+                      })
                     ]}
                     // onBlur={() => onBlur('mobile')}
                   />
                 </Col>
                 <Col xs={24}>
-                  <Form.Item label="Application" name="application">
+                  <Form.Item
+                    label="Application"
+                    name="application"
+                    rules={[
+                      ({ getFieldError, isFieldValidating }) => ({
+                        validator() {
+                          if (
+                            isFieldValidating('application') &&
+                            getFieldError('firstname').includes(
+                              t('messages.errors.require', { field: 'Firstname' })
+                            )
+                          ) {
+                            formSearch.setFields([
+                              {
+                                name: 'firstname',
+                                errors: []
+                              }
+                            ]);
+                          }
+                          return Promise.resolve();
+                        }
+                      })
+                    ]}>
                     <Select placeholder="Please Select">
                       <Select.Option value={null}>Please Select</Select.Option>
                       <Select.Option value={0}>Lucy</Select.Option>
