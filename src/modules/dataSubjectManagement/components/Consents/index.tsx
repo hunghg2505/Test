@@ -10,42 +10,6 @@ import { useConsent } from './service';
 
 const { Panel } = Collapse;
 
-const SearchBox = ({
-  onSearchConsent
-}: {
-  onSearchConsent: ({ search }: { search: string }) => void;
-}) => {
-  const { t } = useTranslation();
-
-  return (
-    <Row className={styles.consentsSearch} align="middle">
-      <h3>Consent</h3>
-
-      <Form onFinish={onSearchConsent}>
-        <Row align="middle" className={styles.searchBox}>
-          <Row align="middle" className={styles.searchContent}>
-            <IconSearch />
-            <Form.Item name="search">
-              <Input placeholder="Search" />
-            </Form.Item>
-          </Row>
-          <Button
-            htmlType="submit"
-            size="middle"
-            className={styles.btnSearch}
-            suffixIcon={<IconSearch />}>
-            {t('search')}
-          </Button>
-        </Row>
-      </Form>
-
-      <Button size="middle" className={styles.btnCreateCase} typeDisplay="ghost">
-        {t('create_case')}
-      </Button>
-    </Row>
-  );
-};
-
 interface IItem {
   name: string;
   lastUpdated: string;
@@ -62,6 +26,7 @@ interface IItem {
 export interface DataType {
   key: string;
   dataConsent: IItem;
+  defaultValue: { [key: string]: string };
 }
 
 const ArrowDown = (
@@ -88,9 +53,44 @@ const ArrowUp = (
   </svg>
 );
 
-const ConsentOption = ({ value, onChange, dataConsent }: any) => {
+const SearchBox = ({
+  onSearchConsent
+}: {
+  onSearchConsent: ({ search }: { search: string }) => void;
+}) => {
+  const { t } = useTranslation();
+
+  return (
+    <Row className={styles.consentsSearch} align="middle">
+      <h3>{t('consent')}</h3>
+
+      <Form onFinish={onSearchConsent}>
+        <Row align="middle" className={styles.searchBox}>
+          <Row align="middle" className={styles.searchContent}>
+            <IconSearch />
+            <Form.Item name="search">
+              <Input placeholder="Search" />
+            </Form.Item>
+          </Row>
+          <Button
+            htmlType="submit"
+            size="middle"
+            className={styles.btnSearch}
+            suffixIcon={<IconSearch />}>
+            {t('search')}
+          </Button>
+        </Row>
+      </Form>
+
+      <Button size="middle" className={styles.btnCreateCase} typeDisplay="ghost">
+        {t('create_case')}
+      </Button>
+    </Row>
+  );
+};
+
+const ConsentOption = ({ value, onChange, dataConsent, defaultValue = [] }: any) => {
   const onChangeConsent = (checkedValues: any) => {
-    console.log('checked = ', checkedValues);
     onChange(checkedValues);
   };
 
@@ -99,7 +99,7 @@ const ConsentOption = ({ value, onChange, dataConsent }: any) => {
   }
 
   return (
-    <Checkbox.Group onChange={onChangeConsent} defaultValue={['personalised-marketing-0']}>
+    <Checkbox.Group onChange={onChangeConsent} defaultValue={defaultValue}>
       {dataConsent.map((item: any) => {
         return (
           <Checkbox key={item.value} value={item.value}>
@@ -112,25 +112,26 @@ const ConsentOption = ({ value, onChange, dataConsent }: any) => {
   );
 };
 
-const ConsentsList = () => {
-  const { data, loading, onChange } = useConsent();
+const ConsentsList = ({ data, loading, onChange, onSaveConsent, loadingUpdateConsent }: any) => {
+  const { t } = useTranslation();
+  const [formConsent] = Form.useForm();
 
   const onUpdateConsent = (value: any) => {
-    console.log(value);
+    onSaveConsent(value);
   };
 
-  if (loading || !data) return null;
+  if (loading || !data?.data?.length) return null;
 
   return (
     <div className={styles.consentWrap}>
-      <Form className={styles.formConsent} onFinish={onUpdateConsent}>
+      <Form className={styles.formConsent} onFinish={onUpdateConsent} form={formConsent}>
         <div className={styles.listConsent}>
           <Collapse
             accordion
             expandIcon={({ isActive }) => {
               return isActive ? ArrowUp : ArrowDown;
             }}>
-            {data?.data?.map(({ dataConsent, key }: DataType) => {
+            {data?.data?.map(({ dataConsent, defaultValue, key }: DataType) => {
               const content = (
                 <Panel
                   key={key}
@@ -150,8 +151,11 @@ const ConsentsList = () => {
                       <div className={styles.description}>{dataConsent.description}</div>
                     </div>
                   }>
-                  <Form.Item className={styles.panelContent} name={`FormItem_${key}`}>
-                    <ConsentOption dataConsent={dataConsent?.list} />
+                  <Form.Item className={styles.panelContent} name={`${key}`}>
+                    <ConsentOption
+                      dataConsent={dataConsent?.list}
+                      defaultValue={Object.keys(defaultValue)}
+                    />
                   </Form.Item>
                 </Panel>
               );
@@ -163,31 +167,40 @@ const ConsentsList = () => {
               className={styles.pagination}
               current={data?.current}
               onChange={onChange}
-              total={data?.list?.length}
-              defaultPageSize={6}
+              total={data?.total}
+              defaultPageSize={data?.pageSize}
               itemRender={paginationItemRender}
             />
           </Row>
         </div>
 
-        <Button htmlType="submit" className={styles.btnSave}>
-          Save
+        <Button htmlType="submit" className={styles.btnSave} loading={loadingUpdateConsent}>
+          {t('save')}
         </Button>
       </Form>
     </div>
   );
 };
 
-function Consents() {
-  const onSearchConsent = ({ search }: { search: string }) => {
-    console.log(search);
+function Consents({ userId }: { userId: number }) {
+  const { data, loading, onChange, onSearchConsent, onSaveConsent, loadingUpdateConsent } =
+    useConsent({ userId });
+
+  const onSearch = ({ search }: { search: string }) => {
+    onSearchConsent(search);
   };
 
   return (
     <div className={styles.consentsWrap}>
-      <SearchBox onSearchConsent={onSearchConsent} />
+      <SearchBox onSearchConsent={onSearch} />
 
-      <ConsentsList />
+      <ConsentsList
+        data={data}
+        loading={loading}
+        onChange={onChange}
+        onSaveConsent={onSaveConsent}
+        loadingUpdateConsent={loadingUpdateConsent}
+      />
     </div>
   );
 }
