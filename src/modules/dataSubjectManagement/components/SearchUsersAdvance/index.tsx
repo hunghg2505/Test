@@ -29,7 +29,8 @@ const SearchUsersAdvance = ({ onSearchDataSubject, t }: any) => {
   const [_isTransitioning, shouldBeVisible, refFormModal] = useFadeEffect(isShowSearch);
   const refSearch: any = useRef();
 
-  useClickAway(() => {
+  useClickAway((e: any) => {
+    if (e?.target?.className === 'ant-select-item-option-content') return;
     setIsShowSearch(false);
   }, refSearch);
 
@@ -78,6 +79,13 @@ const SearchUsersAdvance = ({ onSearchDataSubject, t }: any) => {
                 const conditions: { [key: string]: any } = {};
 
                 for (const key in values) {
+                  if (key === 'application') {
+                    if (values[key] === null) {
+                      delete values[key];
+                    } else {
+                      conditions[key] = values[key];
+                    }
+                  }
                   if (values[key] && key !== 'firstname') {
                     conditions[key] = { searchString: values[key], isEqualSearch: false };
                   }
@@ -189,8 +197,9 @@ const SearchUsersAdvance = ({ onSearchDataSubject, t }: any) => {
                 <Col xs={24}>
                   <Form.Item label="Application" name="application">
                     <Select placeholder="Please Select">
-                      <Select.Option value="lucy">Lucy</Select.Option>
-                      <Select.Option value="lucy1">Lucy1</Select.Option>
+                      <Select.Option value={null}>Please Select</Select.Option>
+                      <Select.Option value={0}>Lucy</Select.Option>
+                      <Select.Option value={1}>Lucy1</Select.Option>
                     </Select>
                   </Form.Item>
                 </Col>
