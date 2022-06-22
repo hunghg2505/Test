@@ -1,7 +1,9 @@
-import cloneDeep from 'lodash/cloneDeep';
 import ApiUtils from 'utils/api/api.utils';
 import { useMount, useRequest } from 'ahooks';
-import { flattenDeep, get, groupBy, isArray } from 'lodash';
+import flattenDeep from 'lodash/flattenDeep';
+import get from 'lodash/get';
+import groupBy from 'lodash/groupBy';
+import isArray from 'lodash/isArray';
 import { API_PATH } from 'utils/api/constant';
 import { message } from 'antd';
 

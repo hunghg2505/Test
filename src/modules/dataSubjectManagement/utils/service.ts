@@ -1,5 +1,6 @@
 import { useRequest } from 'ahooks';
-import { debounce, get } from 'lodash';
+import get from 'lodash/get';
+import debounce from 'lodash/debounce';
 import { useRef, useState } from 'react';
 import ApiUtils from 'utils/api/api.utils';
 import { API_PATH } from 'utils/api/constant';
