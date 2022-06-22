@@ -8,6 +8,7 @@ import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
 import { User } from 'types/common.types';
 import Button from 'libraries/UI/Button';
 import IconLogout from 'assets/icons/icon-logout';
+import { useKeycloak } from '@react-keycloak/web';
 
 interface Props {
   user?: User;
@@ -19,6 +20,9 @@ interface Props {
 
 export default function MainHeader({ isMobile, showSider, user, toggleSider, onLogout }: Props) {
   const { t } = useTranslation();
+  const { keycloak } = useKeycloak();
+  console.log('keycloak', keycloak);
+
   return (
     <div className={styles.mainHeader}>
       {/* <div className={styles.logoView}>
@@ -32,7 +36,9 @@ export default function MainHeader({ isMobile, showSider, user, toggleSider, onL
         )}
         <Logo />
       </div> */}
-      <p className={styles.welcomeUser}>{t('welcome', { username: user?.email })}</p>
+      <p className={styles.welcomeUser}>
+        {t('welcome', { username: user?.email || keycloak?.tokenParsed?.preferred_username })}
+      </p>
       <div className={styles.avatarView}>
         <div className={styles.profileUser}>
           <div className={styles.avatar}>
@@ -40,7 +46,10 @@ export default function MainHeader({ isMobile, showSider, user, toggleSider, onL
           </div>
           <p className={styles.titleProfile}>{t('profile')}</p>
         </div>
-        <Button onClick={onLogout} className={styles.btnLogout} suffixIcon={<IconLogout />}>
+        <Button
+          onClick={() => keycloak.logout()}
+          className={styles.btnLogout}
+          suffixIcon={<IconLogout />}>
           {t('logout')}
         </Button>
       </div>

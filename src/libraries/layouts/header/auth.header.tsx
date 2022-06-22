@@ -1,3 +1,4 @@
+import { useKeycloak } from '@react-keycloak/web';
 import LogoWhite from 'assets/icons/logo-white';
 import clsx from 'clsx';
 import Button from 'libraries/UI/Button';
@@ -12,6 +13,7 @@ export default function AuthHeader() {
   const location = useLocation();
   const navigate = useNavigate();
   const [showButton, setShowButton] = useState({ showBtnSignIn: false, showBtnSignUp: false });
+  const { keycloak } = useKeycloak();
 
   useEffect(() => {
     getButtonHeader(location.pathname);
@@ -45,7 +47,7 @@ export default function AuthHeader() {
         <LogoWhite />
       </div>
       <div className={styles.avatarView}>
-        {showButton.showBtnSignUp && (
+        {/* {showButton.showBtnSignUp && (
           <div
             className={clsx({
               'mr-12': showButton.showBtnSignIn === true && showButton.showBtnSignUp === true
@@ -54,11 +56,26 @@ export default function AuthHeader() {
               {t('sign_up_button')}
             </Button>
           </div>
-        )}
-        {showButton.showBtnSignIn && (
+        )} */}
+        {/* {showButton.showBtnSignIn && (
           <div>
             <Button style={{ padding: '10px 24px' }} onClick={() => onGoTo(routePath.SignIn)}>
               {t('login_button')}
+            </Button>
+          </div>
+        )} */}
+
+        {!keycloak.authenticated && (
+          <div>
+            <Button style={{ padding: '10px 24px' }} onClick={() => keycloak.login()}>
+              {t('login_button_clock', 'Login Keycloak')}
+            </Button>
+          </div>
+        )}
+        {!!keycloak.authenticated && (
+          <div>
+            <Button style={{ padding: '10px 24px' }} onClick={() => keycloak.logout()}>
+              {t('logout_button_clock', 'Logout Keycloak')}
             </Button>
           </div>
         )}

@@ -12,15 +12,19 @@ import 'styles/global.scss';
 import store from 'utils/redux-store';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { ReactKeycloakProvider } from '@react-keycloak/web';
+import keycloak from './keycloak';
 
 ReactDOM.render(
-  <Provider store={store}>
-    <React.StrictMode>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </React.StrictMode>
-  </Provider>,
+  <ReactKeycloakProvider authClient={keycloak}>
+    <Provider store={store}>
+      <React.StrictMode>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </React.StrictMode>
+    </Provider>
+  </ReactKeycloakProvider>,
   document.getElementById('root')
 );
 
