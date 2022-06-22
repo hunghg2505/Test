@@ -89,8 +89,8 @@ const SearchBox = ({
   );
 };
 
-const ConsentOption = ({ value, onChange, dataConsent, defaultValue = [] }: any) => {
-  const onChangeConsent = (checkedValues: any) => {
+const ConsentOption = ({ value, onChange, dataConsent }: any) => {
+  const onChangeValues = (checkedValues: any) => {
     onChange(checkedValues);
   };
 
@@ -99,7 +99,7 @@ const ConsentOption = ({ value, onChange, dataConsent, defaultValue = [] }: any)
   }
 
   return (
-    <Checkbox.Group onChange={onChangeConsent} defaultValue={defaultValue}>
+    <Checkbox.Group onChange={onChangeValues} defaultValue={value}>
       {dataConsent.map((item: any) => {
         return (
           <Checkbox key={item.value} value={item.value}>
@@ -120,18 +120,27 @@ const ConsentsList = ({ data, loading, onChange, onSaveConsent, loadingUpdateCon
     onSaveConsent(value);
   };
 
+  const initialValues = data?.data?.reduce(
+    (acc: any, v: any) => ({ ...acc, [v?.key]: Object.keys(v?.defaultValue) }),
+    {}
+  );
+
   if (loading || !data?.data?.length) return null;
 
   return (
     <div className={styles.consentWrap}>
-      <Form className={styles.formConsent} onFinish={onUpdateConsent} form={formConsent}>
+      <Form
+        className={styles.formConsent}
+        onFinish={onUpdateConsent}
+        form={formConsent}
+        initialValues={initialValues}>
         <div className={styles.listConsent}>
           <Collapse
             accordion
             expandIcon={({ isActive }) => {
               return isActive ? ArrowUp : ArrowDown;
             }}>
-            {data?.data?.map(({ dataConsent, defaultValue, key }: DataType) => {
+            {data?.data?.map(({ dataConsent, key }: DataType) => {
               const content = (
                 <Panel
                   key={key}
@@ -152,10 +161,7 @@ const ConsentsList = ({ data, loading, onChange, onSaveConsent, loadingUpdateCon
                     </div>
                   }>
                   <Form.Item className={styles.panelContent} name={`${key}`}>
-                    <ConsentOption
-                      dataConsent={dataConsent?.list}
-                      defaultValue={Object.keys(defaultValue)}
-                    />
+                    <ConsentOption dataConsent={dataConsent?.list} />
                   </Form.Item>
                 </Panel>
               );
