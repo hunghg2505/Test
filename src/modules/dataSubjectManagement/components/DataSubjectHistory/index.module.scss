@@ -18,7 +18,7 @@
 .dataSubjectContent {
   text-align: center;
   // background: #FFFFFF;
-  border: 1px solid #F6F6F6;
+  border: 1px solid #f6f6f6;
   box-shadow: 0px 5px 40px rgba(9, 44, 76, 0.02);
   border-radius: 8px;
 }
@@ -38,4 +38,41 @@
 
 .btnForgotMe {
   padding: 10px 24px;
+}
+
+.btnCancel {
+  background-color: $color-gray3;
+  border-radius: 100px;
+  color: $color-primary-light;
+
+  &:focus {
+    background-color: $color-gray3;
+    border-radius: 100px;
+    color: $color-primary-light;
+  }
+
+  &:hover {
+    background-color: $color-gray3;
+    border-radius: 100px;
+    color: $color-primary-light;
+    border-color: $color-gray3;
+  }
+}
+
+.btnDelete {
+  background-color: $color-primary;
+  border-radius: 100px;
+  color: $color-primary-light;
+
+  &:focus {
+    background-color: $color-primary;
+    border-radius: 100px;
+    color: $color-primary-light;
+  }
+
+  &:hover {
+    background-color: $color-primary;
+    border-radius: 100px;
+    color: $color-primary-light;
+  }
 }

@@ -1,4 +1,5 @@
 import { routePath } from 'routing/path.routing';
+import { message } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { useRequest, useMount } from 'ahooks';
 import moment from 'moment';
@@ -53,9 +54,11 @@ export const useDataSubjectHistory = ({
   const reqForgotMe = useRequest(async () => forgotMeService(userId), {
     manual: true,
     onSuccess: (r) => {
+      message.success('Delete profile successfully');
       navigate(-1);
     },
     onError: (e) => {
+      message.error('Fail to delete profile');
       console.log('forgot me error', e);
     }
   });
