@@ -2,7 +2,7 @@ export enum ResponseCode {
   SUCCESS = 200,
   UNAUTHORIZED = 401,
   PERMISSION = 403,
-  SERVER_ERROR = 500
+  SERVER_ERROR = 500,
 }
 
 export interface ResponseBase<T> {

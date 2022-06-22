@@ -7,7 +7,7 @@ interface DocumentState {
 
 const initialState = {
   title: process.env.REACT_APP_NAME || 'ABD-PDPA',
-  isNotFound: false
+  isNotFound: false,
 };
 
 const document = createSlice({
@@ -16,8 +16,8 @@ const document = createSlice({
   reducers: {
     changeDocument: (state: DocumentState, action: PayloadAction<DocumentState>) => {
       state = _.merge(state, action.payload);
-    }
-  }
+    },
+  },
 });
 
 const { reducer, actions } = document;

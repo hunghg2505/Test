@@ -12,7 +12,6 @@ const withUnAuthClient = (WrapperComponent: any) => (props: any) => {
     if (auth && auth.accessToken && Object.keys(auth).length > 0) {
       navigate(routePath.HomePage);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [auth]);
 
   if (!auth || !auth?.accessToken) {

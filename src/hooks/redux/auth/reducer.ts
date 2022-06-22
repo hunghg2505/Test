@@ -19,8 +19,8 @@ const auth = createSlice({
     changeAuth: (state: LocalAuth | null, action: PayloadAction<LocalAuth | null>) => {
       state = action.payload;
       return state;
-    }
-  }
+    },
+  },
 });
 
 const { reducer, actions } = auth;

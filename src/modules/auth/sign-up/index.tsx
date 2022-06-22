@@ -30,55 +30,55 @@ export default function SignUpPage() {
 
         <div className={styles.formWrap}>
           <h3 className={styles.titleSignUp}>{t('sign_up.title')}</h3>
-          <Form layout="vertical" name="basic" onFinish={onSignUp}>
-            <div className="mb-16">
+          <Form layout='vertical' name='basic' onFinish={onSignUp}>
+            <div className='mb-16'>
               <InputForm
                 label={t('email_address')}
-                name="email"
+                name='email'
                 rules={[
                   {
                     required: true,
-                    message: t('messages.errors.require', { field: t('email_address') })
+                    message: t('messages.errors.require', { field: t('email_address') }),
                   },
                   {
                     pattern: new RegExp(RegexUtils.RegexConstants.REGEX_EMAIL),
-                    message: `${t('messages.errors.email_invalid')}`
-                  }
+                    message: `${t('messages.errors.email_invalid')}`,
+                  },
                 ]}
               />
             </div>
 
-            <div className="mb-16">
+            <div className='mb-16'>
               <InputForm
                 label={t('name')}
-                name="name"
+                name='name'
                 rules={[
                   {
                     required: true,
-                    message: t('messages.errors.require', { field: t('name') })
+                    message: t('messages.errors.require', { field: t('name') }),
                   },
                   {
                     max: 50,
-                    message: t('messages.errors.max_name', { max: 50 })
+                    message: t('messages.errors.max_name', { max: 50 }),
                   },
                   {
                     whitespace: true,
-                    message: t('messages.errors.empty_name')
-                  }
+                    message: t('messages.errors.empty_name'),
+                  },
                 ]}
               />
             </div>
 
-            <div className="mb-16">
+            <div className='mb-16'>
               <InputPasswordForm
                 label={t('password')}
-                name="password"
+                name='password'
                 rules={[
                   {
                     validator: async (_, value) => {
                       if (!value) {
                         return Promise.reject(
-                          t('messages.errors.require', { field: t('password') })
+                          t('messages.errors.require', { field: t('password') }),
                         );
                       }
                       if (value?.length < 8) {
@@ -92,8 +92,8 @@ export default function SignUpPage() {
                       }
 
                       return Promise.resolve();
-                    }
-                  }
+                    },
+                  },
                 ]}
               />
             </div>
@@ -101,27 +101,27 @@ export default function SignUpPage() {
             <div>
               <InputPasswordForm
                 label={t('confirm_password')}
-                name="confirm_password"
+                name='confirm_password'
                 dependencies={['password']}
                 rules={[
                   ({ getFieldValue }) => ({
                     validator(_, value) {
                       if (!value) {
                         return Promise.reject(
-                          t('messages.errors.require', { field: t('confirm_password') })
+                          t('messages.errors.require', { field: t('confirm_password') }),
                         );
                       }
                       if (getFieldValue('password') === value) {
                         return Promise.resolve();
                       }
                       return Promise.reject(t('password_not_match'));
-                    }
-                  })
+                    },
+                  }),
                 ]}
               />
             </div>
 
-            <Button htmlType="submit" className={styles.buttonSubmit} loading={reqSignUp.loading}>
+            <Button htmlType='submit' className={styles.buttonSubmit} loading={reqSignUp.loading}>
               {t('continue')}
             </Button>
           </Form>
@@ -131,7 +131,8 @@ export default function SignUpPage() {
               <span>By continuing, you’re agreeing to our </span>
               <p
                 onClick={() => setIsShowTermOfServiceModal(true)}
-                className={styles.termOfServiceText}>
+                className={styles.termOfServiceText}
+              >
                 Terms of Service
               </p>
             </p>

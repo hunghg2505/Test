@@ -12,5 +12,5 @@ export const routePath = {
   Auth: '/auth',
   SignIn: '/auth/sign-in',
   SignUp: '/auth/sign-up',
-  ForgotPassword: '/auth/forgot-password'
+  ForgotPassword: '/auth/forgot-password',
 };

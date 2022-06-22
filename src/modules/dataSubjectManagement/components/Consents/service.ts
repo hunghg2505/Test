@@ -10,7 +10,7 @@ const PAGE_SIZE = 10;
 export const getConsentService = async ({
   search,
   userId,
-  page
+  page,
 }: {
   search?: string | undefined;
   userId: number;
@@ -20,7 +20,7 @@ export const getConsentService = async ({
     keyword: search,
     userId: userId,
     limit: PAGE_SIZE,
-    page: page || 1
+    page: page || 1,
   };
 
   const r: any = await ApiUtils.fetch(API_PATH.CONSENTS, params);
@@ -30,7 +30,7 @@ export const getConsentService = async ({
       if (!isArray(item?.myConsent) && item?.myConsent) {
         return {
           ...item,
-          myConsent: [item?.myConsent]
+          myConsent: [item?.myConsent],
         };
       }
       return item;
@@ -56,11 +56,11 @@ export const getConsentService = async ({
           selected: consent?.myConsent?.reduce((acc: any, i: any) => {
             return {
               ...acc,
-              [`${i?.key}@${consent?.id}`]: i?.value
+              [`${i?.key}@${consent?.id}`]: i?.value,
             };
-          }, {})
-        }))
-      }
+          }, {}),
+        })),
+      },
     };
   });
   formatConsents = formatConsents?.map((v: any) => {
@@ -68,12 +68,12 @@ export const getConsentService = async ({
       const selected = v?.selected || {};
       return {
         ...acc,
-        ...selected
+        ...selected,
       };
     }, {});
     return {
       ...v,
-      defaultValue
+      defaultValue,
     };
   });
 
@@ -83,7 +83,7 @@ export const getConsentService = async ({
     pageSize: PAGE_SIZE,
     data: formatConsents,
     keyword: search,
-    listData
+    listData,
   };
 };
 
@@ -91,7 +91,7 @@ export const updateConsent = async ({ userId, content, ConsentList }: any) => {
   const newConsent: any = {
     insert: [],
     update: [],
-    delete: []
+    delete: [],
   };
 
   const consentHasChecked = ConsentList?.filter((v: any) => v?.myConsent?.length > 0);
@@ -104,25 +104,25 @@ export const updateConsent = async ({ userId, content, ConsentList }: any) => {
       consentId: Number(consentId),
       data: {
         key: `${key}`,
-        value: 'true'
-      }
+        value: 'true',
+      },
     });
   });
 
   consentHasChecked?.forEach((element: any) => {
     const isExistInsert = newConsent.insert?.find(
-      (v: any) => `${v?.consentId}` === `${element?.id}`
+      (v: any) => `${v?.consentId}` === `${element?.id}`,
     );
     if (!isExistInsert) {
       newConsent.delete.push({
-        consentId: Number(element?.id)
+        consentId: Number(element?.id),
       });
     }
   });
 
   const body = {
     userId: userId,
-    content: newConsent
+    content: newConsent,
   };
 
   return ApiUtils.post(API_PATH.OPT_OUT_IN, body);
@@ -130,7 +130,7 @@ export const updateConsent = async ({ userId, content, ConsentList }: any) => {
 
 export const useConsent = ({ userId }: { userId: number }) => {
   const { data, loading, run, refresh } = useRequest(getConsentService, {
-    manual: true
+    manual: true,
   });
 
   const reqUpdateConsent = useRequest(updateConsent, {
@@ -140,7 +140,7 @@ export const useConsent = ({ userId }: { userId: number }) => {
     },
     onError: () => {
       message.error('Update Consent Fail');
-    }
+    },
   });
 
   useMount(() => {
@@ -162,14 +162,12 @@ export const useConsent = ({ userId }: { userId: number }) => {
     refresh();
   };
 
-  console.log('consent data', data);
-
   return {
     data,
     loading,
     onChange,
     onSearchConsent,
     onSaveConsent,
-    loadingUpdateConsent: reqUpdateConsent.loading
+    loadingUpdateConsent: reqUpdateConsent.loading,
   };
 };

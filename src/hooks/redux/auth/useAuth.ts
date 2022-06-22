@@ -15,7 +15,7 @@ function useAuth() {
 
   return {
     auth,
-    setAuth
+    setAuth,
   };
 }
 

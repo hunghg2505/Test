@@ -3,7 +3,7 @@ import document from './document/reducer';
 
 const baseReducer = {
   auth,
-  document
+  document,
 };
 
 export default baseReducer;

@@ -1,7 +1,7 @@
 /* eslint-disable no-empty */
 export enum KeyStorage {
   LOCALE = 'locale',
-  AUTH = 'auth'
+  AUTH = 'auth',
 }
 
 const localStorageUtils = {
@@ -49,7 +49,7 @@ const localStorageUtils = {
 
   clear: () => {
     localStorage.clear();
-  }
+  },
 };
 
 export default localStorageUtils;

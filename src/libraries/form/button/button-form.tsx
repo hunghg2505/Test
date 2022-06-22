@@ -27,7 +27,7 @@ export default function ButtonForm({
   buttonType = 'dark',
   className,
   borderRadius = 5,
-  onClick
+  onClick,
 }: Props) {
   const { t } = useTranslation();
   return (
@@ -41,7 +41,7 @@ export default function ButtonForm({
       className={clsx(styles.buttonForm, {
         [styles.buttonFormDark]: buttonType === 'dark',
         [styles.buttonFormLight]: buttonType === 'light',
-        [className]: true
+        [className]: true,
       })}
       style={{ borderRadius: borderRadius }}
     >

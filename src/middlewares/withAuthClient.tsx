@@ -12,11 +12,10 @@ const withAuthClient = (WrapperComponent: any) => (props: any) => {
   useEffect(() => {
     if (!auth || !auth.accessToken || auth.accessToken.length <= 0) {
       navigate(routePath.SignIn, {
-        state: { callbackUrl: location.pathname }
+        state: { callbackUrl: location.pathname },
       });
       return;
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [auth, location]);
 
   if (auth) {

@@ -8,20 +8,20 @@ export const refreshTokenApi = async (): Promise<any> => {
 
     const res: any = await instance.get(API_PATH.REFRESH_TOKEN, {
       headers: {
-        Authorization: 'Bearer ' + tokenInfo?.refreshToken
-      }
+        Authorization: 'Bearer ' + tokenInfo?.refreshToken,
+      },
     });
 
     const newTokenInfo: any = {
       accessToken: res?.content?.accessToken,
       refreshToken: res?.content?.refreshToken,
-      expireTime: Date.now() + res?.content?.expireTime * 1000
+      expireTime: Date.now() + res?.content?.expireTime * 1000,
     };
 
     setTokenInfo({ ...tokenInfo, ...newTokenInfo });
     return res?.content?.accessToken;
   } catch (error) {
-    console.log('error refresh token', error);
+    // console.log('error refresh token', error);
   }
 };
 
@@ -39,6 +39,6 @@ export const getTokenInfo = async () => {
 
 export const setTokenInfo = (tokenInfo: any | null) => {
   localStorageUtils.setObject(KeyStorage.AUTH, {
-    ...tokenInfo
+    ...tokenInfo,
   });
 };
