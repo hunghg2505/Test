@@ -135,13 +135,14 @@ function DataSubjectHistory({ userId, subjectId }: { userId: string; subjectId: 
           }}
         />
       </div>
-      <Button
+
+      {/* <Button
         type="secondary"
         className={styles.btnForgotMe}
         onClick={showConfirm}
         loading={reqForgotMe.loading}>
         Forget Me
-      </Button>
+      </Button> */}
     </div>
   );
 }
