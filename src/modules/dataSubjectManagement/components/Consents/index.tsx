@@ -68,8 +68,24 @@ const SearchBox = ({
         <Row align="middle" className={styles.searchBox}>
           <Row align="middle" className={styles.searchContent}>
             <IconSearch />
-            <Form.Item name="search">
-              <Input placeholder="Search" />
+            <Form.Item
+              name="search"
+              className={styles.formSearchItem}
+              rules={[
+                {
+                  required: true,
+                  message: t('messages.errors.min', { min: 3 })
+                },
+                {
+                  min: 3,
+                  message: t('messages.errors.min', { min: 3 })
+                },
+                {
+                  max: 55,
+                  message: t('messages.errors.max_search_firstname', { max: 55 })
+                }
+              ]}>
+              <Input placeholder="Search" maxLength={55} />
             </Form.Item>
           </Row>
           <Button
@@ -170,6 +186,7 @@ const ConsentsList = ({ data, loading, onChange, onSaveConsent, loadingUpdateCon
               total={data?.total}
               defaultPageSize={data?.pageSize}
               itemRender={paginationItemRender}
+              showSizeChanger={false}
             />
           </Row>
         </div>
