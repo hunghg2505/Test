@@ -1,5 +1,6 @@
 import React, { useImperativeHandle, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 
 import styles from '../../index.module.scss';
 
@@ -8,6 +9,7 @@ const SuggestListUsers = (
   ref: any
 ) => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const [dropdownVisible, setDropdownVisible] = useState(false);
 
   useImperativeHandle(ref, () => {
@@ -24,6 +26,10 @@ const SuggestListUsers = (
     });
     setDropdownVisible(false);
     onResetUsers();
+    navigate({
+      pathname: '/data-subject',
+      search: `?firstnameexact=${item.name}`
+    });
   };
 
   if (!dropdownVisible || (!loading && !data)) return null;

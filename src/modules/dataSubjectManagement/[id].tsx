@@ -13,8 +13,6 @@ function DataSubjectDetail() {
 
   const { loading, data } = useDataSubjectDetail(`${id}`);
 
-  console.log('data', data);
-
   if (!id) {
     navigate('/data-subject');
     return null;
@@ -31,7 +29,7 @@ function DataSubjectDetail() {
   return (
     <ContainerLayout title="Data Subject Detail">
       <UserInfo userInfo={data?.userInfo} />
-      <Consents />
+      <Consents userId={Number(data?.userInfo?.id)} />
       <DataSubjectHistory userId={data?.userInfo?.id || ''} subjectId={id} />
     </ContainerLayout>
   );

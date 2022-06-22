@@ -6,7 +6,9 @@ import { useFadeEffect } from 'hooks/useFadeEffect';
 import InputForm from 'libraries/form/input/input-form';
 import Button from 'libraries/UI/Button';
 import Select from 'libraries/UI/Select';
-import React, { useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
+import { useNavigate, createSearchParams, useLocation } from 'react-router-dom';
+import queryString from 'query-string';
 import { RegexUtils } from 'utils/regex-helper';
 import styles from '../../index.module.scss';
 
@@ -23,13 +25,33 @@ const _popoverVisibleStyles = {
   transitionTimingFunction: 'cubic-bezier(0, 0, 1, 1)'
 };
 
+const formatAdvancedSearchObject = (obj: any) => {
+  const conditions: { [key: string]: any } = {};
+  for (const key in obj) {
+    if (key === 'application') {
+      if (obj[key] === null) {
+        delete obj[key];
+      } else {
+        conditions[key] = obj[key];
+      }
+    }
+    if (obj[key] && key !== 'firstname') {
+      conditions[key] = { searchString: obj[key], isEqualSearch: false };
+    }
+  }
+  return conditions;
+};
+
 const SearchUsersAdvance = ({ onSearchDataSubject, t }: any) => {
   const [formSearch] = Form.useForm();
   const [isShowSearch, setIsShowSearch] = React.useState(false);
   const [_isTransitioning, shouldBeVisible, refFormModal] = useFadeEffect(isShowSearch);
   const refSearch: any = useRef();
+  const navigate = useNavigate();
+  const location = useLocation();
 
-  useClickAway(() => {
+  useClickAway((e: any) => {
+    if (e?.target?.className === 'ant-select-item-option-content') return;
     setIsShowSearch(false);
   }, refSearch);
 
@@ -51,6 +73,25 @@ const SearchUsersAdvance = ({ onSearchDataSubject, t }: any) => {
   //     ]);
   //   }
   // };
+
+  useEffect(() => {
+    const queryParams = queryString.parse(location.search);
+    const conditions = formatAdvancedSearchObject(queryParams);
+    if (queryParams.firstnameexact) {
+      onSearchDataSubject({
+        firstname: queryParams.firstnameexact,
+        isEqualSearch: true
+      });
+    } else {
+      onSearchDataSubject({
+        advanceSearch: {
+          firstname: queryParams.firstname,
+          ...conditions
+        }
+      });
+    }
+  }, []);
+
   return (
     <div style={{ position: 'relative' }} ref={refSearch}>
       <Button
@@ -75,18 +116,25 @@ const SearchUsersAdvance = ({ onSearchDataSubject, t }: any) => {
             style={shouldBeVisible ? _popoverVisibleStyles : _popoverStyles}>
             <Form
               onFinish={(values) => {
-                const conditions: { [key: string]: any } = {};
-
-                for (const key in values) {
-                  if (values[key] && key !== 'firstname') {
-                    conditions[key] = { searchString: values[key], isEqualSearch: false };
-                  }
-                }
+                const conditions = formatAdvancedSearchObject(values);
                 onSearchDataSubject({
                   advanceSearch: {
                     firstname: values.firstname,
                     ...conditions
                   }
+                });
+
+                const params: { [key: string]: any } = {};
+
+                for (const key in values) {
+                  if (values[key] !== undefined && values[key] !== '') {
+                    params[key] = values[key];
+                  }
+                }
+
+                navigate({
+                  pathname: '/data-subject',
+                  search: `?${createSearchParams(params)}`
                 });
                 setIsShowSearch(false);
               }}
@@ -100,6 +148,24 @@ const SearchUsersAdvance = ({ onSearchDataSubject, t }: any) => {
                     placeholder="First Name"
                     maxLength={55}
                     rules={[
+                      ({ getFieldValue }) => ({
+                        validator(_, value) {
+                          if (
+                            !value &&
+                            !getFieldValue('lastNameEn') &&
+                            !getFieldValue('company') &&
+                            !getFieldValue('email') &&
+                            !getFieldValue('mobile') &&
+                            !getFieldValue('application')
+                          ) {
+                            return Promise.reject(
+                              t('messages.errors.require', { field: 'Firstname' })
+                            );
+                          }
+
+                          return Promise.resolve();
+                        }
+                      }),
                       {
                         min: 3,
                         message: t('messages.errors.min', { min: 3 })
@@ -126,7 +192,25 @@ const SearchUsersAdvance = ({ onSearchDataSubject, t }: any) => {
                       {
                         max: 55,
                         message: t('messages.errors.max', { max: 55 })
-                      }
+                      },
+                      ({ getFieldError, isFieldValidating }) => ({
+                        validator() {
+                          if (
+                            isFieldValidating('lastNameEn') &&
+                            getFieldError('firstname').includes(
+                              t('messages.errors.require', { field: 'Firstname' })
+                            )
+                          ) {
+                            formSearch.setFields([
+                              {
+                                name: 'firstname',
+                                errors: []
+                              }
+                            ]);
+                          }
+                          return Promise.resolve();
+                        }
+                      })
                     ]}
                     // onBlur={() => onBlur('lastNameEn')}
                   />
@@ -146,7 +230,25 @@ const SearchUsersAdvance = ({ onSearchDataSubject, t }: any) => {
                       {
                         max: 55,
                         message: t('messages.errors.max', { max: 55 })
-                      }
+                      },
+                      ({ getFieldError, isFieldValidating }) => ({
+                        validator() {
+                          if (
+                            isFieldValidating('company') &&
+                            getFieldError('firstname').includes(
+                              t('messages.errors.require', { field: 'Firstname' })
+                            )
+                          ) {
+                            formSearch.setFields([
+                              {
+                                name: 'firstname',
+                                errors: []
+                              }
+                            ]);
+                          }
+                          return Promise.resolve();
+                        }
+                      })
                     ]}
                     // onBlur={() => onBlur('company')}
                   />
@@ -165,7 +267,25 @@ const SearchUsersAdvance = ({ onSearchDataSubject, t }: any) => {
                       {
                         max: 55,
                         message: t('messages.errors.max', { max: 55 })
-                      }
+                      },
+                      ({ getFieldError, isFieldValidating }) => ({
+                        validator() {
+                          if (
+                            isFieldValidating('email') &&
+                            getFieldError('firstname').includes(
+                              t('messages.errors.require', { field: 'Firstname' })
+                            )
+                          ) {
+                            formSearch.setFields([
+                              {
+                                name: 'firstname',
+                                errors: []
+                              }
+                            ]);
+                          }
+                          return Promise.resolve();
+                        }
+                      })
                     ]}
                     // onBlur={() => onBlur('email')}
                   />
@@ -181,16 +301,61 @@ const SearchUsersAdvance = ({ onSearchDataSubject, t }: any) => {
                       {
                         min: 3,
                         message: t('messages.errors.min', { min: 3 })
-                      }
+                      },
+                      {
+                        max: 55,
+                        message: t('messages.errors.max', { max: 55 })
+                      },
+                      ({ getFieldError, isFieldValidating }) => ({
+                        validator() {
+                          if (
+                            isFieldValidating('mobile') &&
+                            getFieldError('firstname').includes(
+                              t('messages.errors.require', { field: 'Firstname' })
+                            )
+                          ) {
+                            formSearch.setFields([
+                              {
+                                name: 'firstname',
+                                errors: []
+                              }
+                            ]);
+                          }
+                          return Promise.resolve();
+                        }
+                      })
                     ]}
                     // onBlur={() => onBlur('mobile')}
                   />
                 </Col>
                 <Col xs={24}>
-                  <Form.Item label="Application" name="application">
+                  <Form.Item
+                    label="Application"
+                    name="application"
+                    rules={[
+                      ({ getFieldError, isFieldValidating }) => ({
+                        validator() {
+                          if (
+                            isFieldValidating('application') &&
+                            getFieldError('firstname').includes(
+                              t('messages.errors.require', { field: 'Firstname' })
+                            )
+                          ) {
+                            formSearch.setFields([
+                              {
+                                name: 'firstname',
+                                errors: []
+                              }
+                            ]);
+                          }
+                          return Promise.resolve();
+                        }
+                      })
+                    ]}>
                     <Select placeholder="Please Select">
-                      <Select.Option value="lucy">Lucy</Select.Option>
-                      <Select.Option value="lucy1">Lucy1</Select.Option>
+                      <Select.Option value={null}>Please Select</Select.Option>
+                      <Select.Option value={0}>Lucy</Select.Option>
+                      <Select.Option value={1}>Lucy1</Select.Option>
                     </Select>
                   </Form.Item>
                 </Col>

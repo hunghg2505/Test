@@ -12,7 +12,6 @@
 2. React router 6
 3. React i18next 11
 4. Antd 4
-5. Socket IO 4
 6. node-sass 7
 7. Redux toolkit 1
 
@@ -26,8 +25,6 @@ src
  - constants
  - hooks
     - redux
-    - rxjs
-    - socket-io
  - libraries
     - components
     - form

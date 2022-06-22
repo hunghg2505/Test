@@ -1,7 +1,8 @@
 import { routePath } from 'routing/path.routing';
+import { message } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { useRequest, useMount } from 'ahooks';
-import moment from 'moment';
+import dayjs from 'dayjs';
 import ApiUtils from 'utils/api/api.utils';
 import { API_PATH } from 'utils/api/constant';
 
@@ -21,7 +22,7 @@ export const getDataSubjectHistoryService = async (value: any): Promise<any> => 
         ...item,
         key: `${item?.id}`,
         noId: `${item?.id}`,
-        requestDate: moment(item?.requestDate).format('MMM DD, YYYY')
+        requestDate: dayjs(item?.requestDate).format('MMM DD, YYYY')
       })) || []
   };
 };
@@ -53,9 +54,11 @@ export const useDataSubjectHistory = ({
   const reqForgotMe = useRequest(async () => forgotMeService(userId), {
     manual: true,
     onSuccess: (r) => {
-      navigate(routePath.DataSubjectManagement);
+      message.success('Delete profile successfully');
+      navigate(-1);
     },
     onError: (e) => {
+      message.error('Fail to delete profile');
       console.log('forgot me error', e);
     }
   });

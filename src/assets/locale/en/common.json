@@ -42,5 +42,7 @@
   "no_result_found": "No result found",
   "load_more": "Load More",
   "search": "Search",
-  "create_case": "Create Case"
+  "create_case": "Create Case",
+  "save": "Save",
+  "consent": "Consent"
 }

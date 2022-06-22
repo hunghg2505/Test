@@ -1,12 +1,15 @@
-import { Row, Table } from 'antd';
+import { Row, Table, Modal } from 'antd';
+import { ExclamationCircleOutlined } from '@ant-design/icons';
 import { ColumnsType } from 'antd/lib/table';
 import clsx from 'clsx';
 import Button from 'libraries/UI/Button';
 import { paginationItemRender } from 'libraries/UI/Pagination';
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import styles from './index.module.scss';
 import { useDataSubjectHistory } from './service';
+
+const { confirm } = Modal;
 
 export interface DataType {
   key: string;
@@ -89,6 +92,26 @@ function DataSubjectHistory({ userId, subjectId }: { userId: string; subjectId: 
     subjectId
   });
 
+  const showConfirm = useCallback(() => {
+    confirm({
+      title: 'Confirm Delete',
+      icon: <ExclamationCircleOutlined style={{ color: 'red' }} />,
+      content: ' Are you sure want to delete this profile?',
+      okText: 'Delete',
+      okType: 'danger',
+      okButtonProps: {
+        className: styles.btnDelete,
+        loading: reqForgotMe.loading
+      },
+      cancelButtonProps: {
+        className: styles.btnCancel
+      },
+      onOk() {
+        reqForgotMe.run();
+      }
+    });
+  }, []);
+
   return (
     <div className={styles.dsHistoryWrap}>
       <Row justify="space-between" align="middle" className={styles.header}>
@@ -112,13 +135,14 @@ function DataSubjectHistory({ userId, subjectId }: { userId: string; subjectId: 
           }}
         />
       </div>
-      <Button
+
+      {/* <Button
         type="secondary"
         className={styles.btnForgotMe}
-        onClick={reqForgotMe.run}
+        onClick={showConfirm}
         loading={reqForgotMe.loading}>
         Forget Me
-      </Button>
+      </Button> */}
     </div>
   );
 }
