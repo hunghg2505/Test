@@ -5,9 +5,9 @@ import { flattenDeep, get, groupBy, isArray } from 'lodash';
 import { API_PATH } from 'utils/api/constant';
 import { message } from 'antd';
 
-const PAGE_SIZE = 6;
+const PAGE_SIZE = 10;
 
-export const getContentService = async ({
+export const getConsentService = async ({
   search,
   userId,
   page
@@ -80,8 +80,9 @@ export const getContentService = async ({
   return {
     total: r?.content?.metadata?.total || 0,
     current: +r?.content?.metadata?.currentPage || 1,
-    pageSize: +r?.content?.metadata?.itemPage || 6,
+    pageSize: PAGE_SIZE,
     data: formatConsents,
+    keyword: search,
     listData
   };
 };
@@ -128,7 +129,7 @@ export const updateConsent = async ({ userId, content, ConsentList }: any) => {
 };
 
 export const useConsent = ({ userId }: { userId: number }) => {
-  const { data, loading, run, refresh } = useRequest(getContentService, {
+  const { data, loading, run, refresh } = useRequest(getConsentService, {
     manual: true
   });
 
@@ -147,7 +148,7 @@ export const useConsent = ({ userId }: { userId: number }) => {
   });
 
   const onChange = (current: number) => {
-    run({ page: current, userId });
+    run({ search: data.keyword, page: current, userId });
   };
 
   const onSearchConsent = (search: string) => {
@@ -160,6 +161,8 @@ export const useConsent = ({ userId }: { userId: number }) => {
     await reqUpdateConsent.runAsync({ userId, content: consent, ConsentList: data?.listData });
     refresh();
   };
+
+  console.log('consent data', data);
 
   return {
     data,
