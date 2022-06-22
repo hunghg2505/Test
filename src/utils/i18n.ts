@@ -12,20 +12,20 @@ i18n
     resources: {
       en: {
         translation: {
-          ...en
-        }
-      }
+          ...en,
+        },
+      },
     },
     react: {
-      useSuspense: false
+      useSuspense: false,
     },
     backend: {
-      allowMultiLoading: false
+      allowMultiLoading: false,
     },
     fallbackLng: 'en',
     interpolation: {
-      escapeValue: false
-    }
+      escapeValue: false,
+    },
   });
 
 export default i18n;

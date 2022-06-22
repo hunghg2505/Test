@@ -10,7 +10,7 @@ export const getDataSubjectHistoryService = async (value: any): Promise<any> => 
   const r: any = await ApiUtils.fetch(API_PATH.SUBJECT_HISTORY, {
     userId: value?.userId,
     limit: 10,
-    page: value?.current || 1
+    page: value?.current || 1,
   });
 
   return {
@@ -22,8 +22,8 @@ export const getDataSubjectHistoryService = async (value: any): Promise<any> => 
         ...item,
         key: `${item?.id}`,
         noId: `${item?.id}`,
-        requestDate: dayjs(item?.requestDate).format('MMM DD, YYYY')
-      })) || []
+        requestDate: dayjs(item?.requestDate).format('MMM DD, YYYY'),
+      })) || [],
   };
 };
 
@@ -33,7 +33,7 @@ const forgotMeService = (id: any) => {
 
 export const useDataSubjectHistory = ({
   userId,
-  subjectId
+  subjectId,
 }: {
   userId: string;
   subjectId: string;
@@ -43,8 +43,8 @@ export const useDataSubjectHistory = ({
   const { data, loading, run } = useRequest(
     async ({ current }) => getDataSubjectHistoryService({ userId, current }),
     {
-      manual: true
-    }
+      manual: true,
+    },
   );
 
   useMount(() => {
@@ -59,13 +59,12 @@ export const useDataSubjectHistory = ({
     },
     onError: (e) => {
       message.error('Fail to delete profile');
-      console.log('forgot me error', e);
-    }
+    },
   });
 
   const onChangeCurrent = (current: number) => {
     run({
-      current
+      current,
     });
   };
 
@@ -73,6 +72,6 @@ export const useDataSubjectHistory = ({
     data,
     loading,
     onChange: onChangeCurrent,
-    reqForgotMe
+    reqForgotMe,
   };
 };

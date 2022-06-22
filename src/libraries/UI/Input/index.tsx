@@ -35,7 +35,7 @@ function Input({
       <InputAntd.TextArea
         className={clsx(styles.input, {
           [styles[status]]: styles[status],
-          [`${className}`]: className
+          [`${className}`]: className,
         })}
         {...props}
       />
@@ -47,7 +47,7 @@ function Input({
       <InputAntd.Password
         className={clsx(styles.input, {
           [styles[status]]: styles[status],
-          [`${className}`]: className
+          [`${className}`]: className,
         })}
         suffix={suffix}
         prefix={prefix}
@@ -67,7 +67,7 @@ function Input({
     <InputAntd
       className={clsx(styles.input, {
         [styles[status]]: styles[status],
-        [`${className}`]: className
+        [`${className}`]: className,
       })}
       suffix={suffix}
       prefix={prefix}

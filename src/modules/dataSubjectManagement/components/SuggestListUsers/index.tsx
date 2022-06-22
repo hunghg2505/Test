@@ -6,7 +6,7 @@ import styles from '../../index.module.scss';
 
 const SuggestListUsers = (
   { data, loading, onSearchDataSubject, users, onLoadMoreUsers, onResetUsers }: any,
-  ref: any
+  ref: any,
 ) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -15,20 +15,20 @@ const SuggestListUsers = (
   useImperativeHandle(ref, () => {
     return {
       closeListUser: () => setDropdownVisible(false),
-      openListUser: () => setDropdownVisible(true)
+      openListUser: () => setDropdownVisible(true),
     };
   });
 
   const onSelect = (item: any) => () => {
     onSearchDataSubject({
       firstname: item.name,
-      isEqualSearch: true
+      isEqualSearch: true,
     });
     setDropdownVisible(false);
     onResetUsers();
     navigate({
       pathname: '/data-subject',
-      search: `?firstnameexact=${item.name}`
+      search: `?firstnameexact=${item.name}`,
     });
   };
 

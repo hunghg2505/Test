@@ -3,7 +3,7 @@ import React from 'react';
 
 function Profile() {
   return (
-    <ContainerLayout title="Profile">
+    <ContainerLayout title='Profile'>
       <h1>Hello Profile</h1>
     </ContainerLayout>
   );

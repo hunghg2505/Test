@@ -7,15 +7,16 @@ interface ITermOfServiceModalProps {
 
 const TermOfServiceModal = ({
   isShowTermOfServiceModal,
-  onCloseTermOfServiceModal
+  onCloseTermOfServiceModal,
 }: ITermOfServiceModalProps) => {
   return (
     <>
       <Modal
-        title="Term of Service"
+        title='Term of Service'
         visible={isShowTermOfServiceModal}
         onCancel={onCloseTermOfServiceModal}
-        footer={null}>
+        footer={null}
+      >
         <p>Some contents...</p>
         <p>Some contents...</p>
         <p>Some contents...</p>

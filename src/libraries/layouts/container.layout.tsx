@@ -8,7 +8,7 @@ interface Props {
 
 export default function ContainerLayout({
   children,
-  title = process.env.REACT_APP_NAME || 'ABD-PDPA'
+  title = process.env.REACT_APP_NAME || 'ABD-PDPA',
 }: Props) {
   const { setTitle } = useDocument();
   useEffect(() => {

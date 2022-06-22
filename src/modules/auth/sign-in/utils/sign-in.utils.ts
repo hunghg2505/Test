@@ -23,7 +23,7 @@ export default function SignInUtils(): Utils {
     async (values: any) => {
       const body: SignInReq = {
         email: values?.email_abc?.trim(),
-        password: values?.password_abc
+        password: values?.password_abc,
       };
       // call api here
       return apiSignIn(body);
@@ -33,7 +33,7 @@ export default function SignInUtils(): Utils {
       onSuccess: (r: any, params) => {
         const values = params[0];
         if (r.code === ResponseCode.SUCCESS) {
-          console.log('login success');
+          // console.log('login success');
         }
 
         setAuth({
@@ -41,14 +41,14 @@ export default function SignInUtils(): Utils {
           refreshToken: r?.content?.refreshToken,
           expireTime: Date.now() + r?.content?.expireTime * 1000,
           user: {
-            email: values?.email_abc
-          }
+            email: values?.email_abc,
+          },
         });
       },
       onError: (err: any) => {
         message.error(err?.content?.messageContent || 'Login Failed');
-      }
-    }
+      },
+    },
   );
 
   // go to register page
@@ -65,6 +65,6 @@ export default function SignInUtils(): Utils {
     loadingSignIn: reqLogin.loading,
     onLogin: reqLogin.run,
     onGoToRegister,
-    onGoToForgotPassword
+    onGoToForgotPassword,
   };
 }

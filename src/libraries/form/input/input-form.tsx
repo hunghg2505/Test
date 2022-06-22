@@ -25,7 +25,7 @@ export default function InputForm({
   maxLength,
   classNameFormInput,
   className,
-  onBlur
+  onBlur,
 }: Props) {
   return (
     <Form.Item
@@ -33,11 +33,12 @@ export default function InputForm({
       name={name}
       rules={rules}
       className={clsx(styles.customInputFormItem, {
-        [classNameFormInput]: true
-      })}>
+        [classNameFormInput]: true,
+      })}
+    >
       <Input
         className={clsx(styles.customInputForm, {
-          [className]: true
+          [className]: true,
         })}
         maxLength={maxLength}
         placeholder={placeholder}

@@ -34,20 +34,20 @@ export const getDataManagementService = async (values: any): Promise<any> => {
     username = '',
     advanceSearch = {},
     page = 1,
-    isEqualSearch = false
+    isEqualSearch = false,
   } = values;
   const { firstname: firstNameAdvance, ...rest } = advanceSearch;
 
   const params = {
     firstname: username || firstname || firstNameAdvance || '',
     isEqualSearch,
-    advanceSearch: { ...rest }
+    advanceSearch: { ...rest },
   };
 
   const r: any = await ApiUtils.post(API_PATH.USER_PROFILES, {
     limit: values?.limit || 10,
     page: page || 1,
-    ...params
+    ...params,
   });
 
   const current = r?.content?.metadata?.currentPage || 1;
@@ -65,9 +65,9 @@ export const getDataManagementService = async (values: any): Promise<any> => {
         email: item?.email || '',
         phoneNumber: item?.mobile || '',
         application: 'Application 1 default',
-        action: `${item?.id}`
+        action: `${item?.id}`,
       })),
-    params
+    params,
   };
 };
 
@@ -88,8 +88,8 @@ const getDataSubjectDetail = async (id: string): Promise<IDataSubjectDetail> => 
       nationality: r?.content?.nationality || '',
       cardId: r?.content?.cardId || '',
       passportNo: r?.content?.passportNo || '',
-      laserCode: r?.content?.laserCode || ''
-    }
+      laserCode: r?.content?.laserCode || '',
+    },
   };
 };
 
@@ -98,7 +98,7 @@ const getUsers = async (value: any, page = 1, column: string) => {
     column,
     searchString: value || '',
     limit: 10,
-    page
+    page,
   };
 
   const res: any = await ApiUtils.fetch(API_PATH.SEARCH_USERS, params);
@@ -107,7 +107,7 @@ const getUsers = async (value: any, page = 1, column: string) => {
     data: res?.content?.data?.map((v: any, idx: number) => ({ id: idx, name: v.firstNameEn })),
     isLoadMore: +res?.content?.metadata?.currentPage < +res?.content?.metadata?.lastPage,
     currentPage: +res?.content?.metadata?.currentPage,
-    value
+    value,
   };
 };
 
@@ -123,11 +123,11 @@ export const useDataSubjectManagement = () => {
     data: [],
     isLoadMore: false,
     currentPage: 1,
-    value: ''
+    value: '',
   });
 
   const { data, loading, run } = useRequest(getDataManagementService, {
-    manual: true
+    manual: true,
   });
 
   const requestSearchUsers = useRequest(
@@ -151,11 +151,11 @@ export const useDataSubjectManagement = () => {
             data: newData,
             isLoadMore: r.isLoadMore,
             currentPage: r.currentPage,
-            value: r.value
+            value: r.value,
           };
         });
-      }
-    }
+      },
+    },
   );
 
   const onResetUsers = () => {
@@ -163,7 +163,7 @@ export const useDataSubjectManagement = () => {
       data: [],
       isLoadMore: false,
       currentPage: 1,
-      value: ''
+      value: '',
     });
   };
 
@@ -172,24 +172,24 @@ export const useDataSubjectManagement = () => {
   };
 
   const onSearchUsersDebounce = debounce(
-    async (values: any[], callback: Function, column: string) => {
+    async (values: any[], callback: () => void, column: string) => {
       const value = get(values, '[0].value', '');
       if (value?.length < MIN_SEARCH_USER) return;
 
       await requestSearchUsers.runAsync(value, column, 1, false);
       if (callback) callback();
     },
-    350
+    350,
   );
 
   const onChangeCurrent = (page: number) => {
     run({
       page,
-      ...data.params
+      ...data.params,
     });
   };
 
-  const onSearchDataSubject = (values = {}, callback: Function) => {
+  const onSearchDataSubject = (values = {}, callback: () => void) => {
     if (!Object.values(values)?.filter((v) => v).length) return;
     if (get(values, 'type') === 'enter') refCancelRequest.current = true;
 
@@ -207,7 +207,7 @@ export const useDataSubjectManagement = () => {
     onSearchUsersDebounce,
     users,
     onResetUsers,
-    onLoadMoreUsers
+    onLoadMoreUsers,
   };
 };
 

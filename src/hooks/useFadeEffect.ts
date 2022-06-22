@@ -7,12 +7,12 @@ const reducer = (state: any, action: any) => {
     case 'start':
       return {
         isTransitioning: true,
-        shouldBeVisible: action.shouldBeVisible
+        shouldBeVisible: action.shouldBeVisible,
       };
     case 'finish':
       return {
         isTransitioning: false,
-        shouldBeVisible: state.shouldBeVisible
+        shouldBeVisible: state.shouldBeVisible,
       };
     default:
       return state;
@@ -24,7 +24,7 @@ export const useFadeEffect = (visible: boolean) => {
   const visibleRef = React.useRef(false);
   const [state, setState] = React.useReducer(reducer, {
     isTransitioning: false,
-    shouldBeVisible: false
+    shouldBeVisible: false,
   });
 
   const { isTransitioning, shouldBeVisible } = state;
@@ -44,7 +44,7 @@ export const useFadeEffect = (visible: boolean) => {
 
   const handleFinish = React.useCallback(() => {
     setState({
-      type: 'finish'
+      type: 'finish',
     });
     if (hiddenRef.current != null) {
       clearTimeout(hiddenRef.current);
@@ -61,7 +61,7 @@ export const useFadeEffect = (visible: boolean) => {
       showRef.current = window.requestAnimationFrame(() => {
         setState({
           shouldBeVisible: visible,
-          type: 'start'
+          type: 'start',
         });
 
         showRef.current = null;
@@ -72,7 +72,7 @@ export const useFadeEffect = (visible: boolean) => {
         }
       });
     },
-    [handleFinish]
+    [handleFinish],
   );
 
   React.useLayoutEffect(() => {
@@ -84,7 +84,7 @@ export const useFadeEffect = (visible: boolean) => {
 
   const _ref = React.useCallback(
     (_re: any) => {
-      var _elm: any = ref.current;
+      const _elm: any = ref.current;
 
       ref.current = _re;
       if (_re !== null) {
@@ -103,7 +103,7 @@ export const useFadeEffect = (visible: boolean) => {
         }
       }
     },
-    [handleFinish, handleStart]
+    [handleFinish, handleStart],
   );
   const _isTransitioning = isTransitioning || shouldBeVisible || visible;
   return [_isTransitioning, shouldBeVisible, _ref];

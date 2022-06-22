@@ -10,7 +10,7 @@ interface IConsentDetailProps {
 
 export default function ConsentDetail({ id }: IConsentDetailProps) {
   return (
-    <ContainerLayout title="Consent Detail">
+    <ContainerLayout title='Consent Detail'>
       <h1>Consent Detail {id}</h1>
     </ContainerLayout>
   );

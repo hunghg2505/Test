@@ -27,12 +27,13 @@ const Select = ({
   return (
     <SelectAntd
       className={clsx(styles.select, {
-        [`${className}`]: className
+        [`${className}`]: className,
       })}
       placeholder={placeholder}
       suffixIcon={suffixIcon}
       options={options}
-      {...props}>
+      {...props}
+    >
       <>{children}</>
     </SelectAntd>
   );

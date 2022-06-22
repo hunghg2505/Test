@@ -6,7 +6,7 @@ import styles from './index.module.scss';
 
 export default function NewConsent() {
   return (
-    <ContainerLayout title="New Consent">
+    <ContainerLayout title='New Consent'>
       <div>new Consent</div>
     </ContainerLayout>
   );

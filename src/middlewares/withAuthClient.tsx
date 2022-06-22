@@ -21,7 +21,7 @@ const withAuthClient = (WrapperComponent: any) => (props: any) => {
     // }
     if (!isLoggedIn) {
       navigate(routePath.SignIn, {
-        state: { callbackUrl: location.pathname }
+        state: { callbackUrl: location.pathname },
       });
     }
   }, [auth, location, isLoggedIn]);

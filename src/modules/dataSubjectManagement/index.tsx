@@ -37,55 +37,55 @@ const columns: ColumnsType<DataType> = [
     title: 'No.',
     dataIndex: 'noId',
     key: 'noId',
-    width: 70
+    width: 70,
   },
   {
     title: 'First Name',
     dataIndex: 'firstName',
     key: 'firstName',
-    width: 216
+    width: 216,
   },
   {
     title: 'Last Name',
     dataIndex: 'lastName',
     key: 'lastName',
-    width: 216
+    width: 216,
   },
   {
     title: 'Company',
     dataIndex: 'company',
     key: 'company',
-    width: 254
+    width: 254,
   },
   {
     title: 'Email',
     dataIndex: 'email',
     key: 'email',
-    width: 254
+    width: 254,
   },
   {
     title: 'Mobile Number',
     dataIndex: 'phoneNumber',
     key: 'phoneNumber',
-    width: 204
+    width: 204,
   },
   {
     title: 'Application',
     dataIndex: 'application',
     key: 'application',
-    width: 270
+    width: 270,
   },
   {
     title: 'Action',
     key: 'action',
     dataIndex: 'action',
     render: (_, { action }) => (
-      <Row justify="center" align="middle" style={{ flexFlow: 'nowrap' }} className={styles.action}>
+      <Row justify='center' align='middle' style={{ flexFlow: 'nowrap' }} className={styles.action}>
         <Link to={`/data-subject/${action}`}>Detail</Link>
       </Row>
     ),
-    width: 105
-  }
+    width: 105,
+  },
 ];
 
 function DataSubjectManagement() {
@@ -101,7 +101,7 @@ function DataSubjectManagement() {
     onSearchUsersDebounce,
     users,
     onResetUsers,
-    onLoadMoreUsers
+    onLoadMoreUsers,
   } = useDataSubjectManagement();
   const [formSearch]: any = Form.useForm();
 
@@ -125,7 +125,7 @@ function DataSubjectManagement() {
 
     navigate({
       pathname: '/data-subject',
-      search: `?firstname=${values.username}`
+      search: `?firstname=${values.username}`,
     });
   };
 
@@ -136,38 +136,38 @@ function DataSubjectManagement() {
       () => {
         if (refListUsers.current?.openListUser) refListUsers.current.openListUser();
       },
-      'firstNameEn'
+      'firstNameEn',
     );
   };
 
   return (
-    <ContainerLayout title="Data Subject Management">
+    <ContainerLayout title='Data Subject Management'>
       <div className={styles.dataSubjectPage}>
-        <Row justify="center" align="middle" className={styles.dataSubjectHeader}>
+        <Row justify='center' align='middle' className={styles.dataSubjectHeader}>
           <Form onFinish={onFinish} onFieldsChange={onFieldsChange} form={formSearch}>
             <div ref={refForm} className={styles.formSearchWrap}>
-              <Row justify="center" align="middle" className={styles.searchForm}>
+              <Row justify='center' align='middle' className={styles.searchForm}>
                 <IconSearch />
 
                 <InputForm
-                  name="username"
-                  placeholder="Search Firstname"
+                  name='username'
+                  placeholder='Search Firstname'
                   className={styles.inputSearch}
                   classNameFormInput={styles.inputSearchForm}
                   maxLength={55}
                   rules={[
                     {
                       required: true,
-                      message: t('messages.errors.min', { min: 3 })
+                      message: t('messages.errors.min', { min: 3 }),
                     },
                     {
                       min: 3,
-                      message: t('messages.errors.min', { min: 3 })
+                      message: t('messages.errors.min', { min: 3 }),
                     },
                     {
                       max: 55,
-                      message: t('messages.errors.max_search_firstname', { max: 55 })
-                    }
+                      message: t('messages.errors.max_search_firstname', { max: 55 }),
+                    },
                   ]}
                   onBlur={() => {
                     const username = formSearch.getFieldValue('username');
@@ -176,18 +176,19 @@ function DataSubjectManagement() {
                       formSearch.setFields([
                         {
                           name: 'username',
-                          errors: [t('messages.errors.min', { min: 3 })]
-                        }
+                          errors: [t('messages.errors.min', { min: 3 })],
+                        },
                       ]);
                     }
                   }}
                 />
 
                 <Button
-                  htmlType="submit"
+                  htmlType='submit'
                   className={styles.btnSearch}
-                  type="secondary"
-                  icon={<IconSearch />}>
+                  type='secondary'
+                  icon={<IconSearch />}
+                >
                   {t('Search')}
                 </Button>
               </Row>
@@ -208,8 +209,9 @@ function DataSubjectManagement() {
         </Row>
         <div
           className={clsx(styles.dataSubjectContent, {
-            [styles.dataSubjectContentEmpty]: !loading && !data?.data?.length
-          })}>
+            [styles.dataSubjectContentEmpty]: !loading && !data?.data?.length,
+          })}
+        >
           {data?.data?.length === 0 ? (
             <p className={styles.noResultText}>{t('no_result_found')}</p>
           ) : (
@@ -223,7 +225,7 @@ function DataSubjectManagement() {
                 total: data?.total,
                 showSizeChanger: false,
                 onChange,
-                itemRender: paginationItemRender
+                itemRender: paginationItemRender,
               }}
             />
           )}

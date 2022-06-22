@@ -36,31 +36,31 @@ const configRoutes: IRouter[] = [
         path: routePath.Profile,
         element: lazy(() => import('modules/profile')),
         name: 'Profile',
-        icons: React.createElement(IconProfile)
+        icons: React.createElement(IconProfile),
       },
       {
         path: routePath.Reports,
         element: lazy(() => import('modules/reports')),
         name: 'Reports',
-        icons: React.createElement(IconReports)
+        icons: React.createElement(IconReports),
       },
       {
         path: routePath.DataSubjectManagement,
         element: lazy(() => import('modules/dataSubjectManagement/index')),
         name: 'Data Subject Management',
-        icons: React.createElement(IconDataSubject)
+        icons: React.createElement(IconDataSubject),
       },
       {
         path: routePath.DataSubjectDetail,
         element: lazy(() => import('modules/dataSubjectManagement/[id]')),
         name: 'Data Subject Management',
-        hiddenMenu: true
+        hiddenMenu: true,
       },
       {
         path: routePath.CaseManagement,
         element: lazy(() => import('modules/caseManagement')),
         name: 'Case Management',
-        icons: React.createElement(IconCaseManagement)
+        icons: React.createElement(IconCaseManagement),
         // haveChild: true,
 
         // children: [
@@ -80,13 +80,13 @@ const configRoutes: IRouter[] = [
         path: routePath.ConsentManagement,
         element: lazy(() => import('modules/consentManagement/index')),
         name: 'Consent Management',
-        icons: React.createElement(IconConsent)
+        icons: React.createElement(IconConsent),
       },
       {
         path: routePath.ConsentDetail,
         element: lazy(() => import('modules/consentManagement/[id]')),
         name: 'Consent Management Detail',
-        hiddenMenu: true
+        hiddenMenu: true,
       },
       // {
       //   path: routePath.ConsentManagement,
@@ -104,9 +104,9 @@ const configRoutes: IRouter[] = [
       {
         path: '*',
         element: lazy(() => import('modules/not-found')),
-        hiddenMenu: true
-      }
-    ]
+        hiddenMenu: true,
+      },
+    ],
   },
 
   // Auth
@@ -117,24 +117,24 @@ const configRoutes: IRouter[] = [
     children: [
       {
         path: routePath.SignIn,
-        element: lazy(() => import('modules/auth/sign-in'))
+        element: lazy(() => import('modules/auth/sign-in')),
       },
       {
         path: routePath.SignUp,
-        element: lazy(() => import('modules/auth/sign-up'))
+        element: lazy(() => import('modules/auth/sign-up')),
       },
       {
         path: routePath.ForgotPassword,
-        element: lazy(() => import('modules/auth/forgot-password'))
-      }
-    ]
+        element: lazy(() => import('modules/auth/forgot-password')),
+      },
+    ],
   },
 
   // Not Found
   {
     path: '*',
-    element: lazy(() => import('modules/not-found'))
-  }
+    element: lazy(() => import('modules/not-found')),
+  },
 ];
 
 export default configRoutes;

@@ -16,12 +16,12 @@ export const getConsentManagementService = async (value: any): Promise<any> => {
     description: 'Description',
     createdAt: '03/05/2022',
     updatedAt: '03/05/2022',
-    action: i
+    action: i,
   }));
 
   const formatData = {
     list: r,
-    current: 1
+    current: 1,
   };
 
   return {
@@ -29,14 +29,14 @@ export const getConsentManagementService = async (value: any): Promise<any> => {
     total: Math.ceil(formatData.list.length / PAGE_SIZE),
     data: formatData?.list?.slice(
       (formatData.current - 1) * PAGE_SIZE,
-      (formatData.current - 1) * PAGE_SIZE + PAGE_SIZE
-    )
+      (formatData.current - 1) * PAGE_SIZE + PAGE_SIZE,
+    ),
   };
 };
 
 export const useConsentManagement = () => {
   const { data, loading, run, mutate } = useRequest(getConsentManagementService, {
-    manual: true
+    manual: true,
   });
 
   useMount(() => {
@@ -48,7 +48,7 @@ export const useConsentManagement = () => {
       mutate({
         ...data,
         current,
-        data: data?.list?.slice((current - 1) * PAGE_SIZE, (current - 1) * PAGE_SIZE + PAGE_SIZE)
+        data: data?.list?.slice((current - 1) * PAGE_SIZE, (current - 1) * PAGE_SIZE + PAGE_SIZE),
       });
     }
   };
@@ -62,6 +62,6 @@ export const useConsentManagement = () => {
     loading,
     run,
     onChange: onChangeCurrent,
-    onSearchConsent
+    onSearchConsent,
   };
 };

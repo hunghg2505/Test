@@ -12,7 +12,7 @@ function AuthLayout() {
   const { document } = useDocument();
 
   return (
-    <Layout className="min-height">
+    <Layout className='min-height'>
       <Helmet>
         <title>{document.title}</title>
       </Helmet>
@@ -26,8 +26,9 @@ function AuthLayout() {
           style={{
             padding: 24,
             margin: 0,
-            minHeight: 280
-          }}>
+            minHeight: 280,
+          }}
+        >
           <Outlet />
         </Content>
       </Layout>
