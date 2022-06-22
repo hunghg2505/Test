@@ -82,6 +82,7 @@ export const getConsentService = async ({
     current: +r?.content?.metadata?.currentPage || 1,
     pageSize: PAGE_SIZE,
     data: formatConsents,
+    keyword: search,
     listData
   };
 };
@@ -156,7 +157,7 @@ export const useConsent = ({ userId }: { userId: number }) => {
   });
 
   const onChange = (current: number) => {
-    run({ page: current, userId });
+    run({ search: data.keyword, page: current, userId });
   };
 
   const onSearchConsent = (search: string) => {
