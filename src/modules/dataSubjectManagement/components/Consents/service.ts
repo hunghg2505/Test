@@ -95,38 +95,29 @@ export const updateConsent = async ({ userId, content, ConsentList }: any) => {
   };
 
   const consentHasChecked = ConsentList?.filter((v: any) => v?.myConsent?.length > 0);
-
-  let consentHasChecked2 = cloneDeep(consentHasChecked);
   const valuesChecked = flattenDeep(Object.values(content))?.map((v) => v);
 
-  valuesChecked?.forEach((v: any) => {
-    const [key, consentId] = v?.split('@') || [];
-    const isExistChecked = consentHasChecked?.find((i: any) => i?.key === key);
-    consentHasChecked2 = consentHasChecked2?.filter((i: any) => i?.key !== key);
+  valuesChecked?.forEach((consentSelected: string) => {
+    const [key, consentId] = consentSelected?.split('@') || [];
 
-    if (!isExistChecked && consentId) {
-      newConsent.insert.push({
-        consentId: Number(consentId),
-        data: {
-          key: `${key}`,
-          value: 'true'
-        }
-      });
-    } else if (consentId) {
-      newConsent.update.push({
-        consentId: Number(consentId),
-        data: {
-          key: `${key}`,
-          value: 'true'
-        }
-      });
-    }
+    newConsent.insert.push({
+      consentId: Number(consentId),
+      data: {
+        key: `${key}`,
+        value: 'true'
+      }
+    });
   });
 
-  newConsent.delete = consentHasChecked2.map((v: any) => {
-    return {
-      consentId: Number(v?.id)
-    };
+  consentHasChecked?.forEach((element: any) => {
+    const isExistInsert = newConsent.insert?.find(
+      (v: any) => `${v?.consentId}` === `${element?.id}`
+    );
+    if (!isExistInsert) {
+      newConsent.delete.push({
+        consentId: Number(element?.id)
+      });
+    }
   });
 
   const body = {
@@ -166,6 +157,7 @@ export const useConsent = ({ userId }: { userId: number }) => {
 
   const onSaveConsent = async (consent: any) => {
     if (Object.keys(consent).length === 0) return;
+
     await reqUpdateConsent.runAsync({ userId, content: consent, ConsentList: data?.listData });
     refresh();
   };
