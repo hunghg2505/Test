@@ -1,21 +1,15 @@
-import useDocument from 'hooks/redux/document/useDocument';
-import withUnAuthClient from 'middlewares/withUnAuthClient';
-import { Helmet } from 'react-helmet';
-import { Outlet } from 'react-router-dom';
-import AuthFooter from './footer/auth.footer';
-import AuthHeader from './header/auth.header';
 import { Layout } from 'antd';
+import withUnAuthClient from 'middlewares/withUnAuthClient';
+import { Outlet } from 'react-router-dom';
+import AuthHeader from './header/auth.header';
+import SEO from './SEO';
 import styles from './styles.module.scss';
 
 const Content = Layout.Content;
 function AuthLayout() {
-  const { document } = useDocument();
-
   return (
     <Layout className='min-height'>
-      <Helmet>
-        <title>{document.title}</title>
-      </Helmet>
+      <SEO />
       {/** Header */}
       <AuthHeader />
 
