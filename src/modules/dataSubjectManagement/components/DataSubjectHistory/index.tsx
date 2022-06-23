@@ -87,30 +87,30 @@ const ICON_GRID = (
 );
 
 function DataSubjectHistory({ userId, subjectId }: { userId: string; subjectId: string }) {
-  const { data, loading, onChange, reqForgotMe } = useDataSubjectHistory({
+  const { data, loading, onChange, reqForgotMe, subjectHistoryData } = useDataSubjectHistory({
     userId,
     subjectId,
   });
 
-  const showConfirm = useCallback(() => {
-    confirm({
-      title: 'Confirm Delete',
-      icon: <ExclamationCircleOutlined style={{ color: 'red' }} />,
-      content: ' Are you sure want to delete this profile?',
-      okText: 'Delete',
-      okType: 'danger',
-      okButtonProps: {
-        className: styles.btnDelete,
-        loading: reqForgotMe.loading,
-      },
-      cancelButtonProps: {
-        className: styles.btnCancel,
-      },
-      onOk() {
-        reqForgotMe.run();
-      },
-    });
-  }, []);
+  // const showConfirm = useCallback(() => {
+  //   confirm({
+  //     title: 'Confirm Delete',
+  //     icon: <ExclamationCircleOutlined style={{ color: 'red' }} />,
+  //     content: ' Are you sure want to delete this profile?',
+  //     okText: 'Delete',
+  //     okType: 'danger',
+  //     okButtonProps: {
+  //       className: styles.btnDelete,
+  //       loading: reqForgotMe.loading,
+  //     },
+  //     cancelButtonProps: {
+  //       className: styles.btnCancel,
+  //     },
+  //     onOk() {
+  //       reqForgotMe.run();
+  //     },
+  //   });
+  // }, []);
 
   return (
     <div className={styles.dsHistoryWrap}>
@@ -126,13 +126,14 @@ function DataSubjectHistory({ userId, subjectId }: { userId: string; subjectId: 
         <Table
           className={styles.table}
           columns={columns}
-          dataSource={data?.data}
+          dataSource={subjectHistoryData}
           loading={loading}
           pagination={{
             current: data?.current,
             total: data?.total,
             onChange,
             itemRender: paginationItemRender,
+            showSizeChanger: false,
           }}
         />
       </div>

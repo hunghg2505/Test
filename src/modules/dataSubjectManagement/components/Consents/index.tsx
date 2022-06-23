@@ -73,10 +73,6 @@ const SearchBox = ({
               className={styles.formSearchItem}
               rules={[
                 {
-                  required: true,
-                  message: t('messages.errors.min', { min: 3 }),
-                },
-                {
                   min: 3,
                   message: t('messages.errors.min', { min: 3 }),
                 },
