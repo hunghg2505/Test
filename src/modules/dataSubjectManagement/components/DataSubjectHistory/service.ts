@@ -40,7 +40,7 @@ export const useDataSubjectHistory = ({
 }) => {
   const navigate = useNavigate();
 
-  const { data, loading, run } = useRequest(
+  const { data, loading, run, refresh } = useRequest(
     async ({ current }) => getDataSubjectHistoryService({ userId, current }),
     {
       manual: true,
@@ -82,5 +82,6 @@ export const useDataSubjectHistory = ({
     onChange: onChangeCurrent,
     reqForgotMe,
     subjectHistoryData,
+    refresh,
   };
 };

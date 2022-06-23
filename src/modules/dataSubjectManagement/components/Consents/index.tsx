@@ -207,12 +207,20 @@ const ConsentsList = ({ data, loading, onChange, onSaveConsent, loadingUpdateCon
   );
 };
 
-function Consents({ userId }: { userId: number }) {
+function Consents({ userId, refDataHistory }: { userId: number; refDataHistory: any }) {
   const { data, loading, onChange, onSearchConsent, onSaveConsent, loadingUpdateConsent } =
     useConsent({ userId });
 
   const onSearch = ({ search }: { search: string }) => {
     onSearchConsent(search);
+  };
+
+  const onSave = async (values: any) => {
+    try {
+      await onSaveConsent(values);
+      if (refDataHistory.current?.refreshDataHistory) refDataHistory.current.refreshDataHistory();
+      // eslint-disable-next-line no-empty
+    } catch (error) {}
   };
 
   return (
@@ -223,7 +231,7 @@ function Consents({ userId }: { userId: number }) {
         data={data}
         loading={loading}
         onChange={onChange}
-        onSaveConsent={onSaveConsent}
+        onSaveConsent={onSave}
         loadingUpdateConsent={loadingUpdateConsent}
       />
     </div>

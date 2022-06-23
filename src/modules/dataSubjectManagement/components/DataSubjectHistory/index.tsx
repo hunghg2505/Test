@@ -1,15 +1,12 @@
-import { Row, Table, Modal } from 'antd';
-import { ExclamationCircleOutlined } from '@ant-design/icons';
+import { Modal, Row, Table } from 'antd';
 import { ColumnsType } from 'antd/lib/table';
 import clsx from 'clsx';
-import Button from 'libraries/UI/Button';
 import { paginationItemRender } from 'libraries/UI/Pagination';
-import React, { useCallback } from 'react';
-import { useTranslation } from 'react-i18next';
+import { forwardRef, useImperativeHandle } from 'react';
 import styles from './index.module.scss';
 import { useDataSubjectHistory } from './service';
 
-const { confirm } = Modal;
+// const { confirm } = Modal;
 
 export interface DataType {
   key: string;
@@ -86,10 +83,19 @@ const ICON_GRID = (
   </svg>
 );
 
-function DataSubjectHistory({ userId, subjectId }: { userId: string; subjectId: string }) {
-  const { data, loading, onChange, reqForgotMe, subjectHistoryData } = useDataSubjectHistory({
+function DataSubjectHistory(
+  { userId, subjectId }: { userId: string; subjectId: string },
+  ref: any,
+) {
+  const { data, loading, onChange, subjectHistoryData, refresh } = useDataSubjectHistory({
     userId,
     subjectId,
+  });
+
+  useImperativeHandle(ref, () => {
+    return {
+      refreshDataHistory: refresh,
+    };
   });
 
   // const showConfirm = useCallback(() => {
@@ -149,4 +155,4 @@ function DataSubjectHistory({ userId, subjectId }: { userId: string; subjectId: 
   );
 }
 
-export default DataSubjectHistory;
+export default forwardRef(DataSubjectHistory);
