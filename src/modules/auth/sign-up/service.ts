@@ -28,20 +28,18 @@ export const useSignUp = () => {
         username: data.name?.trim(),
         password: data.password?.trim(),
         firstName: data?.name?.trim() || 'abc',
-        lastName: data?.firstName?.trim() || 'abc'
+        lastName: data?.firstName?.trim() || 'abc',
       });
     },
     {
       manual: true,
       onSuccess: (r) => {
-        console.log('sign up success', r);
         message.info('Sign up success');
         navigate(routePath.SignIn);
       },
       onError: (e: any) => {
-        console.log('sign up error', e);
         message.error(e?.content?.messageContent || 'Sign up error');
-      }
-    }
+      },
+    },
   );
 };

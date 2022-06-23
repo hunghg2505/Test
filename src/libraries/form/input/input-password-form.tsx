@@ -26,7 +26,7 @@ export default function InputPasswordForm({
   dependencies,
   classNameFormInput,
   className,
-  normalize
+  normalize,
 }: Props) {
   return (
     <Form.Item
@@ -35,16 +35,17 @@ export default function InputPasswordForm({
       rules={rules}
       normalize={normalize}
       className={clsx(styles.customInputPasswordFormItem, {
-        [classNameFormInput]: true
+        [classNameFormInput]: true,
       })}
-      dependencies={dependencies}>
+      dependencies={dependencies}
+    >
       <Input
         className={clsx(styles.customInputPasswordForm, {
-          [className]: true
+          [className]: true,
         })}
         placeholder={placeholder}
         autoComplete={autoComplete}
-        type="password"
+        type='password'
       />
     </Form.Item>
   );

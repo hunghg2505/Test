@@ -20,17 +20,17 @@ export default function SignInPage() {
 
         <div className={styles.formWrap}>
           <h4 className={clsx('mb-52 mt-86', styles.titleSignIn)}>{t('sign_in.title')}</h4>
-          <Form layout="vertical" name="basic" onFinish={onLogin} autoComplete="off">
-            <div className="mb-16">
+          <Form layout='vertical' name='basic' onFinish={onLogin} autoComplete='off'>
+            <div className='mb-16'>
               <InputForm
                 label={t('email_address')}
-                name="email_abc"
+                name='email_abc'
                 rules={[
                   {
                     validator: async (_, value) => {
                       if (!value) {
                         return Promise.reject(
-                          t('messages.errors.require', { field: t('email_address') })
+                          t('messages.errors.require', { field: t('email_address') }),
                         );
                       }
 
@@ -40,21 +40,21 @@ export default function SignInPage() {
                       }
 
                       return Promise.resolve();
-                    }
-                  }
+                    },
+                  },
                 ]}
               />
             </div>
 
-            <div className="mb-12">
+            <div className='mb-12'>
               <InputPasswordForm
                 label={t('password')}
-                name="password_abc"
+                name='password_abc'
                 rules={[
                   {
                     required: true,
-                    message: t('messages.errors.require', { field: t('password') })
-                  }
+                    message: t('messages.errors.require', { field: t('password') }),
+                  },
                 ]}
               />
             </div>
@@ -67,7 +67,7 @@ export default function SignInPage() {
             </div>
 
             <Form.Item>
-              <Button htmlType="submit" className={styles.buttonSubmit} loading={loadingSignIn}>
+              <Button htmlType='submit' className={styles.buttonSubmit} loading={loadingSignIn}>
                 {t('login_button')}
               </Button>
             </Form.Item>

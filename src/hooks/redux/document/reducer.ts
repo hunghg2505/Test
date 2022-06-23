@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import _ from 'lodash';
+import merge from 'lodash/merge';
 interface DocumentState {
   title?: string;
   isNotFound?: boolean;
@@ -7,7 +7,7 @@ interface DocumentState {
 
 const initialState = {
   title: process.env.REACT_APP_NAME || 'ABD-PDPA',
-  isNotFound: false
+  isNotFound: false,
 };
 
 const document = createSlice({
@@ -15,9 +15,9 @@ const document = createSlice({
   initialState: initialState,
   reducers: {
     changeDocument: (state: DocumentState, action: PayloadAction<DocumentState>) => {
-      state = _.merge(state, action.payload);
-    }
-  }
+      state = merge(state, action.payload);
+    },
+  },
 });
 
 const { reducer, actions } = document;

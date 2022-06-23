@@ -20,14 +20,14 @@ function DataSubjectDetail() {
 
   if (loading) {
     return (
-      <ContainerLayout title="Data Subject Detail">
+      <ContainerLayout title='Data Subject Detail'>
         <Loading />
       </ContainerLayout>
     );
   }
 
   return (
-    <ContainerLayout title="Data Subject Detail">
+    <ContainerLayout title='Data Subject Detail'>
       <UserInfo userInfo={data?.userInfo} />
       <Consents userId={Number(data?.userInfo?.id)} />
       <DataSubjectHistory userId={data?.userInfo?.id || ''} subjectId={id} />

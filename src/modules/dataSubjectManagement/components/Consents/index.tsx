@@ -30,75 +30,77 @@ export interface DataType {
 }
 
 const ArrowDown = (
-  <svg xmlns="http://www.w3.org/2000/svg" width={15} height={8} viewBox="0 0 15 8" fill="none">
+  <svg xmlns='http://www.w3.org/2000/svg' width={15} height={8} viewBox='0 0 15 8' fill='none'>
     <path
-      d="M13.5 1L7.5 7L1.5 1"
-      stroke="#BDBDBD"
+      d='M13.5 1L7.5 7L1.5 1'
+      stroke='#BDBDBD'
       strokeWidth={2}
-      strokeLinecap="round"
-      strokeLinejoin="round"
+      strokeLinecap='round'
+      strokeLinejoin='round'
     />
   </svg>
 );
 
 const ArrowUp = (
-  <svg xmlns="http://www.w3.org/2000/svg" width={15} height={8} viewBox="0 0 15 8" fill="none">
+  <svg xmlns='http://www.w3.org/2000/svg' width={15} height={8} viewBox='0 0 15 8' fill='none'>
     <path
-      d="M13.5 7L7.5 1L1.5 7"
-      stroke="#092C4C"
+      d='M13.5 7L7.5 1L1.5 7'
+      stroke='#092C4C'
       strokeWidth={2}
-      strokeLinecap="round"
-      strokeLinejoin="round"
+      strokeLinecap='round'
+      strokeLinejoin='round'
     />
   </svg>
 );
 
 const SearchBox = ({
-  onSearchConsent
+  onSearchConsent,
 }: {
   onSearchConsent: ({ search }: { search: string }) => void;
 }) => {
   const { t } = useTranslation();
 
   return (
-    <Row className={styles.consentsSearch} align="middle">
+    <Row className={styles.consentsSearch} align='middle'>
       <h3>{t('consent')}</h3>
 
       <Form onFinish={onSearchConsent}>
-        <Row align="middle" className={styles.searchBox}>
-          <Row align="middle" className={styles.searchContent}>
+        <Row align='middle' className={styles.searchBox}>
+          <Row align='middle' className={styles.searchContent}>
             <IconSearch />
             <Form.Item
-              name="search"
+              name='search'
               className={styles.formSearchItem}
               rules={[
                 {
                   required: true,
-                  message: t('messages.errors.min', { min: 3 })
+                  message: t('messages.errors.min', { min: 3 }),
                 },
                 {
                   min: 3,
-                  message: t('messages.errors.min', { min: 3 })
+                  message: t('messages.errors.min', { min: 3 }),
                 },
                 {
                   max: 55,
-                  message: t('messages.errors.max_search_firstname', { max: 55 })
-                }
-              ]}>
-              <Input placeholder="Search" maxLength={55} />
+                  message: t('messages.errors.max_search_firstname', { max: 55 }),
+                },
+              ]}
+            >
+              <Input placeholder='Search' maxLength={55} />
             </Form.Item>
           </Row>
           <Button
-            htmlType="submit"
-            size="middle"
+            htmlType='submit'
+            size='middle'
             className={styles.btnSearch}
-            suffixIcon={<IconSearch />}>
+            suffixIcon={<IconSearch />}
+          >
             {t('search')}
           </Button>
         </Row>
       </Form>
 
-      <Button size="middle" className={styles.btnCreateCase} typeDisplay="ghost">
+      <Button size='middle' className={styles.btnCreateCase} typeDisplay='ghost'>
         {t('create_case')}
       </Button>
     </Row>
@@ -138,7 +140,7 @@ const ConsentsList = ({ data, loading, onChange, onSaveConsent, loadingUpdateCon
 
   const initialValues = data?.data?.reduce(
     (acc: any, v: any) => ({ ...acc, [v?.key]: Object.keys(v?.defaultValue) }),
-    {}
+    {},
   );
 
   if (loading || !data?.data?.length) return null;
@@ -149,13 +151,15 @@ const ConsentsList = ({ data, loading, onChange, onSaveConsent, loadingUpdateCon
         className={styles.formConsent}
         onFinish={onUpdateConsent}
         form={formConsent}
-        initialValues={initialValues}>
+        initialValues={initialValues}
+      >
         <div className={styles.listConsent}>
           <Collapse
             accordion
             expandIcon={({ isActive }) => {
               return isActive ? ArrowUp : ArrowDown;
-            }}>
+            }}
+          >
             {data?.data?.map(({ dataConsent, key }: DataType) => {
               const content = (
                 <Panel
@@ -163,19 +167,21 @@ const ConsentsList = ({ data, loading, onChange, onSaveConsent, loadingUpdateCon
                   header={
                     <div className={styles.panelHeader}>
                       <div className={styles.name}>{dataConsent.name}</div>
-                      <Row align="middle">
+                      <Row align='middle'>
                         <div className={styles.lastUpdated}>{dataConsent.lastUpdated}</div>
                         <div className={styles.version}>{dataConsent.version}</div>
                         <div
                           className={`${styles.status} ${
                             dataConsent.status === 'Accepted' ? styles.active : ''
-                          }`}>
+                          }`}
+                        >
                           {dataConsent.status}
                         </div>
                       </Row>
                       <div className={styles.description}>{dataConsent.description}</div>
                     </div>
-                  }>
+                  }
+                >
                   <Form.Item className={styles.panelContent} name={`${key}`}>
                     <ConsentOption dataConsent={dataConsent?.list} />
                   </Form.Item>
@@ -184,7 +190,7 @@ const ConsentsList = ({ data, loading, onChange, onSaveConsent, loadingUpdateCon
               return content;
             })}
           </Collapse>
-          <Row justify="space-between">
+          <Row justify='space-between'>
             <Pagination
               className={styles.pagination}
               current={data?.current}
@@ -197,7 +203,7 @@ const ConsentsList = ({ data, loading, onChange, onSaveConsent, loadingUpdateCon
           </Row>
         </div>
 
-        <Button htmlType="submit" className={styles.btnSave} loading={loadingUpdateConsent}>
+        <Button htmlType='submit' className={styles.btnSave} loading={loadingUpdateConsent}>
           {t('save')}
         </Button>
       </Form>

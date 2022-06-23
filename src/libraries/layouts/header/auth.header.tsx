@@ -19,7 +19,7 @@ export default function AuthHeader() {
 
   // check path render button auth header
   const getButtonHeader = (path: string) => {
-    let dataCheck = { showBtnSignIn: false, showBtnSignUp: false };
+    const dataCheck = { showBtnSignIn: false, showBtnSignUp: false };
     switch (path) {
       case routePath.SignIn:
         dataCheck.showBtnSignUp = true;
@@ -48,8 +48,9 @@ export default function AuthHeader() {
         {showButton.showBtnSignUp && (
           <div
             className={clsx({
-              'mr-12': showButton.showBtnSignIn === true && showButton.showBtnSignUp === true
-            })}>
+              'mr-12': showButton.showBtnSignIn === true && showButton.showBtnSignUp === true,
+            })}
+          >
             <Button style={{ padding: '10px 24px' }} onClick={() => onGoTo(routePath.SignUp)}>
               {t('sign_up_button')}
             </Button>

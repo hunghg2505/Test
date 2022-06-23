@@ -3,16 +3,16 @@ import baseReducer from 'hooks/redux/reducer';
 import { createStateSyncMiddleware, initMessageListener } from 'redux-state-sync';
 
 const rootReducer = combineReducers({
-  ...baseReducer
+  ...baseReducer,
 });
 
 const store = configureStore({
   reducer: rootReducer,
   middleware: [
     createStateSyncMiddleware({
-      whitelist: ['locale/changeLocale']
-    })
-  ]
+      whitelist: ['locale/changeLocale'],
+    }),
+  ],
 });
 initMessageListener(store);
 

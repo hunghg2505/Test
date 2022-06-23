@@ -13,7 +13,7 @@ export const __DEV__ = !process.env.NODE_ENV || process.env.NODE_ENV === 'develo
 
 export const instance = axios.create({
   baseURL: BACKEND_URL,
-  timeout: REQ_TIMEOUT
+  timeout: REQ_TIMEOUT,
 });
 
 instance.interceptors.request.use((_config: any) => requestHandler(_config));
@@ -52,11 +52,11 @@ const requestHandler = (request: AxiosRequestConfig) => {
 
 instance.interceptors.response.use(
   (response: any) => successHandler(response),
-  (error: any) => errorHandler(error)
+  (error: any) => errorHandler(error),
 );
 
 let isRefreshing = false;
-let refreshSubscribers: any[] = [];
+const refreshSubscribers: any[] = [];
 function subscribeTokenRefresh(cb: any) {
   refreshSubscribers.push(cb);
 }
@@ -115,7 +115,7 @@ async function fetch<ReqType, ResType>(
   url: string,
   params?: ReqType,
   customHeaders?: CustomHeaders,
-  responseType?: ResponseType
+  responseType?: ResponseType,
 ): Promise<ResType> {
   const headers = await getHeader(customHeaders);
   return instance.get(url, { params, headers, responseType });
@@ -124,7 +124,7 @@ async function fetch<ReqType, ResType>(
 async function post<ReqType, ResType>(
   url: string,
   data?: ReqType,
-  customHeaders?: CustomHeaders
+  customHeaders?: CustomHeaders,
 ): Promise<ResType> {
   const headers = await getHeader(customHeaders);
   return instance.post(url, { ...data }, { headers });
@@ -133,7 +133,7 @@ async function post<ReqType, ResType>(
 async function postForm<ReqType, ResType>(
   url: string,
   data?: ReqType,
-  customHeaders?: CustomHeaders
+  customHeaders?: CustomHeaders,
 ): Promise<ResType> {
   const headers = await getHeader(customHeaders);
   return instance.post(url, data, { headers });
@@ -142,7 +142,7 @@ async function postForm<ReqType, ResType>(
 async function put<ReqType, ResType>(
   url: string,
   data?: ReqType,
-  customHeaders?: CustomHeaders
+  customHeaders?: CustomHeaders,
 ): Promise<ResType> {
   const headers = await getHeader(customHeaders);
   return instance.put(url, { ...data }, { headers });
@@ -151,7 +151,7 @@ async function put<ReqType, ResType>(
 async function remove<ReqType, ResType>(
   url: string,
   data?: ReqType,
-  customHeaders?: CustomHeaders
+  customHeaders?: CustomHeaders,
 ): Promise<ResType> {
   const headers = await getHeader(customHeaders);
   return instance.delete(url, { data: { ...data }, headers: { ...headers } });

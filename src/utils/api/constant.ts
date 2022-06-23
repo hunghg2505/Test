@@ -13,5 +13,5 @@ export const API_PATH = {
   SUBJECT_HISTORY: '/data-subject/subject-histories',
   SEARCH_USERS: '/data-subject/data-autocomplete',
   CONSENTS: '/data-subject/consents',
-  OPT_OUT_IN: '/data-subject/opt-out-in'
+  OPT_OUT_IN: '/data-subject/opt-out-in',
 };

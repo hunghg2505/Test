@@ -29,7 +29,6 @@ function useInitAuth(config?: Config): void {
         navigate(routePath.HomePage);
       }
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [auth]);
 }
 

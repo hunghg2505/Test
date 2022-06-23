@@ -3,7 +3,7 @@ import React from 'react';
 
 function CaseManagement() {
   return (
-    <ContainerLayout title="Case Management">
+    <ContainerLayout title='Case Management'>
       <h1>Hello Case Management</h1>
     </ContainerLayout>
   );

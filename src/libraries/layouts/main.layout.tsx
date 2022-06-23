@@ -69,11 +69,11 @@ function MainLayout() {
       const listChild = routerNotAuth.children || [];
       listChild.forEach((item) => {
         if (item.hiddenMenu) return null;
-        let menu: ItemType = {
+        const menu: ItemType = {
           key: item.haveChild ? `${item.path}-main` : item.path,
           icon: item.icons,
           label: item.name,
-          children: []
+          children: [],
         };
 
         const childMenu: any[] = [];
@@ -83,7 +83,7 @@ function MainLayout() {
             if (!item.hiddenMenu) {
               childMenu.push({
                 key: item.path,
-                label: item.name
+                label: item.name,
               });
             }
           });
@@ -124,7 +124,7 @@ function MainLayout() {
   );
 
   return (
-    <Layout className="min-height">
+    <Layout className='min-height'>
       <Helmet>
         <title>{document.title}</title>
       </Helmet>
@@ -140,13 +140,14 @@ function MainLayout() {
             collapsed={!showSider !== undefined ? !showSider : false}
             onCollapse={() => {
               toggleSider && toggleSider();
-            }}>
+            }}
+          >
             <div className={styles.logo}>
               <Logo />
             </div>
             <Menu
               onClick={onClickMenu}
-              mode="inline"
+              mode='inline'
               selectedKeys={defaultSelected}
               style={{ borderRight: 0 }}
               inlineCollapsed={!showSider}
@@ -156,17 +157,18 @@ function MainLayout() {
           </Sider>
         ) : (
           <Drawer
-            className="sider-bar-drawer"
-            placement="left"
+            className='sider-bar-drawer'
+            placement='left'
             closable={false}
             bodyStyle={{ padding: 0 }}
             visible={showSider}
             onClose={() => {
               toggleSider && toggleSider();
-            }}>
+            }}
+          >
             <Menu
               onClick={onClickMenu}
-              mode="inline"
+              mode='inline'
               selectedKeys={defaultSelected}
               style={{ borderRight: 0 }}
               items={menus}
@@ -178,10 +180,11 @@ function MainLayout() {
         {/** Main layout content */}
         <Layout className={styles.mainLayout}>
           <Content
-            className="site-layout-background"
+            className='site-layout-background'
             style={{
-              overflow: 'overlay'
-            }}>
+              overflow: 'overlay',
+            }}
+          >
             {/** Header */}
             <MainHeader
               toggleSider={toggleSider}

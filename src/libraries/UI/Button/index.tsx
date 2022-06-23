@@ -33,7 +33,7 @@ const Button = ({
   disabled = false,
   typeDisplay,
   style = {},
-  onClick
+  onClick,
 }: Props) => {
   const onClickHandler = useCallback(
     (event: React.MouseEvent<HTMLButtonElement | HTMLAnchorElement, MouseEvent>) => {
@@ -43,7 +43,7 @@ const Button = ({
         onClick(event);
       }
     },
-    [loading, disabled, onClick]
+    [loading, disabled, onClick],
   );
 
   return (
@@ -59,8 +59,9 @@ const Button = ({
         [styles[size]]: true,
         [styles[`${typeDisplay}`]]: typeDisplay,
         [styles['disabled']]: disabled,
-        [className]: true
-      })}>
+        [className]: true,
+      })}
+    >
       {<>{children}</>}
       {suffixIcon}
     </ButtonAntd>

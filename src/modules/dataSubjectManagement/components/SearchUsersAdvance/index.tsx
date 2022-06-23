@@ -16,13 +16,13 @@ const _popoverStyles = {
   opacity: 0,
   transitionDuration: '300ms',
   transitionProperty: 'opacity',
-  transitionTimingFunction: 'cubic-bezier(0, 0, 1, 1)'
+  transitionTimingFunction: 'cubic-bezier(0, 0, 1, 1)',
 };
 
 const _popoverVisibleStyles = {
   opacity: 1,
   transitionDuration: '300ms',
-  transitionTimingFunction: 'cubic-bezier(0, 0, 1, 1)'
+  transitionTimingFunction: 'cubic-bezier(0, 0, 1, 1)',
 };
 
 const formatAdvancedSearchObject = (obj: any) => {
@@ -80,14 +80,14 @@ const SearchUsersAdvance = ({ onSearchDataSubject, t }: any) => {
     if (queryParams.firstnameexact) {
       onSearchDataSubject({
         firstname: queryParams.firstnameexact,
-        isEqualSearch: true
+        isEqualSearch: true,
       });
     } else {
       onSearchDataSubject({
         advanceSearch: {
           firstname: queryParams.firstname,
-          ...conditions
-        }
+          ...conditions,
+        },
       });
     }
   }, []);
@@ -95,33 +95,36 @@ const SearchUsersAdvance = ({ onSearchDataSubject, t }: any) => {
   return (
     <div style={{ position: 'relative' }} ref={refSearch}>
       <Button
-        typeDisplay="ghost"
+        typeDisplay='ghost'
         className={styles.btnSearchAdvanced}
         icon={<IconCross />}
-        onClick={onVisibleSearch}>
+        onClick={onVisibleSearch}
+      >
         {t('advanced')}
       </Button>
       <div
-        id="searchAdvanceOverlay"
+        id='searchAdvanceOverlay'
         style={{
           position: 'absolute',
           top: '130%',
           right: 0,
-          zIndex: 1
-        }}>
+          zIndex: 1,
+        }}
+      >
         {_isTransitioning && (
           <div
             className={styles.formSearchAdvanced}
             ref={refFormModal}
-            style={shouldBeVisible ? _popoverVisibleStyles : _popoverStyles}>
+            style={shouldBeVisible ? _popoverVisibleStyles : _popoverStyles}
+          >
             <Form
               onFinish={(values) => {
                 const conditions = formatAdvancedSearchObject(values);
                 onSearchDataSubject({
                   advanceSearch: {
                     firstname: values.firstname,
-                    ...conditions
-                  }
+                    ...conditions,
+                  },
                 });
 
                 const params: { [key: string]: any } = {};
@@ -134,18 +137,19 @@ const SearchUsersAdvance = ({ onSearchDataSubject, t }: any) => {
 
                 navigate({
                   pathname: '/data-subject',
-                  search: `?${createSearchParams(params)}`
+                  search: `?${createSearchParams(params)}`,
                 });
                 setIsShowSearch(false);
               }}
               form={formSearch}
-              layout="vertical">
+              layout='vertical'
+            >
               <Row gutter={[0, 16]}>
                 <Col xs={24}>
                   <InputForm
-                    label="First Name"
-                    name="firstname"
-                    placeholder="First Name"
+                    label='First Name'
+                    name='firstname'
+                    placeholder='First Name'
                     maxLength={55}
                     rules={[
                       ({ getFieldValue }) => ({
@@ -159,58 +163,58 @@ const SearchUsersAdvance = ({ onSearchDataSubject, t }: any) => {
                             !getFieldValue('application')
                           ) {
                             return Promise.reject(
-                              t('messages.errors.require', { field: 'Firstname' })
+                              t('messages.errors.require', { field: 'Firstname' }),
                             );
                           }
 
                           return Promise.resolve();
-                        }
+                        },
                       }),
                       {
                         min: 3,
-                        message: t('messages.errors.min', { min: 3 })
+                        message: t('messages.errors.min', { min: 3 }),
                       },
                       {
                         max: 55,
-                        message: t('messages.errors.max', { max: 55 })
-                      }
+                        message: t('messages.errors.max', { max: 55 }),
+                      },
                     ]}
                     // onBlur={() => onBlur('firstname')}
                   />
                 </Col>
                 <Col xs={24}>
                   <InputForm
-                    label="Last Name"
-                    name="lastNameEn"
-                    placeholder="Last Name"
+                    label='Last Name'
+                    name='lastNameEn'
+                    placeholder='Last Name'
                     maxLength={55}
                     rules={[
                       {
                         min: 3,
-                        message: t('messages.errors.min', { min: 3 })
+                        message: t('messages.errors.min', { min: 3 }),
                       },
                       {
                         max: 55,
-                        message: t('messages.errors.max', { max: 55 })
+                        message: t('messages.errors.max', { max: 55 }),
                       },
                       ({ getFieldError, isFieldValidating }) => ({
                         validator() {
                           if (
                             isFieldValidating('lastNameEn') &&
                             getFieldError('firstname').includes(
-                              t('messages.errors.require', { field: 'Firstname' })
+                              t('messages.errors.require', { field: 'Firstname' }),
                             )
                           ) {
                             formSearch.setFields([
                               {
                                 name: 'firstname',
-                                errors: []
-                              }
+                                errors: [],
+                              },
                             ]);
                           }
                           return Promise.resolve();
-                        }
-                      })
+                        },
+                      }),
                     ]}
                     // onBlur={() => onBlur('lastNameEn')}
                   />
@@ -218,74 +222,74 @@ const SearchUsersAdvance = ({ onSearchDataSubject, t }: any) => {
 
                 <Col xs={24}>
                   <InputForm
-                    label="Company"
-                    name="company"
-                    placeholder="Company"
+                    label='Company'
+                    name='company'
+                    placeholder='Company'
                     maxLength={55}
                     rules={[
                       {
                         min: 3,
-                        message: t('messages.errors.min', { min: 3 })
+                        message: t('messages.errors.min', { min: 3 }),
                       },
                       {
                         max: 55,
-                        message: t('messages.errors.max', { max: 55 })
+                        message: t('messages.errors.max', { max: 55 }),
                       },
                       ({ getFieldError, isFieldValidating }) => ({
                         validator() {
                           if (
                             isFieldValidating('company') &&
                             getFieldError('firstname').includes(
-                              t('messages.errors.require', { field: 'Firstname' })
+                              t('messages.errors.require', { field: 'Firstname' }),
                             )
                           ) {
                             formSearch.setFields([
                               {
                                 name: 'firstname',
-                                errors: []
-                              }
+                                errors: [],
+                              },
                             ]);
                           }
                           return Promise.resolve();
-                        }
-                      })
+                        },
+                      }),
                     ]}
                     // onBlur={() => onBlur('company')}
                   />
                 </Col>
                 <Col xs={24} className={styles.emailFiled}>
                   <InputForm
-                    label="Email"
-                    name="email"
-                    placeholder="Email"
+                    label='Email'
+                    name='email'
+                    placeholder='Email'
                     maxLength={30}
                     rules={[
                       {
                         min: 3,
-                        message: t('messages.errors.min', { min: 3 })
+                        message: t('messages.errors.min', { min: 3 }),
                       },
                       {
                         max: 55,
-                        message: t('messages.errors.max', { max: 55 })
+                        message: t('messages.errors.max', { max: 55 }),
                       },
                       ({ getFieldError, isFieldValidating }) => ({
                         validator() {
                           if (
                             isFieldValidating('email') &&
                             getFieldError('firstname').includes(
-                              t('messages.errors.require', { field: 'Firstname' })
+                              t('messages.errors.require', { field: 'Firstname' }),
                             )
                           ) {
                             formSearch.setFields([
                               {
                                 name: 'firstname',
-                                errors: []
-                              }
+                                errors: [],
+                              },
                             ]);
                           }
                           return Promise.resolve();
-                        }
-                      })
+                        },
+                      }),
                     ]}
                     // onBlur={() => onBlur('email')}
                   />
@@ -293,66 +297,67 @@ const SearchUsersAdvance = ({ onSearchDataSubject, t }: any) => {
 
                 <Col xs={24}>
                   <InputForm
-                    label="Mobile number"
-                    name="mobile"
-                    placeholder="Mobile number"
+                    label='Mobile number'
+                    name='mobile'
+                    placeholder='Mobile number'
                     maxLength={55}
                     rules={[
                       {
                         min: 3,
-                        message: t('messages.errors.min', { min: 3 })
+                        message: t('messages.errors.min', { min: 3 }),
                       },
                       {
                         max: 55,
-                        message: t('messages.errors.max', { max: 55 })
+                        message: t('messages.errors.max', { max: 55 }),
                       },
                       ({ getFieldError, isFieldValidating }) => ({
                         validator() {
                           if (
                             isFieldValidating('mobile') &&
                             getFieldError('firstname').includes(
-                              t('messages.errors.require', { field: 'Firstname' })
+                              t('messages.errors.require', { field: 'Firstname' }),
                             )
                           ) {
                             formSearch.setFields([
                               {
                                 name: 'firstname',
-                                errors: []
-                              }
+                                errors: [],
+                              },
                             ]);
                           }
                           return Promise.resolve();
-                        }
-                      })
+                        },
+                      }),
                     ]}
                     // onBlur={() => onBlur('mobile')}
                   />
                 </Col>
                 <Col xs={24}>
                   <Form.Item
-                    label="Application"
-                    name="application"
+                    label='Application'
+                    name='application'
                     rules={[
                       ({ getFieldError, isFieldValidating }) => ({
                         validator() {
                           if (
                             isFieldValidating('application') &&
                             getFieldError('firstname').includes(
-                              t('messages.errors.require', { field: 'Firstname' })
+                              t('messages.errors.require', { field: 'Firstname' }),
                             )
                           ) {
                             formSearch.setFields([
                               {
                                 name: 'firstname',
-                                errors: []
-                              }
+                                errors: [],
+                              },
                             ]);
                           }
                           return Promise.resolve();
-                        }
-                      })
-                    ]}>
-                    <Select placeholder="Please Select">
+                        },
+                      }),
+                    ]}
+                  >
+                    <Select placeholder='Please Select'>
                       <Select.Option value={null}>Please Select</Select.Option>
                       <Select.Option value={0}>Lucy</Select.Option>
                       <Select.Option value={1}>Lucy1</Select.Option>
@@ -362,10 +367,11 @@ const SearchUsersAdvance = ({ onSearchDataSubject, t }: any) => {
               </Row>
 
               <Button
-                htmlType="submit"
-                type="secondary"
+                htmlType='submit'
+                type='secondary'
                 className={styles.btnSearchAdvancedDd}
-                icon={<IconSearch />}>
+                icon={<IconSearch />}
+              >
                 {t('Search')}
               </Button>
             </Form>
