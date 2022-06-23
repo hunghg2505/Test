@@ -73,10 +73,6 @@ const SearchBox = ({
               className={styles.formSearchItem}
               rules={[
                 {
-                  required: true,
-                  message: t('messages.errors.min', { min: 3 }),
-                },
-                {
                   min: 3,
                   message: t('messages.errors.min', { min: 3 }),
                 },
@@ -143,9 +139,12 @@ const ConsentsList = ({ data, loading, onChange, onSaveConsent, loadingUpdateCon
     {},
   );
 
-  if (loading || !data?.data?.length) return null;
+  if (loading) return null;
+  console.log(data?.data?.length === 0);
 
-  return (
+  return data?.data?.length === 0 ? (
+    <p className={styles.noResultText}>{t('no_result_found')}</p>
+  ) : (
     <div className={styles.consentWrap}>
       <Form
         className={styles.formConsent}
@@ -153,55 +152,59 @@ const ConsentsList = ({ data, loading, onChange, onSaveConsent, loadingUpdateCon
         form={formConsent}
         initialValues={initialValues}
       >
-        <div className={styles.listConsent}>
-          <Collapse
-            accordion
-            expandIcon={({ isActive }) => {
-              return isActive ? ArrowUp : ArrowDown;
-            }}
-          >
-            {data?.data?.map(({ dataConsent, key }: DataType) => {
-              const content = (
-                <Panel
-                  key={key}
-                  header={
-                    <div className={styles.panelHeader}>
-                      <div className={styles.name}>{dataConsent.name}</div>
-                      <Row align='middle'>
-                        <div className={styles.lastUpdated}>{dataConsent.lastUpdated}</div>
-                        <div className={styles.version}>{dataConsent.version}</div>
-                        <div
-                          className={`${styles.status} ${
-                            dataConsent.status === 'Accepted' ? styles.active : ''
-                          }`}
-                        >
-                          {dataConsent.status}
-                        </div>
-                      </Row>
-                      <div className={styles.description}>{dataConsent.description}</div>
-                    </div>
-                  }
-                >
-                  <Form.Item className={styles.panelContent} name={`${key}`}>
-                    <ConsentOption dataConsent={dataConsent?.list} />
-                  </Form.Item>
-                </Panel>
-              );
-              return content;
-            })}
-          </Collapse>
-          <Row justify='space-between'>
-            <Pagination
-              className={styles.pagination}
-              current={data?.current}
-              onChange={onChange}
-              total={data?.total}
-              defaultPageSize={data?.pageSize}
-              itemRender={paginationItemRender}
-              showSizeChanger={false}
-            />
-          </Row>
-        </div>
+        {data?.data?.length === 0 ? (
+          <p className={styles.noResultText}>{t('no_result_found')}</p>
+        ) : (
+          <div className={styles.listConsent}>
+            <Collapse
+              // accordion
+              expandIcon={({ isActive }) => {
+                return isActive ? ArrowUp : ArrowDown;
+              }}
+            >
+              {data?.data?.map(({ dataConsent, key }: DataType) => {
+                const content = (
+                  <Panel
+                    key={key}
+                    header={
+                      <div className={styles.panelHeader}>
+                        <div className={styles.name}>{dataConsent.name}</div>
+                        <Row align='middle'>
+                          <div className={styles.lastUpdated}>{dataConsent.lastUpdated}</div>
+                          <div className={styles.version}>{dataConsent.version}</div>
+                          <div
+                            className={`${styles.status} ${
+                              dataConsent.status === 'Accepted' ? styles.active : ''
+                            }`}
+                          >
+                            {dataConsent.status}
+                          </div>
+                        </Row>
+                        <div className={styles.description}>{dataConsent.description}</div>
+                      </div>
+                    }
+                  >
+                    <Form.Item className={styles.panelContent} name={`${key}`}>
+                      <ConsentOption dataConsent={dataConsent?.list} />
+                    </Form.Item>
+                  </Panel>
+                );
+                return content;
+              })}
+            </Collapse>
+            <Row justify='space-between'>
+              <Pagination
+                className={styles.pagination}
+                current={data?.current}
+                onChange={onChange}
+                total={data?.total}
+                defaultPageSize={data?.pageSize}
+                itemRender={paginationItemRender}
+                showSizeChanger={false}
+              />
+            </Row>
+          </div>
+        )}
 
         <Button htmlType='submit' className={styles.btnSave} loading={loadingUpdateConsent}>
           {t('save')}
@@ -211,12 +214,20 @@ const ConsentsList = ({ data, loading, onChange, onSaveConsent, loadingUpdateCon
   );
 };
 
-function Consents({ userId }: { userId: number }) {
+function Consents({ userId, refDataHistory }: { userId: number; refDataHistory: any }) {
   const { data, loading, onChange, onSearchConsent, onSaveConsent, loadingUpdateConsent } =
     useConsent({ userId });
 
   const onSearch = ({ search }: { search: string }) => {
     onSearchConsent(search);
+  };
+
+  const onSave = async (values: any) => {
+    try {
+      await onSaveConsent(values);
+      if (refDataHistory.current?.refreshDataHistory) refDataHistory.current.refreshDataHistory();
+      // eslint-disable-next-line no-empty
+    } catch (error) {}
   };
 
   return (
@@ -227,7 +238,7 @@ function Consents({ userId }: { userId: number }) {
         data={data}
         loading={loading}
         onChange={onChange}
-        onSaveConsent={onSaveConsent}
+        onSaveConsent={onSave}
         loadingUpdateConsent={loadingUpdateConsent}
       />
     </div>

@@ -40,12 +40,20 @@ export const useDataSubjectHistory = ({
 }) => {
   const navigate = useNavigate();
 
-  const { data, loading, run } = useRequest(
+  const { data, loading, run, refresh } = useRequest(
     async ({ current }) => getDataSubjectHistoryService({ userId, current }),
     {
       manual: true,
     },
   );
+
+  const subjectHistoryData = data?.data.map((item: any) => {
+    return {
+      ...item,
+      dataRequest:
+        typeof item?.dataRequest === 'string' ? item.dataRequest : item.dataRequest.consentName,
+    };
+  });
 
   useMount(() => {
     run({ current: 1 });
@@ -73,5 +81,7 @@ export const useDataSubjectHistory = ({
     loading,
     onChange: onChangeCurrent,
     reqForgotMe,
+    subjectHistoryData,
+    refresh,
   };
 };

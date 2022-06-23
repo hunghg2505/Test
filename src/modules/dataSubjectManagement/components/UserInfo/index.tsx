@@ -45,8 +45,8 @@ function UserInfo({ userInfo }: { userInfo?: IUserInfo }) {
           </Col>
 
           <Col xs={12}>
-            <div className={styles.label}>{t('address')}</div>
-            <div className={styles.content}>{userInfo.address}</div>
+            <div className={styles.label}>{t('mobile_number')}</div>
+            <div className={styles.content}>{userInfo.mobile}</div>
           </Col>
           <Col xs={12}>
             <div className={styles.label}>{t('birthday')}</div>
