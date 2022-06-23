@@ -14,17 +14,20 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { ReactKeycloakProvider } from '@react-keycloak/web';
 import keycloak from './keycloak';
+import { ErrorBoundary } from 'libraries/components/ErrorBoundary';
 
 ReactDOM.render(
-  <ReactKeycloakProvider authClient={keycloak}>
-    <Provider store={store}>
-      <React.StrictMode>
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>
-      </React.StrictMode>
-    </Provider>
-  </ReactKeycloakProvider>,
+  <ErrorBoundary>
+    <ReactKeycloakProvider authClient={keycloak}>
+      <Provider store={store}>
+        <React.StrictMode>
+          <BrowserRouter>
+            <App />
+          </BrowserRouter>
+        </React.StrictMode>
+      </Provider>
+    </ReactKeycloakProvider>
+  </ErrorBoundary>,
   document.getElementById('root'),
 );
 
