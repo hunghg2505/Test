@@ -1,7 +1,7 @@
 import LogoWhite from 'assets/icons/logo-white';
-import clsx from 'clsx';
+import useAuth from 'hooks/redux/auth/useAuth';
 import Button from 'libraries/UI/Button';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { routePath } from 'routing/path.routing';
@@ -12,6 +12,7 @@ export default function AuthHeader() {
   const location = useLocation();
   const navigate = useNavigate();
   const [showButton, setShowButton] = useState({ showBtnSignIn: false, showBtnSignUp: false });
+  const { isLogin, onLogin, onLogout } = useAuth();
 
   useEffect(() => {
     getButtonHeader(location.pathname);
@@ -45,7 +46,7 @@ export default function AuthHeader() {
         <LogoWhite />
       </div>
       <div className={styles.avatarView}>
-        {showButton.showBtnSignUp && (
+        {/* {showButton.showBtnSignUp && (
           <div
             className={clsx({
               'mr-12': showButton.showBtnSignIn === true && showButton.showBtnSignUp === true,
@@ -55,11 +56,26 @@ export default function AuthHeader() {
               {t('sign_up_button')}
             </Button>
           </div>
-        )}
-        {showButton.showBtnSignIn && (
+        )} */}
+        {/* {showButton.showBtnSignIn && (
           <div>
             <Button style={{ padding: '10px 24px' }} onClick={() => onGoTo(routePath.SignIn)}>
               {t('login_button')}
+            </Button>
+          </div>
+        )} */}
+
+        {!isLogin && (
+          <div>
+            <Button style={{ padding: '10px 24px' }} onClick={onLogin}>
+              {t('login_button_clock', 'Login Keycloak')}
+            </Button>
+          </div>
+        )}
+        {isLogin && (
+          <div>
+            <Button style={{ padding: '10px 24px' }} onClick={onLogout}>
+              {t('logout_button_clock', 'Logout Keycloak')}
             </Button>
           </div>
         )}

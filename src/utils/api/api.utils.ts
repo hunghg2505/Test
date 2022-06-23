@@ -55,7 +55,7 @@ instance.interceptors.response.use(
   (error: any) => errorHandler(error),
 );
 
-let isRefreshing = false;
+const isRefreshing = false;
 const refreshSubscribers: any[] = [];
 function subscribeTokenRefresh(cb: any) {
   refreshSubscribers.push(cb);
@@ -70,27 +70,25 @@ const errorHandler = (error: AxiosError) => {
   const originalRequest: any = error.config;
 
   if (resError?.data?.code === ResponseCode.UNAUTHORIZED) {
-    if (originalRequest.url === API_PATH.REFRESH_TOKEN) {
-      localStorageUtils.setObject(KeyStorage.AUTH, 'null');
-      window.location.href = '/auth/sign-in';
-      return;
-    }
-
-    if (!isRefreshing) {
-      isRefreshing = true;
-      refreshTokenApi().then((data: any) => {
-        isRefreshing = false;
-        onRefreshed(data);
-      });
-    }
-
-    const retryOrigReq = new Promise((resolve, reject) => {
-      subscribeTokenRefresh(async (token: string) => {
-        originalRequest.headers['Authorization'] = 'Bearer ' + token;
-        resolve(instance.request(originalRequest));
-      });
-    });
-    return retryOrigReq;
+    // if (originalRequest.url === API_PATH.REFRESH_TOKEN) {
+    //   localStorageUtils.setObject(KeyStorage.AUTH, 'null');
+    //   window.location.href = '/auth/sign-in';
+    //   return;
+    // }
+    // if (!isRefreshing) {
+    //   isRefreshing = true;
+    //   refreshTokenApi().then((data: any) => {
+    //     isRefreshing = false;
+    //     onRefreshed(data);
+    //   });
+    // }
+    // const retryOrigReq = new Promise((resolve, reject) => {
+    //   subscribeTokenRefresh(async (token: string) => {
+    //     originalRequest.headers['Authorization'] = 'Bearer ' + token;
+    //     resolve(instance.request(originalRequest));
+    //   });
+    // });
+    // return retryOrigReq;
   }
 
   if (__DEV__) {

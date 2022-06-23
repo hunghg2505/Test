@@ -1,13 +1,11 @@
-import IconUser from 'assets/icons/icon-user';
-import Logo from 'assets/icons/logo';
-import ButtonForm from 'libraries/form/button/button-form';
-import React from 'react';
-import { useTranslation } from 'react-i18next';
-import styles from './styles.module.scss';
-import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
-import { User } from 'types/common.types';
-import Button from 'libraries/UI/Button';
+import { useKeycloak } from '@react-keycloak/web';
 import IconLogout from 'assets/icons/icon-logout';
+import IconUser from 'assets/icons/icon-user';
+import useAuth from 'hooks/redux/auth/useAuth';
+import Button from 'libraries/UI/Button';
+import { useTranslation } from 'react-i18next';
+import { User } from 'types/common.types';
+import styles from './styles.module.scss';
 
 interface Props {
   user?: User;
@@ -17,8 +15,11 @@ interface Props {
   isMobile: boolean;
 }
 
-export default function MainHeader({ isMobile, showSider, user, toggleSider, onLogout }: Props) {
+export default function MainHeader({ isMobile, showSider, user, toggleSider }: Props) {
   const { t } = useTranslation();
+  const { keycloak } = useKeycloak();
+  const { onLogout } = useAuth();
+
   return (
     <div className={styles.mainHeader}>
       {/* <div className={styles.logoView}>
@@ -32,7 +33,9 @@ export default function MainHeader({ isMobile, showSider, user, toggleSider, onL
         )}
         <Logo />
       </div> */}
-      <p className={styles.welcomeUser}>{t('welcome', { username: user?.email })}</p>
+      <p className={styles.welcomeUser}>
+        {t('welcome', { username: user?.email || keycloak?.tokenParsed?.preferred_username })}
+      </p>
       <div className={styles.avatarView}>
         <div className={styles.profileUser}>
           <div className={styles.avatar}>
