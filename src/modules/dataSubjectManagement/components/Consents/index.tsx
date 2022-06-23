@@ -1,12 +1,16 @@
+import { useClickAway } from 'ahooks';
 import { Checkbox, Collapse, Form, Pagination, Row } from 'antd';
 
 import IconSearch from 'assets/icons/icon-search';
 import Button from 'libraries/UI/Button';
 import Input from 'libraries/UI/Input';
 import { paginationItemRender } from 'libraries/UI/Pagination';
+import { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import styles from './index.module.scss';
 import { useConsent } from './service';
+import SuggestConsents from './SuggestConsents';
+import get from 'lodash/get';
 
 const { Panel } = Collapse;
 
@@ -55,45 +59,91 @@ const ArrowUp = (
 
 const SearchBox = ({
   onSearchConsent,
+  suggestionConsents,
+  onSuggestionConsentsDebounce,
+  onLoadMoreSuggestionConsents,
+  onResetSuggestionConsents,
 }: {
-  onSearchConsent: ({ search }: { search: string }) => void;
+  onSearchConsent: (search: string) => void;
+  suggestionConsents: any;
+  onSuggestionConsentsDebounce: (value: string, callback: any) => void;
+  onLoadMoreSuggestionConsents: (value: string) => void;
+  onResetSuggestionConsents: () => void;
 }) => {
   const { t } = useTranslation();
+  const refForm: any = useRef();
+  const refListConsents: any = useRef();
+
+  const onFieldsChange = (values: any) => {
+    const value = get(values, '[0].value', '');
+    if (value?.length < 3) refListConsents.current.closeListUser();
+    onSuggestionConsentsDebounce(value || '', () => {
+      if (refListConsents.current?.openListUser) refListConsents.current.openListUser();
+    });
+  };
+
+  const onFinish = (values: any) => {
+    const value = get(values, 'search', '');
+    onSearchConsent(value);
+  };
+
+  useClickAway(() => {
+    if (refListConsents.current?.closeListUser) {
+      refListConsents.current.closeListUser();
+      onResetSuggestionConsents();
+    }
+  }, refForm);
 
   return (
     <Row className={styles.consentsSearch} align='middle'>
       <h3>{t('consent')}</h3>
 
-      <Form onFinish={onSearchConsent}>
-        <Row align='middle' className={styles.searchBox}>
-          <Row align='middle' className={styles.searchContent}>
-            <IconSearch />
-            <Form.Item
-              name='search'
-              className={styles.formSearchItem}
-              rules={[
-                {
-                  min: 3,
-                  message: t('messages.errors.min', { min: 3 }),
-                },
-                {
-                  max: 55,
-                  message: t('messages.errors.max_search_firstname', { max: 55 }),
-                },
-              ]}
+      <Form onFinish={onFinish} onFieldsChange={onFieldsChange}>
+        <div
+          ref={refForm}
+          style={{
+            position: 'relative',
+            maxWidth: 680,
+            marginLeft: 'auto',
+          }}
+        >
+          <Row align='middle' className={styles.searchBox}>
+            <Row align='middle' className={styles.searchContent}>
+              <IconSearch />
+              <Form.Item
+                name='search'
+                className={styles.formSearchItem}
+                rules={[
+                  {
+                    min: 3,
+                    message: t('messages.errors.min', { min: 3 }),
+                  },
+                  {
+                    max: 55,
+                    message: t('messages.errors.max_search_firstname', { max: 55 }),
+                  },
+                ]}
+              >
+                <Input placeholder='Search' maxLength={55} />
+              </Form.Item>
+            </Row>
+            <Button
+              htmlType='submit'
+              size='middle'
+              className={styles.btnSearch}
+              suffixIcon={<IconSearch />}
             >
-              <Input placeholder='Search' maxLength={55} />
-            </Form.Item>
+              {t('search')}
+            </Button>
+            <SuggestConsents
+              ref={refListConsents}
+              onSearchConsent={onSearchConsent}
+              suggestionConsents={suggestionConsents}
+              onLoadMoreSuggestionConsents={onLoadMoreSuggestionConsents}
+              onResetSuggestionConsents={onResetSuggestionConsents}
+            />
           </Row>
-          <Button
-            htmlType='submit'
-            size='middle'
-            className={styles.btnSearch}
-            suffixIcon={<IconSearch />}
-          >
-            {t('search')}
-          </Button>
-        </Row>
+        </div>
       </Form>
 
       <Button size='middle' className={styles.btnCreateCase} typeDisplay='ghost'>
@@ -140,7 +190,6 @@ const ConsentsList = ({ data, loading, onChange, onSaveConsent, loadingUpdateCon
   );
 
   if (loading) return null;
-  console.log(data?.data?.length === 0);
 
   return data?.data?.length === 0 ? (
     <p className={styles.noResultText}>{t('no_result_found')}</p>
@@ -215,10 +264,20 @@ const ConsentsList = ({ data, loading, onChange, onSaveConsent, loadingUpdateCon
 };
 
 function Consents({ userId, refDataHistory }: { userId: number; refDataHistory: any }) {
-  const { data, loading, onChange, onSearchConsent, onSaveConsent, loadingUpdateConsent } =
-    useConsent({ userId });
+  const {
+    data,
+    loading,
+    onChange,
+    onSearchConsent,
+    onSaveConsent,
+    loadingUpdateConsent,
+    suggestionConsents,
+    onSuggestionConsentsDebounce,
+    onLoadMoreSuggestionConsents,
+    onResetSuggestionConsents,
+  } = useConsent({ userId });
 
-  const onSearch = ({ search }: { search: string }) => {
+  const onSearch = (search: string) => {
     onSearchConsent(search);
   };
 
@@ -232,7 +291,13 @@ function Consents({ userId, refDataHistory }: { userId: number; refDataHistory: 
 
   return (
     <div className={styles.consentsWrap}>
-      <SearchBox onSearchConsent={onSearch} />
+      <SearchBox
+        onSearchConsent={onSearch}
+        suggestionConsents={suggestionConsents}
+        onSuggestionConsentsDebounce={onSuggestionConsentsDebounce}
+        onLoadMoreSuggestionConsents={onLoadMoreSuggestionConsents}
+        onResetSuggestionConsents={onResetSuggestionConsents}
+      />
 
       <ConsentsList
         data={data}

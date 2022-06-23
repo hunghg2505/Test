@@ -62,7 +62,9 @@
 }
 
 .searchBox {
-  > div {
+  position: relative;
+  right: 15px;
+  > div:first-child {
     padding: 11.5px 24px;
     // height: 44px;
     background: #fcfcfc;
@@ -73,7 +75,7 @@
 
 .searchBox {
   flex: 1;
-  padding: 0 15px 0 90px;
+  // padding: 0 15px 0 90px;
 }
 
 .btnSearch {
