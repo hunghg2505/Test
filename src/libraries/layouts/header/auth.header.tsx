@@ -1,8 +1,7 @@
-import { useKeycloak } from '@react-keycloak/web';
 import LogoWhite from 'assets/icons/logo-white';
-import clsx from 'clsx';
+import useAuth from 'hooks/redux/auth/useAuth';
 import Button from 'libraries/UI/Button';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { routePath } from 'routing/path.routing';
@@ -13,7 +12,7 @@ export default function AuthHeader() {
   const location = useLocation();
   const navigate = useNavigate();
   const [showButton, setShowButton] = useState({ showBtnSignIn: false, showBtnSignUp: false });
-  const { keycloak } = useKeycloak();
+  const { isLogin, onLogin, onLogout } = useAuth();
 
   useEffect(() => {
     getButtonHeader(location.pathname);
@@ -66,16 +65,16 @@ export default function AuthHeader() {
           </div>
         )} */}
 
-        {!keycloak.authenticated && (
+        {!isLogin && (
           <div>
-            <Button style={{ padding: '10px 24px' }} onClick={() => keycloak.login()}>
+            <Button style={{ padding: '10px 24px' }} onClick={onLogin}>
               {t('login_button_clock', 'Login Keycloak')}
             </Button>
           </div>
         )}
-        {!!keycloak.authenticated && (
+        {isLogin && (
           <div>
-            <Button style={{ padding: '10px 24px' }} onClick={() => keycloak.logout()}>
+            <Button style={{ padding: '10px 24px' }} onClick={onLogout}>
               {t('logout_button_clock', 'Logout Keycloak')}
             </Button>
           </div>
