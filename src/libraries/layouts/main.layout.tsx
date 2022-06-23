@@ -2,20 +2,19 @@ import { Drawer, Grid, Layout, Menu } from 'antd';
 import { Content } from 'antd/lib/layout/layout';
 import Sider from 'antd/lib/layout/Sider';
 import { ItemType } from 'antd/lib/menu/hooks/useItems';
-import Logo from 'assets/icons/logo';
+import IconInfo from 'assets/icons/icon-info';
 import IconLogout from 'assets/icons/icon-logout';
+import Logo from 'assets/icons/logo';
 import useAuth from 'hooks/redux/auth/useAuth';
-import useDocument from 'hooks/redux/document/useDocument';
 import cloneDeep from 'lodash/cloneDeep';
 import withAuthClient from 'middlewares/withAuthClient';
 import { useEffect, useState } from 'react';
-import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import configRoutes, { IRouter } from 'routing/config.routing';
 import MainHeader from './header/main.header';
+import SEO from './SEO';
 import styles from './styles.module.scss';
-import IconInfo from 'assets/icons/icon-info';
 
 const { useBreakpoint } = Grid;
 const collapsedWidth = '50px';
@@ -23,7 +22,6 @@ const collapsedWidth = '50px';
 function MainLayout() {
   const navigate = useNavigate();
   const { auth, setAuth } = useAuth();
-  const { document } = useDocument();
   const location = useLocation();
   const screens = useBreakpoint();
   const { t } = useTranslation();
@@ -125,9 +123,7 @@ function MainLayout() {
 
   return (
     <Layout className='min-height'>
-      <Helmet>
-        <title>{document.title}</title>
-      </Helmet>
+      <SEO />
 
       {/** Main Content */}
       <Layout className={styles.container}>

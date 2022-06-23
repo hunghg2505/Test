@@ -90,6 +90,7 @@ const getDataSubjectDetail = async (id: string): Promise<IDataSubjectDetail> => 
       cardId: r?.content?.cardId || '',
       passportNo: r?.content?.passportNo || '',
       laserCode: r?.content?.laserCode || '',
+      mobile: r?.content?.mobile || '',
     },
   };
 };
