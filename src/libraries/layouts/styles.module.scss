@@ -15,7 +15,7 @@
   .logo {
     text-align: center;
   }
-  background-color: $color-secondary;
+  background-color: $color-black4;
 
   :global {
     .ant-layout-sider-children {
@@ -23,7 +23,7 @@
       flex-direction: column;
     }
     .ant-menu-root {
-      background-color: $color-secondary;
+      background-color: $color-black4;
       padding: 42px 0 0;
     }
 
@@ -31,7 +31,7 @@
       font-weight: 400;
       font-size: 16px;
       line-height: 24px;
-      color: $color-gray4;
+      color: $color-gray3;
     }
 
     .ant-menu-item.ant-menu-item {
@@ -125,40 +125,30 @@
   border: none !important;
 
   :global {
-    .ant-menu-title-content {
+    .ant-menu-item.ant-menu-item {
+      height: initial;
+      padding: 10px 20px 10px 42px !important;
+      margin: 0;
+      background-color: transparent !important;
       display: flex;
       align-items: center;
-      > div {
-        display: flex;
-        align-items: center;
-      }
-      svg {
+      > svg {
         margin: 0 10px 0 0;
-        path {
-          stroke: $color-gray4 !important;
+      }
+
+      &:first-child {
+        .ant-menu-title-content {
+          color: $color-primary !important;
+        }
+        svg path {
+          stroke: $color-primary !important;
         }
       }
 
-      &:hover {
-        svg {
-          path {
-            stroke: $color-white !important;
-          }
+      &:last-child:hover {
+        svg path {
+          stroke: $color-white !important;
         }
-      }
-    }
-    .ant-menu-title-content a {
-      font-weight: 400;
-      font-size: 16px;
-      color: $color-gray4;
-      &:hover {
-        color: $color-white;
-      }
-
-      @media (max-width: 768px){
-        color: rgba(0, 0, 0, 0.85);
-        font-size: 14px;
-        font-weight: normal;
       }
     }
   }

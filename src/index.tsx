@@ -20,11 +20,9 @@ ReactDOM.render(
   <ErrorBoundary>
     <ReactKeycloakProvider authClient={keycloak}>
       <Provider store={store}>
-        <React.StrictMode>
-          <BrowserRouter>
-            <App />
-          </BrowserRouter>
-        </React.StrictMode>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
       </Provider>
     </ReactKeycloakProvider>
   </ErrorBoundary>,
