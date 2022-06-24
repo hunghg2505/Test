@@ -8,9 +8,9 @@ export default function SignInPage() {
 
   return (
     <ContainerLayout title={t('sign_in.title')}>
-      <div className={styles.signInPage}>
+      {/* <div className={styles.signInPage}>
         <h1 className={styles.titlePage}>{t('welcome_auth')}</h1>
-      </div>
+      </div> */}
     </ContainerLayout>
   );
 }

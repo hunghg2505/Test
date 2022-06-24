@@ -131,7 +131,8 @@ const SearchBox = ({
               htmlType='submit'
               size='middle'
               className={styles.btnSearch}
-              suffixIcon={<IconSearch />}
+              icon={<IconSearch />}
+              type='secondary'
             >
               {t('search')}
             </Button>

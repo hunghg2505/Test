@@ -11,7 +11,6 @@ interface Props {
   user?: User;
   showSider: boolean;
   toggleSider: () => void;
-  onLogout: () => void;
   isMobile: boolean;
 }
 

@@ -35,11 +35,6 @@ export default function AuthHeader() {
     setShowButton(dataCheck);
   };
 
-  // on redirect to path
-  const onGoTo = (path: string) => {
-    navigate(path);
-  };
-
   return (
     <div className={styles.mainAuthHeader}>
       <div className={styles.logoView}>
@@ -68,14 +63,14 @@ export default function AuthHeader() {
         {!isLogin && (
           <div>
             <Button style={{ padding: '10px 24px' }} onClick={onLogin}>
-              {t('login_button_clock', 'Login Keycloak')}
+              {t('login_button', 'Login')}
             </Button>
           </div>
         )}
         {isLogin && (
           <div>
             <Button style={{ padding: '10px 24px' }} onClick={onLogout}>
-              {t('logout_button_clock', 'Logout Keycloak')}
+              {t('logout', 'Logout')}
             </Button>
           </div>
         )}

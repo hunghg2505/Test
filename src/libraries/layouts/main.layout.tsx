@@ -10,7 +10,7 @@ import cloneDeep from 'lodash/cloneDeep';
 import withAuthClient from 'middlewares/withAuthClient';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import configRoutes, { IRouter } from 'routing/config.routing';
 import MainHeader from './header/main.header';
 import SEO from './SEO';
@@ -21,7 +21,7 @@ const collapsedWidth = '50px';
 
 function MainLayout() {
   const navigate = useNavigate();
-  const { auth, setAuth } = useAuth();
+  const { auth, onLogout } = useAuth();
   const location = useLocation();
   const screens = useBreakpoint();
   const { t } = useTranslation();
@@ -101,25 +101,29 @@ function MainLayout() {
     setShowSider(status !== undefined ? status : !showSider);
   };
 
-  // on click button logout
-  const onLogout = () => {
-    setAuth(null);
+  const MenuFooter = () => {
+    return (
+      <Menu
+        className={styles.menu2}
+        onClick={(e) => {
+          if (e.key === '/logout') return onLogout();
+          navigate(e.key);
+        }}
+        items={[
+          {
+            label: <>{t('logout')}</>,
+            icon: <IconLogout />,
+            key: '/logout',
+          },
+          {
+            label: <>{t('help')}</>,
+            icon: <IconInfo />,
+            key: '/help',
+          },
+        ]}
+      />
+    );
   };
-
-  const menu2 = (
-    <Menu className={styles.menu2}>
-      <Menu.Item>
-        <div onClick={onLogout}>
-          <IconLogout />
-          {t('logout')}
-        </div>
-      </Menu.Item>
-      <Menu.Item>
-        <IconInfo />
-        <Link to={'/help'}>{t('help')}</Link>
-      </Menu.Item>
-    </Menu>
-  );
 
   return (
     <Layout className='min-height'>
@@ -149,7 +153,7 @@ function MainLayout() {
               inlineCollapsed={!showSider}
               items={menus}
             />
-            {menu2}
+            <MenuFooter />
           </Sider>
         ) : (
           <Drawer
@@ -169,7 +173,7 @@ function MainLayout() {
               style={{ borderRight: 0 }}
               items={menus}
             />
-            {menu2}
+            <MenuFooter />
           </Drawer>
         )}
 
@@ -185,7 +189,6 @@ function MainLayout() {
             <MainHeader
               toggleSider={toggleSider}
               showSider={showSider}
-              onLogout={onLogout}
               user={auth?.user}
               isMobile={!!screens.md}
             />
