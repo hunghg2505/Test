@@ -7,7 +7,7 @@ import { KeyStorage } from 'utils/local-storage.utils';
 
 function App() {
   useInitBase();
-  const { keycloak } = useKeycloak();
+  const { keycloak, initialized } = useKeycloak();
 
   useLayoutEffect(() => {
     const authData = {
@@ -18,6 +18,8 @@ function App() {
 
     localStorage.setItem(KeyStorage.AUTH, JSON.stringify(authData));
   }, [keycloak?.token, keycloak?.refreshToken]);
+
+  if (!initialized) return <Loading />;
 
   return (
     <Suspense fallback={<Loading />}>

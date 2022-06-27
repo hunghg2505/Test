@@ -1,4 +1,3 @@
-import { useKeycloak } from '@react-keycloak/web';
 import useAuth from 'hooks/redux/auth/useAuth';
 import Loading from 'libraries/components/loading';
 import { useEffect } from 'react';
@@ -7,20 +6,15 @@ import { routePath } from 'routing/path.routing';
 
 const withUnAuthClient = (WrapperComponent: any) => (props: any) => {
   const navigate = useNavigate();
-  const { auth } = useAuth();
-  const { keycloak } = useKeycloak();
-  const isLoggedIn = keycloak.authenticated;
+  const { auth, isLogin } = useAuth();
 
   useEffect(() => {
-    // if (auth && auth.accessToken && Object.keys(auth).length > 0) {
-    //   navigate(routePath.HomePage);
-    // }
-    if (isLoggedIn) {
+    if (isLogin) {
       navigate(routePath.HomePage);
     }
-  }, [auth, isLoggedIn]);
+  }, [isLogin]);
 
-  if (!auth || !auth?.accessToken || !isLoggedIn) {
+  if (!auth || !auth?.accessToken || !isLogin) {
     return <WrapperComponent {...props} />;
   }
   return <Loading />;
