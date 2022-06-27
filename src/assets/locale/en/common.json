@@ -44,5 +44,8 @@
   "search": "Search",
   "create_case": "Create Case",
   "save": "Save",
-  "consent": "Consent"
+  "consent": "Consent",
+  "create_request": "Create Request",
+  "reports": "Reports",
+  "settings": "Settings"
 }

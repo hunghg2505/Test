@@ -15,10 +15,13 @@
 
 .consentHeader {
   width: 100%;
-
+  background: #FFFFFF;
+  border: 1px solid #F6F6F6;
+  box-shadow: 0px 5px 40px rgba(9, 44, 76, 0.02);
+  border-radius: 8px;
+  padding: 32px;
   form {
     flex: 1;
-    max-width: 667px;
   }
 }
 
@@ -29,15 +32,25 @@
 }
 
 .searchForm {
-  background: #FFFFFF;
-  border: 1px solid $black_color;
-  border-radius: 12px;
-  padding: 10px;
+  background: #FCFCFC;
+  padding: 5px 6px 5px 24px;
+  border: 1px solid #F6F6F6;
+  border-radius: 100px;
+
+  > svg path {
+    fill: #BDBDBD;
+  }
 }
 
 .consentActions {
-  margin: 0 0 0 20px;
+  margin: 0 0 0 16px;
+  padding: 12px;
+  background: #2022251a;
+  border-radius: 4px;
   cursor: pointer;
+  svg path {
+    stroke: #202225;
+  }
 }
 
 .inputSearchForm {
@@ -74,33 +87,36 @@
 }
 
 .btnSearchConsent {
-  padding: 0 15px;
-  height: 30px;
-  line-height: normal;
+  padding: 7px 16px;
+  display: flex;
   justify-content: center;
   align-items: center;
+  span {
+    font-weight: 700;
+    font-size: 14px;
+  }
+  svg {
+    margin-right: 10px;
+    path {
+      fill: #fff;
+    }
+  }
 }
 
 .btnCreateConsent {
-  position: absolute;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  @media (max-width: 1350px){
-    display: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 26px;
+  margin-left: 40px;
+  span {
+    margin-left: 10px;
+    font-weight: 700;
+    font-size: 16px;
   }
 
-  a {
-    padding: 19px;
-    text-align: center;
-    background-color: $black_color;
-    color: $white_color;
-    font-style: normal;
-    font-weight: 400;
-    font-size: 18px;
-    line-height: 21px;
-    cursor: pointer;
-    border-radius: 5px;
+  &:hover svg path {
+    stroke: $color-white;
   }
 }
 
@@ -126,4 +142,23 @@
 }
 .table {
   text-align: center;
+}
+
+.btnActions {
+  div, a {
+    padding: 8px;
+    border-radius: 4px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+  }
+
+  div {
+    background-color: rgba(207, 42, 43, 0.1);
+    margin-right: 8px;
+  }
+  a {
+    background-color: $color-gray5;
+  }
 }

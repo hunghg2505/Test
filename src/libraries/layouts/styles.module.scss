@@ -79,7 +79,36 @@
 
 
     }
+    li.ant-menu-submenu.ant-menu-submenu-inline {
+      margin: 0;
+      padding: 10px 20px 10px 42px !important;
+      &:hover, &:focus {
+        > .ant-menu-submenu-title {
+          svg path {
+          stroke: $color-white;
+          }
+          .ant-menu-title-content {
+            color: $color-white;
+          }
+        }
+      }
+      .ant-menu-submenu-title {
+        svg {
+          margin: 0 10px 0 0;
+        }
+      }
 
+      &.ant-menu-submenu-open.ant-menu-submenu-selected {
+        > .ant-menu-submenu-title {
+          svg path {
+          stroke: $color-white;
+          }
+          .ant-menu-title-content {
+            color: $color-white;
+          }
+        }
+      }
+    }
     .ant-menu-submenu {
       margin-bottom: 25px;
       .ant-menu-submenu-title {

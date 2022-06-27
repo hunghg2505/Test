@@ -58,23 +58,40 @@ const configRoutes: IRouter[] = [
       },
       {
         path: routePath.CaseManagement,
-        element: lazy(() => import('modules/caseManagement')),
+        element: lazy(() => import('modules/caseManagement/assignToYou/index')),
         name: 'Case Management',
         icons: React.createElement(IconCaseManagement),
-        // haveChild: true,
-
-        // children: [
-        //   {
-        //     path: routePath.Profile,
-        //     element: lazy(() => import('modules/profile')),
-        //     name: 'Assigned To You'
-        //   },
-        //   {
-        //     path: routePath.Profile,
-        //     element: lazy(() => import('modules/profile')),
-        //     name: 'Search Case'
-        //   }
-        // ]
+        haveChild: true,
+        children: [
+          {
+            path: routePath.AssignToYou,
+            element: lazy(() => import('modules/caseManagement/assignToYou/index')),
+            name: 'Assigned To You',
+          },
+          {
+            path: routePath.SearchCase,
+            element: lazy(() => import('modules/caseManagement/SearchCase/index')),
+            name: 'Search Case',
+          },
+        ],
+      },
+      {
+        path: routePath.AssignToYou,
+        element: lazy(() => import('modules/caseManagement/assignToYou/index')),
+        name: 'Assigned To You',
+        hiddenMenu: true,
+      },
+      {
+        path: routePath.CaseManagementDetail,
+        element: lazy(() => import('modules/caseManagement/[id]')),
+        name: 'Assigned To You',
+        hiddenMenu: true,
+      },
+      {
+        path: routePath.SearchCase,
+        element: lazy(() => import('modules/caseManagement/SearchCase/index')),
+        name: 'Search Case',
+        hiddenMenu: true,
       },
       {
         path: routePath.ConsentManagement,

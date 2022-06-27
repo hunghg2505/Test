@@ -19,6 +19,19 @@ const reducer = (state: any, action: any) => {
   }
 };
 
+export const _popoverStyles = {
+  opacity: 0,
+  transitionDuration: '300ms',
+  transitionProperty: 'opacity',
+  transitionTimingFunction: 'cubic-bezier(0, 0, 1, 1)',
+};
+
+export const _popoverVisibleStyles = {
+  opacity: 1,
+  transitionDuration: '300ms',
+  transitionTimingFunction: 'cubic-bezier(0, 0, 1, 1)',
+};
+
 export const useFadeEffect = (visible: boolean) => {
   const ref = React.useRef(null);
   const visibleRef = React.useRef(false);

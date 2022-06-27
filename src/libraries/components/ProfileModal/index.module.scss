@@ -1,0 +1,39 @@
+
+@import '../../../styles/variables.scss';
+
+.menus {
+  position: absolute;
+  z-index: 1;
+  left: 0;
+  top: calc(100% + 11px);
+  background-color: $color-white;
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.06);
+  border-radius: 4px;
+
+  li {
+    padding: 10px 26px 10px 14px;
+    font-weight: 400;
+    font-size: 16px;
+    color: $color-gray3;
+    transition: all 300ms;
+    cursor: pointer;
+
+    &:hover, &:active {
+      background: rgba(207, 42, 43, 0.1);
+      color: $color-primary;
+      font-weight: 700;
+      font-size: 16px;
+    }
+  }
+
+  .active {
+    background: rgba(207, 42, 43, 0.1);
+    color: $color-primary;
+    font-weight: 700;
+    font-size: 16px;
+  }
+}
+
+.btnProfile {
+  cursor: pointer;
+}

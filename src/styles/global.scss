@@ -157,6 +157,10 @@ body {
     font-weight: 400;
     font-size: 14px;
     color: $color-gray3;
+
+    &::before {
+      display: none;
+    }
   }
 
   .ant-table-tbody {

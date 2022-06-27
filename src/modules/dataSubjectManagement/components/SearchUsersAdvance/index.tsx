@@ -2,28 +2,14 @@ import { useClickAway } from 'ahooks';
 import { Col, Form, Row } from 'antd';
 import IconCross from 'assets/icons/icon-cross';
 import IconSearch from 'assets/icons/icon-search';
-import { useFadeEffect } from 'hooks/useFadeEffect';
+import { useFadeEffect, _popoverStyles, _popoverVisibleStyles } from 'hooks/useFadeEffect';
 import InputForm from 'libraries/form/input/input-form';
 import Button from 'libraries/UI/Button';
 import Select from 'libraries/UI/Select';
-import React, { useRef, useEffect } from 'react';
-import { useNavigate, createSearchParams, useLocation } from 'react-router-dom';
 import queryString from 'query-string';
-import { RegexUtils } from 'utils/regex-helper';
+import React, { useEffect, useRef } from 'react';
+import { createSearchParams, useLocation, useNavigate } from 'react-router-dom';
 import styles from '../../index.module.scss';
-
-const _popoverStyles = {
-  opacity: 0,
-  transitionDuration: '300ms',
-  transitionProperty: 'opacity',
-  transitionTimingFunction: 'cubic-bezier(0, 0, 1, 1)',
-};
-
-const _popoverVisibleStyles = {
-  opacity: 1,
-  transitionDuration: '300ms',
-  transitionTimingFunction: 'cubic-bezier(0, 0, 1, 1)',
-};
 
 const formatAdvancedSearchObject = (obj: any) => {
   const conditions: { [key: string]: any } = {};

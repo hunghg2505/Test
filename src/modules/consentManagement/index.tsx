@@ -1,6 +1,5 @@
 import React from 'react';
-
-import ConsentManagement from 'libraries/components/ConsentManagement';
+import ConsentManagement from './components';
 
 export default function ConsentPage() {
   return <ConsentManagement />;

@@ -1,8 +1,7 @@
 import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-
-import ConsentDetail from 'libraries/components/ConsentManagement/ConsentDetail';
-import NewConsent from 'libraries/components/ConsentManagement/NewConsent';
+import ConsentDetail from './components/ConsentDetail';
+import NewConsent from './components/NewConsent';
 
 export default function ConsentNewPage() {
   const { id } = useParams();
