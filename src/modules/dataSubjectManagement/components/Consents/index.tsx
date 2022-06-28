@@ -11,6 +11,8 @@ import styles from './index.module.scss';
 import { useConsent } from './service';
 import SuggestConsents from './SuggestConsents';
 import get from 'lodash/get';
+import ArrowDownCollapse from 'assets/icons/icon-arrow-down-collapse';
+import ArrowUpCollapse from 'assets/icons/icon-arrow-up-collapse';
 
 const { Panel } = Collapse;
 
@@ -32,30 +34,6 @@ export interface DataType {
   dataConsent: IItem;
   defaultValue: { [key: string]: string };
 }
-
-const ArrowDown = (
-  <svg xmlns='http://www.w3.org/2000/svg' width={15} height={8} viewBox='0 0 15 8' fill='none'>
-    <path
-      d='M13.5 1L7.5 7L1.5 1'
-      stroke='#BDBDBD'
-      strokeWidth={2}
-      strokeLinecap='round'
-      strokeLinejoin='round'
-    />
-  </svg>
-);
-
-const ArrowUp = (
-  <svg xmlns='http://www.w3.org/2000/svg' width={15} height={8} viewBox='0 0 15 8' fill='none'>
-    <path
-      d='M13.5 7L7.5 1L1.5 7'
-      stroke='#092C4C'
-      strokeWidth={2}
-      strokeLinecap='round'
-      strokeLinejoin='round'
-    />
-  </svg>
-);
 
 const SearchBox = ({
   onSearchConsent,
@@ -209,7 +187,7 @@ const ConsentsList = ({ data, loading, onChange, onSaveConsent, loadingUpdateCon
             <Collapse
               // accordion
               expandIcon={({ isActive }) => {
-                return isActive ? ArrowUp : ArrowDown;
+                return isActive ? ArrowUpCollapse : ArrowDownCollapse;
               }}
             >
               {data?.data?.map(({ dataConsent, key }: DataType) => {
