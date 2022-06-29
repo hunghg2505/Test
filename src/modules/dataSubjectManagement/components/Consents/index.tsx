@@ -42,7 +42,7 @@ const SearchBox = ({
   onLoadMoreSuggestionConsents,
   onResetSuggestionConsents,
 }: {
-  onSearchConsent: (search: string) => void;
+  onSearchConsent: (search: string, callback?: any) => void;
   suggestionConsents: any;
   onSuggestionConsentsDebounce: (value: string, callback: any) => void;
   onLoadMoreSuggestionConsents: (value: string) => void;
@@ -63,7 +63,12 @@ const SearchBox = ({
 
   const onFinish = (values: any) => {
     const value = get(values, 'search', '');
-    onSearchConsent(value);
+    onSearchConsent(value, () => {
+      if (refListConsents.current?.closeListUser) {
+        refListConsents.current.closeListUser();
+        onResetSuggestionConsents();
+      }
+    });
   };
 
   useClickAway(() => {
@@ -262,8 +267,8 @@ function Consents({ userId, refDataHistory }: { userId: number; refDataHistory: 
     onResetSuggestionConsents,
   } = useConsent({ userId });
 
-  const onSearch = (search: string) => {
-    onSearchConsent(search);
+  const onSearch = (search: string, callback?: any) => {
+    onSearchConsent(search, callback);
   };
 
   const onSave = async (values: any) => {

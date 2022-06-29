@@ -1,3 +1,4 @@
+import { useRef } from 'react';
 import { useMount, useRequest } from 'ahooks';
 import { message } from 'antd';
 import debounce from 'lodash/debounce';
@@ -107,10 +108,12 @@ export const updateConsent = async ({ userId, content, ConsentList }: any) => {
 
     newConsent.insert.push({
       consentId: Number(consentId),
-      data: {
-        key: `${key}`,
-        value: 'true',
-      },
+      data: [
+        {
+          key: `${key}`,
+          value: 'true',
+        },
+      ],
     });
   });
 
@@ -169,7 +172,9 @@ const getSuggestionConsents = async (userId: any, search: string, page = 1) => {
 };
 
 export const useConsent = ({ userId }: { userId: number }) => {
-  const { data, loading, run, refresh } = useRequest(getConsentService, {
+  const refCancelRequest: any = useRef(false);
+
+  const { data, loading, run, runAsync, refresh } = useRequest(getConsentService, {
     manual: true,
   });
 
@@ -190,6 +195,8 @@ export const useConsent = ({ userId }: { userId: number }) => {
   // suggestion consent
   const requestSuggestionConsents = useRequest(
     async (value: string, page = 1) => {
+      if (refCancelRequest.current) throw new Error('Cancel Request');
+
       return getSuggestionConsents(userId, value, page);
     },
     {
@@ -233,8 +240,12 @@ export const useConsent = ({ userId }: { userId: number }) => {
     run({ search: data.keyword, page: current, userId });
   };
 
-  const onSearchConsent = (search: string) => {
-    run({ search, page: 1, userId });
+  const onSearchConsent = async (search: string, callback?: any) => {
+    refCancelRequest.current = true;
+    await runAsync({ search, page: 1, userId });
+
+    if (callback) callback();
+    refCancelRequest.current = false;
   };
 
   const onSaveConsent = async (consent: any) => {
