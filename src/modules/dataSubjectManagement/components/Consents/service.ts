@@ -107,10 +107,12 @@ export const updateConsent = async ({ userId, content, ConsentList }: any) => {
 
     newConsent.insert.push({
       consentId: Number(consentId),
-      data: {
-        key: `${key}`,
-        value: 'true',
-      },
+      data: [
+        {
+          key: `${key}`,
+          value: 'true',
+        },
+      ],
     });
   });
 
