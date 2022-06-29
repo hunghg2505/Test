@@ -1,13 +1,14 @@
-import ApiUtils from 'utils/api/api.utils';
 import { useMount, useRequest } from 'ahooks';
+import { message } from 'antd';
+import debounce from 'lodash/debounce';
 import flattenDeep from 'lodash/flattenDeep';
 import get from 'lodash/get';
 import groupBy from 'lodash/groupBy';
 import isArray from 'lodash/isArray';
+import isEqual from 'lodash/isEqual';
+import uniqWith from 'lodash/uniqWith';
+import ApiUtils from 'utils/api/api.utils';
 import { API_PATH } from 'utils/api/constant';
-import { message } from 'antd';
-import { useRef, useState } from 'react';
-import { debounce } from 'lodash';
 
 const PAGE_SIZE = 10;
 
@@ -136,40 +137,38 @@ const getSuggestionConsents = async (userId: any, search: string, page = 1) => {
   const params = {
     keyword: search,
     userId: userId,
-    limit: 10,
+    limit: 1000,
     page,
   };
 
   const res: any = await ApiUtils.fetch(API_PATH.CONSENTS, params);
 
+  let dataUnique = res?.content?.data?.map((v: any) => {
+    return v?.consentData?.application?.startsWith(search)
+      ? v?.consentData?.application
+      : v?.consentData?.consentName;
+  });
+
+  dataUnique = uniqWith(dataUnique, isEqual)?.map((item, idx) => ({ id: idx, name: item }));
+  const formatData = {
+    list: dataUnique,
+    current: 1,
+    total: Math.ceil(dataUnique.length / PAGE_SIZE),
+  };
+
   return {
-    data: res?.content?.data?.map((v: any, idx: number) => ({
-      id: idx,
-      name: v?.consentData?.application?.startsWith(search)
-        ? v?.consentData?.application
-        : v?.consentData?.consentName,
-    })),
-    isLoadMore: +res?.content?.metadata?.currentPage < +res?.content?.metadata?.lastPage,
-    currentPage: +res?.content?.metadata?.currentPage,
-    value: search,
+    ...formatData,
+    total: Math.ceil(formatData.list.length / PAGE_SIZE),
+    data:
+      formatData?.list?.slice(
+        (formatData.current - 1) * PAGE_SIZE,
+        (formatData.current - 1) * PAGE_SIZE + PAGE_SIZE,
+      ) || [],
+    isLoadMore: formatData.current < formatData.total,
   };
 };
 
 export const useConsent = ({ userId }: { userId: number }) => {
-  const refCancelRequest = useRef(false);
-
-  const [suggestionConsents, setSuggestionConsents] = useState<{
-    data: any[];
-    isLoadMore: boolean;
-    currentPage: number;
-    value: string;
-  }>({
-    data: [],
-    isLoadMore: false,
-    currentPage: 1,
-    value: '',
-  });
-
   const { data, loading, run, refresh } = useRequest(getConsentService, {
     manual: true,
   });
@@ -190,54 +189,43 @@ export const useConsent = ({ userId }: { userId: number }) => {
 
   // suggestion consent
   const requestSuggestionConsents = useRequest(
-    async (value: string, page = 1, isLoadMore = false) => {
-      if (refCancelRequest.current) throw Error('Block request');
+    async (value: string, page = 1) => {
       return getSuggestionConsents(userId, value, page);
     },
     {
       manual: true,
-      refreshDeps: [refCancelRequest.current],
-      onError: (err: any) => {
-        refCancelRequest.current = false;
-      },
-      onSuccess: (r: any, params) => {
-        const isLoadMore = params[2];
-
-        setSuggestionConsents((prev) => {
-          const newData = isLoadMore ? [...prev.data, ...r.data] : r.data;
-
-          return {
-            data: newData,
-            isLoadMore: r.isLoadMore,
-            currentPage: r.currentPage,
-            value: r.value,
-          };
-        });
-      },
     },
   );
 
   const onResetSuggestionConsents = () => {
-    setSuggestionConsents({
+    requestSuggestionConsents.mutate({
+      current: 1,
       data: [],
+      list: [],
+      total: 0,
       isLoadMore: false,
-      currentPage: 1,
-      value: '',
     });
   };
 
   const onLoadMoreSuggestionConsents = () => {
-    requestSuggestionConsents.run(
-      suggestionConsents.value,
-      suggestionConsents.currentPage + 1,
-      true,
-    );
+    const data: any = requestSuggestionConsents.data;
+    const prevData = data?.data || [];
+    const current = data?.current + 1 || 0;
+    const nextData =
+      data?.list?.slice((current - 1) * PAGE_SIZE, (current - 1) * PAGE_SIZE + PAGE_SIZE) || [];
+
+    requestSuggestionConsents.mutate({
+      ...data,
+      current: current,
+      isLoadMore: current < data?.total,
+      data: [...prevData, ...nextData],
+    });
   };
 
   const onSuggestionConsentsDebounce = debounce(async (value: string, callback: any) => {
     if (value?.length < 3) return;
 
-    await requestSuggestionConsents.runAsync(value, 1, false);
+    await requestSuggestionConsents.runAsync(value, 1);
     if (callback) callback();
   }, 350);
 
@@ -263,7 +251,7 @@ export const useConsent = ({ userId }: { userId: number }) => {
     onSearchConsent,
     onSaveConsent,
     loadingUpdateConsent: reqUpdateConsent.loading,
-    suggestionConsents,
+    suggestionConsents: requestSuggestionConsents.data,
     onSuggestionConsentsDebounce,
     onLoadMoreSuggestionConsents,
     onResetSuggestionConsents,

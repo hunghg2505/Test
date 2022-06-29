@@ -51,6 +51,7 @@ const SearchBox = ({
   const { t } = useTranslation();
   const refForm: any = useRef();
   const refListConsents: any = useRef();
+  const [formSearchConsent] = Form.useForm();
 
   const onFieldsChange = (values: any) => {
     const value = get(values, '[0].value', '');
@@ -76,7 +77,7 @@ const SearchBox = ({
     <Row className={styles.consentsSearch} align='middle'>
       <h3>{t('consent')}</h3>
 
-      <Form onFinish={onFinish} onFieldsChange={onFieldsChange}>
+      <Form onFinish={onFinish} onFieldsChange={onFieldsChange} form={formSearchConsent}>
         <div
           ref={refForm}
           style={{
@@ -116,7 +117,12 @@ const SearchBox = ({
             </Button>
             <SuggestConsents
               ref={refListConsents}
-              onSearchConsent={onSearchConsent}
+              onSearchConsent={(val: string) => {
+                formSearchConsent.setFieldsValue({
+                  search: val,
+                });
+                onSearchConsent(val);
+              }}
               suggestionConsents={suggestionConsents}
               onLoadMoreSuggestionConsents={onLoadMoreSuggestionConsents}
               onResetSuggestionConsents={onResetSuggestionConsents}
