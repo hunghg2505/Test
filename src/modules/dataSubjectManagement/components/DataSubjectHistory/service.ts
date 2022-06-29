@@ -13,15 +13,16 @@ export const getDataSubjectHistoryService = async (value: any): Promise<any> => 
     page: value?.current || 1,
   });
 
+  const current = r?.content?.metadata?.currentPage || 1;
   return {
     total: r?.content?.metadata?.total || 0,
     current: +r?.content?.metadata?.currentPage || 1,
     pageSize: +r?.content?.metadata?.itemPage || 10,
     data:
-      r?.content?.data?.map((item: any) => ({
+      r?.content?.data?.map((item: any, idx: number) => ({
         ...item,
         key: `${item?.id}`,
-        noId: `${item?.id}`,
+        noId: `${(current - 1) * 10 + idx + 1 || idx}`,
         requestDate: dayjs(item?.requestDate).format('MMM DD, YYYY'),
       })) || [],
   };
