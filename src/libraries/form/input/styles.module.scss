@@ -1,14 +1,13 @@
 @import '../../../styles/variables.scss';
 
-
 // input form
 .customInputFormItem {
   margin: 0;
 
-  div[class="ant-col ant-form-item-label"] {
+  div[class='ant-col ant-form-item-label'] {
     line-height: 14px;
     margin: 0 0 6px;
-    padding: 0;
+    padding: 0 0 8px;
 
     label {
       font-style: normal;
@@ -27,7 +26,28 @@
 .customInputPasswordFormItem {
   margin: 0;
 
-  div[class="ant-col ant-form-item-label"] {
+  div[class='ant-col ant-form-item-label'] {
+    line-height: 14px;
+    margin: 0 0 6px;
+    padding: 0;
+
+    label {
+      font-style: normal;
+      font-weight: 400;
+      font-size: 14px;
+      color: $color-gray4;
+
+      &::before {
+        display: none !important;
+      }
+    }
+  }
+}
+
+.customTextAreaFormItem {
+  margin: 0;
+
+  div[class='ant-col ant-form-item-label'] {
     line-height: 14px;
     margin: 0 0 6px;
     padding: 0;

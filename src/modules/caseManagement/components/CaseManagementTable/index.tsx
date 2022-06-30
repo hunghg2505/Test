@@ -67,7 +67,7 @@ const columns: ColumnsType<DataType> = [
     dataIndex: 'action',
     render: (_, { action }) => (
       <Row justify='center' align='middle' style={{ flexFlow: 'nowrap' }} className={styles.action}>
-        <Link to={`/case-management/${action}`}>Edit</Link>
+        <Link to={`/case-management/${action}`}>Detail</Link>
       </Row>
     ),
     width: 178,

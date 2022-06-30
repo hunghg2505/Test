@@ -1,0 +1,47 @@
+@import '../../../../styles/variables.scss';
+
+.form {
+  padding: 32px;
+  background: #ffffff;
+  border: 1px solid #f6f6f6;
+  box-shadow: 0px 5px 40px rgba(9, 44, 76, 0.02);
+  border-radius: 8px;
+  :global {
+    .ant-form-item-label > label {
+      font-style: normal;
+      font-weight: 400;
+      font-size: 14px;
+      color: $color-gray4;
+    }
+  }
+}
+
+.actions {
+  margin-top: 20px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 5px;
+}
+
+.editBtn {
+  background-color: $white_color;
+  border: 1px solid $color-primary;
+  display: flex;
+  gap: 3px;
+  align-items: center;
+  justify-content: center;
+
+  span {
+    color: $color-primary;
+  }
+
+  &:hover,
+  &:focus {
+    background-color: $white_color;
+    border: 1px solid $color-primary;
+
+    span {
+      color: $color-primary;
+    }
+  }
+}

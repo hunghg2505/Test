@@ -11,47 +11,47 @@ interface Props {
   placeholder?: string;
   autoComplete?: 'on' | 'off';
   maxLength?: number;
-  defaultValue?: string;
+  rows?: number;
   disabled?: boolean;
   // custom
   classNameFormInput?: any;
   className?: any;
-
-  onBlur?: (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
 }
-export default function InputForm({
+
+const InputTextAreaForm = ({
   label,
   placeholder,
   name,
   rules,
   autoComplete = 'off',
-  maxLength,
+  disabled = false,
   classNameFormInput,
   className,
-  defaultValue,
-  disabled = false,
-  onBlur,
-}: Props) {
+  maxLength,
+  rows,
+}: Props) => {
   return (
     <Form.Item
       label={label}
       name={name}
       rules={rules}
-      className={clsx(styles.customInputFormItem, {
+      className={clsx(styles.customTextAreaFormItem, {
         [classNameFormInput]: true,
       })}
     >
       <Input
-        className={clsx(styles.customInputForm, {
+        className={clsx(styles.customInputPasswordForm, {
           [className]: true,
         })}
-        maxLength={maxLength}
         placeholder={placeholder}
         autoComplete={autoComplete}
-        defaultValue={defaultValue}
-        onBlur={onBlur}
+        type='textarea'
+        maxLength={maxLength}
+        rows={rows}
         disabled={disabled}
       />
     </Form.Item>
   );
-}
+};
+
+export default InputTextAreaForm;
