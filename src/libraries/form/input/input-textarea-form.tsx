@@ -13,6 +13,7 @@ interface Props {
   maxLength?: number;
   rows?: number;
   disabled?: boolean;
+  required?: boolean;
   // custom
   classNameFormInput?: any;
   className?: any;
@@ -29,6 +30,7 @@ const InputTextAreaForm = ({
   className,
   maxLength,
   rows,
+  required,
 }: Props) => {
   return (
     <Form.Item
@@ -38,6 +40,7 @@ const InputTextAreaForm = ({
       className={clsx(styles.customTextAreaFormItem, {
         [classNameFormInput]: true,
       })}
+      required={required}
     >
       <Input
         className={clsx(styles.customInputPasswordForm, {

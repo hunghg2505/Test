@@ -33,11 +33,11 @@ const CreateCaseForm = () => {
   const [isEdit, setIsEdit] = useState(true);
   return (
     <div className={styles.form}>
-      <Form layout='vertical' form={createCaseForm}>
+      <Form layout='vertical' form={createCaseForm} disabled={isEdit}>
         <Row gutter={[15, 24]}>
           <Col xs={12}>
-            <Form.Item label='Action*' name='action'>
-              <Select placeholder='Select an Action' disabled={isEdit}>
+            <Form.Item label='Action' name='action' required>
+              <Select placeholder='Select an Action'>
                 <Select.Option value={null}>Select an Action</Select.Option>
                 <Select.Option value={0}>Action 1</Select.Option>
                 <Select.Option value={1}>Action 2</Select.Option>
@@ -45,8 +45,8 @@ const CreateCaseForm = () => {
             </Form.Item>
           </Col>
           <Col xs={12}>
-            <Form.Item label='Related Department*' name='department'>
-              <Select placeholder='Select a Department' disabled={isEdit}>
+            <Form.Item label='Related Department' name='department' required>
+              <Select placeholder='Select a Department'>
                 <Select.Option value={null}>Select an Department</Select.Option>
                 <Select.Option value={0}>Department 1</Select.Option>
                 <Select.Option value={1}>Department 2</Select.Option>
@@ -54,8 +54,8 @@ const CreateCaseForm = () => {
             </Form.Item>
           </Col>
           <Col xs={12}>
-            <Form.Item label='Assign to*' name='assign'>
-              <Select placeholder='Assign to' disabled={isEdit}>
+            <Form.Item label='Assign to' name='assign' required>
+              <Select placeholder='Assign to'>
                 <Select.Option value={null}>Assign to</Select.Option>
                 <Select.Option value={0}>user 1</Select.Option>
                 <Select.Option value={1}>user 2</Select.Option>
@@ -65,16 +65,15 @@ const CreateCaseForm = () => {
           <Col xs={24}>
             <InputTextAreaForm
               name='Description'
-              label='Description*'
+              label='Description'
               placeholder='Details of Execution'
               rows={6}
               className={styles.textarea}
-              disabled={isEdit}
             />
           </Col>
           <Col xs={12}>
-            <Form.Item label='Accept/Reject*' name='isAllow'>
-              <Select placeholder='Accept/Reject the Request' disabled={isEdit}>
+            <Form.Item label='Accept/Reject' name='isAllow' required>
+              <Select placeholder='Accept/Reject the Request'>
                 <Select.Option value={null}>Accept/Reject the Request</Select.Option>
                 <Select.Option value={1}>Accept</Select.Option>
                 <Select.Option value={0}>Reject</Select.Option>
@@ -88,12 +87,12 @@ const CreateCaseForm = () => {
               placeholder='Reason to Approve or Reject'
               rows={6}
               className={styles.textarea}
-              disabled={isEdit}
+              required={true}
             />
           </Col>
           <Col xs={12}>
-            <Form.Item label='Status*' name='status'>
-              <Select placeholder='List of Status' disabled={isEdit}>
+            <Form.Item label='Status' name='status' required>
+              <Select placeholder='List of Status'>
                 <Select.Option value={null}>List of Status</Select.Option>
                 <Select.Option value={1}>Status 1</Select.Option>
                 <Select.Option value={0}>Status 2</Select.Option>
@@ -115,27 +114,27 @@ const CreateCaseForm = () => {
               placeholder='Comment ...'
               rows={6}
               maxLength={250}
-              disabled={isEdit}
+              required={true}
             />
           </Col>
         </Row>
-        {
-          <div className={styles.actions}>
-            {isEdit ? (
-              <Button onClick={() => setIsEdit(false)} icon={ICON_EDIT} className={styles.editBtn}>
-                Edit
-              </Button>
-            ) : (
-              <>
-                <Button onClick={() => setIsEdit(true)}>Cancel</Button>{' '}
-                <Button type='secondary' htmlType='submit'>
-                  Submit
-                </Button>
-              </>
-            )}
-          </div>
-        }
       </Form>
+      {
+        <div className={styles.actions}>
+          {isEdit ? (
+            <Button onClick={() => setIsEdit(false)} icon={ICON_EDIT} className={styles.editBtn}>
+              Edit
+            </Button>
+          ) : (
+            <>
+              <Button onClick={() => setIsEdit(true)}>Cancel</Button>{' '}
+              <Button type='secondary' htmlType='submit' onClick={() => createCaseForm.submit()}>
+                Submit
+              </Button>
+            </>
+          )}
+        </div>
+      }
     </div>
   );
 };
