@@ -17,6 +17,8 @@ interface Props {
   defaultValue?: string | number;
   autoComplete?: 'on' | 'off';
   maxLength?: number;
+  disabled?: boolean;
+  rows?: number;
   onChange?: (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
   onBlur?: (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
 }

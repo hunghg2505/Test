@@ -12,6 +12,7 @@ interface IProps {
   placeholder?: string;
   value?: string | number;
   options?: { label: any; value: any }[];
+  disabled?: boolean;
   onSelect?: (value: any) => void;
   onChange?: (value: any) => void;
 }

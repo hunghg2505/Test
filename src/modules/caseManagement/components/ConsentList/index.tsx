@@ -120,9 +120,9 @@ const Consents = ({ data, loading, onChange }: any) => {
           </div>
         )}
 
-        <Button htmlType='submit' className={styles.btnSave}>
+        {/* <Button htmlType='submit' className={styles.btnSave}>
           {t('save')}
-        </Button>
+        </Button> */}
       </Form>
     </div>
   );
