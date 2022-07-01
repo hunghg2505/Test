@@ -48,7 +48,7 @@ const ActivityList = () => {
             </Panel>
           );
           const otherItem = (
-            <div className={styles.activity}>
+            <div className={styles.activity} key={key}>
               <h2 className={styles.name}>{activity.activityName}</h2>
               <p className={styles.desc}>{activity.activityDesc}</p>
               <p className={styles.fromDate}>
