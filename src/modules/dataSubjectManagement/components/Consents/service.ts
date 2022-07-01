@@ -159,11 +159,7 @@ const getSuggestionConsents = async (userId: any, search: string, page = 1) => {
 
   const res: any = await ApiUtils.fetch(API_PATH.CONSENTS, params);
 
-  let dataUnique = res?.content?.data?.map((v: any) => {
-    return v?.consentData?.application?.startsWith(search)
-      ? v?.consentData?.application
-      : v?.consentData?.consentName;
-  });
+  let dataUnique = res?.content?.data?.map((v: any) => v?.consentData?.application);
 
   dataUnique = uniqWith(dataUnique, isEqual)?.map((item, idx) => ({ id: idx, name: item }));
   const formatData = {
