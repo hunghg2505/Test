@@ -15,6 +15,13 @@ import { API_PATH } from 'utils/api/constant';
 
 const PAGE_SIZE = 10;
 
+const getStatusConstent = (lastUpdated: string) => {
+  const date1 = dayjs('2022-05-19');
+  const date2 = dayjs(lastUpdated);
+
+  return date1.diff(date2) >= 0 ? 'Published' : 'Draft';
+};
+
 export const getConsentService = async ({
   search,
   userId,
@@ -62,6 +69,9 @@ export const getConsentService = async ({
           title: get(consent, 'consentData.consentName', ''),
           description: get(consent, 'consentData.content', ''),
           value: `${get(consent, 'consentData.consentName', '')}@${consent?.id}`,
+          lastUpdated: dayjs(get(consent, 'updatedAt', '')).format('MMM DD, YYYY'),
+          version: `Version ${get(consent, 'consentData.version', '')}`,
+          status: getStatusConstent(get(consent, 'updatedAt', '')),
           selected: consent?.myConsent?.reduce((acc: any, i: any) => {
             return {
               ...acc,

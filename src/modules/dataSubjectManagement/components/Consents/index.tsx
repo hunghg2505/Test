@@ -1,5 +1,5 @@
 import { useClickAway } from 'ahooks';
-import { Checkbox, Collapse, Form, Pagination, Row } from 'antd';
+import { Checkbox, Col, Collapse, Form, Pagination, Row } from 'antd';
 
 import IconSearch from 'assets/icons/icon-search';
 import Button from 'libraries/UI/Button';
@@ -158,6 +158,13 @@ const ConsentOption = ({ value, onChange, dataConsent }: any) => {
         return (
           <Checkbox key={item.value} value={item.value}>
             <h4>{item.title}</h4>
+            <Row className={styles.consentInfo}>
+              <Col>{item?.lastUpdated}</Col>
+              <Col>{item?.version}</Col>
+              <Col className={item?.status === 'Published' ? styles.active : ''}>
+                {item?.status}
+              </Col>
+            </Row>
             <div>{item.description}</div>
           </Checkbox>
         );
@@ -208,17 +215,6 @@ const ConsentsList = ({ data, loading, onChange, onSaveConsent, loadingUpdateCon
                     header={
                       <div className={styles.panelHeader}>
                         <div className={styles.name}>{dataConsent.name}</div>
-                        <Row align='middle'>
-                          <div className={styles.lastUpdated}>{dataConsent.lastUpdated}</div>
-                          <div className={styles.version}>{dataConsent.version}</div>
-                          <div
-                            className={`${styles.status} ${
-                              dataConsent.status === 'Accepted' ? styles.active : ''
-                            }`}
-                          >
-                            {dataConsent.status}
-                          </div>
-                        </Row>
                         <div className={styles.description}>{dataConsent.description}</div>
                       </div>
                     }
