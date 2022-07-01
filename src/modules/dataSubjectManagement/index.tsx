@@ -2,7 +2,7 @@ import { Form, Row, Table } from 'antd';
 import type { ColumnsType } from 'antd/lib/table';
 import clsx from 'clsx';
 import { useTranslation } from 'react-i18next';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import IconSearch from 'assets/icons/icon-search';
 import InputForm from 'libraries/form/input/input-form';
@@ -90,7 +90,6 @@ const columns: ColumnsType<DataType> = [
 
 function DataSubjectManagement() {
   const { t } = useTranslation();
-  const navigate = useNavigate();
 
   const {
     data,
@@ -121,11 +120,6 @@ function DataSubjectManagement() {
         refListUsers.current.closeListUser();
         onResetUsers();
       }
-    });
-
-    navigate({
-      pathname: '/data-subject',
-      search: `?firstname=${values.username}`,
     });
   };
 

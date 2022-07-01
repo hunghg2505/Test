@@ -130,6 +130,7 @@ export const useDataSubjectManagement = () => {
 
   const { data, loading, run } = useRequest(getDataManagementService, {
     manual: true,
+    cacheKey: 'data-management',
   });
 
   const requestSearchUsers = useRequest(

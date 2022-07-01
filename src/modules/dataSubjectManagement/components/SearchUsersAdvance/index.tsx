@@ -6,9 +6,7 @@ import { useFadeEffect, _popoverStyles, _popoverVisibleStyles } from 'hooks/useF
 import InputForm from 'libraries/form/input/input-form';
 import Button from 'libraries/UI/Button';
 import Select from 'libraries/UI/Select';
-import queryString from 'query-string';
-import React, { useEffect, useRef } from 'react';
-import { createSearchParams, useLocation, useNavigate } from 'react-router-dom';
+import React, { useRef } from 'react';
 import styles from '../../index.module.scss';
 
 const formatAdvancedSearchObject = (obj: any) => {
@@ -33,8 +31,6 @@ const SearchUsersAdvance = ({ onSearchDataSubject, t }: any) => {
   const [isShowSearch, setIsShowSearch] = React.useState(false);
   const [_isTransitioning, shouldBeVisible, refFormModal] = useFadeEffect(isShowSearch);
   const refSearch: any = useRef();
-  const navigate = useNavigate();
-  const location = useLocation();
 
   useClickAway((e: any) => {
     if (e?.target?.className === 'ant-select-item-option-content') return;
@@ -44,39 +40,6 @@ const SearchUsersAdvance = ({ onSearchDataSubject, t }: any) => {
   const onVisibleSearch = () => {
     setIsShowSearch(!isShowSearch);
   };
-
-  // Currrent don't need onBlur
-  // const onBlur = (name: string, msg?: string) => {
-  //   const username = formSearch.getFieldValue(name);
-
-  //   if (!username) {
-  //     const msgErr = msg || t('messages.errors.min', { min: 3 });
-  //     formSearch.setFields([
-  //       {
-  //         name,
-  //         errors: [msgErr]
-  //       }
-  //     ]);
-  //   }
-  // };
-
-  useEffect(() => {
-    const queryParams = queryString.parse(location.search);
-    const conditions = formatAdvancedSearchObject(queryParams);
-    if (queryParams.firstnameexact) {
-      onSearchDataSubject({
-        firstname: queryParams.firstnameexact,
-        isEqualSearch: true,
-      });
-    } else {
-      onSearchDataSubject({
-        advanceSearch: {
-          firstname: queryParams.firstname,
-          ...conditions,
-        },
-      });
-    }
-  }, []);
 
   return (
     <div style={{ position: 'relative' }} ref={refSearch}>
@@ -113,18 +76,6 @@ const SearchUsersAdvance = ({ onSearchDataSubject, t }: any) => {
                   },
                 });
 
-                const params: { [key: string]: any } = {};
-
-                for (const key in values) {
-                  if (values[key] !== undefined && values[key] !== '') {
-                    params[key] = values[key];
-                  }
-                }
-
-                navigate({
-                  pathname: '/data-subject',
-                  search: `?${createSearchParams(params)}`,
-                });
                 setIsShowSearch(false);
               }}
               form={formSearch}
