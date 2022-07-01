@@ -39,7 +39,7 @@ const ConsentOption = ({ value, onChange, dataConsent }: any) => {
   }
 
   return (
-    <Checkbox.Group onChange={onChangeValues} defaultValue={value}>
+    <Checkbox.Group onChange={onChangeValues} defaultValue={value} disabled>
       {dataConsent.map((item: any) => {
         return (
           <Checkbox key={item.value} value={item.value}>
