@@ -5,7 +5,7 @@ import IconSearch from 'assets/icons/icon-search';
 import Button from 'libraries/UI/Button';
 import Input from 'libraries/UI/Input';
 import { paginationItemRender } from 'libraries/UI/Pagination';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styles from './index.module.scss';
 import { useConsent } from './service';
@@ -13,6 +13,7 @@ import SuggestConsents from './SuggestConsents';
 import get from 'lodash/get';
 import ArrowDownCollapse from 'assets/icons/icon-arrow-down-collapse';
 import ArrowUpCollapse from 'assets/icons/icon-arrow-up-collapse';
+import CreateCaseForm from '../CreateCaseForm';
 
 const { Panel } = Collapse;
 
@@ -52,6 +53,8 @@ const SearchBox = ({
   const refForm: any = useRef();
   const refListConsents: any = useRef();
   const [formSearchConsent] = Form.useForm();
+
+  const [isOpenCreateCaseForm, setIsOpenCreateCaseForm] = useState(false);
 
   const onFieldsChange = (values: any) => {
     const value = get(values, '[0].value', '');
@@ -136,9 +139,18 @@ const SearchBox = ({
         </div>
       </Form>
 
-      <Button size='middle' className={styles.btnCreateCase} typeDisplay='ghost'>
+      <Button
+        size='middle'
+        className={styles.btnCreateCase}
+        typeDisplay='ghost'
+        onClick={() => setIsOpenCreateCaseForm(true)}
+      >
         {t('create_case')}
       </Button>
+      <CreateCaseForm
+        visible={isOpenCreateCaseForm}
+        onClose={() => setIsOpenCreateCaseForm(false)}
+      />
     </Row>
   );
 };
