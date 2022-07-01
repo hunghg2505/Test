@@ -4,6 +4,7 @@ import { Col, Form, Row } from 'antd';
 import InputForm from 'libraries/form/input/input-form';
 import InputTextAreaForm from 'libraries/form/input/input-textarea-form';
 import Select from 'libraries/UI/Select';
+import { useTranslation } from 'react-i18next';
 
 import styles from './index.module.scss';
 import Button from 'libraries/UI/Button';
@@ -28,6 +29,7 @@ const ICON_EDIT = (
 );
 
 const CreateCaseForm = () => {
+  const { t } = useTranslation();
   const [createCaseForm] = Form.useForm();
 
   const [isEdit, setIsEdit] = useState(true);
@@ -36,7 +38,14 @@ const CreateCaseForm = () => {
       <Form layout='vertical' form={createCaseForm} disabled={isEdit}>
         <Row gutter={[15, 24]}>
           <Col xs={12}>
-            <Form.Item label='Action' name='action' required>
+            <Form.Item
+              label='Action'
+              name='action'
+              required
+              rules={[
+                { required: true, message: t('messages.errors.require', { field: 'Action' }) },
+              ]}
+            >
               <Select placeholder='Select an Action'>
                 <Select.Option value={null}>Select an Action</Select.Option>
                 <Select.Option value={0}>Action 1</Select.Option>
@@ -45,7 +54,14 @@ const CreateCaseForm = () => {
             </Form.Item>
           </Col>
           <Col xs={12}>
-            <Form.Item label='Related Department' name='department' required>
+            <Form.Item
+              label='Related Department'
+              name='department'
+              required
+              rules={[
+                { required: true, message: t('messages.errors.require', { field: 'Department' }) },
+              ]}
+            >
               <Select placeholder='Select a Department'>
                 <Select.Option value={null}>Select an Department</Select.Option>
                 <Select.Option value={0}>Department 1</Select.Option>
@@ -54,7 +70,14 @@ const CreateCaseForm = () => {
             </Form.Item>
           </Col>
           <Col xs={12}>
-            <Form.Item label='Assign to' name='assign' required>
+            <Form.Item
+              label='Assign to'
+              name='assign'
+              required
+              rules={[
+                { required: true, message: t('messages.errors.require', { field: 'Assign' }) },
+              ]}
+            >
               <Select placeholder='Assign to'>
                 <Select.Option value={null}>Assign to</Select.Option>
                 <Select.Option value={0}>user 1</Select.Option>
@@ -69,10 +92,23 @@ const CreateCaseForm = () => {
               placeholder='Details of Execution'
               rows={6}
               className={styles.textarea}
+              rules={[
+                { required: true, message: t('messages.errors.require', { field: 'Description' }) },
+              ]}
             />
           </Col>
           <Col xs={12}>
-            <Form.Item label='Accept/Reject' name='isAllow' required>
+            <Form.Item
+              label='Accept/Reject'
+              name='isAllow'
+              required
+              rules={[
+                {
+                  required: true,
+                  message: t('messages.errors.require', { field: 'Accept/Reject' }),
+                },
+              ]}
+            >
               <Select placeholder='Accept/Reject the Request'>
                 <Select.Option value={null}>Accept/Reject the Request</Select.Option>
                 <Select.Option value={1}>Accept</Select.Option>
@@ -88,10 +124,26 @@ const CreateCaseForm = () => {
               rows={6}
               className={styles.textarea}
               required={true}
+              rules={[
+                {
+                  required: true,
+                  message: t('messages.errors.require', { field: 'Reason' }),
+                },
+              ]}
             />
           </Col>
           <Col xs={12}>
-            <Form.Item label='Status' name='status' required>
+            <Form.Item
+              label='Status'
+              name='status'
+              required
+              rules={[
+                {
+                  required: true,
+                  message: t('messages.errors.require', { field: 'Status' }),
+                },
+              ]}
+            >
               <Select placeholder='List of Status'>
                 <Select.Option value={null}>List of Status</Select.Option>
                 <Select.Option value={1}>Status 1</Select.Option>
