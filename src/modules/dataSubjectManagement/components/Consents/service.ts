@@ -8,7 +8,9 @@ import groupBy from 'lodash/groupBy';
 import isArray from 'lodash/isArray';
 import isEqual from 'lodash/isEqual';
 import uniqWith from 'lodash/uniqWith';
+import max from 'lodash/max';
 import ApiUtils from 'utils/api/api.utils';
+import dayjs from 'dayjs';
 import { API_PATH } from 'utils/api/constant';
 
 const PAGE_SIZE = 10;
@@ -46,11 +48,12 @@ export const getConsentService = async ({
 
   formatConsents = Object.keys(formatConsents).map((consentKey, i) => {
     const consents: any[] = formatConsents[consentKey];
+
     return {
       key: `${consentKey}`,
       dataConsent: {
         name: consentKey,
-        lastUpdated: 'Date',
+        lastUpdated: dayjs(max(consents.map((consent) => consent?.updatedAt))).format('DD/MM/YYYY'),
         version: 'V1.0',
         status: i % 2 === 0 ? 'Accepted' : 'Not Accepted',
         description: get(consents, '[0].consentData.title', ''),
