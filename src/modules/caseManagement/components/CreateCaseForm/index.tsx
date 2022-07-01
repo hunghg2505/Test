@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import dayjs from 'dayjs';
-import { Col, Form, Row } from 'antd';
+import { Col, Form, Row, Divider } from 'antd';
 import InputForm from 'libraries/form/input/input-form';
 import InputTextAreaForm from 'libraries/form/input/input-textarea-form';
 import Select from 'libraries/UI/Select';
@@ -39,15 +39,18 @@ const CreateCaseForm = () => {
         <Row gutter={[15, 24]}>
           <Col xs={12}>
             <Form.Item
-              label='Action'
-              name='action'
+              label='Data Subject Rights'
+              name='dataSubjectRight'
               required
               rules={[
-                { required: true, message: t('messages.errors.require', { field: 'Action' }) },
+                {
+                  required: true,
+                  message: t('messages.errors.require', { field: 'Data Subject Rights' }),
+                },
               ]}
             >
-              <Select placeholder='Select an Action'>
-                <Select.Option value={null}>Select an Action</Select.Option>
+              <Select placeholder='Select a Right'>
+                <Select.Option value={null}>Select a Right</Select.Option>
                 <Select.Option value={0}>Action 1</Select.Option>
                 <Select.Option value={1}>Action 2</Select.Option>
               </Select>
@@ -97,41 +100,7 @@ const CreateCaseForm = () => {
               ]}
             />
           </Col>
-          <Col xs={12}>
-            <Form.Item
-              label='Accept/Reject'
-              name='isAllow'
-              required
-              rules={[
-                {
-                  required: true,
-                  message: t('messages.errors.require', { field: 'Accept/Reject' }),
-                },
-              ]}
-            >
-              <Select placeholder='Accept/Reject the Request'>
-                <Select.Option value={null}>Accept/Reject the Request</Select.Option>
-                <Select.Option value={1}>Accept</Select.Option>
-                <Select.Option value={0}>Reject</Select.Option>
-              </Select>
-            </Form.Item>
-          </Col>
-          <Col xs={24}>
-            <InputTextAreaForm
-              name='reason'
-              label='Reason'
-              placeholder='Reason to Approve or Reject'
-              rows={6}
-              className={styles.textarea}
-              required={true}
-              rules={[
-                {
-                  required: true,
-                  message: t('messages.errors.require', { field: 'Reason' }),
-                },
-              ]}
-            />
-          </Col>
+
           <Col xs={12}>
             <Form.Item
               label='Status'
@@ -153,22 +122,68 @@ const CreateCaseForm = () => {
           </Col>
           <Col xs={12}>
             <InputForm
+              label='Accepted Date'
+              name='acceptedDate'
+              defaultValue={dayjs(Date.now()).format('DD/MM/YYYY')}
+              disabled={true}
+            />
+          </Col>
+          <Divider />
+          <Col xs={12}>
+            <Form.Item
+              label='Result'
+              name='result'
+              required
+              rules={[
+                {
+                  required: true,
+                  message: t('messages.errors.require', { field: 'Result' }),
+                },
+              ]}
+            >
+              <Select placeholder='Result'>
+                <Select.Option value={null}>Result</Select.Option>
+                <Select.Option value={1}>Completed</Select.Option>
+                <Select.Option value={0}>Rejected</Select.Option>
+              </Select>
+            </Form.Item>
+          </Col>
+          <Col xs={24}>
+            <InputTextAreaForm
+              name='reason'
+              label='Reason'
+              placeholder='Reason to Approve or Reject'
+              rows={6}
+              className={styles.textarea}
+              required={true}
+              rules={[
+                {
+                  required: true,
+                  message: t('messages.errors.require', { field: 'Reason' }),
+                },
+              ]}
+            />
+          </Col>
+          <Col xs={12}>
+            <InputForm
               label='Date of Response'
               name='dateOfResponse'
               defaultValue={dayjs(Date.now()).format('DD/MM/YYYY')}
               disabled={true}
             />
           </Col>
-          <Col xs={24}>
-            <InputTextAreaForm
-              name='comment'
-              label='Update comment'
-              placeholder='Comment ...'
-              rows={6}
-              maxLength={250}
-              required={true}
-            />
-          </Col>
+          {!isEdit && (
+            <Col xs={24}>
+              <InputTextAreaForm
+                name='comment'
+                label='Update comment'
+                placeholder='Comment ...'
+                rows={6}
+                maxLength={250}
+                required={true}
+              />
+            </Col>
+          )}
         </Row>
       </Form>
       {
@@ -179,8 +194,10 @@ const CreateCaseForm = () => {
             </Button>
           ) : (
             <>
-              <Button onClick={() => setIsEdit(true)}>Cancel</Button>{' '}
-              <Button type='secondary' htmlType='submit' onClick={() => createCaseForm.submit()}>
+              <Button onClick={() => setIsEdit(true)} className={styles.cancelBtn}>
+                Cancel
+              </Button>{' '}
+              <Button htmlType='submit' onClick={() => createCaseForm.submit()}>
                 Submit
               </Button>
             </>

@@ -48,3 +48,25 @@
     }
   }
 }
+
+.cancelBtn {
+  background-color: $background_button_light;
+
+  display: flex;
+  gap: 3px;
+  align-items: center;
+  justify-content: center;
+
+  span {
+    color: $grey_900;
+  }
+
+  &:hover,
+  &:focus {
+    background-color: $background_button_light;
+
+    span {
+      color: $grey_900;
+    }
+  }
+}
