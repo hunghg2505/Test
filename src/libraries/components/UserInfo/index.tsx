@@ -1,7 +1,6 @@
 import { Button, Col, Row, Upload } from 'antd';
 import IconCamera from 'assets/icons/icon-camera';
 import { IUserInfo } from 'modules/dataSubjectManagement/utils/service';
-import React from 'react';
 import dayjs from 'dayjs';
 import { useTranslation } from 'react-i18next';
 

@@ -1,4 +1,4 @@
-@import '../../../../styles/variables.scss';
+@import '../../../styles/variables.scss';
 
 .userInfoWrap {
   flex-flow: nowrap;
@@ -23,7 +23,7 @@
       width: 100%;
       height: 44px;
       z-index: 1;
-      background: linear-gradient(180deg, rgba(9, 44, 76, 0) 51.04%, #092C4C 100%);
+      background: linear-gradient(180deg, rgba(9, 44, 76, 0) 51.04%, #092c4c 100%);
     }
   }
 
@@ -61,12 +61,11 @@
     }
 
     span {
-    font-weight: 700;
-    font-size: 14px;
-    color: $color-white;
-    margin-left: 10px;
-  }
-
+      font-weight: 700;
+      font-size: 14px;
+      color: $color-white;
+      margin-left: 10px;
+    }
   }
 }
 
@@ -87,7 +86,7 @@
   border-radius: 4px;
   padding: 8px 16px;
   height: 44px;
-  background: #FCFCFC;
+  background: #fcfcfc;
   border: 1px solid $color-gray6;
   border-radius: 4px;
   display: flex;
@@ -97,4 +96,3 @@
 .line {
   border-top: 1px solid $color-gray6;
 }
-

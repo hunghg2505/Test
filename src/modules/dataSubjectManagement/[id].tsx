@@ -4,7 +4,7 @@ import React, { useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import Consents from './components/Consents';
 import DataSubjectHistory from './components/DataSubjectHistory';
-import UserInfo from './components/UserInfo';
+import UserInfo from '../../libraries/components/UserInfo';
 import { useDataSubjectDetail } from './utils/service';
 
 function DataSubjectDetail() {
