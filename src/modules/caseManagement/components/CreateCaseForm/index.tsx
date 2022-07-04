@@ -40,7 +40,7 @@ const CreateCaseForm = () => {
           <Col xs={12}>
             <Form.Item
               label='Data Subject Rights'
-              name='dataSubjectRight'
+              name='action'
               required
               rules={[
                 {
@@ -75,7 +75,7 @@ const CreateCaseForm = () => {
           <Col xs={12}>
             <Form.Item
               label='Assign to'
-              name='assign'
+              name='assignTo'
               required
               rules={[
                 { required: true, message: t('messages.errors.require', { field: 'Assign' }) },
@@ -90,7 +90,7 @@ const CreateCaseForm = () => {
           </Col>
           <Col xs={24}>
             <InputTextAreaForm
-              name='Description'
+              name='description'
               label='Description'
               placeholder='Details of Execution'
               rows={6}
@@ -104,7 +104,7 @@ const CreateCaseForm = () => {
           <Col xs={12}>
             <Form.Item
               label='Status'
-              name='status'
+              name='responseStatus'
               required
               rules={[
                 {
@@ -132,7 +132,7 @@ const CreateCaseForm = () => {
           <Col xs={12}>
             <Form.Item
               label='Result'
-              name='result'
+              name='status'
               required
               rules={[
                 {

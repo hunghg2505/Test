@@ -7,9 +7,16 @@ import { useTranslation } from 'react-i18next';
 
 import styles from './index.module.scss';
 import Button from 'libraries/UI/Button';
+import { useParams } from 'react-router-dom';
 
-const CreateCaseForm = ({ visible, onClose }: any) => {
+interface IProps {
+  visible: boolean;
+  onClose: () => void;
+}
+
+const CreateCaseForm = ({ visible, onClose }: IProps) => {
   const { t } = useTranslation();
+  const { id } = useParams();
   const [createCaseForm] = Form.useForm();
 
   return (
@@ -28,7 +35,7 @@ const CreateCaseForm = ({ visible, onClose }: any) => {
           <Col xs={12}>
             <Form.Item
               label='Data Subject Rights'
-              name='dataSubjectRight'
+              name='action'
               required
               rules={[
                 {
@@ -66,7 +73,7 @@ const CreateCaseForm = ({ visible, onClose }: any) => {
           <Col xs={12}>
             <Form.Item
               label='Assign to'
-              name='assign'
+              name='assignTo'
               required
               rules={[
                 { required: true, message: t('messages.errors.require', { field: 'Assign' }) },
@@ -81,7 +88,7 @@ const CreateCaseForm = ({ visible, onClose }: any) => {
           </Col>
           <Col xs={24}>
             <InputTextAreaForm
-              name='Description'
+              name='description'
               label='Description'
               placeholder='Details of Execution'
               rows={6}
@@ -98,7 +105,7 @@ const CreateCaseForm = ({ visible, onClose }: any) => {
           <Col xs={12}>
             <Form.Item
               label='Status'
-              name='status'
+              name='responseStatus'
               required
               rules={[
                 {
@@ -126,7 +133,7 @@ const CreateCaseForm = ({ visible, onClose }: any) => {
           <Col xs={12}>
             <Form.Item
               label='Result'
-              name='result'
+              name='status'
               required
               rules={[
                 {
