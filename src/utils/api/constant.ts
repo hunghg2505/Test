@@ -14,4 +14,7 @@ export const API_PATH = {
   SEARCH_USERS: '/data-subject/data-autocomplete',
   CONSENTS: '/data-subject/consents',
   OPT_OUT_IN: '/data-subject/opt-out-in',
+
+  // Case Management
+  CREATE_CASE: '/case-management/create',
 };
