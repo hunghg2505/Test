@@ -1,6 +1,6 @@
 import { routePath } from '../../../../routing/path.routing';
 import ApiUtils from 'utils/api/api.utils';
-import { useRequest } from 'ahooks';
+import { useMount, useRequest } from 'ahooks';
 import { API_PATH } from 'utils/api/constant';
 import { ResponseBase } from 'utils/api/api.types';
 import { useNavigate } from 'react-router-dom';
@@ -19,7 +19,43 @@ interface ICreateCase {
 }
 
 const createCaseService = async (body: ICreateCase) => {
-  return ApiUtils.post<any, ResponseBase<any>>(API_PATH.CREATE_CASE, body);
+  return ApiUtils.post<any, ResponseBase<any>>(API_PATH.CASE_MANAGEMENT_BASE_URL, body);
+};
+
+const getListActionService = async () => {
+  const response: any = await ApiUtils.fetch(API_PATH.GET_LIST_ACTION);
+
+  return {
+    data: response?.content?.data.map(({ id, name }: any) => ({
+      value: name,
+      label: name,
+      id,
+    })),
+  };
+};
+
+const getListRelateDepartmentService = async () => {
+  const response: any = await ApiUtils.fetch(API_PATH.GET_LIST_DEPARTMENT);
+
+  return {
+    data: response?.content?.data.map(({ id, name }: any) => ({
+      value: name,
+      label: name,
+      id,
+    })),
+  };
+};
+
+const getListUserService = async () => {
+  const response: any = await ApiUtils.fetch(API_PATH.GET_LIST_USER);
+
+  return {
+    data: response?.content?.data.map(({ sid, givenName, familyName }: any) => ({
+      sid,
+      label: `${givenName} ${familyName}`,
+      value: `${givenName} ${familyName}`,
+    })),
+  };
 };
 
 export const useCreateCase = () => {
@@ -44,4 +80,34 @@ export const useCreateCase = () => {
       },
     },
   );
+};
+
+export const useGetListDataDropDropdown = () => {
+  const { data: actionsData, run: runActionService } = useRequest(
+    async () => getListActionService(),
+    {
+      cacheKey: 'list-action',
+    },
+  );
+  const { data: departmentsData, run: runDepartmentService } = useRequest(
+    async () => getListRelateDepartmentService(),
+    {
+      cacheKey: 'list-department',
+    },
+  );
+  const { data: usersData, run: runUserService } = useRequest(async () => getListUserService(), {
+    cacheKey: 'list-user',
+  });
+
+  useMount(() => {
+    runActionService();
+    runDepartmentService();
+    runUserService();
+  });
+
+  return {
+    actionsData,
+    departmentsData,
+    usersData,
+  };
 };
