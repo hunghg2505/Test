@@ -4,10 +4,16 @@ import InputForm from 'libraries/form/input/input-form';
 import InputTextAreaForm from 'libraries/form/input/input-textarea-form';
 import Select from 'libraries/UI/Select';
 import { useTranslation } from 'react-i18next';
+import {
+  DATA_SUBJECT_RIGHT_DROPDOWN_DATA,
+  STATUS_DROPDOWN_DATA,
+  RESULT_DROPDOWN_DATA,
+} from 'constants/common.constants';
 
 import styles from './index.module.scss';
 import Button from 'libraries/UI/Button';
 import { useParams } from 'react-router-dom';
+import { useCreateCase } from './service';
 
 interface IProps {
   visible: boolean;
@@ -17,7 +23,14 @@ interface IProps {
 const CreateCaseForm = ({ visible, onClose }: IProps) => {
   const { t } = useTranslation();
   const { id } = useParams();
+  const createCaseFormRequest = useCreateCase();
   const [createCaseForm] = Form.useForm();
+
+  const onFinish = (values: any) => {
+    delete values.acceptedDate;
+    delete values.dateOfResponse;
+    createCaseFormRequest.run({ ...values, userProfileId: Number(id) });
+  };
 
   return (
     <Modal
@@ -30,7 +43,7 @@ const CreateCaseForm = ({ visible, onClose }: IProps) => {
         createCaseForm.resetFields();
       }}
     >
-      <Form layout='vertical' form={createCaseForm}>
+      <Form layout='vertical' form={createCaseForm} onFinish={onFinish}>
         <Row gutter={[15, 24]}>
           <Col xs={12}>
             <Form.Item
@@ -45,9 +58,11 @@ const CreateCaseForm = ({ visible, onClose }: IProps) => {
               ]}
             >
               <Select placeholder='Select a Right'>
-                <Select.Option value={null}>Select a Right</Select.Option>
-                <Select.Option value={0}>Action 1</Select.Option>
-                <Select.Option value={1}>Action 2</Select.Option>
+                {DATA_SUBJECT_RIGHT_DROPDOWN_DATA.map((item, index) => (
+                  <Select.Option value={item.value} key={`${index}${item.value}`}>
+                    {item.value}
+                  </Select.Option>
+                ))}
               </Select>
             </Form.Item>
           </Col>
@@ -64,9 +79,8 @@ const CreateCaseForm = ({ visible, onClose }: IProps) => {
               ]}
             >
               <Select placeholder='Select a Department'>
-                <Select.Option value={null}>Select an Department</Select.Option>
-                <Select.Option value={0}>Department 1</Select.Option>
-                <Select.Option value={1}>Department 2</Select.Option>
+                <Select.Option value={'Department 1'}>Department 1</Select.Option>
+                <Select.Option value={'Department 2'}>Department 2</Select.Option>
               </Select>
             </Form.Item>
           </Col>
@@ -80,9 +94,8 @@ const CreateCaseForm = ({ visible, onClose }: IProps) => {
               ]}
             >
               <Select placeholder='Assign to'>
-                <Select.Option value={null}>Assign to</Select.Option>
-                <Select.Option value={0}>user 1</Select.Option>
-                <Select.Option value={1}>user 2</Select.Option>
+                <Select.Option value={'User 1'}>User 1</Select.Option>
+                <Select.Option value={'User 2'}>User 2</Select.Option>
               </Select>
             </Form.Item>
           </Col>
@@ -93,6 +106,8 @@ const CreateCaseForm = ({ visible, onClose }: IProps) => {
               placeholder='Details of Execution'
               rows={6}
               className={styles.textarea}
+              required
+              maxLength={250}
               rules={[
                 {
                   required: true,
@@ -115,9 +130,11 @@ const CreateCaseForm = ({ visible, onClose }: IProps) => {
               ]}
             >
               <Select placeholder='List of Status'>
-                <Select.Option value={null}>List of Status</Select.Option>
-                <Select.Option value={1}>Status 1</Select.Option>
-                <Select.Option value={0}>Status 2</Select.Option>
+                {STATUS_DROPDOWN_DATA.map((item, index) => (
+                  <Select.Option value={item.value} key={`${index}${item.value}`}>
+                    {item.value}
+                  </Select.Option>
+                ))}
               </Select>
             </Form.Item>
           </Col>
@@ -143,9 +160,11 @@ const CreateCaseForm = ({ visible, onClose }: IProps) => {
               ]}
             >
               <Select placeholder='Result'>
-                <Select.Option value={null}>Result</Select.Option>
-                <Select.Option value={1}>Completed</Select.Option>
-                <Select.Option value={0}>Rejected</Select.Option>
+                {RESULT_DROPDOWN_DATA.map((item, index) => (
+                  <Select.Option value={item.value} key={`${index}${item.value}`}>
+                    {item.value}
+                  </Select.Option>
+                ))}
               </Select>
             </Form.Item>
           </Col>
@@ -157,6 +176,7 @@ const CreateCaseForm = ({ visible, onClose }: IProps) => {
               rows={6}
               className={styles.textarea}
               required={true}
+              maxLength={250}
               rules={[
                 {
                   required: true,
