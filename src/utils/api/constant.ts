@@ -1,5 +1,7 @@
 export const BACKEND_URL = process.env.REACT_APP_API_DOMAIN;
 
+const CASE_MANAGEMENT_BASE_URL = '/case-management';
+
 export const API_PATH = {
   // Account
   LOGIN: '/auth/login',
@@ -16,5 +18,8 @@ export const API_PATH = {
   OPT_OUT_IN: '/data-subject/opt-out-in',
 
   // Case Management
-  CREATE_CASE: '/case-management/create',
+  CASE_MANAGEMENT_BASE_URL,
+  GET_LIST_ACTION: `${CASE_MANAGEMENT_BASE_URL}/subject-right`,
+  GET_LIST_DEPARTMENT: `${CASE_MANAGEMENT_BASE_URL}/relate-departments`,
+  GET_LIST_USER: `${CASE_MANAGEMENT_BASE_URL}/users`,
 };

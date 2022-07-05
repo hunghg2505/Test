@@ -13,7 +13,7 @@ import {
 import styles from './index.module.scss';
 import Button from 'libraries/UI/Button';
 import { useParams } from 'react-router-dom';
-import { useCreateCase } from './service';
+import { useCreateCase, useGetListDataDropDropdown } from './service';
 
 interface IProps {
   visible: boolean;
@@ -24,6 +24,10 @@ const CreateCaseForm = ({ visible, onClose }: IProps) => {
   const { t } = useTranslation();
   const { id } = useParams();
   const createCaseFormRequest = useCreateCase();
+  {
+    /** Use hardcode data for test purpose */
+  }
+  // const { actionsData, departmentsData, usersData } = useGetListDataDropDropdown();
   const [createCaseForm] = Form.useForm();
 
   const onFinish = (values: any) => {
