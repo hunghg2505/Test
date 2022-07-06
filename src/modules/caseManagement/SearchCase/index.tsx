@@ -13,19 +13,23 @@ import { useSearchCase } from './service';
 
 function SearchCase() {
   const { t } = useTranslation();
-  const { data, loading, onChange } = useSearchCase();
+  const { data, loading, onChangePage, onSearchCase } = useSearchCase();
+
+  const onFinish = (values: any) => {
+    onSearchCase({ ...values });
+  };
 
   return (
     <ContainerLayout title='Assign To You'>
       <div className={styles.wrap}>
         <Row justify='center' align='middle' className={styles.searchCaseHeader}>
-          <Form>
+          <Form onFinish={onFinish}>
             <div className={styles.formSearchWrap}>
               <Row justify='center' align='middle' className={styles.searchForm}>
                 <IconSearch />
 
                 <InputForm
-                  name='username'
+                  name='searchString'
                   placeholder='Search Case'
                   className={styles.inputSearch}
                   classNameFormInput={styles.inputSearchForm}
@@ -68,7 +72,7 @@ function SearchCase() {
             [styles.dataSubjectContentEmpty]: !loading && !data?.data?.length,
           })}
         >
-          <CaseManagementTable data={data} loading={loading} onChange={onChange} />
+          <CaseManagementTable data={data} loading={loading} onChange={onChangePage} />
         </div>
       </div>
     </ContainerLayout>

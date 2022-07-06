@@ -5,6 +5,7 @@ import { API_PATH } from 'utils/api/constant';
 import { ResponseBase } from 'utils/api/api.types';
 import { useNavigate } from 'react-router-dom';
 import { message } from 'antd';
+import dayjs from 'dayjs';
 
 interface ICreateCase {
   action: string;
@@ -58,7 +59,7 @@ const getListUserService = async () => {
   };
 };
 
-export const useCreateCase = () => {
+export const useCreateCase = (onFinishSubmitForm: any) => {
   const navigate = useNavigate();
 
   return useRequest(
@@ -69,7 +70,7 @@ export const useCreateCase = () => {
       manual: true,
       onSuccess: () => {
         message.success('Create Case Success');
-
+        onFinishSubmitForm();
         {
           /** No need now  */
         }
@@ -77,6 +78,7 @@ export const useCreateCase = () => {
       },
       onError: () => {
         message.error('Create Case Error');
+        onFinishSubmitForm();
       },
     },
   );

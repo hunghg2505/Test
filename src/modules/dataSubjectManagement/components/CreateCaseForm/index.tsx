@@ -18,12 +18,20 @@ import { useCreateCase, useGetListDataDropDropdown } from './service';
 interface IProps {
   visible: boolean;
   onClose: () => void;
+  refDataHistory: any;
 }
 
-const CreateCaseForm = ({ visible, onClose }: IProps) => {
+const CreateCaseForm = ({ visible, onClose, refDataHistory }: IProps) => {
   const { t } = useTranslation();
   const { id } = useParams();
-  const createCaseFormRequest = useCreateCase();
+
+  const onFinishSubmitForm = () => {
+    onClose();
+    createCaseForm.resetFields();
+    if (refDataHistory.current?.refreshDataHistory) refDataHistory.current.refreshDataHistory();
+  };
+
+  const createCaseFormRequest = useCreateCase(onFinishSubmitForm);
   {
     /** Use hardcode data for test purpose */
   }
