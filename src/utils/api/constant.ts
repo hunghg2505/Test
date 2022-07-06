@@ -19,4 +19,7 @@ export const API_PATH = {
 
   // Case Management
   CASE_MANAGEMENT_BASE_URL,
+  GET_LIST_ACTION: `${CASE_MANAGEMENT_BASE_URL}/subject-right`,
+  GET_LIST_DEPARTMENT: `${CASE_MANAGEMENT_BASE_URL}/relate-departments`,
+  GET_LIST_USER: `${CASE_MANAGEMENT_BASE_URL}/users`,
 };
