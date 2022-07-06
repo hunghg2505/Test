@@ -24,7 +24,14 @@ interface IProps {
 const CreateCaseForm = ({ visible, onClose, refDataHistory }: IProps) => {
   const { t } = useTranslation();
   const { id } = useParams();
-  const createCaseFormRequest = useCreateCase(onClose);
+
+  const onFinishSubmitForm = () => {
+    onClose();
+    createCaseForm.resetFields();
+    if (refDataHistory.current?.refreshDataHistory) refDataHistory.current.refreshDataHistory();
+  };
+
+  const createCaseFormRequest = useCreateCase(onFinishSubmitForm);
   {
     /** Use hardcode data for test purpose */
   }
@@ -35,7 +42,6 @@ const CreateCaseForm = ({ visible, onClose, refDataHistory }: IProps) => {
     delete values.acceptedDate;
     delete values.dateOfResponse;
     createCaseFormRequest.run({ ...values, userProfileId: Number(id) });
-    if (refDataHistory.current?.refreshDataHistory) refDataHistory.current.refreshDataHistory();
   };
 
   return (

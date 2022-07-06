@@ -59,7 +59,7 @@ const getListUserService = async () => {
   };
 };
 
-export const useCreateCase = (onCloseModal: any) => {
+export const useCreateCase = (onFinishSubmitForm: any) => {
   const navigate = useNavigate();
 
   return useRequest(
@@ -70,7 +70,7 @@ export const useCreateCase = (onCloseModal: any) => {
       manual: true,
       onSuccess: () => {
         message.success('Create Case Success');
-        onCloseModal();
+        onFinishSubmitForm();
         {
           /** No need now  */
         }
@@ -78,7 +78,7 @@ export const useCreateCase = (onCloseModal: any) => {
       },
       onError: () => {
         message.error('Create Case Error');
-        onCloseModal();
+        onFinishSubmitForm();
       },
     },
   );
