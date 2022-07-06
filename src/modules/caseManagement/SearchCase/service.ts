@@ -6,7 +6,7 @@ import { API_PATH } from 'utils/api/constant';
 const PAGE_SIZE = 10;
 
 const getListCaseManagementService = async (values: any): Promise<any> => {
-  const response: any = await ApiUtils.post(API_PATH.CASE_MANAGEMENT_BASE_URL, {
+  const response: any = await ApiUtils.post(API_PATH.GET_LIST_CASE_MANAGEMENT, {
     userId: 1,
     limit: 10,
     page: values?.current || 1,
