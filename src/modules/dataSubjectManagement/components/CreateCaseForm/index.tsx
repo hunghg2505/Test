@@ -18,18 +18,20 @@ import { useCreateCase } from './service';
 interface IProps {
   visible: boolean;
   onClose: () => void;
+  refDataHistory: any;
 }
 
-const CreateCaseForm = ({ visible, onClose }: IProps) => {
+const CreateCaseForm = ({ visible, onClose, refDataHistory }: IProps) => {
   const { t } = useTranslation();
   const { id } = useParams();
-  const createCaseFormRequest = useCreateCase();
+  const createCaseFormRequest = useCreateCase(onClose);
   const [createCaseForm] = Form.useForm();
 
   const onFinish = (values: any) => {
     delete values.acceptedDate;
     delete values.dateOfResponse;
     createCaseFormRequest.run({ ...values, userProfileId: Number(id) });
+    if (refDataHistory.current?.refreshDataHistory) refDataHistory.current.refreshDataHistory();
   };
 
   return (

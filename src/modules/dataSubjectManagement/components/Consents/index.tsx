@@ -42,12 +42,14 @@ const SearchBox = ({
   onSuggestionConsentsDebounce,
   onLoadMoreSuggestionConsents,
   onResetSuggestionConsents,
+  refDataHistory,
 }: {
   onSearchConsent: (search: string, callback?: any) => void;
   suggestionConsents: any;
   onSuggestionConsentsDebounce: (value: string, callback: any) => void;
   onLoadMoreSuggestionConsents: (value: string) => void;
   onResetSuggestionConsents: () => void;
+  refDataHistory: any;
 }) => {
   const { t } = useTranslation();
   const refForm: any = useRef();
@@ -150,6 +152,7 @@ const SearchBox = ({
       <CreateCaseForm
         visible={isOpenCreateCaseForm}
         onClose={() => setIsOpenCreateCaseForm(false)}
+        refDataHistory={refDataHistory}
       />
     </Row>
   );
@@ -295,6 +298,7 @@ function Consents({ userId, refDataHistory }: { userId: number; refDataHistory: 
         onSuggestionConsentsDebounce={onSuggestionConsentsDebounce}
         onLoadMoreSuggestionConsents={onLoadMoreSuggestionConsents}
         onResetSuggestionConsents={onResetSuggestionConsents}
+        refDataHistory={refDataHistory}
       />
 
       <ConsentsList
