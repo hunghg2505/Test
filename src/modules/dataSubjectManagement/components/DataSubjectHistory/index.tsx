@@ -19,7 +19,7 @@ export interface DataType {
 
 const columns: ColumnsType<DataType> = [
   {
-    title: 'No.',
+    title: 'ID',
     dataIndex: 'noId',
     key: 'noId',
     width: 160,

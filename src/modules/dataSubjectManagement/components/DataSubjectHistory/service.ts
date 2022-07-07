@@ -5,6 +5,7 @@ import { useRequest, useMount } from 'ahooks';
 import dayjs from 'dayjs';
 import ApiUtils from 'utils/api/api.utils';
 import { API_PATH } from 'utils/api/constant';
+import { formatIdSubjectHistory } from 'utils/common.utils';
 
 export const getDataSubjectHistoryService = async (value: any): Promise<any> => {
   const r: any = await ApiUtils.fetch(API_PATH.SUBJECT_HISTORY, {
@@ -22,7 +23,7 @@ export const getDataSubjectHistoryService = async (value: any): Promise<any> => 
       r?.content?.data?.map((item: any, idx: number) => ({
         ...item,
         key: `${item?.id}`,
-        noId: `${(current - 1) * 10 + idx + 1 || idx}`,
+        noId: formatIdSubjectHistory(current, idx, item.requestType, item.id, item.createdAt),
         requestDate: dayjs(item?.requestDate).format('MMM DD, YYYY'),
       })) || [],
   };

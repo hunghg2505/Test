@@ -39,6 +39,7 @@ function Input({
           [styles[status]]: styles[status],
           [`${className}`]: className,
         })}
+        maxLength={maxLength}
         {...props}
       />
     );
