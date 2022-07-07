@@ -8,6 +8,7 @@ import IconReports from 'assets/icons/icon-reports';
 import IconDataSubject from 'assets/icons/icon-data-subject';
 import IconCaseManagement from 'assets/icons/icon-case-management';
 import IconConsent from 'assets/icons/icon-consent';
+import IconUserManagement from 'assets/icons/icon-user-management';
 
 export interface IRouter {
   icons?: JSX.Element | string | any;
@@ -104,6 +105,12 @@ const configRoutes: IRouter[] = [
         element: lazy(() => import('modules/consentManagement/[id]')),
         name: 'Consent Management Detail',
         hiddenMenu: true,
+      },
+      {
+        path: routePath.UserManagement,
+        element: lazy(() => import('modules/userManagement/index')),
+        name: 'User Management',
+        icons: React.createElement(IconUserManagement),
       },
       // {
       //   path: routePath.ConsentManagement,

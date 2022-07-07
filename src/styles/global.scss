@@ -176,6 +176,12 @@ body {
   }
 }
 
+tr.ant-table-expanded-row.ant-table-expanded-row-level-1 {
+  .ant-table-cell {
+    background-color: #fff;
+  }
+}
+
 // Error form input
 .ant-form-item-explain-error {
   text-align: left;
