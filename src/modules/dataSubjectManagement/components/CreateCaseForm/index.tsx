@@ -30,7 +30,7 @@ const CreateCaseForm = ({ visible, onClose, refDataHistory }: IProps) => {
   const { t } = useTranslation();
   const { id } = useParams();
 
-  const [acceptedDate, setAcceptedDate] = useState(new Date());
+  const [acceptedDate, setAcceptedDate] = useState(moment());
   const [dateOfResponse, setDateOfResponse] = useState(null);
 
   const onFinishSubmitForm = () => {
@@ -38,7 +38,7 @@ const CreateCaseForm = ({ visible, onClose, refDataHistory }: IProps) => {
     createCaseForm.resetFields();
     if (refDataHistory.current?.refreshDataHistory) refDataHistory.current.refreshDataHistory();
     setDateOfResponse(null);
-    setAcceptedDate(new Date());
+    setAcceptedDate(moment());
   };
 
   const createCaseFormRequest = useCreateCase(onFinishSubmitForm);
@@ -56,7 +56,7 @@ const CreateCaseForm = ({ visible, onClose, refDataHistory }: IProps) => {
       dateOfResponse,
     });
     setDateOfResponse(null);
-    setAcceptedDate(new Date());
+    setAcceptedDate(moment());
   };
 
   const showConfirm = useCallback(() => {
@@ -77,7 +77,7 @@ const CreateCaseForm = ({ visible, onClose, refDataHistory }: IProps) => {
         onClose();
         createCaseForm.resetFields();
         setDateOfResponse(null);
-        setAcceptedDate(new Date());
+        setAcceptedDate(moment());
       },
     });
   }, []);
@@ -194,11 +194,11 @@ const CreateCaseForm = ({ visible, onClose, refDataHistory }: IProps) => {
             </p>
             <DatePicker
               getPopupContainer={(trigger: any) => trigger.parentElement}
-              defaultValue={moment()}
+              // defaultValue={moment()}
               format='DD/MM/YYYY'
               onChange={(date: any) => setAcceptedDate(date)}
               allowClear={false}
-              value={moment(acceptedDate)}
+              value={acceptedDate}
             />
           </Col>
           <Divider />
@@ -248,7 +248,7 @@ const CreateCaseForm = ({ visible, onClose, refDataHistory }: IProps) => {
               onClose();
               createCaseForm.resetFields();
               setDateOfResponse(null);
-              setAcceptedDate(new Date());
+              setAcceptedDate(moment());
               return;
             }
             showConfirm();

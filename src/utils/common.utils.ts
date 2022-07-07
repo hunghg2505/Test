@@ -6,7 +6,7 @@ export const formatIdSubjectHistory = (
   createdDate: Date,
 ) => {
   let formattedId;
-  if (requestType.includes('Errasure')) {
+  if (requestType.includes('Erasure')) {
     formattedId = `${new Date(createdDate).getFullYear()}ER${id}`;
     return formattedId;
   }
