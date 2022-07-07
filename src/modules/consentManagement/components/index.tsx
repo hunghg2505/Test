@@ -192,8 +192,8 @@ function ConsentManagement() {
         </Row>
 
         <div
-          className={clsx(styles.consentContent, {
-            [styles.consentContentEmpty]: !loading && !data?.list?.length,
+          className={clsx(styles.userPermissions, {
+            [styles.userPermissionsEmpty]: !loading && !data?.list?.length,
           })}
         >
           <Table

@@ -10,6 +10,7 @@ export const routePath = {
   SearchCase: '/case-management/search-case',
   ConsentManagement: '/consent',
   ConsentDetail: '/consent/:id',
+  UserManagement: '/user-management',
 
   // Auth Path
   Auth: '/auth',

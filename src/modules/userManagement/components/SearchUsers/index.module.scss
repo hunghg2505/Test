@@ -1,0 +1,104 @@
+@import '../../../../styles/variables.scss';
+
+.usersHeader {
+  flex-flow: nowrap;
+  position: relative;
+  width: 100%;
+  background: #FFFFFF;
+  border: 1px solid #F6F6F6;
+  box-shadow: 0px 5px 40px rgba(9, 44, 76, 0.02);
+  border-radius: 8px;
+  padding: 32px;
+  margin: 0 0 40px;
+}
+
+.usersHeader {
+  width: 100%;
+  form {
+    flex: 1;
+  }
+}
+.searchForm {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.searchForm {
+  padding: 4.5px 6px 4.5px 24px;
+  background: $color-primary-light2;
+  border: 1px solid $color-gray6;
+  border-radius: 100px;
+
+  > svg {
+    min-width: 22px;
+    max-width: 22px;
+    path {
+      fill: #bdbdbd !important;
+    }
+  }
+}
+.inputSearchForm {
+  flex: 1;
+  position: relative;
+
+  :global {
+    .ant-form-item-control-input {
+      min-height: initial;
+    }
+
+    .ant-form-item-explain {
+      position: absolute;
+      top: 38px;
+      left: 12px;
+    }
+
+    .ant-input-status-error:not(.ant-input-disabled):not(.ant-input-borderless).ant-input:focus {
+      box-shadow: none;
+    }
+  }
+}
+
+.inputSearch {
+  border: none !important;
+  border-radius: none !important;
+  height: initial;
+  padding: 0 15px;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  color: $black_color;
+
+  ::-webkit-input-placeholder {
+    /* Edge */
+    color: $color-gray4;
+  }
+
+  :-ms-input-placeholder {
+    /* Internet Explorer 10-11 */
+    color: $color-gray4;
+  }
+
+  ::placeholder {
+    color: $color-gray4;
+  }
+}
+
+.btnSearch {
+  padding: 7px 16px;
+  line-height: normal;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 100px;
+  span {
+    font-weight: 700;
+    font-size: 14px;
+    margin-left: 10px;
+  }
+
+  svg {
+    min-width: 13px;
+    min-height: 13px;
+  }
+}
