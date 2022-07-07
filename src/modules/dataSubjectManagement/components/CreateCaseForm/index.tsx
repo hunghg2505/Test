@@ -193,6 +193,7 @@ const CreateCaseForm = ({ visible, onClose, refDataHistory }: IProps) => {
               Accepted Date <span style={{ color: 'red' }}>*</span>
             </p>
             <DatePicker
+              getPopupContainer={(trigger: any) => trigger.parentElement}
               defaultValue={moment()}
               format='DD/MM/YYYY'
               onChange={(date: any) => setAcceptedDate(date)}
@@ -225,6 +226,7 @@ const CreateCaseForm = ({ visible, onClose, refDataHistory }: IProps) => {
           <Col xs={12}>
             <p className={styles.datePickerLabel}>Date of Response</p>
             <DatePicker
+              getPopupContainer={(trigger: any) => trigger.parentElement}
               format='DD/MM/YYYY'
               onChange={(date: any) => setDateOfResponse(date)}
               value={dateOfResponse}

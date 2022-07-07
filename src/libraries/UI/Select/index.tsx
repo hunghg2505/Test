@@ -34,6 +34,7 @@ const Select = ({
       suffixIcon={suffixIcon}
       options={options}
       {...props}
+      getPopupContainer={(trigger) => trigger.parentNode}
     >
       <>{children}</>
     </SelectAntd>
