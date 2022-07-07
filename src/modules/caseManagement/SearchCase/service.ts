@@ -2,6 +2,7 @@ import { useMount, useRequest } from 'ahooks';
 import dayjs from 'dayjs';
 import ApiUtils from 'utils/api/api.utils';
 import { API_PATH } from 'utils/api/constant';
+import { formatIdSubjectHistory } from 'utils/common.utils';
 
 const PAGE_SIZE = 10;
 
@@ -23,7 +24,7 @@ const getListCaseManagementService = async (values: any): Promise<any> => {
       response?.content?.data?.map((item: any, idx: number) => ({
         ...item,
         key: `${item?.id}`,
-        noId: `${(current - 1) * 10 + idx + 1 || idx}`,
+        noId: formatIdSubjectHistory(current, idx, item.action, item.id, item.createdAt),
         description: item?.description,
         assignTo: item?.assignTo,
         caseStatus: item?.responseStatus,
