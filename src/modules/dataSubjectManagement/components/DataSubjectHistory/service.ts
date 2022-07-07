@@ -24,7 +24,7 @@ export const getDataSubjectHistoryService = async (value: any): Promise<any> => 
         ...item,
         key: `${item?.id}`,
         noId: formatIdSubjectHistory(current, idx, item.requestType, item.id, item.createdAt),
-        requestDate: dayjs(item?.requestDate).format('MMM DD, YYYY'),
+        requestDate: dayjs(item?.createdAt).format('MMM DD, YYYY'),
       })) || [],
   };
 };
