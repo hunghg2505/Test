@@ -157,7 +157,7 @@ const CreateCaseForm = ({ visible, onClose, refDataHistory }: IProps) => {
           <Col xs={12}>
             <Form.Item
               label='Status'
-              name='responseStatus'
+              name='status'
               required
               rules={[
                 {
@@ -185,7 +185,7 @@ const CreateCaseForm = ({ visible, onClose, refDataHistory }: IProps) => {
           </Col>
           <Divider />
           <Col xs={12}>
-            <Form.Item label='Result' name='status' required>
+            <Form.Item label='Result' name='responseStatus' required>
               <Select placeholder='Select Result'>
                 {RESULT_DROPDOWN_DATA.map((item, index) => (
                   <Select.Option value={item.value} key={`${index}${item.value}`}>
