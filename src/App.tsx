@@ -5,12 +5,23 @@ import { Suspense, useLayoutEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import MasterRoute from 'routing/master-routes.routing';
 import { KeyStorage } from 'utils/local-storage.utils';
-import { clearCache } from 'ahooks';
+import { clearCache, useUpdateEffect } from 'ahooks';
+import useAuth from 'hooks/redux/auth/useAuth';
 
 function App() {
   useInitBase();
   const { keycloak, initialized } = useKeycloak();
   const location = useLocation();
+  const { saveUser } = useAuth();
+
+  useUpdateEffect(() => {
+    const isLogin = localStorage.getItem('save_login');
+
+    if (initialized && keycloak?.token && !isLogin) {
+      localStorage.setItem('save_login', 'true');
+      saveUser();
+    }
+  }, [initialized, keycloak?.token]);
 
   useLayoutEffect(() => {
     if (!location.pathname?.includes('data-subject')) {

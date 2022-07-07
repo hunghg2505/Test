@@ -1,3 +1,6 @@
+import { API_PATH } from 'utils/api/constant';
+import ApiUtils from 'utils/api/api.utils';
+import { useRequest } from 'ahooks';
 import { useKeycloak } from '@react-keycloak/web';
 import { useDispatch, useSelector } from 'react-redux';
 import localStorageUtils, { KeyStorage } from 'utils/local-storage.utils';
@@ -9,6 +12,15 @@ function useAuth() {
   const dispatch = useDispatch();
   const { keycloak } = useKeycloak();
 
+  const reqSaveUser = useRequest(
+    async () => {
+      return ApiUtils.post(API_PATH.AUTH_KEYCLOAK_SAVE_USER);
+    },
+    {
+      manual: true,
+    },
+  );
+
   const setAuth = (data: LocalAuth | null) => {
     localStorageUtils.setObject(KeyStorage.AUTH, data);
     const actionChangeAuth = changeAuth(data);
@@ -17,7 +29,11 @@ function useAuth() {
 
   const onLogin = () => keycloak.login();
 
-  const onLogout = () => keycloak.logout();
+  const onLogout = () => {
+    localStorage.removeItem('save_login');
+    localStorageUtils.remove(KeyStorage.AUTH);
+    keycloak.logout();
+  };
 
   return {
     auth,
@@ -25,6 +41,7 @@ function useAuth() {
     isLogin: keycloak.authenticated,
     onLogin,
     onLogout,
+    saveUser: reqSaveUser.run,
   };
 }
 

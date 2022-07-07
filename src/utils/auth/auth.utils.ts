@@ -6,7 +6,7 @@ export const refreshTokenApi = async (): Promise<any> => {
   try {
     const tokenInfo: any = localStorageUtils.getObject(KeyStorage.AUTH, null);
 
-    const res: any = await instance.get(API_PATH.REFRESH_TOKEN, {
+    const res: any = await instance.get(API_PATH.AUTH_KEYSLOAK_REFRESH_TOKEN, {
       headers: {
         Authorization: 'Bearer ' + tokenInfo?.refreshToken,
       },

@@ -7,6 +7,8 @@ export const API_PATH = {
   LOGIN: '/auth/login',
   SIGN_UP: '/auth/sign-up',
   REFRESH_TOKEN: '/auth/refresh-token',
+  AUTH_KEYSLOAK_REFRESH_TOKEN: '/auth/refresh-token',
+  AUTH_KEYCLOAK_SAVE_USER: '/auth/keycloak-user',
 
   // Data Subject Management
   FORGET_ME: (id: string | number) => `/data-subject/forget-me/${id}`,
