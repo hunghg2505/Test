@@ -1,6 +1,6 @@
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import dayjs from 'dayjs';
-import { Col, Form, Row, Divider, Modal } from 'antd';
+import { Col, Form, Row, Divider, Modal, DatePicker } from 'antd';
 import InputForm from 'libraries/form/input/input-form';
 import InputTextAreaForm from 'libraries/form/input/input-textarea-form';
 import Select from 'libraries/UI/Select';
@@ -16,6 +16,7 @@ import Button from 'libraries/UI/Button';
 import { useParams } from 'react-router-dom';
 import { useCreateCase, useGetListDataDropDropdown } from './service';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
+import moment from 'moment';
 
 interface IProps {
   visible: boolean;
@@ -29,10 +30,15 @@ const CreateCaseForm = ({ visible, onClose, refDataHistory }: IProps) => {
   const { t } = useTranslation();
   const { id } = useParams();
 
+  const [acceptedDate, setAcceptedDate] = useState(new Date());
+  const [dateOfResponse, setDateOfResponse] = useState(null);
+
   const onFinishSubmitForm = () => {
     onClose();
     createCaseForm.resetFields();
     if (refDataHistory.current?.refreshDataHistory) refDataHistory.current.refreshDataHistory();
+    setDateOfResponse(null);
+    setAcceptedDate(new Date());
   };
 
   const createCaseFormRequest = useCreateCase(onFinishSubmitForm);
@@ -43,9 +49,14 @@ const CreateCaseForm = ({ visible, onClose, refDataHistory }: IProps) => {
   const [createCaseForm] = Form.useForm();
 
   const onFinish = (values: any) => {
-    delete values.acceptedDate;
-    delete values.dateOfResponse;
-    createCaseFormRequest.run({ ...values, userProfileId: Number(id) });
+    createCaseFormRequest.run({
+      ...values,
+      userProfileId: Number(id),
+      acceptedDate,
+      dateOfResponse,
+    });
+    setDateOfResponse(null);
+    setAcceptedDate(new Date());
   };
 
   const showConfirm = useCallback(() => {
@@ -65,6 +76,8 @@ const CreateCaseForm = ({ visible, onClose, refDataHistory }: IProps) => {
       onOk() {
         onClose();
         createCaseForm.resetFields();
+        setDateOfResponse(null);
+        setAcceptedDate(new Date());
       },
     });
   }, []);
@@ -176,16 +189,20 @@ const CreateCaseForm = ({ visible, onClose, refDataHistory }: IProps) => {
             </Form.Item>
           </Col>
           <Col xs={12}>
-            <InputForm
-              label='Accepted Date'
-              name='acceptedDate'
-              defaultValue={dayjs(Date.now()).format('DD/MM/YYYY')}
-              disabled={true}
+            <p className={styles.datePickerLabel}>
+              Accepted Date <span style={{ color: 'red' }}>*</span>
+            </p>
+            <DatePicker
+              defaultValue={moment()}
+              format='DD/MM/YYYY'
+              onChange={(date: any) => setAcceptedDate(date)}
+              allowClear={false}
+              value={moment(acceptedDate)}
             />
           </Col>
           <Divider />
           <Col xs={12}>
-            <Form.Item label='Result' name='responseStatus' required>
+            <Form.Item label='Result' name='responseStatus'>
               <Select placeholder='Select Result'>
                 {RESULT_DROPDOWN_DATA.map((item, index) => (
                   <Select.Option value={item.value} key={`${index}${item.value}`}>
@@ -202,16 +219,15 @@ const CreateCaseForm = ({ visible, onClose, refDataHistory }: IProps) => {
               placeholder='Reason for Completed or Reject'
               rows={6}
               className={styles.textarea}
-              required={true}
               maxLength={250}
             />
           </Col>
           <Col xs={12}>
-            <InputForm
-              label='Date of Response'
-              name='dateOfResponse'
-              defaultValue={dayjs(Date.now()).format('DD/MM/YYYY')}
-              disabled={true}
+            <p className={styles.datePickerLabel}>Date of Response</p>
+            <DatePicker
+              format='DD/MM/YYYY'
+              onChange={(date: any) => setDateOfResponse(date)}
+              value={dateOfResponse}
             />
           </Col>
         </Row>
@@ -229,6 +245,8 @@ const CreateCaseForm = ({ visible, onClose, refDataHistory }: IProps) => {
             ) {
               onClose();
               createCaseForm.resetFields();
+              setDateOfResponse(null);
+              setAcceptedDate(new Date());
               return;
             }
             showConfirm();
