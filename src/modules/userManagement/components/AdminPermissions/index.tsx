@@ -115,7 +115,7 @@ const AdminPermissions = () => {
 
   return (
     <>
-      <Row justify='end' align='middle' gutter={[16, 0]}>
+      {/* <Row justify='end' align='middle' gutter={[16, 0]}>
         <Col>
           <Button>Create Role</Button>
         </Col>
@@ -123,7 +123,7 @@ const AdminPermissions = () => {
         <Col>
           <Button typeDisplay='ghost'>Cretea Group</Button>
         </Col>
-      </Row>
+      </Row> */}
 
       <div
         className={clsx(styles.usersContent, {
@@ -147,6 +147,11 @@ const AdminPermissions = () => {
           }}
         />
       </div>
+      <Row justify='start' align='middle' gutter={[16, 0]}>
+        <Col>
+          <Button>Save</Button>
+        </Col>
+      </Row>
     </>
   );
 };
