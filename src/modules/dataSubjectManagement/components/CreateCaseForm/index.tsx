@@ -45,7 +45,7 @@ const CreateCaseForm = ({ visible, onClose, refDataHistory }: IProps) => {
   {
     /** Use hardcode data for test purpose */
   }
-  // const { actionsData, departmentsData, usersData } = useGetListDataDropDropdown();
+  const { actionsData, departmentsData, usersData } = useGetListDataDropDropdown();
   const [createCaseForm] = Form.useForm();
 
   const onFinish = (values: any) => {
@@ -81,6 +81,8 @@ const CreateCaseForm = ({ visible, onClose, refDataHistory }: IProps) => {
       },
     });
   }, []);
+
+  console.log(usersData?.data);
 
   return (
     <Modal
@@ -144,8 +146,11 @@ const CreateCaseForm = ({ visible, onClose, refDataHistory }: IProps) => {
               ]}
             >
               <Select placeholder='Assign to'>
-                <Select.Option value={'User 1'}>User 1</Select.Option>
-                <Select.Option value={'User 2'}>User 2</Select.Option>
+                {usersData?.data?.map((item: any) => (
+                  <Select.Option value={item.value} key={`${item.sid}`}>
+                    {item.value}
+                  </Select.Option>
+                ))}
               </Select>
             </Form.Item>
           </Col>

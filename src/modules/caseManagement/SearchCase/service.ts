@@ -27,8 +27,8 @@ const getListCaseManagementService = async (values: any): Promise<any> => {
         noId: formatIdSubjectHistory(current, idx, item.action, item.id, item.createdAt),
         description: item?.description,
         assignTo: item?.assignTo,
-        caseStatus: item?.responseStatus,
-        createdDate: dayjs(item?.dateOfResponse).format('MMM DD, YYYY'),
+        caseStatus: item?.status,
+        createdDate: dayjs(item?.createdAt).format('MMM DD, YYYY'),
       })) || [],
     searchString: values.searchString || '',
   };

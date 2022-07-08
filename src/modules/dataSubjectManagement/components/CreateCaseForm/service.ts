@@ -27,7 +27,7 @@ const getListActionService = async () => {
   const response: any = await ApiUtils.fetch(API_PATH.GET_LIST_ACTION);
 
   return {
-    data: response?.content?.data.map(({ id, name }: any) => ({
+    data: response?.content?.data?.map(({ id, name }: any) => ({
       value: name,
       label: name,
       id,
@@ -39,7 +39,7 @@ const getListRelateDepartmentService = async () => {
   const response: any = await ApiUtils.fetch(API_PATH.GET_LIST_DEPARTMENT);
 
   return {
-    data: response?.content?.data.map(({ id, name }: any) => ({
+    data: response?.content?.data?.map(({ id, name }: any) => ({
       value: name,
       label: name,
       id,
@@ -51,10 +51,10 @@ const getListUserService = async () => {
   const response: any = await ApiUtils.fetch(API_PATH.GET_LIST_USER);
 
   return {
-    data: response?.content?.data.map(({ sid, givenName, familyName }: any) => ({
+    data: response?.content?.map(({ sid, name }: any) => ({
       sid,
-      label: `${givenName} ${familyName}`,
-      value: `${givenName} ${familyName}`,
+      label: `${name}`,
+      value: `${name}`,
     })),
   };
 };
