@@ -141,6 +141,12 @@ export const updateConsent = async ({ userId, content, ConsentList }: any) => {
     }
   });
 
+  newConsent.insert = newConsent.insert?.filter((item: any) => {
+    const isExistOnList = consentHasChecked?.find((v: any) => `${v.id}` === `${item.consentId}`);
+    if (isExistOnList) return false;
+    return true;
+  });
+
   const body = {
     userId: userId,
     content: newConsent,

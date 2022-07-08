@@ -146,11 +146,13 @@ const AdminPermissions = ({
           }}
         />
       </div>
-      <Row justify='start' align='middle' gutter={[16, 0]}>
-        <Col>
-          <Button>Save</Button>
-        </Col>
-      </Row>
+      {!!data?.data?.length && (
+        <Row justify='start' align='middle' gutter={[16, 0]}>
+          <Col>
+            <Button>Save</Button>
+          </Col>
+        </Row>
+      )}
     </>
   );
 };
