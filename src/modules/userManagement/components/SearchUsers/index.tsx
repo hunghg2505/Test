@@ -19,20 +19,12 @@ const SearchUsers = () => {
               <IconSearch />
 
               <InputForm
-                name='username'
+                name='keyword'
                 placeholder='Search First Name'
                 className={styles.inputSearch}
                 classNameFormInput={styles.inputSearchForm}
                 maxLength={55}
                 rules={[
-                  {
-                    required: true,
-                    message: t('messages.errors.min', { min: 3 }),
-                  },
-                  {
-                    min: 3,
-                    message: t('messages.errors.min', { min: 3 }),
-                  },
                   {
                     max: 55,
                     message: t('messages.errors.max_search_firstname', { max: 55 }),

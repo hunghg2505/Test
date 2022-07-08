@@ -1,6 +1,7 @@
 export const BACKEND_URL = process.env.REACT_APP_API_DOMAIN;
 
 const CASE_MANAGEMENT_BASE_URL = '/case-management';
+const USER_MANAGEMENT_BASE_URL = '/user-management';
 
 export const API_PATH = {
   // Account
@@ -25,4 +26,7 @@ export const API_PATH = {
   GET_LIST_ACTION: `${CASE_MANAGEMENT_BASE_URL}/subject-right`,
   GET_LIST_DEPARTMENT: `${CASE_MANAGEMENT_BASE_URL}/relate-departments`,
   GET_LIST_USER: `${CASE_MANAGEMENT_BASE_URL}/users`,
+
+  // User Management
+  GET_PERMISSION_ROLE_IN_USERS: `${USER_MANAGEMENT_BASE_URL}/permission-role-in-users`,
 };

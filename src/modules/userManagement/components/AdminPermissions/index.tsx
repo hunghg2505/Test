@@ -127,13 +127,13 @@ const AdminPermissions = () => {
 
       <div
         className={clsx(styles.usersContent, {
-          [styles.usersContentEmpty]: !loading && !data?.list?.length,
+          [styles.usersContentEmpty]: !loading && !data?.data.length,
         })}
       >
         <Table
           className={styles.table}
           columns={columns}
-          dataSource={data?.list}
+          dataSource={data?.data}
           loading={loading}
           expandable={{
             expandedRowRender: getExpandRowRender,
@@ -141,7 +141,7 @@ const AdminPermissions = () => {
           }}
           pagination={{
             current: data?.current,
-            total: data?.list?.length,
+            total: data?.total,
             onChange,
             itemRender: paginationItemRender,
           }}
