@@ -28,16 +28,14 @@ const getUserPermissions = async ({
           {
             id: 12,
             permissionName: 'User Profile',
-            listAction: [
-              { id: Math.random() * Math.random(), actionName: 'View', permission: true },
-            ],
+            listAction: [{ id: 100, actionName: 'View', permission: true }],
           },
           {
             id: 22,
             permissionName: 'Data Subject Management',
             listAction: [
-              { id: Math.random() * Math.random(), actionName: 'View', permission: true },
-              { id: Math.random() * Math.random(), actionName: 'Edit', permission: false },
+              { id: 101, actionName: 'View', permission: true },
+              { id: 102, actionName: 'Edit', permission: false },
             ],
           },
           {
@@ -45,31 +43,31 @@ const getUserPermissions = async ({
             permissionName: 'Case Management',
             listAction: [
               {
-                id: Math.random() * Math.random(),
+                id: 112,
                 actionName: 'View Assigned To',
                 permission: true,
               },
-              { id: Math.random() * Math.random(), actionName: 'View Search', permission: true },
-              { id: Math.random() * Math.random(), actionName: 'Create', permission: false },
-              { id: Math.random() * Math.random(), actionName: 'Edit', permission: true },
-              { id: Math.random() * Math.random(), actionName: 'Delete', permission: false },
+              { id: 103, actionName: 'View Search', permission: true },
+              { id: 104, actionName: 'Create', permission: false },
+              { id: 105, actionName: 'Edit', permission: true },
+              { id: 106, actionName: 'Delete', permission: false },
             ],
           },
           {
             id: 44,
             permissionName: 'Consent Management',
             listAction: [
-              { id: Math.random() * Math.random(), actionName: 'Create', permission: false },
-              { id: Math.random() * Math.random(), actionName: 'Edit', permission: true },
-              { id: Math.random() * Math.random(), actionName: 'Delete', permission: false },
+              { id: 107, actionName: 'Create', permission: false },
+              { id: 108, actionName: 'Edit', permission: true },
+              { id: 109, actionName: 'Delete', permission: false },
             ],
           },
           {
             id: 35,
             permissionName: 'User Management',
             listAction: [
-              { id: Math.random() * Math.random(), actionName: 'View', permission: true },
-              { id: Math.random() * Math.random(), actionName: 'Edit', permission: true },
+              { id: 110, actionName: 'View', permission: true },
+              { id: 111, actionName: 'Edit', permission: true },
             ],
           },
         ],

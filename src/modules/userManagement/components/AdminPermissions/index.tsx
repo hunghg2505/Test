@@ -75,33 +75,37 @@ const customExpandIcon = ({ expanded, onExpand, record }: any) =>
     </div>
   );
 
-const getExpandRowRender = (record: any) => (
-  <div className={styles.rolesDetail}>
-    <h4>Permission</h4>
-    {record?.listRoles?.map((role: any, index: number) => {
-      return (
-        <div key={`${role?.userId}${index}`}>
-          <Row className={styles.title}>
-            <Col span={4}>{role.permissionName}</Col>
-            {role.listAction.map((item: any) => (
-              <Col span={4} key={`${item.id}`}>
-                {item?.actionName}
-              </Col>
-            ))}
-          </Row>
-          <Row className={styles.checkbox}>
-            <Col span={4}></Col>
-            {role.listAction.map((item: any, index: number) => (
-              <Col span={4} key={`${item.id}${index}${item.actionName}`}>
-                <Checkbox checked={item.permission} />
-              </Col>
-            ))}
-          </Row>
-        </div>
-      );
-    })}
-  </div>
-);
+const getExpandRowRender = (record: any) => {
+  console.log(record.userId);
+
+  return (
+    <div className={styles.rolesDetail}>
+      <h4>Permission</h4>
+      {record?.listRoles?.map((role: any, index: number) => {
+        return (
+          <div key={`${record.userId}`}>
+            <Row className={styles.title}>
+              <Col span={4}>{role.permissionName}</Col>
+              {role.listAction.map((item: any) => (
+                <Col span={4} key={`${item?.id}`}>
+                  {item?.actionName}
+                </Col>
+              ))}
+            </Row>
+            <Row className={styles.checkbox}>
+              <Col span={4}></Col>
+              {role.listAction.map((item: any, index: number) => (
+                <Col span={4} key={`${item?.id}${index}`}>
+                  <Checkbox checked={item.permission} />
+                </Col>
+              ))}
+            </Row>
+          </div>
+        );
+      })}
+    </div>
+  );
+};
 
 const AdminPermissions = ({
   data,
