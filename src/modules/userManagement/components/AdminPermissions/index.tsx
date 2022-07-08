@@ -76,14 +76,12 @@ const customExpandIcon = ({ expanded, onExpand, record }: any) =>
   );
 
 const getExpandRowRender = (record: any) => {
-  console.log(record.userId);
-
   return (
     <div className={styles.rolesDetail}>
       <h4>Permission</h4>
       {record?.listRoles?.map((role: any, index: number) => {
         return (
-          <div key={`${record.userId}`}>
+          <div key={`${role.id}${index}}`}>
             <Row className={styles.title}>
               <Col span={4}>{role.permissionName}</Col>
               {role.listAction.map((item: any) => (
