@@ -110,9 +110,15 @@ const getExpandRowRender = (record: any) => (
   </div>
 );
 
-const AdminPermissions = () => {
-  const { data, loading, onChange } = useAdminPermissions();
-
+const AdminPermissions = ({
+  data,
+  loading,
+  onChangePage,
+}: {
+  data: any;
+  loading: boolean;
+  onChangePage: any;
+}) => {
   return (
     <>
       {/* <Row justify='end' align='middle' gutter={[16, 0]}>
@@ -142,7 +148,7 @@ const AdminPermissions = () => {
           pagination={{
             current: data?.current,
             total: data?.total,
-            onChange,
+            onChange: onChangePage,
             itemRender: paginationItemRender,
           }}
         />

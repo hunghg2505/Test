@@ -2,11 +2,17 @@ import { useRequest, useMount } from 'ahooks';
 import ApiUtils from 'utils/api/api.utils';
 import { API_PATH } from 'utils/api/constant';
 
-const getUserPermissions = async (values: any): Promise<any> => {
+const getUserPermissions = async ({
+  keyword,
+  page,
+}: {
+  keyword?: string | undefined;
+  page: number;
+}): Promise<any> => {
   const response: any = await ApiUtils.fetch(API_PATH.GET_PERMISSION_ROLE_IN_USERS, {
-    keyword: values?.keyword,
+    keyword,
     limit: 10,
-    page: values?.current || 1,
+    page: page || 1,
   });
 
   return {
@@ -14,35 +20,37 @@ const getUserPermissions = async (values: any): Promise<any> => {
     current: +response?.content?.metadata?.currentPage || 1,
     pageSize: +response?.content?.metadata?.itemPage || 10,
     data:
-      response?.content?.data?.map((item: any, idx: number) => ({
+      response?.content?.data?.map((item: any) => ({
         ...item,
         firstName: `${item?.givenName}`,
         lastName: `${item?.familyName}`,
       })) || [],
-    keyword: values?.keyword,
+    keyword,
   };
 };
 
 const useAdminPermissions = () => {
   const { data, loading, run } = useRequest(getUserPermissions, {
     manual: true,
-    cacheKey: 'user-permissions',
+  });
+
+  useMount(() => {
+    run({ page: 1 });
   });
 
   const onChangePage = (page: number) => {
-    run({
-      page,
-    });
+    run({ keyword: data.keyword, page });
   };
 
-  useMount(() => {
-    run(getUserPermissions);
-  });
+  const onSearchUserPermissions = ({ keyword }: { keyword: string }) => {
+    run({ keyword, page: 1 });
+  };
 
   return {
     data,
     loading,
-    onChange: onChangePage,
+    onChangePage,
+    onSearchUserPermissions,
   };
 };
 

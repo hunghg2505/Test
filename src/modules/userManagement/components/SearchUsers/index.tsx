@@ -7,13 +7,13 @@ import { useTranslation } from 'react-i18next';
 
 import styles from './index.module.scss';
 
-const SearchUsers = () => {
+const SearchUsers = ({ onSearchUserPermissions }: { onSearchUserPermissions: any }) => {
   const { t } = useTranslation();
 
   return (
     <>
       <Row justify='center' align='middle' className={styles.usersHeader}>
-        <Form>
+        <Form onFinish={onSearchUserPermissions}>
           <div className={styles.formSearchWrap}>
             <Row justify='center' align='middle' className={styles.searchForm}>
               <IconSearch />
