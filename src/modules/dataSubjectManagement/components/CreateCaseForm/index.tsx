@@ -82,8 +82,6 @@ const CreateCaseForm = ({ visible, onClose, refDataHistory }: IProps) => {
     });
   }, []);
 
-  console.log(usersData?.data);
-
   return (
     <Modal
       footer={null}
