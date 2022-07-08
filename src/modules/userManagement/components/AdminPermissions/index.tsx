@@ -10,9 +10,9 @@ import styles from './index.module.scss';
 export interface DataType {
   key: React.ReactNode;
   no: string;
-  roles: string;
-  description: string;
-  action: string;
+  firstName: string;
+  lastName: string;
+  roleName: string;
   listRoles?: [];
 }
 
@@ -24,26 +24,27 @@ const columns: any = [
     width: 110,
   },
   {
-    title: 'Roles',
-    dataIndex: 'roles',
-    key: 'roles',
+    title: 'First Name',
+    dataIndex: 'firstName',
+    key: 'firstName',
     width: 110,
   },
   {
-    title: 'Description',
-    dataIndex: 'description',
-    key: 'description',
+    title: 'Last Name',
+    dataIndex: 'lastName',
+    key: 'lastName',
+  },
+  {
+    title: 'Role Name',
+    dataIndex: 'roleName',
+    key: 'roleName',
   },
   {
     title: 'Actions',
-    dataIndex: 'action',
-    key: 'action',
-    render: () => (
-      <Row justify='center'>
-        <Button>Edit</Button>
-      </Row>
-    ),
-    width: 50,
+    render() {
+      return null;
+    },
+    width: 80,
   },
   Table.EXPAND_COLUMN,
 ];
@@ -77,6 +78,7 @@ const customExpandIcon = ({ expanded, onExpand, record }: any) =>
 
 const getExpandRowRender = (record: any) => (
   <div className={styles.rolesDetail}>
+    <h4>Permission</h4>
     {record?.listRoles?.map((role: any) => {
       return (
         <div key={`${record.key}${role?.id}`}>

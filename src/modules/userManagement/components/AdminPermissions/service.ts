@@ -7,9 +7,9 @@ const getUserPermissions = async () => {
       {
         key: '1',
         no: '1',
-        roles: 'Roles 1',
-        description: 'N/a',
-        actions: 'A',
+        firstName: 'Hung',
+        lastName: 'Hung',
+        roleName: 'Admin',
         listRoles: [
           {
             id: 1,
@@ -32,9 +32,9 @@ const getUserPermissions = async () => {
       {
         key: '2',
         no: '2',
-        roles: 'Roles 2',
-        description: 'N/a',
-        actions: 'B',
+        firstName: 'Hung',
+        lastName: 'Hung',
+        roleName: 'Admin',
         listRoles: [
           {
             id: 1,

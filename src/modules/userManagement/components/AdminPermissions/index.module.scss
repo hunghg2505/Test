@@ -10,11 +10,20 @@
   }
 }
 .rolesDetail {
+  padding: 24px 60px;
   > div {
     border-radius: 8px;
     background: #FFFFFF;
     border: 1px solid #F6F6F6;
     margin-top: 10px;
+  }
+
+  h4 {
+    text-align: left;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 150%;
+    color: #CF2A2B;
   }
 }
 
@@ -52,6 +61,16 @@
     span.ant-checkbox.ant-checkbox-checked {
       .ant-checkbox-inner {
         border-color: #27AE60;
+      }
+    }
+  }
+}
+
+.table {
+  :global {
+    .ant-table-tbody {
+      tr > .ant-table-cell:nth-child(5) {
+        display: none;
       }
     }
   }
