@@ -2,7 +2,6 @@ import { Checkbox, Col, Row, Table } from 'antd';
 import clsx from 'clsx';
 import Button from 'libraries/UI/Button';
 import React from 'react';
-import { useAdminPermissions } from './service';
 
 import { paginationItemRender } from 'libraries/UI/Pagination';
 import styles from './index.module.scss';
@@ -79,30 +78,24 @@ const customExpandIcon = ({ expanded, onExpand, record }: any) =>
 const getExpandRowRender = (record: any) => (
   <div className={styles.rolesDetail}>
     <h4>Permission</h4>
-    {record?.listRoles?.map((role: any) => {
+    {record?.listRoles?.map((role: any, index: number) => {
       return (
-        <div key={`${record.key}${role?.id}`}>
+        <div key={`${role?.userId}${index}`}>
           <Row className={styles.title}>
-            <Col span={4}>Permission</Col>
-            <Col span={5}>Profile</Col>
-            <Col span={5}>DSM</Col>
-            <Col span={5}>Case</Col>
-            <Col span={5}>Consent</Col>
+            <Col span={4}>{role.permissionName}</Col>
+            {role.listAction.map((item: any) => (
+              <Col span={4} key={`${item.id}`}>
+                {item?.actionName}
+              </Col>
+            ))}
           </Row>
           <Row className={styles.checkbox}>
             <Col span={4}></Col>
-            <Col span={5}>
-              <Checkbox />
-            </Col>
-            <Col span={5}>
-              <Checkbox />
-            </Col>
-            <Col span={5}>
-              <Checkbox />
-            </Col>
-            <Col span={5}>
-              <Checkbox />
-            </Col>
+            {role.listAction.map((item: any, index: number) => (
+              <Col span={4} key={`${item.id}${index}${item.actionName}`}>
+                <Checkbox checked={item.permission} />
+              </Col>
+            ))}
           </Row>
         </div>
       );
