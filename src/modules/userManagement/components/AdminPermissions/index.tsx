@@ -79,6 +79,7 @@ const getExpandRowRender = (record: any) => {
   return (
     <div className={styles.rolesDetail}>
       <h4>Permission</h4>
+
       {record?.listRoles?.map((role: any, index: number) => {
         return (
           <div key={`${role.id}${index}}`}>

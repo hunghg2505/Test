@@ -9,7 +9,7 @@ const getUserPermissions = async ({
   keyword?: string | undefined;
   page: number;
 }): Promise<any> => {
-  const response: any = await ApiUtils.fetch(API_PATH.GET_PERMISSION_ROLE_IN_USERS, {
+  const response: any = await ApiUtils.fetch(API_PATH.GET_LIST_USERS_ROLE_PERMISSION, {
     keyword,
     limit: 10,
     page: page || 1,

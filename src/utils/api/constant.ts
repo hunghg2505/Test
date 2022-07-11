@@ -28,5 +28,5 @@ export const API_PATH = {
   GET_LIST_USER: `${CASE_MANAGEMENT_BASE_URL}/users`,
 
   // User Management
-  GET_PERMISSION_ROLE_IN_USERS: `${USER_MANAGEMENT_BASE_URL}/permission-role-in-users`,
+  GET_LIST_USERS_ROLE_PERMISSION: `${USER_MANAGEMENT_BASE_URL}/users`,
 };
