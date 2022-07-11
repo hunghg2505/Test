@@ -4,7 +4,6 @@ import React from 'react';
 
 function Profile() {
   const { auth } = useAuth();
-  console.log('user', auth);
 
   return (
     <ContainerLayout title='Profile'>

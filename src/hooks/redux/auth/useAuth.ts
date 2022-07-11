@@ -37,6 +37,7 @@ function useAuth() {
           user: {
             email: '',
             roles: r?.content as TRoles,
+            loading: false,
           },
         });
         dispatch(actionChangeAuth);
@@ -59,6 +60,7 @@ function useAuth() {
 
   const onLogout = () => {
     localStorage.removeItem('save_login');
+    localStorage.removeItem('get_profile');
     localStorageUtils.remove(KeyStorage.AUTH);
     keycloak.logout();
   };

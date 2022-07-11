@@ -6,11 +6,13 @@ export interface LocalAuth {
   accessToken: string | null;
   refreshToken: string | null;
   expireTime: number | null;
-  user?: User;
+  user: User;
 }
 const localAuth = localStorageUtils.getObject(KeyStorage.AUTH) as LocalAuth | null;
 
-const initialState: LocalAuth | null = localAuth;
+const initialState: LocalAuth | null = localAuth
+  ? { ...localAuth, user: { email: '', loading: true } }
+  : localAuth;
 
 const auth = createSlice({
   name: 'auth',

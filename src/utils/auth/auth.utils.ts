@@ -16,6 +16,9 @@ export const refreshTokenApi = async (): Promise<any> => {
       accessToken: res?.content?.accessToken,
       refreshToken: res?.content?.refreshToken,
       expireTime: Date.now() + res?.content?.expireTime * 1000,
+      user: {
+        loading: true,
+      },
     };
 
     setTokenInfo({ ...tokenInfo, ...newTokenInfo });

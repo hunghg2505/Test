@@ -12,6 +12,7 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import configRoutes, { IRouter } from 'routing/config.routing';
+import { getPermissionView } from 'routing/master-routes.routing';
 import MainHeader from './header/main.header';
 import SEO from './SEO';
 import styles from './styles.module.scss';
@@ -66,9 +67,17 @@ function MainLayout() {
     if (routerNotAuth) {
       const listChild = routerNotAuth.children || [];
       listChild.forEach((item) => {
+        let isPermissionView = true;
+        if (!item.roles?.includes('@')) {
+          isPermissionView = getPermissionView({ path: item?.path, exitsRoles: auth?.user?.roles });
+        }
+
+        if (!isPermissionView) item.hiddenMenu = true;
+
         if (item.hiddenMenu) return null;
+
         const menu: ItemType = {
-          key: item.haveChild ? `${item.path}-main` : item.path,
+          key: item.path,
           icon: item.icons,
           label: item.name,
           children: [],
@@ -78,6 +87,17 @@ function MainLayout() {
         if (item.haveChild) {
           const childItem = item.children || [];
           childItem.forEach((item) => {
+            let isPermissionView = true;
+            if (!item.roles?.includes('@')) {
+              isPermissionView = getPermissionView({
+                path: item?.path,
+                exitsRoles: auth?.user?.roles,
+              });
+            }
+
+            if (!isPermissionView) item.hiddenMenu = true;
+
+            if (item.hiddenMenu) return null;
             if (!item.hiddenMenu) {
               childMenu.push({
                 key: item.path,

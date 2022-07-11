@@ -42,6 +42,7 @@ export default function SignInUtils(): Utils {
           expireTime: Date.now() + r?.content?.expireTime * 1000,
           user: {
             email: values?.email_abc,
+            loading: false,
           },
         });
       },

@@ -43,6 +43,9 @@ function App() {
       accessToken: keycloak?.token,
       refreshToken: keycloak?.refreshToken,
       expireTime: null,
+      user: {
+        loading: true,
+      },
     };
 
     localStorage.setItem(KeyStorage.AUTH, JSON.stringify(authData));
