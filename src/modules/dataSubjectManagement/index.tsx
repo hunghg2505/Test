@@ -92,7 +92,7 @@ const columns: ColumnsType<DataType> = [
 function DataSubjectManagement() {
   const { t } = useTranslation();
   const { auth } = useAuth();
-  console.log('auth', auth);
+  console.log('auth2', auth);
 
   const {
     data,
