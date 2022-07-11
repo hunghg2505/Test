@@ -17,6 +17,7 @@ import { useRef } from 'react';
 import SearchUsersAdvance from './components/SearchUsersAdvance';
 import SuggestListUsers from './components/SuggestListUsers';
 import styles from './index.module.scss';
+import useAuth from 'hooks/redux/auth/useAuth';
 
 const MIN_SEARCH_USER = 3;
 
@@ -90,6 +91,8 @@ const columns: ColumnsType<DataType> = [
 
 function DataSubjectManagement() {
   const { t } = useTranslation();
+  const { auth } = useAuth();
+  console.log('auth', auth);
 
   const {
     data,

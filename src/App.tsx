@@ -24,9 +24,9 @@ function App() {
   }, [initialized, keycloak?.token]);
 
   useUpdateEffect(() => {
-    const isLogin = localStorage.getItem('get_profile');
+    const isGetProfile = localStorage.getItem('get_profile');
 
-    if (initialized && keycloak?.token && !isLogin) {
+    if (initialized && keycloak?.token && !isGetProfile) {
       localStorage.setItem('get_profile', 'true');
       getProfile();
     }

@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import localStorageUtils, { KeyStorage } from 'utils/local-storage.utils';
 import { RootState } from 'utils/redux-store';
 import { changeAuth, LocalAuth } from './reducer';
+import { TRoles } from 'types/common.types';
 
 function useAuth() {
   const auth = useSelector((state: RootState) => state.auth);
@@ -27,13 +28,24 @@ function useAuth() {
     },
     {
       manual: true,
-      onSuccess: (r) => {
+      onSuccess: (r: any) => {
         localStorage.removeItem('get_profile');
-        console.log('r', r);
+        const data: LocalAuth = localStorageUtils.getObject(KeyStorage.AUTH);
+
+        const actionChangeAuth = changeAuth({
+          ...data,
+          user: {
+            email: '',
+            roles: r?.content as TRoles,
+          },
+        });
+        dispatch(actionChangeAuth);
       },
       onError: (err) => {
+        localStorage.removeItem('get_profile');
         console.log('get profile err', err);
       },
+      refreshDeps: [auth],
     },
   );
 
