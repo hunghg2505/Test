@@ -52,3 +52,13 @@ export const RESULT_DROPDOWN_DATA = [
   { label: 'Completed', value: 'Completed' },
   { label: 'Reject', value: 'Reject' },
 ];
+
+export const FEATURE_NAME = {
+  caseManagement: 'Case Management',
+  consentManagement: 'Consent Management',
+};
+
+export const PERMISSION_ID = {
+  createCase: 'PDPA_CaseManagement_Create',
+  editConsent: 'PDPA_ConsentManagement_Edit',
+};

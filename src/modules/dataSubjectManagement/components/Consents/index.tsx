@@ -14,6 +14,8 @@ import get from 'lodash/get';
 import ArrowDownCollapse from 'assets/icons/icon-arrow-down-collapse';
 import ArrowUpCollapse from 'assets/icons/icon-arrow-up-collapse';
 import CreateCaseForm from '../CreateCaseForm';
+import useDataSubjectManagementPermission from 'hooks/useDataSubjectManagementPermission';
+import useConsentManagementPermission from 'hooks/useConsentManagementPermission';
 
 const { Panel } = Collapse;
 
@@ -55,6 +57,8 @@ const SearchBox = ({
   const refForm: any = useRef();
   const refListConsents: any = useRef();
   const [formSearchConsent] = Form.useForm();
+
+  const { isHavePermissionCreateCase } = useDataSubjectManagementPermission();
 
   const [isOpenCreateCaseForm, setIsOpenCreateCaseForm] = useState(false);
 
@@ -141,14 +145,16 @@ const SearchBox = ({
         </div>
       </Form>
 
-      <Button
-        size='middle'
-        className={styles.btnCreateCase}
-        typeDisplay='ghost'
-        onClick={() => setIsOpenCreateCaseForm(true)}
-      >
-        {t('create_case')}
-      </Button>
+      {isHavePermissionCreateCase && (
+        <Button
+          size='middle'
+          className={styles.btnCreateCase}
+          typeDisplay='ghost'
+          onClick={() => setIsOpenCreateCaseForm(true)}
+        >
+          {t('create_case')}
+        </Button>
+      )}
       <CreateCaseForm
         visible={isOpenCreateCaseForm}
         onClose={() => setIsOpenCreateCaseForm(false)}
@@ -158,7 +164,7 @@ const SearchBox = ({
   );
 };
 
-const ConsentOption = ({ value, onChange, dataConsent }: any) => {
+const ConsentOption = ({ value, onChange, dataConsent, isHavePermissionEditConsent }: any) => {
   const onChangeValues = (checkedValues: any) => {
     onChange(checkedValues);
   };
@@ -168,7 +174,11 @@ const ConsentOption = ({ value, onChange, dataConsent }: any) => {
   }
 
   return (
-    <Checkbox.Group onChange={onChangeValues} defaultValue={value}>
+    <Checkbox.Group
+      onChange={onChangeValues}
+      defaultValue={value}
+      disabled={!isHavePermissionEditConsent}
+    >
       {dataConsent.map((item: any) => {
         return (
           <Checkbox key={item.value} value={item.value}>
@@ -191,6 +201,8 @@ const ConsentOption = ({ value, onChange, dataConsent }: any) => {
 const ConsentsList = ({ data, loading, onChange, onSaveConsent, loadingUpdateConsent }: any) => {
   const { t } = useTranslation();
   const [formConsent] = Form.useForm();
+
+  const { isHavePermissionEditConsent } = useConsentManagementPermission();
 
   const onUpdateConsent = (value: any) => {
     onSaveConsent(value);
@@ -235,7 +247,10 @@ const ConsentsList = ({ data, loading, onChange, onSaveConsent, loadingUpdateCon
                     }
                   >
                     <Form.Item className={styles.panelContent} name={`${key}`}>
-                      <ConsentOption dataConsent={dataConsent?.list} />
+                      <ConsentOption
+                        dataConsent={dataConsent?.list}
+                        isHavePermissionEditConsent={isHavePermissionEditConsent}
+                      />
                     </Form.Item>
                   </Panel>
                 );
@@ -256,9 +271,11 @@ const ConsentsList = ({ data, loading, onChange, onSaveConsent, loadingUpdateCon
           </div>
         )}
 
-        <Button htmlType='submit' className={styles.btnSave} loading={loadingUpdateConsent}>
-          {t('save')}
-        </Button>
+        {isHavePermissionEditConsent && (
+          <Button htmlType='submit' className={styles.btnSave} loading={loadingUpdateConsent}>
+            {t('save')}
+          </Button>
+        )}
       </Form>
     </div>
   );
