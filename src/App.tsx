@@ -12,7 +12,7 @@ function App() {
   useInitBase();
   const { keycloak, initialized } = useKeycloak();
   const location = useLocation();
-  const { saveUser } = useAuth();
+  const { saveUser, getProfile } = useAuth();
 
   useUpdateEffect(() => {
     const isLogin = localStorage.getItem('save_login');
@@ -20,6 +20,15 @@ function App() {
     if (initialized && keycloak?.token && !isLogin) {
       localStorage.setItem('save_login', 'true');
       saveUser();
+    }
+  }, [initialized, keycloak?.token]);
+
+  useUpdateEffect(() => {
+    const isLogin = localStorage.getItem('get_profile');
+
+    if (initialized && keycloak?.token && !isLogin) {
+      localStorage.setItem('get_profile', 'true');
+      getProfile();
     }
   }, [initialized, keycloak?.token]);
 

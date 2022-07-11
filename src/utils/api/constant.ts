@@ -29,4 +29,5 @@ export const API_PATH = {
 
   // User Management
   GET_LIST_USERS_ROLE_PERMISSION: `${USER_MANAGEMENT_BASE_URL}/users`,
+  GET_USERS_FEATURES: `${USER_MANAGEMENT_BASE_URL}/users/features`,
 };

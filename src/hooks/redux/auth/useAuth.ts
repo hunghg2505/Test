@@ -21,6 +21,22 @@ function useAuth() {
     },
   );
 
+  const reqGetProfile = useRequest(
+    async () => {
+      return ApiUtils.fetch(API_PATH.GET_USERS_FEATURES);
+    },
+    {
+      manual: true,
+      onSuccess: (r) => {
+        localStorage.removeItem('get_profile');
+        console.log('r', r);
+      },
+      onError: (err) => {
+        console.log('get profile err', err);
+      },
+    },
+  );
+
   const setAuth = (data: LocalAuth | null) => {
     localStorageUtils.setObject(KeyStorage.AUTH, data);
     const actionChangeAuth = changeAuth(data);
@@ -42,6 +58,7 @@ function useAuth() {
     onLogin,
     onLogout,
     saveUser: reqSaveUser.run,
+    getProfile: reqGetProfile.run,
   };
 }
 
