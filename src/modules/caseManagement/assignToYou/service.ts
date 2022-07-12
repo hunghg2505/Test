@@ -10,8 +10,8 @@ const getListAssignToYou = async (values: any, username: string) => {
     userId: 1,
     limit: 10,
     page: values?.page || 1,
-    searchString: username,
-    assignTo: username,
+    searchString: '',
+    assignTo: 'Ha Pham',
   });
 
   const current = response?.content?.metadata?.currentPage || 1;
@@ -39,7 +39,7 @@ const useAssignToYou = () => {
   const { data, loading, run } = useRequest(
     async (values) => {
       if (keycloak?.tokenParsed?.preferred_username) {
-        return getListAssignToYou(values, keycloak?.tokenParsed?.preferred_username);
+        return getListAssignToYou(values, keycloak?.tokenParsed?.name);
       }
 
       return {
@@ -48,7 +48,7 @@ const useAssignToYou = () => {
     },
     {
       manual: true,
-      refreshDeps: [keycloak?.tokenParsed?.preferred_username],
+      refreshDeps: [keycloak?.tokenParsed?.name],
     },
   );
 
