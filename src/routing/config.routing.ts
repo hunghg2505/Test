@@ -125,7 +125,7 @@ const configRoutes: IRouter[] = [
         element: lazy(() => import('modules/userManagement/index')),
         name: 'User Management',
         icons: React.createElement(IconUserManagement),
-        roles: ['@'],
+        roles: ['Super Admin', 'Administrator'],
       },
       // {
       //   path: routePath.ConsentManagement,
