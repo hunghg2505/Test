@@ -204,14 +204,14 @@ const ConsentsList = ({ data, loading, onChange, onSaveConsent, loadingUpdateCon
 
   const { isHavePermissionEditConsent } = useConsentManagementPermission();
 
-  const onUpdateConsent = (value: any) => {
-    onSaveConsent(value);
-  };
-
   const initialValues = data?.data?.reduce(
     (acc: any, v: any) => ({ ...acc, [v?.key]: Object.keys(v?.defaultValue) }),
     {},
   );
+
+  const onUpdateConsent = (value: any) => {
+    onSaveConsent(value, initialValues);
+  };
 
   if (loading) return null;
 
@@ -299,9 +299,9 @@ function Consents({ userId, refDataHistory }: { userId: number; refDataHistory: 
     onSearchConsent(search, callback);
   };
 
-  const onSave = async (values: any) => {
+  const onSave = async (values: any, initialValues: any) => {
     try {
-      await onSaveConsent(values);
+      await onSaveConsent(values, initialValues);
       if (refDataHistory.current?.refreshDataHistory) refDataHistory.current.refreshDataHistory();
       // eslint-disable-next-line no-empty
     } catch (error) {}
