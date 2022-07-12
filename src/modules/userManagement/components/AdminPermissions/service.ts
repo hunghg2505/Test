@@ -24,53 +24,25 @@ const getUserPermissions = async ({
         ...item,
         firstName: `${item?.givenName}`,
         lastName: `${item?.familyName}`,
-        listRoles: [
-          {
-            id: 12,
-            permissionName: 'User Profile',
-            listAction: [{ id: 100, actionName: 'View', permission: true }],
-          },
-          {
-            id: 22,
-            permissionName: 'Data Subject Management',
-            listAction: [
-              { id: 101, actionName: 'View', permission: true },
-              { id: 102, actionName: 'Edit', permission: false },
-            ],
-          },
-          {
-            id: 23,
-            permissionName: 'Case Management',
-            listAction: [
-              {
-                id: 112,
-                actionName: 'View Assigned To',
-                permission: true,
-              },
-              { id: 103, actionName: 'View Search', permission: true },
-              { id: 104, actionName: 'Create', permission: false },
-              { id: 105, actionName: 'Edit', permission: true },
-              { id: 106, actionName: 'Delete', permission: false },
-            ],
-          },
-          {
-            id: 44,
-            permissionName: 'Consent Management',
-            listAction: [
-              { id: 107, actionName: 'Create', permission: false },
-              { id: 108, actionName: 'Edit', permission: true },
-              { id: 109, actionName: 'Delete', permission: false },
-            ],
-          },
-          {
-            id: 35,
-            permissionName: 'User Management',
-            listAction: [
-              { id: 110, actionName: 'View', permission: true },
-              { id: 111, actionName: 'Edit', permission: true },
-            ],
-          },
-        ],
+        listRoles: item?.roles?.reduce((acc: any, v: any) => {
+          v?.fatures?.forEach((feature: any) => {
+            const listAction = feature?.permissions?.map((permission: any) => {
+              return {
+                ...permission,
+                id: permission?.permissionId,
+                actionName: permission?.permissionName,
+                permission: permission?.isChecked,
+              };
+            });
+
+            acc.push({
+              id: `${item?.userId}_${v?.roleId}_${v?.roleName}`,
+              permissionName: feature?.name,
+              listAction,
+            });
+          });
+          return acc;
+        }, []),
       })) || [],
     keyword,
   };
