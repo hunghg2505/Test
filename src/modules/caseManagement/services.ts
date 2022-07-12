@@ -5,17 +5,42 @@ import { ResponseBase } from 'utils/api/api.types';
 import { useNavigate } from 'react-router-dom';
 import { message } from 'antd';
 
-interface IEditCase {
-  action?: string;
-  department?: string;
-  assignTo?: string;
-  description?: string;
-  responseStatus?: string;
+interface IDetialCase {
+  id: number;
+  action: string;
+  department: string;
+  assignTo: string;
+  description: string;
+  responseStatus: string;
+  acceptedDate: string;
   reason?: string;
   status?: string;
-  userProfileId: string | number;
+  dateOfResponse?: string;
   comment?: string;
 }
+
+const getDetailCaseService = async (caseId: string | undefined): Promise<IDetialCase> => {
+  const response: any = await ApiUtils.fetch(API_PATH.GET_DETAIL_CASE, { caseId });
+
+  return {
+    id: response?.content?.data?.id,
+    action: response?.content?.data?.action,
+    department: response?.content?.data?.department,
+    assignTo: response?.content?.data?.assignTo,
+    description: response?.content?.data?.description,
+    responseStatus: response?.content?.data?.responseStatus,
+    reason: response?.content?.data?.reason,
+    status: response?.content?.data?.status,
+    dateOfResponse: response?.content?.data?.dateOfResponse,
+    comment: response?.content?.data?.comment,
+    acceptedDate: response?.content?.data?.acceptedDate,
+  };
+};
+
+export const useCaseDetail = (caseId: string | undefined) => {
+  const { data, loading } = useRequest(async () => getDetailCaseService(caseId));
+  return { data, loading };
+};
 
 const getListActionService = async () => {
   const response: any = await ApiUtils.fetch(API_PATH.GET_LIST_ACTION);
