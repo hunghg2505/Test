@@ -64,12 +64,11 @@ const getListCaseManagementService = async (values: any): Promise<any> => {
 
 const useSearchCase = () => {
   const { data, loading, run } = useRequest(getListCaseManagementService, {
+    manual: true,
     cacheKey: 'case-management',
   });
 
   const onChangePage = (page: number) => {
-    console.log(page);
-
     run({
       page,
       searchString: data.searchString,

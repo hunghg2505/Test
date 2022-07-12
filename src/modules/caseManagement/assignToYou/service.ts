@@ -1,40 +1,68 @@
-import { useRequest } from 'ahooks';
+import { API_PATH } from 'utils/api/constant';
+import { useRequest, useMount } from 'ahooks';
+import ApiUtils from 'utils/api/api.utils';
+import { useKeycloak } from '@react-keycloak/web';
+import { formatIdSubjectHistory } from 'utils/common.utils';
+import dayjs from 'dayjs';
 
-const PAGE_SIZE = 10;
+const getListAssignToYou = async (values: any, username: string) => {
+  const response: any = await ApiUtils.post(API_PATH.GET_LIST_CASE_MANAGEMENT, {
+    userId: 1,
+    limit: 10,
+    page: values?.page || 1,
+    searchString: username,
+  });
 
-const getListAssignToYou = async () => {
-  const r = new Array(15).fill(0).map((_, i) => ({
-    key: `${i}`,
-    caseId: `${i}`,
-    refId: '1234',
-    dsName: 'Dean Ng',
-    description: 'Short Description',
-    assignTo: 'Phattararak',
-    caseStatus: 'In-Progress',
-    createdDate: '24/05/2022',
-    action: i,
-  }));
-
-  const formatData = {
-    list: r,
-    current: 1,
-  };
+  const current = response?.content?.metadata?.currentPage || 1;
 
   return {
-    ...formatData,
-    total: Math.ceil(formatData.list.length / PAGE_SIZE),
-    data: formatData?.list?.slice(
-      (formatData.current - 1) * PAGE_SIZE,
-      (formatData.current - 1) * PAGE_SIZE + PAGE_SIZE,
-    ),
+    total: response?.content?.metadata?.total || 0,
+    current: +response?.content?.metadata?.currentPage || 1,
+    pageSize: +response?.content?.metadata?.itemPage || 10,
+    data:
+      response?.content?.data?.map((item: any, idx: number) => ({
+        ...item,
+        key: `${item?.id}`,
+        noId: formatIdSubjectHistory(current, idx, item.action, item.id, item.createdAt),
+        description: item?.description,
+        assignTo: item?.assignTo,
+        caseStatus: item?.status,
+        createdDate: dayjs(item?.createdAt).format('MMM DD, YYYY'),
+      })) || [],
   };
 };
 
 const useAssignToYou = () => {
-  const { data, loading } = useRequest(getListAssignToYou);
-  const onChange = () => {
-    console.log('a');
+  const { keycloak } = useKeycloak();
+
+  const { data, loading, run } = useRequest(
+    async (values) => {
+      if (keycloak?.tokenParsed?.preferred_username) {
+        getListAssignToYou(values, keycloak?.tokenParsed?.preferred_username);
+      }
+
+      return {
+        data: [],
+      };
+    },
+    {
+      manual: true,
+      refreshDeps: [keycloak?.tokenParsed?.preferred_username],
+    },
+  );
+
+  useMount(() => {
+    run({
+      page: 1,
+    });
+  });
+
+  const onChange = (page: number) => {
+    run({
+      page,
+    });
   };
+
   return {
     data,
     loading,
