@@ -71,6 +71,15 @@ export const getPermissionView = ({ path, exitsRoles }: any) => {
       if (!hasPermissionsUserViews) return false;
     }
 
+    if (path === routePath.UserManagement) {
+      const hasPermissionsUserViews = hasPermissionViewPage(
+        exitsRoles,
+        PERMISSIONS.PDPA_UserManagement_View,
+      );
+
+      if (!hasPermissionsUserViews) return false;
+    }
+
     return true;
   } catch (error) {
     return false;

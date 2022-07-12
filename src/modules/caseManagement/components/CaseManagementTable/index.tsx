@@ -1,4 +1,4 @@
-import { Row } from 'antd';
+import { Row, Tooltip } from 'antd';
 import Table, { ColumnsType } from 'antd/lib/table';
 import { paginationItemRender } from 'libraries/UI/Pagination';
 import { useTranslation } from 'react-i18next';
@@ -42,6 +42,24 @@ const columns: ColumnsType<DataType> = [
     dataIndex: 'description',
     key: 'description',
     width: 400,
+    render(value) {
+      return (
+        <Row
+          justify='center'
+          align='middle'
+          style={{ flexFlow: 'nowrap' }}
+          className={styles.action}
+        >
+          {value?.length > 30 ? (
+            <Tooltip title={value}>
+              <span>{`${value?.slice(0, 30)}...`}</span>
+            </Tooltip>
+          ) : (
+            value
+          )}
+        </Row>
+      );
+    },
   },
   {
     title: 'Assign To',

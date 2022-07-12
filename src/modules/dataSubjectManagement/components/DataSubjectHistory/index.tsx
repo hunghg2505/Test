@@ -1,4 +1,4 @@
-import { Modal, Row, Table } from 'antd';
+import { Modal, Row, Table, Tooltip } from 'antd';
 import { ColumnsType } from 'antd/lib/table';
 import clsx from 'clsx';
 import { paginationItemRender } from 'libraries/UI/Pagination';
@@ -35,6 +35,24 @@ const columns: ColumnsType<DataType> = [
     dataIndex: 'dataRequest',
     key: 'dataRequest',
     width: 785,
+    render(value) {
+      return (
+        <Row
+          justify='center'
+          align='middle'
+          style={{ flexFlow: 'nowrap' }}
+          className={styles.action}
+        >
+          {value?.length > 30 ? (
+            <Tooltip title={value}>
+              <span>{`${value?.slice(0, 30)}...`}</span>
+            </Tooltip>
+          ) : (
+            value
+          )}
+        </Row>
+      );
+    },
   },
   {
     title: 'Request Type',

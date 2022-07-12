@@ -10,7 +10,7 @@ const getListCaseManagementService = async (values: any): Promise<any> => {
   const response: any = await ApiUtils.post(API_PATH.GET_LIST_CASE_MANAGEMENT, {
     userId: 1,
     limit: 10,
-    page: values?.current || 1,
+    page: values?.page || 1,
     searchString: values.searchString || 'test',
   });
 
@@ -68,6 +68,8 @@ const useSearchCase = () => {
   });
 
   const onChangePage = (page: number) => {
+    console.log(page);
+
     run({
       page,
       searchString: data.searchString,

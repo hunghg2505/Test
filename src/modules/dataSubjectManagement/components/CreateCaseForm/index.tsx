@@ -1,7 +1,5 @@
 import { useCallback, useState } from 'react';
-import dayjs from 'dayjs';
 import { Col, Form, Row, Divider, Modal, DatePicker } from 'antd';
-import InputForm from 'libraries/form/input/input-form';
 import InputTextAreaForm from 'libraries/form/input/input-textarea-form';
 import Select from 'libraries/UI/Select';
 import { useTranslation } from 'react-i18next';
