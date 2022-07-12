@@ -81,7 +81,7 @@ const configRoutes: IRouter[] = [
             path: routePath.SearchCase,
             element: lazy(() => import('modules/caseManagement/SearchCase/index')),
             name: 'Search Case',
-            roles: ['Super Admin', 'DPO', 'Administrator'],
+            roles: ['Super Admin', 'DPO', 'Authorized User', 'Administrator'],
           },
         ],
       },
@@ -104,7 +104,7 @@ const configRoutes: IRouter[] = [
         element: lazy(() => import('modules/caseManagement/SearchCase/index')),
         name: 'Search Case',
         hiddenMenu: true,
-        roles: ['Super Admin', 'DPO', 'Administrator'],
+        roles: ['Super Admin', 'DPO', 'Authorized User', 'Administrator'],
       },
       {
         path: routePath.ConsentManagement,
