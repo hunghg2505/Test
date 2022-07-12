@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import dayjs from 'dayjs';
 import { Col, Form, Row, Divider, DatePicker } from 'antd';
 import InputForm from 'libraries/form/input/input-form';
@@ -45,8 +45,19 @@ const CreateCaseForm = () => {
   const { data, loading } = useCaseDetail(id);
 
   const [isEdit, setIsEdit] = useState(true);
-  const [acceptedDate, setAcceptedDate] = useState(moment(data?.acceptedDate));
-  const [dateOfResponse, setDateOfResponse] = useState(moment(data?.dateOfResponse));
+  const [acceptedDate, setAcceptedDate] = useState<null | moment.Moment>(null);
+  const [dateOfResponse, setDateOfResponse] = useState<null | moment.Moment>(null);
+
+  useEffect(() => {
+    if (!loading) {
+      if (data?.acceptedDate) {
+        setAcceptedDate(moment(data?.acceptedDate));
+      }
+      if (data?.dateOfResponse) {
+        setDateOfResponse(moment(data?.dateOfResponse));
+      }
+    }
+  }, [data]);
 
   return (
     <div className={styles.form}>
