@@ -11,7 +11,8 @@ const getListCaseManagementService = async (values: any): Promise<any> => {
     userId: 1,
     limit: 10,
     page: values?.page || 1,
-    searchString: values.searchString || 'test',
+    searchString: values.searchString || '',
+    assignTo: '',
   });
 
   const current = response?.content?.metadata?.currentPage || 1;

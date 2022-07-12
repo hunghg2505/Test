@@ -11,6 +11,7 @@ const getListAssignToYou = async (values: any, username: string) => {
     limit: 10,
     page: values?.page || 1,
     searchString: username,
+    assignTo: username,
   });
 
   const current = response?.content?.metadata?.currentPage || 1;
@@ -52,9 +53,7 @@ const useAssignToYou = () => {
   );
 
   useMount(() => {
-    run({
-      page: 1,
-    });
+    run(getListAssignToYou);
   });
 
   const onChange = (page: number) => {

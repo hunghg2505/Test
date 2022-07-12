@@ -95,6 +95,8 @@ const columns: ColumnsType<DataType> = [
 const CaseManagementTable = ({ data, loading, onChange }: any) => {
   const { t } = useTranslation();
 
+  console.log('data', data);
+
   return (
     <>
       {data?.data?.length === 0 ? (
