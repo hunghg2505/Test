@@ -15,13 +15,17 @@ const getUserPermissions = async ({
     page: page || 1,
   });
 
+  const current = +response?.content?.metadata?.currentPage || 1;
+
   return {
     total: response?.content?.metadata?.total || 0,
-    current: +response?.content?.metadata?.currentPage || 1,
+    current: current,
     pageSize: +response?.content?.metadata?.itemPage || 10,
     data:
-      response?.content?.data?.map((item: any) => ({
+      response?.content?.data?.map((item: any, idx: number) => ({
         ...item,
+        key: `${item?.userId}`,
+        no: `${(current - 1) * 10 + idx + 1 || idx}`,
         firstName: `${item?.givenName}`,
         lastName: `${item?.familyName}`,
         listRoles: item?.roles?.reduce((acc: any, v: any) => {
