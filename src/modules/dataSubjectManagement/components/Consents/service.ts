@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef, useCallback } from 'react';
 import { useMount, useRequest } from 'ahooks';
 import { message } from 'antd';
 import debounce from 'lodash/debounce';
@@ -106,12 +106,16 @@ export const getConsentService = async ({
   };
 };
 
-export const updateConsent = async ({ userId, content, ConsentList }: any) => {
+export const updateConsent = async ({ userId, content, ConsentList, initialValues }: any) => {
   const newConsent: any = {
     insert: [],
     update: [],
     delete: [],
   };
+
+  Object.keys(initialValues)?.forEach((initialKey) => {
+    if (!content[initialKey]) content[initialKey] = initialValues[initialKey];
+  });
 
   const consentHasChecked = ConsentList?.filter((v: any) => v?.myConsent?.length > 0);
   const valuesChecked = flattenDeep(Object.values(content))?.map((v) => v);
@@ -263,11 +267,16 @@ export const useConsent = ({ userId }: { userId: number }) => {
     refCancelRequest.current = false;
   };
 
-  const onSaveConsent = async (consent: any) => {
+  const onSaveConsent = async (consent: any, initialValues: any) => {
     if (Object.keys(consent).length === 0) return;
 
-    await reqUpdateConsent.runAsync({ userId, content: consent, ConsentList: data?.listData });
-    refresh();
+    await reqUpdateConsent.runAsync({
+      userId,
+      content: consent,
+      ConsentList: data?.listData,
+      initialValues,
+    });
+    // refresh();
   };
 
   return {
