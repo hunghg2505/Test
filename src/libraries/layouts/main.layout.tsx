@@ -131,11 +131,6 @@ function MainLayout() {
         }}
         items={[
           {
-            label: <>{t('logout')}</>,
-            icon: <IconLogout />,
-            key: '/logout',
-          },
-          {
             label: <>{t('help')}</>,
             icon: <IconInfo />,
             key: '/help',
