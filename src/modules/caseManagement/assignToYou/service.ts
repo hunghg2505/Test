@@ -11,7 +11,7 @@ const getListAssignToYou = async (values: any, username: string) => {
     limit: 10,
     page: values?.page || 1,
     searchString: '',
-    assignTo: 'Ha Pham',
+    assignTo: username,
   });
 
   const current = response?.content?.metadata?.currentPage || 1;
