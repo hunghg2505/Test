@@ -276,7 +276,7 @@ export const useConsent = ({ userId }: { userId: number }) => {
       ConsentList: data?.listData,
       initialValues,
     });
-    // refresh();
+    refresh();
   };
 
   return {
