@@ -1,10 +1,8 @@
 @import '../../../styles/variables.scss';
 
 .select {
-
-
   :global {
-    .ant-select-selector.ant-select-selector  {
+    .ant-select-selector.ant-select-selector {
       border: 1px solid $color-gray6;
       border-radius: 4px;
       padding: 8px 16px;
@@ -27,11 +25,17 @@
       display: flex;
       align-items: center;
     }
+
+    .ant-select-selection-search {
+      padding: 8px 0;
+      right: 0 !important;
+      left: 0 !important;
+    }
   }
 
   &:hover {
     :global {
-      .ant-select-selector.ant-select-selector  {
+      .ant-select-selector.ant-select-selector {
         border-color: $color-secondary !important;
       }
     }
@@ -39,14 +43,14 @@
 
   &:global(.ant-select-open) {
     :global {
-      .ant-select-selector.ant-select-selector  {
+      .ant-select-selector.ant-select-selector {
         border-color: $color-secondary !important;
       }
     }
   }
   &:global(.ant-select-focused) {
     :global {
-      .ant-select-selector.ant-select-selector  {
+      .ant-select-selector.ant-select-selector {
         border-color: $color-secondary !important;
       }
     }

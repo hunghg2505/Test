@@ -141,7 +141,7 @@ const CreateCaseForm = ({ visible, onClose, refDataHistory }: IProps) => {
                 { required: true, message: t('messages.errors.require', { field: 'Assign' }) },
               ]}
             >
-              <Select placeholder='Assign to'>
+              <Select placeholder='Assign to' showSearch>
                 {usersData?.data?.map((item: any) => (
                   <Select.Option value={item.value} key={`${item.sid}`}>
                     {item.value}
