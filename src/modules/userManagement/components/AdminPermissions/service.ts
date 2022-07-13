@@ -21,6 +21,18 @@ const TEXT_PERMISSIONS: any = {
   PDPA_UserProfile_View: 'View',
 };
 
+const changeIndex = (arr: any) => {
+  const userProfileIndex = arr?.findIndex((item: any) => item?.permissionName === 'User Profile');
+  arr?.splice(0, 0, arr?.splice(userProfileIndex, 1)[0]);
+
+  const dataSubjectManagementIndex = arr?.findIndex(
+    (item: any) => item?.permissionName === 'Data Subject Management',
+  );
+  arr?.splice(1, 0, arr?.splice(dataSubjectManagementIndex, 1)[0]);
+
+  return arr;
+};
+
 const getUserPermissions = async ({
   keyword,
   page,
@@ -47,25 +59,27 @@ const getUserPermissions = async ({
         no: `${(current - 1) * 10 + idx + 1 || idx}`,
         firstName: `${item?.givenName}`,
         lastName: `${item?.familyName}`,
-        listRoles: item?.roles?.reduce((acc: any, v: any) => {
-          v?.fatures?.forEach((feature: any) => {
-            const listAction = feature?.permissions?.map((permission: any) => {
-              return {
-                ...permission,
-                id: permission?.permissionId,
-                actionName: TEXT_PERMISSIONS[permission?.permissionId],
-                permission: permission?.isChecked,
-              };
-            });
+        listRoles: changeIndex(
+          item?.roles?.reduce((acc: any, v: any) => {
+            v?.fatures?.forEach((feature: any) => {
+              const listAction = feature?.permissions?.map((permission: any) => {
+                return {
+                  ...permission,
+                  id: permission?.permissionId,
+                  actionName: TEXT_PERMISSIONS[permission?.permissionId],
+                  permission: permission?.isChecked,
+                };
+              });
 
-            acc.push({
-              id: `${item?.userId}_${v?.roleId}_${v?.roleName}`,
-              permissionName: feature?.name,
-              listAction,
+              acc.push({
+                id: `${item?.userId}_${v?.roleId}_${v?.roleName}`,
+                permissionName: feature?.name,
+                listAction,
+              });
             });
-          });
-          return acc;
-        }, []),
+            return acc;
+          }, []),
+        ),
       })) || [],
     keyword,
   };
