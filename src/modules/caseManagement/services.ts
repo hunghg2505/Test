@@ -17,6 +17,7 @@ interface IDetialCase {
   status?: string;
   dateOfResponse?: string;
   comment?: string;
+  userProfile?: any;
 }
 
 const getDetailCaseService = async (caseId: string | undefined): Promise<IDetialCase> => {
@@ -34,6 +35,7 @@ const getDetailCaseService = async (caseId: string | undefined): Promise<IDetial
     dateOfResponse: response?.content?.data?.dateOfResponse,
     comment: response?.content?.data?.comment,
     acceptedDate: response?.content?.data?.acceptedDate,
+    userProfile: response?.content?.data?.__userProfile__,
   };
 };
 

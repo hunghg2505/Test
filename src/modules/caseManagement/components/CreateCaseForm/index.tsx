@@ -37,12 +37,11 @@ const ICON_EDIT = (
   </svg>
 );
 
-const CreateCaseForm = () => {
+const CreateCaseForm = ({ data, loading }: any) => {
   const { t } = useTranslation();
   const [editCaseForm] = Form.useForm();
-  const { id } = useParams();
+
   const { actionsData, departmentsData, usersData } = useGetListDataDropDropdown();
-  const { data, loading } = useCaseDetail(id);
 
   const [isEdit, setIsEdit] = useState(true);
   const [acceptedDate, setAcceptedDate] = useState<null | moment.Moment>(null);

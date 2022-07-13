@@ -17,6 +17,8 @@ interface IActivity {
 }
 
 const ActivityList = ({ data }: any) => {
+  console.log('data', data);
+
   return (
     <div className={styles.activityList}>
       <Collapse
