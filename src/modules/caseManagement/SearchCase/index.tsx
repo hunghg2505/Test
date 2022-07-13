@@ -30,7 +30,7 @@ function SearchCase() {
 
                 <InputForm
                   name='searchString'
-                  placeholder='Search Case'
+                  placeholder='Search Case ID, Assign to'
                   className={styles.inputSearch}
                   classNameFormInput={styles.inputSearchForm}
                   maxLength={55}
