@@ -6,6 +6,8 @@ import { API_PATH } from 'utils/api/constant';
 const getActivity = async (caseId: number) => {
   const res: any = await ApiUtils.fetch(API_PATH.GET_ACTIVITY, {
     caseId,
+    limit: 1,
+    page: 1,
   });
 
   return res?.content?.data?.map((item: any) => {

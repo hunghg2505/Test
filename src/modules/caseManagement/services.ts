@@ -38,7 +38,11 @@ interface IDetialCase {
 }
 
 const getDetailCaseService = async (caseId: string | undefined): Promise<IDetialCase> => {
-  const response: any = await ApiUtils.fetch(API_PATH.GET_DETAIL_CASE, { caseId });
+  const response: any = await ApiUtils.fetch(API_PATH.GET_DETAIL_CASE, {
+    caseId,
+    page: 1,
+    limit: 1,
+  });
 
   return {
     id: response?.content?.data?.id,
