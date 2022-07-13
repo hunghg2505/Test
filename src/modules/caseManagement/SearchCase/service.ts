@@ -4,15 +4,13 @@ import ApiUtils from 'utils/api/api.utils';
 import { API_PATH } from 'utils/api/constant';
 import { formatIdSubjectHistory } from 'utils/common.utils';
 
-const PAGE_SIZE = 10;
-
 const getListCaseManagementService = async (values: any): Promise<any> => {
   const response: any = await ApiUtils.post(API_PATH.GET_LIST_CASE_MANAGEMENT, {
     userId: 1,
     limit: 10,
     page: values?.page || 1,
     searchString: values.searchString || '',
-    assignTo: '',
+    assignTo: values.searchString || '',
   });
 
   const current = response?.content?.metadata?.currentPage || 1;

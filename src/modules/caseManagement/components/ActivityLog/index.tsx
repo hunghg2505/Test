@@ -4,6 +4,7 @@ import ArrowDownCollapse from 'assets/icons/icon-arrow-down-collapse';
 import ArrowUpCollapse from 'assets/icons/icon-arrow-up-collapse';
 
 import styles from './index.module.scss';
+import { useActivity } from './service';
 
 const { Panel } = Collapse;
 
@@ -15,7 +16,7 @@ interface IActivity {
   commentDetail?: string;
 }
 
-const ActivityList = () => {
+const ActivityList = ({ data }: any) => {
   return (
     <div className={styles.activityList}>
       <Collapse
@@ -23,7 +24,7 @@ const ActivityList = () => {
           return isActive ? ArrowUpCollapse : ArrowDownCollapse;
         }}
       >
-        {MOCK_DATA.map((activity: IActivity, key) => {
+        {data.map((activity: IActivity, key: number) => {
           const commentItem = (
             <Panel
               key={key}
@@ -63,45 +64,15 @@ const ActivityList = () => {
   );
 };
 
-function ActivityLog() {
+function ActivityLog({ caseId }: { caseId: number }) {
+  const { loading, data } = useActivity(caseId);
+
   return (
     <div className={styles.activityLog}>
       <h2>ActivityLog</h2>
-      <ActivityList />
+      {!loading && data ? <ActivityList data={data} /> : null}
     </div>
   );
 }
-
-const MOCK_DATA = [
-  {
-    activityName: 'New Case',
-    activityDesc: '[userName] has created a new case',
-    activityFrom: 'System.sys',
-    activityDate: 'May 14,2022 hh:mm:ss',
-  },
-  {
-    activityName: 'Status Update',
-    activityDesc: '[userName] has created a new case',
-    activityFrom: 'System.sys',
-    activityDate: 'May 14,2022 hh:mm:ss',
-  },
-  {
-    activityName: 'Comment',
-    activityDesc: '[userName] has created a new case',
-    activityFrom: 'System.sys',
-    activityDate: 'May 14,2022 hh:mm:ss',
-    commentDetail: `- Q: I have read and assessed the User Story, and there are some changes regarding
-    the format of the User Story. As I see here, you have listed all the fields and
-    field types, detailed values in drop-down, Do I still need to create detailed
-    business rules for each field? Or I will follow the format you have created for
-    easier understanding from both teams.`,
-  },
-  {
-    activityName: 'Assigned to [userName]',
-    activityDesc: '[userName] has created a new case',
-    activityFrom: 'System.sys',
-    activityDate: 'May 14,2022 hh:mm:ss',
-  },
-];
 
 export default ActivityLog;
