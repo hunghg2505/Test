@@ -21,6 +21,30 @@ const TEXT_PERMISSIONS: any = {
   PDPA_UserProfile_View: 'View',
 };
 
+const SORT_PERMISSIONS: any = {
+  PDPA_CaseManagement_Edit: 3,
+  PDPA_CaseManagement_Delete: 4,
+  PDPA_CaseManagement_Create: 2,
+  PDPA_CaseManagement_ViewAssignedTo: 1,
+  PDPA_CaseManagement_ViewSearchCase: 1,
+  PDPA_ConsentManagement_Edit: 3,
+  PDPA_ConsentManagement_View: 1,
+  PDPA_ConsentManagement_Create: 2,
+  PDPA_DataSubjectManagement_Edit: 3,
+  PDPA_DataSubjectManagement_View: 1,
+  PDPA_UserManagement_Edit: 3,
+  PDPA_UserManagement_View: 1,
+  PDPA_UserProfile_View: 1,
+};
+
+const SORT_IDX: any = {
+  'User Profile': 1,
+  'Data Subject Management': 2,
+  'Case Management': 3,
+  'Consent Management': 4,
+  'User Management': 5,
+};
+
 const getUserPermissions = async ({
   keyword,
   page,
@@ -49,21 +73,27 @@ const getUserPermissions = async ({
         lastName: `${item?.familyName}`,
         listRoles: item?.roles?.reduce((acc: any, v: any) => {
           v?.fatures?.forEach((feature: any) => {
-            const listAction = feature?.permissions?.map((permission: any) => {
+            let listAction = feature?.permissions?.map((permission: any) => {
               return {
                 ...permission,
+                permissionIdx: SORT_PERMISSIONS[permission?.permissionId],
                 id: permission?.permissionId,
                 actionName: TEXT_PERMISSIONS[permission?.permissionId],
                 permission: permission?.isChecked,
               };
             });
 
+            listAction = listAction.sort((a: any, b: any) => a?.permissionIdx - b?.permissionIdx);
+
             acc.push({
+              sortIdx: SORT_IDX[feature?.name],
               id: `${item?.userId}_${v?.roleId}_${v?.roleName}`,
               permissionName: feature?.name,
               listAction,
             });
           });
+
+          acc = acc.sort((a: any, b: any) => a?.sortIdx - b?.sortIdx);
           return acc;
         }, []),
       })) || [],
