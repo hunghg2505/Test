@@ -6,7 +6,7 @@ import { API_PATH } from 'utils/api/constant';
 const getActivity = async (caseId: number) => {
   const res: any = await ApiUtils.fetch(API_PATH.GET_ACTIVITY, {
     caseId,
-    limit: 1,
+    limit: 10,
     page: 1,
   });
 
@@ -15,7 +15,7 @@ const getActivity = async (caseId: number) => {
       activityName: item?.title || '',
       activityDesc: item?.description || '',
       activityFrom: '',
-      activityDate: dayjs(item?.updatedAt).format('MMM DD,YYYY HH:MM:ss'),
+      activityDate: dayjs(item?.logDate).format('MMM DD,YYYY HH:MM:ss'),
 
       commentDetail: item?.detailComment || '',
     };

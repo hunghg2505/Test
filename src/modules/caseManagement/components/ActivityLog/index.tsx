@@ -34,9 +34,7 @@ const ActivityList = ({ data }: any) => {
                 <div className={styles.panelHeader}>
                   <h2 className={styles.name}>{activity.activityName}</h2>
                   <p className={styles.desc}>{activity.activityDesc}</p>
-                  <p className={styles.fromDate}>
-                    {activity.activityFrom}. {activity.activityDate}
-                  </p>
+                  <p className={styles.fromDate}>Date: {activity.activityDate}</p>
                 </div>
               }
             >
@@ -55,7 +53,7 @@ const ActivityList = ({ data }: any) => {
               <h2 className={styles.name}>{activity.activityName}</h2>
               <p className={styles.desc}>{activity.activityDesc}</p>
               <p className={styles.fromDate}>
-                {activity.activityFrom}. {activity.activityDate}
+                <p className={styles.fromDate}>Date: {activity.activityDate}</p>
               </p>
             </div>
           );
@@ -71,7 +69,7 @@ function ActivityLog({ caseId }: { caseId: number }) {
 
   return (
     <div className={styles.activityLog}>
-      <h2>ActivityLog</h2>
+      <h2>Activity Log</h2>
       {!loading && data ? <ActivityList data={data} /> : null}
     </div>
   );
