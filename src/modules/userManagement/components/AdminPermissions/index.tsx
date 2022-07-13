@@ -1,10 +1,11 @@
 import { Checkbox, Col, Row, Table } from 'antd';
 import clsx from 'clsx';
-import Button from 'libraries/UI/Button';
 import React from 'react';
 
 import { paginationItemRender } from 'libraries/UI/Pagination';
 import styles from './index.module.scss';
+import { CheckboxChangeEvent } from 'antd/lib/checkbox';
+import { useUpdatePermissions } from './service';
 
 export interface DataType {
   key: React.ReactNode;
@@ -75,7 +76,16 @@ const customExpandIcon = ({ expanded, onExpand, record }: any) =>
     </div>
   );
 
-const getExpandRowRender = (record: any) => {
+const getExpandRowRender = (record: any, reqUpdatePermissions: any) => {
+  const onChange = (e: CheckboxChangeEvent, item: any) => {
+    reqUpdatePermissions.run({
+      permissionId: item?.permissionId,
+      value: e.target.checked,
+      evt: e,
+      record,
+    });
+  };
+
   return (
     <div className={styles.rolesDetail}>
       <h4>Permission</h4>
@@ -95,7 +105,10 @@ const getExpandRowRender = (record: any) => {
               <Col span={4}></Col>
               {role.listAction.map((item: any, index: number) => (
                 <Col span={4} key={`${item?.id}${index}`}>
-                  <Checkbox checked={item.permission} />
+                  <Checkbox
+                    defaultChecked={item.permission}
+                    onChange={(evt) => onChange(evt, item)}
+                  />
                 </Col>
               ))}
             </Row>
@@ -115,6 +128,8 @@ const AdminPermissions = ({
   loading: boolean;
   onChangePage: any;
 }) => {
+  const reqUpdatePermissions = useUpdatePermissions();
+
   return (
     <>
       {/* <Row justify='end' align='middle' gutter={[16, 0]}>
@@ -138,7 +153,7 @@ const AdminPermissions = ({
           dataSource={data?.data}
           loading={loading}
           expandable={{
-            expandedRowRender: getExpandRowRender,
+            expandedRowRender: (record) => getExpandRowRender(record, reqUpdatePermissions),
             expandIcon: customExpandIcon,
           }}
           pagination={{
@@ -149,13 +164,13 @@ const AdminPermissions = ({
           }}
         />
       </div>
-      {!!data?.data?.length && (
+      {/* {!!data?.data?.length && (
         <Row justify='start' align='middle' gutter={[16, 0]}>
           <Col>
             <Button>Save</Button>
           </Col>
         </Row>
-      )}
+      )} */}
     </>
   );
 };
