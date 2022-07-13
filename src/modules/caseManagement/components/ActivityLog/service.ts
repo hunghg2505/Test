@@ -1,26 +1,30 @@
-import { useRequest } from 'ahooks';
+import { useMount, useRequest } from 'ahooks';
 import dayjs from 'dayjs';
 import ApiUtils from 'utils/api/api.utils';
 import { API_PATH } from 'utils/api/constant';
 
-const getActivity = async (caseId: number) => {
+const getActivity = async (values: any) => {
   const res: any = await ApiUtils.fetch(API_PATH.GET_ACTIVITY, {
-    caseId,
+    caseId: values.caseId,
     limit: 10,
-    page: 1,
+    page: values?.current || 1,
   });
 
-  return res?.content?.data?.map((item: any) => {
-    return {
-      activityName: item?.title || '',
-      activityDesc: item?.description || '',
-      activityFrom: '',
-      activityDate: dayjs(item?.logDate).format('MMM DD,YYYY HH:MM:ss'),
+  return {
+    total: res?.content?.metadata?.total || 0,
+    current: +res?.content?.metadata?.currentPage || 1,
+    pageSize: +res?.content?.metadata?.itemPage || 10,
+    data: res?.content?.data?.map((item: any) => {
+      return {
+        activityName: item?.title || '',
+        activityDesc: item?.description || '',
+        activityFrom: '',
+        activityDate: dayjs(item?.logDate).format('MMM DD,YYYY HH:MM:ss'),
 
-      commentDetail: item?.detailComment || '',
-    };
-  });
-
+        commentDetail: item?.detailComment || '',
+      };
+    }),
+  };
   // // console.log('data', da);
 
   // const MOCK_DATA = [
@@ -59,11 +63,24 @@ const getActivity = async (caseId: number) => {
 };
 
 const useActivity = (caseId: number) => {
-  const { data, loading } = useRequest(async () => getActivity(caseId));
+  const { data, loading, run } = useRequest(async ({ current }) =>
+    getActivity({ caseId, current }),
+  );
+
+  useMount(() => {
+    run({ current: 1 });
+  });
+
+  const onChangeCurrent = (current: number) => {
+    run({
+      current,
+    });
+  };
 
   return {
     loading,
-    data: data,
+    data,
+    onChange: onChangeCurrent,
   };
 };
 
