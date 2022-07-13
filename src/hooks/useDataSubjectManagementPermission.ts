@@ -13,7 +13,16 @@ export default function useDataSubjectManagementPermission() {
     [auth],
   );
 
+  const isHavePermissionSaveConsent = useMemo(
+    () =>
+      auth?.user?.roles
+        ?.find((item) => item.name === FEATURE_NAME.dataSubjectManagement)
+        ?.permissions.some((item) => item.permissionId === PERMISSION_ID.editDataSubject),
+    [auth],
+  );
+
   return {
     isHavePermissionCreateCase,
+    isHavePermissionSaveConsent,
   };
 }

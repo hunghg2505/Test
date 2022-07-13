@@ -164,7 +164,7 @@ const SearchBox = ({
   );
 };
 
-const ConsentOption = ({ value, onChange, dataConsent, isHavePermissionEditConsent }: any) => {
+const ConsentOption = ({ value, onChange, dataConsent, isHavePermissionSaveConsent }: any) => {
   const onChangeValues = (checkedValues: any) => {
     onChange(checkedValues);
   };
@@ -177,7 +177,7 @@ const ConsentOption = ({ value, onChange, dataConsent, isHavePermissionEditConse
     <Checkbox.Group
       onChange={onChangeValues}
       defaultValue={value}
-      disabled={!isHavePermissionEditConsent}
+      disabled={!isHavePermissionSaveConsent}
     >
       {dataConsent.map((item: any) => {
         return (
@@ -202,7 +202,7 @@ const ConsentsList = ({ data, loading, onChange, onSaveConsent, loadingUpdateCon
   const { t } = useTranslation();
   const [formConsent] = Form.useForm();
 
-  const { isHavePermissionEditConsent } = useConsentManagementPermission();
+  const { isHavePermissionSaveConsent } = useDataSubjectManagementPermission();
 
   const initialValues = data?.data?.reduce(
     (acc: any, v: any) => ({ ...acc, [v?.key]: Object.keys(v?.defaultValue) }),
@@ -249,7 +249,7 @@ const ConsentsList = ({ data, loading, onChange, onSaveConsent, loadingUpdateCon
                     <Form.Item className={styles.panelContent} name={`${key}`}>
                       <ConsentOption
                         dataConsent={dataConsent?.list}
-                        isHavePermissionEditConsent={isHavePermissionEditConsent}
+                        isHavePermissionSaveConsent={isHavePermissionSaveConsent}
                       />
                     </Form.Item>
                   </Panel>
@@ -271,7 +271,7 @@ const ConsentsList = ({ data, loading, onChange, onSaveConsent, loadingUpdateCon
           </div>
         )}
 
-        {isHavePermissionEditConsent && (
+        {isHavePermissionSaveConsent && (
           <Button htmlType='submit' className={styles.btnSave} loading={loadingUpdateConsent}>
             {t('save')}
           </Button>
