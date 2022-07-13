@@ -5,6 +5,23 @@ import { ResponseBase } from 'utils/api/api.types';
 import { useNavigate } from 'react-router-dom';
 import { message } from 'antd';
 
+interface IUserInfo {
+  id?: string;
+  imageUrl?: string;
+  email?: string;
+  address: string;
+
+  firstNameEn?: string;
+  lastNameEn?: string;
+  firstNameTh?: string;
+  lastNameTh?: string;
+  dateOfBirth?: string;
+  mobile?: string;
+  cardId?: string;
+  nationality?: string;
+  passportNo?: string;
+  laserCode?: string;
+}
 interface IDetialCase {
   id: number;
   action: string;
@@ -17,7 +34,7 @@ interface IDetialCase {
   status?: string;
   dateOfResponse?: string;
   comment?: string;
-  userProfile?: any;
+  userProfile?: IUserInfo;
 }
 
 const getDetailCaseService = async (caseId: string | undefined): Promise<IDetialCase> => {
