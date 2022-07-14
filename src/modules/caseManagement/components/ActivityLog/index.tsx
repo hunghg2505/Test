@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { forwardRef, useImperativeHandle } from 'react';
 import { Collapse, Pagination, Row } from 'antd';
 import ArrowDownCollapse from 'assets/icons/icon-arrow-down-collapse';
 import ArrowUpCollapse from 'assets/icons/icon-arrow-up-collapse';
@@ -18,8 +18,6 @@ interface IActivity {
 }
 
 const ActivityList = ({ data }: any) => {
-  console.log('data', data);
-
   return (
     <div className={styles.activityList}>
       <Collapse
@@ -65,25 +63,35 @@ const ActivityList = ({ data }: any) => {
   );
 };
 
-function ActivityLog({ caseId }: { caseId: number }) {
-  const { loading, data, onChange } = useActivity(caseId);
+function ActivityLog({ caseId }: { caseId: number }, ref: any) {
+  const { loading, data, onChange, refresh } = useActivity(caseId);
+
+  useImperativeHandle(ref, () => {
+    return {
+      refreshDataActivityLog: refresh,
+    };
+  });
 
   return (
     <div className={styles.activityLog}>
       <h2>Activity Log</h2>
-      {!loading && data ? <ActivityList data={data?.data} /> : null}
-      <Row justify='end'>
-        <Pagination
-          current={data?.current}
-          onChange={onChange}
-          total={data?.total}
-          defaultPageSize={data?.pageSize}
-          itemRender={paginationItemRender}
-          showSizeChanger={false}
-        />
-      </Row>
+      {!loading && data ? (
+        <>
+          <ActivityList data={data?.data} />{' '}
+          <Row justify='end'>
+            <Pagination
+              current={data?.current}
+              onChange={onChange}
+              total={data?.total}
+              defaultPageSize={data?.pageSize}
+              itemRender={paginationItemRender}
+              showSizeChanger={false}
+            />
+          </Row>
+        </>
+      ) : null}
     </div>
   );
 }
 
-export default ActivityLog;
+export default forwardRef(ActivityLog);

@@ -6,14 +6,14 @@ import { API_PATH } from 'utils/api/constant';
 const getActivity = async (values: any) => {
   const res: any = await ApiUtils.fetch(API_PATH.GET_ACTIVITY, {
     caseId: values.caseId,
-    limit: 10,
+    limit: 4,
     page: values?.current || 1,
   });
 
   return {
-    total: res?.content?.metadata?.total || 0,
+    total: +res?.content?.metadata?.total || 0,
     current: +res?.content?.metadata?.currentPage || 1,
-    pageSize: +res?.content?.metadata?.itemPage || 10,
+    pageSize: 4,
     data: res?.content?.data?.map((item: any) => {
       return {
         activityName: item?.title || '',
@@ -63,7 +63,7 @@ const getActivity = async (values: any) => {
 };
 
 const useActivity = (caseId: number) => {
-  const { data, loading, run } = useRequest(async ({ current }) =>
+  const { data, loading, run, refresh } = useRequest(async ({ current }) =>
     getActivity({ caseId, current }),
   );
 
@@ -81,6 +81,7 @@ const useActivity = (caseId: number) => {
     loading,
     data,
     onChange: onChangeCurrent,
+    refresh,
   };
 };
 

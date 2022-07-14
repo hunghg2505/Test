@@ -7,11 +7,13 @@ import styles from './index.module.scss';
 import CreateCaseForm from './components/CreateCaseForm';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useCaseDetail } from './services';
+import { useRef } from 'react';
 
 function CaseManagementDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
   const { data, loading } = useCaseDetail(id);
+  const refActivityLog: any = useRef(null);
 
   if (!id) {
     navigate('/case-management');
@@ -21,9 +23,9 @@ function CaseManagementDetail() {
     <ContainerLayout title='Case Management Detail'>
       <div className={styles.wrap}>
         <UserInfo userInfo={data?.userProfile} />
-        <ActivityLog caseId={Number(id)} />
+        <ActivityLog caseId={Number(id)} ref={refActivityLog} />
         <ConsentList />
-        <CreateCaseForm data={data} loading={loading} />
+        <CreateCaseForm data={data} loading={loading} refActivityLog={refActivityLog} />
       </div>
     </ContainerLayout>
   );

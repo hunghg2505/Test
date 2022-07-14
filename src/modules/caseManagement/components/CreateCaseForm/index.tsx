@@ -14,7 +14,11 @@ import {
 
 import styles from './index.module.scss';
 import Button from 'libraries/UI/Button';
-import { useCaseDetail, useGetListDataDropDropdown } from 'modules/caseManagement/services';
+import {
+  useCaseDetail,
+  useEditCase,
+  useGetListDataDropDropdown,
+} from 'modules/caseManagement/services';
 import { useParams } from 'react-router-dom';
 import Loading from 'libraries/components/loading';
 
@@ -37,8 +41,9 @@ const ICON_EDIT = (
   </svg>
 );
 
-const CreateCaseForm = ({ data, loading }: any) => {
+const CreateCaseForm = ({ data, loading, refActivityLog }: any) => {
   const { t } = useTranslation();
+  const { id } = useParams();
   const [editCaseForm] = Form.useForm();
 
   const { actionsData, departmentsData, usersData } = useGetListDataDropDropdown();
@@ -46,6 +51,25 @@ const CreateCaseForm = ({ data, loading }: any) => {
   const [isEdit, setIsEdit] = useState(true);
   const [acceptedDate, setAcceptedDate] = useState<null | moment.Moment>(null);
   const [dateOfResponse, setDateOfResponse] = useState<null | moment.Moment>(null);
+
+  const onFinishSubmitForm = () => {
+    setIsEdit(true);
+    if (refActivityLog.current.refreshDataActivityLog)
+      refActivityLog.current.refreshDataActivityLog();
+  };
+
+  const editCaseRequest = useEditCase(onFinishSubmitForm);
+
+  const onFinish = (values: any) => {
+    editCaseRequest.run({
+      caseId: Number(id),
+      editCaseParam: {
+        ...values,
+        acceptedDate,
+        dateOfResponse,
+      },
+    });
+  };
 
   useEffect(() => {
     if (!loading) {
@@ -76,6 +100,7 @@ const CreateCaseForm = ({ data, loading }: any) => {
             responseStatus: data?.responseStatus,
             reason: data?.reason,
           }}
+          onFinish={onFinish}
         >
           <Row gutter={[15, 24]}>
             <Col xs={12}>
@@ -217,11 +242,22 @@ const CreateCaseForm = ({ data, loading }: any) => {
                 value={dateOfResponse}
               />
             </Col>
+            {!isEdit && (
+              <Col xs={24}>
+                <InputTextAreaForm
+                  name='comment'
+                  label='Update comment'
+                  placeholder='Comment ...'
+                  rows={6}
+                  maxLength={250}
+                />
+              </Col>
+            )}
           </Row>
         </Form>
       )}
 
-      {/* {
+      {
         <div className={styles.actions}>
           {isEdit ? (
             <Button onClick={() => setIsEdit(false)} icon={ICON_EDIT} className={styles.editBtn}>
@@ -238,7 +274,7 @@ const CreateCaseForm = ({ data, loading }: any) => {
             </>
           )}
         </div>
-      } */}
+      }
     </div>
   );
 };

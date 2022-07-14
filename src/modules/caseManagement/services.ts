@@ -37,6 +37,22 @@ interface IDetialCase {
   userProfile?: IUserInfo;
 }
 
+interface IEditCase {
+  caseId: number;
+  editCaseParam: {
+    action?: string;
+    department?: string;
+    assignTo?: string;
+    description?: string;
+    responseStatus?: string;
+    acceptedDate?: string;
+    reason?: string;
+    status?: string;
+    dateOfResponse?: string;
+    comment?: string;
+  };
+}
+
 const getDetailCaseService = async (caseId: string | undefined): Promise<IDetialCase> => {
   const response: any = await ApiUtils.fetch(API_PATH.GET_DETAIL_CASE, {
     caseId,
@@ -129,4 +145,32 @@ export const useGetListDataDropDropdown = () => {
     departmentsData,
     usersData,
   };
+};
+
+const editCaseService = async (body: IEditCase) => {
+  return ApiUtils.post<any, ResponseBase<any>>(API_PATH.EDIT_CASE, body);
+};
+
+export const useEditCase = (onFinishSubmitForm: any) => {
+  return useRequest(
+    async (data: IEditCase) => {
+      return editCaseService(data);
+    },
+    {
+      manual: true,
+      onSuccess: () => {
+        message.success('Edit Case Success');
+        onFinishSubmitForm();
+
+        {
+          /** No need now  */
+        }
+        // navigate(routePath.CaseManagement);
+      },
+      onError: () => {
+        message.error('Edit Case Error');
+        onFinishSubmitForm();
+      },
+    },
+  );
 };
