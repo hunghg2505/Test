@@ -15,7 +15,7 @@ import { API_PATH } from 'utils/api/constant';
 
 const PAGE_SIZE = 10;
 
-const getStatusConstent = (lastUpdated: string) => {
+export const getStatusConstent = (lastUpdated: string) => {
   const date1 = dayjs('2022-05-19');
   const date2 = dayjs(lastUpdated);
 
