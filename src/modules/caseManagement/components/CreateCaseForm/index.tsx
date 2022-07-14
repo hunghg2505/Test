@@ -243,7 +243,13 @@ const CreateCaseForm = ({ data, loading, refActivityLog, refreshDataCaseDetail }
 
       <div className={styles.actions}>
         <>
-          <Button onClick={() => setIsEdit(true)} className={styles.cancelBtn}>
+          <Button
+            onClick={() => {
+              setIsEdit(true);
+              editCaseForm.resetFields();
+            }}
+            className={styles.cancelBtn}
+          >
             Cancel
           </Button>{' '}
           <Button htmlType='submit' onClick={() => editCaseForm.submit()}>
