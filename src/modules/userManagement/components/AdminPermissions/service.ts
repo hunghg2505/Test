@@ -10,7 +10,7 @@ const TEXT_PERMISSIONS: any = {
   PDPA_CaseManagement_Delete: 'Delete',
   PDPA_CaseManagement_Create: 'Create',
   PDPA_CaseManagement_ViewAssignedTo: 'View Assigned To',
-  PDPA_CaseManagement_ViewSearchCase: 'View Search Case',
+  PDPA_CaseManagement_ViewSearchCase: 'View Search',
   PDPA_ConsentManagement_Edit: 'Edit',
   PDPA_ConsentManagement_View: 'View',
   PDPA_ConsentManagement_Create: 'Create',
