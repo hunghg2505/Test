@@ -106,7 +106,7 @@ export const getConsentService = async ({
   };
 };
 
-export const updateConsent = async ({ userId, content, ConsentList, initialValues }: any) => {
+const getConsentsChecked = ({ content, ConsentList, initialValues }: any) => {
   const newConsent: any = {
     insert: [],
     update: [],
@@ -150,6 +150,12 @@ export const updateConsent = async ({ userId, content, ConsentList, initialValue
     if (isExistOnList) return false;
     return true;
   });
+
+  return newConsent;
+};
+
+export const updateConsent = async ({ userId, content, ConsentList, initialValues }: any) => {
+  const newConsent = getConsentsChecked({ content, ConsentList, initialValues });
 
   const body = {
     userId: userId,
@@ -279,6 +285,16 @@ export const useConsent = ({ userId }: { userId: number }) => {
     refresh();
   };
 
+  const onCheckConsent = (consent: any, initialValues: any) => {
+    const newConsent = getConsentsChecked({
+      content: consent,
+      ConsentList: data?.listData,
+      initialValues,
+    });
+
+    return newConsent;
+  };
+
   return {
     data,
     loading,
@@ -290,5 +306,6 @@ export const useConsent = ({ userId }: { userId: number }) => {
     onSuggestionConsentsDebounce,
     onLoadMoreSuggestionConsents,
     onResetSuggestionConsents,
+    onCheckConsent,
   };
 };

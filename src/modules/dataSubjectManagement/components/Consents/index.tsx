@@ -5,7 +5,7 @@ import IconSearch from 'assets/icons/icon-search';
 import Button from 'libraries/UI/Button';
 import Input from 'libraries/UI/Input';
 import { paginationItemRender } from 'libraries/UI/Pagination';
-import { useRef, useState } from 'react';
+import { useRef, useState, useImperativeHandle } from 'react';
 import { useTranslation } from 'react-i18next';
 import styles from './index.module.scss';
 import { useConsent } from './service';
@@ -45,6 +45,7 @@ const SearchBox = ({
   onLoadMoreSuggestionConsents,
   onResetSuggestionConsents,
   refDataHistory,
+  refSearchConsent,
 }: {
   onSearchConsent: (search: string, callback?: any) => void;
   suggestionConsents: any;
@@ -52,15 +53,30 @@ const SearchBox = ({
   onLoadMoreSuggestionConsents: (value: string) => void;
   onResetSuggestionConsents: () => void;
   refDataHistory: any;
+  refSearchConsent: any;
 }) => {
   const { t } = useTranslation();
   const refForm: any = useRef();
   const refListConsents: any = useRef();
   const [formSearchConsent] = Form.useForm();
+  const [disable, setDisable] = useState(true);
+  const [consentsId, setConsentsId] = useState<string[]>([]);
 
   const { isHavePermissionCreateCase } = useDataSubjectManagementPermission();
 
   const [isOpenCreateCaseForm, setIsOpenCreateCaseForm] = useState(false);
+
+  useImperativeHandle(refSearchConsent, () => {
+    return {
+      enableButtonCreateConsent: () => setDisable(true),
+      disableButtonCreateConsent: () => setDisable(false),
+      updateConsentsId: (consentsId: string[]) => {
+        console.log('consentsId', consentsId);
+
+        setConsentsId(consentsId);
+      },
+    };
+  });
 
   const onFieldsChange = (values: any) => {
     const value = get(values, '[0].value', '');
@@ -151,6 +167,7 @@ const SearchBox = ({
           className={styles.btnCreateCase}
           typeDisplay='ghost'
           onClick={() => setIsOpenCreateCaseForm(true)}
+          disabled={disable}
         >
           {t('create_case')}
         </Button>
@@ -159,6 +176,7 @@ const SearchBox = ({
         visible={isOpenCreateCaseForm}
         onClose={() => setIsOpenCreateCaseForm(false)}
         refDataHistory={refDataHistory}
+        consents={consentsId}
       />
     </Row>
   );
@@ -198,7 +216,14 @@ const ConsentOption = ({ value, onChange, dataConsent, isHavePermissionSaveConse
   );
 };
 
-const ConsentsList = ({ data, loading, onChange, onSaveConsent, loadingUpdateConsent }: any) => {
+const ConsentsList = ({
+  data,
+  loading,
+  onChange,
+  onSaveConsent,
+  loadingUpdateConsent,
+  onCheckConsent,
+}: any) => {
   const { t } = useTranslation();
   const [formConsent] = Form.useForm();
 
@@ -213,6 +238,15 @@ const ConsentsList = ({ data, loading, onChange, onSaveConsent, loadingUpdateCon
     onSaveConsent(value, initialValues);
   };
 
+  const onFieldsChange = (values: any, allValues: any) => {
+    const val = allValues?.reduce((acc: any, v: any) => {
+      const name = get(v, 'name[0]');
+      acc[`${name}`] = get(v, 'value');
+      return acc;
+    }, {});
+    onCheckConsent(val, initialValues);
+  };
+
   if (loading) return null;
 
   return data?.data?.length === 0 ? (
@@ -224,6 +258,7 @@ const ConsentsList = ({ data, loading, onChange, onSaveConsent, loadingUpdateCon
         onFinish={onUpdateConsent}
         form={formConsent}
         initialValues={initialValues}
+        onFieldsChange={onFieldsChange}
       >
         {data?.data?.length === 0 ? (
           <p className={styles.noResultText}>{t('no_result_found')}</p>
@@ -293,7 +328,10 @@ function Consents({ userId, refDataHistory }: { userId: number; refDataHistory: 
     onSuggestionConsentsDebounce,
     onLoadMoreSuggestionConsents,
     onResetSuggestionConsents,
+    onCheckConsent,
   } = useConsent({ userId });
+
+  const refSearchConsent: any = useRef();
 
   const onSearch = (search: string, callback?: any) => {
     onSearchConsent(search, callback);
@@ -307,6 +345,21 @@ function Consents({ userId, refDataHistory }: { userId: number; refDataHistory: 
     } catch (error) {}
   };
 
+  const onCheckConsentSelected = (values: any, initialValues: any) => {
+    const newConsent = onCheckConsent(values, initialValues);
+
+    if (!newConsent?.insert?.length) {
+      refSearchConsent?.current?.enableButtonCreateConsent();
+      return;
+    }
+    if (newConsent?.insert?.length && refSearchConsent?.current?.enableButtonCreateConsent) {
+      const consentsId = newConsent.insert.map((v: any) => v.consentId + '');
+
+      refSearchConsent?.current?.disableButtonCreateConsent();
+      refSearchConsent?.current?.updateConsentsId(consentsId);
+    }
+  };
+
   return (
     <div className={styles.consentsWrap}>
       <SearchBox
@@ -316,6 +369,7 @@ function Consents({ userId, refDataHistory }: { userId: number; refDataHistory: 
         onLoadMoreSuggestionConsents={onLoadMoreSuggestionConsents}
         onResetSuggestionConsents={onResetSuggestionConsents}
         refDataHistory={refDataHistory}
+        refSearchConsent={refSearchConsent}
       />
 
       <ConsentsList
@@ -324,6 +378,7 @@ function Consents({ userId, refDataHistory }: { userId: number; refDataHistory: 
         onChange={onChange}
         onSaveConsent={onSave}
         loadingUpdateConsent={loadingUpdateConsent}
+        onCheckConsent={onCheckConsentSelected}
       />
     </div>
   );
