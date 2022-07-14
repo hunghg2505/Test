@@ -12,7 +12,7 @@ import { useRef } from 'react';
 function CaseManagementDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { data, loading } = useCaseDetail(id);
+  const { data, loading, refresh } = useCaseDetail(id);
   const refActivityLog: any = useRef(null);
 
   if (!id) {
@@ -25,7 +25,12 @@ function CaseManagementDetail() {
         <UserInfo userInfo={data?.userProfile} />
         <ActivityLog caseId={Number(id)} ref={refActivityLog} />
         <ConsentList />
-        <CreateCaseForm data={data} loading={loading} refActivityLog={refActivityLog} />
+        <CreateCaseForm
+          data={data}
+          loading={loading}
+          refActivityLog={refActivityLog}
+          refreshDataCaseDetail={refresh}
+        />
       </div>
     </ContainerLayout>
   );

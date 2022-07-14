@@ -77,8 +77,8 @@ const getDetailCaseService = async (caseId: string | undefined): Promise<IDetial
 };
 
 export const useCaseDetail = (caseId: string | undefined) => {
-  const { data, loading } = useRequest(async () => getDetailCaseService(caseId));
-  return { data, loading };
+  const { data, loading, refresh } = useRequest(async () => getDetailCaseService(caseId));
+  return { data, loading, refresh };
 };
 
 const getListActionService = async () => {
