@@ -1,10 +1,13 @@
-import React from 'react';
-import { Row, Col, Divider } from 'antd';
+import React, { useCallback } from 'react';
+import { Row, Col, Divider, Modal } from 'antd';
 import styles from './style.module.scss';
 import dayjs from 'dayjs';
 import Button from 'libraries/UI/Button';
 import IconDelete from 'assets/icons/icon-delete';
-// #CF2A2B
+import { ExclamationCircleOutlined } from '@ant-design/icons';
+
+const { confirm } = Modal;
+
 const ICON_EDIT = (
   <svg xmlns='http://www.w3.org/2000/svg' width={24} height={24} viewBox='0 0 24 24' fill='white'>
     <path
@@ -24,7 +27,27 @@ const ICON_EDIT = (
   </svg>
 );
 
-const CaseInfo = ({ data, onClickEdit }: any) => {
+const CaseInfo = ({ data, onClickEdit, deleteCaseRequest }: any) => {
+  const showConfirm = useCallback(() => {
+    confirm({
+      title: 'Confirm Delete',
+      icon: <ExclamationCircleOutlined style={{ color: 'red' }} />,
+      content: 'Are you sure you want to delete this Case?',
+      okText: 'Yes',
+      cancelText: 'No',
+      okType: 'danger',
+      okButtonProps: {
+        className: styles.btnDelete,
+      },
+      cancelButtonProps: {
+        className: styles.btnCancel,
+      },
+      onOk() {
+        deleteCaseRequest.run();
+      },
+    });
+  }, []);
+
   return (
     <div className={styles.caseInfo}>
       <Row>
@@ -83,7 +106,7 @@ const CaseInfo = ({ data, onClickEdit }: any) => {
         <Button onClick={onClickEdit} icon={ICON_EDIT} className={styles.editBtn}>
           Edit
         </Button>
-        <Button className={styles.deleteBtn} icon={<IconDelete />}>
+        <Button className={styles.deleteBtn} icon={<IconDelete />} onClick={() => showConfirm()}>
           Delete
         </Button>
       </Row>

@@ -23,7 +23,13 @@ import { useParams } from 'react-router-dom';
 import Loading from 'libraries/components/loading';
 import CaseInfo from '../CaseInfo';
 
-const CreateCaseForm = ({ data, loading, refActivityLog, refreshDataCaseDetail }: any) => {
+const CreateCaseForm = ({
+  data,
+  loading,
+  refActivityLog,
+  refreshDataCaseDetail,
+  deleteCaseRequest,
+}: any) => {
   const { t } = useTranslation();
   const { id } = useParams();
   const [editCaseForm] = Form.useForm();
@@ -259,7 +265,11 @@ const CreateCaseForm = ({ data, loading, refActivityLog, refreshDataCaseDetail }
       </div>
     </div>
   ) : (
-    <CaseInfo data={data} onClickEdit={() => setIsEdit(false)} />
+    <CaseInfo
+      data={data}
+      onClickEdit={() => setIsEdit(false)}
+      deleteCaseRequest={deleteCaseRequest}
+    />
   );
 };
 

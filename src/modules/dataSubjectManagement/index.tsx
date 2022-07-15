@@ -17,7 +17,6 @@ import { useRef } from 'react';
 import SearchUsersAdvance from './components/SearchUsersAdvance';
 import SuggestListUsers from './components/SuggestListUsers';
 import styles from './index.module.scss';
-import useAuth from 'hooks/redux/auth/useAuth';
 
 const MIN_SEARCH_USER = 3;
 

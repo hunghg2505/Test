@@ -76,9 +76,27 @@ const getDetailCaseService = async (caseId: string | undefined): Promise<IDetial
   };
 };
 
+const deleteCaseService = async (caseId: string | undefined) => {
+  return ApiUtils.remove(API_PATH.DELETE_CASE, { caseId });
+};
+
 export const useCaseDetail = (caseId: string | undefined) => {
   const { data, loading, refresh } = useRequest(async () => getDetailCaseService(caseId));
-  return { data, loading, refresh };
+
+  const navigate = useNavigate();
+
+  const deleteCaseRequest = useRequest(async () => deleteCaseService(caseId), {
+    manual: true,
+    onSuccess: () => {
+      message.success('Delete case successfully');
+      navigate(-1);
+    },
+    onError: () => {
+      message.error('Fail to delete case');
+    },
+  });
+
+  return { data, loading, refresh, deleteCaseRequest };
 };
 
 const getListActionService = async () => {

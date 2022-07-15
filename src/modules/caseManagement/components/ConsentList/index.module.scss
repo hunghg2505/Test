@@ -125,17 +125,29 @@
   color: #bdbdbd;
 }
 
-.version {
-  margin: 0 24px;
+.consentInfo {
+  font-weight: 400;
+  font-size: 12px;
+  color: #000;
+  margin: 6px 0 27px;
+
+  div:nth-child(2) {
+    margin: 0 30px 0 60px;
+  }
+
+  div:nth-child(3) {
+    color: $color-warning;
+  }
+
+  .active {
+    color: $color-success !important;
+  }
 }
 
-.status {
-  font-weight: 700;
-  font-size: 14px;
-  color: $color-error;
-}
-.active {
-  color: $color-success;
+.description {
+  font-weight: 400;
+  font-size: 16px;
+  color: $color-secondary;
 }
 
 .description {

@@ -1,10 +1,10 @@
-import { Checkbox, Collapse, Form, Pagination, Row } from 'antd';
+import { Checkbox, Col, Collapse, Form, Pagination, Row } from 'antd';
 
 import ArrowDownCollapse from 'assets/icons/icon-arrow-down-collapse';
 import ArrowUpCollapse from 'assets/icons/icon-arrow-up-collapse';
-import Button from 'libraries/UI/Button';
 import { paginationItemRender } from 'libraries/UI/Pagination';
 import { useTranslation } from 'react-i18next';
+import { useParams } from 'react-router-dom';
 import styles from './index.module.scss';
 import { useConsentList } from './service';
 
@@ -39,11 +39,18 @@ const ConsentOption = ({ value, onChange, dataConsent }: any) => {
   }
 
   return (
-    <Checkbox.Group onChange={onChangeValues} defaultValue={value} disabled>
+    <Checkbox.Group onChange={onChangeValues} defaultValue={value}>
       {dataConsent.map((item: any) => {
         return (
-          <Checkbox key={item.value} value={item.value}>
+          <Checkbox key={item.value} value={item.value} disabled>
             <h4>{item.title}</h4>
+            <Row className={styles.consentInfo}>
+              <Col>{item?.lastUpdated}</Col>
+              <Col>{item?.version}</Col>
+              <Col className={item?.status === 'Published' ? styles.active : ''}>
+                {item?.status}
+              </Col>
+            </Row>
             <div>{item.description}</div>
           </Checkbox>
         );
@@ -56,16 +63,27 @@ const Consents = ({ data, loading, onChange }: any) => {
   const { t } = useTranslation();
   const [formConsent] = Form.useForm();
 
+  const initialValues = data?.data?.reduce((acc: any, v: any) => {
+    if (!acc[v.key]) acc[v.key] = [];
+    v?.dataConsent?.list?.forEach((it: any) => {
+      acc[v.key].push(it?.value);
+    });
+
+    return acc;
+  }, {});
+
   if (loading) return null;
 
-  return data?.data?.length === 0 ? (
-    <p className={styles.noResultText}>{t('no_result_found')}</p>
-  ) : (
+  if (!loading && !data?.data?.length)
+    return <p className={styles.noResultText}>{t('no_result_found')}</p>;
+
+  return (
     <div className={styles.consentWrap}>
       <Form
         className={styles.formConsent}
         // onFinish={onUpdateConsent}
         form={formConsent}
+        initialValues={initialValues}
       >
         {data?.data?.length === 0 ? (
           <p className={styles.noResultText}>{t('no_result_found')}</p>
@@ -83,17 +101,6 @@ const Consents = ({ data, loading, onChange }: any) => {
                     header={
                       <div className={styles.panelHeader}>
                         <div className={styles.name}>{dataConsent.name}</div>
-                        <Row align='middle'>
-                          <div className={styles.lastUpdated}>{dataConsent.lastUpdated}</div>
-                          <div className={styles.version}>{dataConsent.version}</div>
-                          <div
-                            className={`${styles.status} ${
-                              dataConsent.status === 'Accepted' ? styles.active : ''
-                            }`}
-                          >
-                            {dataConsent.status}
-                          </div>
-                        </Row>
                         <div className={styles.description}>{dataConsent.description}</div>
                       </div>
                     }
@@ -119,17 +126,14 @@ const Consents = ({ data, loading, onChange }: any) => {
             </Row>
           </div>
         )}
-
-        {/* <Button htmlType='submit' className={styles.btnSave}>
-          {t('save')}
-        </Button> */}
       </Form>
     </div>
   );
 };
 
 function ConsentList() {
-  const { data, loading, onChange } = useConsentList();
+  const { id } = useParams();
+  const { data, loading, onChange } = useConsentList(`${id}`);
 
   return (
     <div className={styles.consentsWrap}>
