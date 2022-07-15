@@ -21,12 +21,25 @@
       color: $color-gray4;
     }
 
+    .asterisk {
+      color: #ff4d4f;
+      margin-left: 3px;
+    }
+
+    .leftSpace {
+      margin-left: 20px;
+    }
+
     .value {
       font-style: normal;
       font-weight: 400;
       font-size: 14px;
       color: $color-black4;
     }
+  }
+
+  .flexend {
+    justify-content: flex-end;
   }
 }
 
