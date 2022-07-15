@@ -26,6 +26,7 @@ export const PERMISSIONS = {
   PDPA_ConsentManagement_Create: 'PDPA_ConsentManagement_Create',
   PDPA_UserManagement_View: 'PDPA_UserManagement_View',
   PDPA_UserManagement_Edit: 'PDPA_UserManagement_Edit',
+  PDPA_Reports_View: 'PDPA_Reports_View',
 };
 
 export type TRoles = {

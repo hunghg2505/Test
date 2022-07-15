@@ -36,15 +36,6 @@ export const getPermissionView = ({ path, exitsRoles }: any) => {
       if (!hasPermissionsUserViews) return false;
     }
 
-    if (path === routePath.CaseManagement) {
-      const hasPermissionsUserViews = hasPermissionViewPage(
-        exitsRoles,
-        PERMISSIONS.PDPA_ConsentManagement_View,
-      );
-
-      if (!hasPermissionsUserViews) return false;
-    }
-
     if (path === routePath.AssignToYou) {
       const hasPermissionsUserViews = hasPermissionViewPage(
         exitsRoles,
@@ -53,6 +44,7 @@ export const getPermissionView = ({ path, exitsRoles }: any) => {
 
       if (!hasPermissionsUserViews) return false;
     }
+
     if (path === routePath.SearchCase) {
       const hasPermissionsUserViews = hasPermissionViewPage(
         exitsRoles,
@@ -72,7 +64,10 @@ export const getPermissionView = ({ path, exitsRoles }: any) => {
         PERMISSIONS.PDPA_CaseManagement_ViewAssignedTo,
       );
 
-      if (!hasPermissionsUserViewSearchCase && !hasPermissionsUserViewAssignTo) return false;
+      if (hasPermissionsUserViewAssignTo && hasPermissionsUserViewSearchCase) return true;
+      if (hasPermissionsUserViewAssignTo && !hasPermissionsUserViewSearchCase) return true;
+      if (!hasPermissionsUserViewAssignTo && hasPermissionsUserViewSearchCase) return true;
+      if (!hasPermissionsUserViewAssignTo && !hasPermissionsUserViewSearchCase) return false;
     }
 
     if (path === routePath.ConsentDetail || path === routePath.ConsentManagement) {
@@ -88,6 +83,15 @@ export const getPermissionView = ({ path, exitsRoles }: any) => {
       const hasPermissionsUserViews = hasPermissionViewPage(
         exitsRoles,
         PERMISSIONS.PDPA_UserManagement_View,
+      );
+
+      if (!hasPermissionsUserViews) return false;
+    }
+
+    if (path === routePath.Reports) {
+      const hasPermissionsUserViews = hasPermissionViewPage(
+        exitsRoles,
+        PERMISSIONS.PDPA_Reports_View,
       );
 
       if (!hasPermissionsUserViews) return false;

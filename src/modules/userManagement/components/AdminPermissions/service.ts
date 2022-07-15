@@ -144,8 +144,6 @@ const serviceUpdatePermissions = (permissionId: string, value: boolean, record: 
 };
 
 const useUpdatePermissions = () => {
-  const { getProfile } = useAuth();
-
   return useRequest(
     async ({
       permissionId,
@@ -160,9 +158,7 @@ const useUpdatePermissions = () => {
     {
       manual: true,
       onSuccess: (r) => {
-        localStorage.setItem('get_profile', 'true');
         message.success('Update permission is succeeded');
-        getProfile();
       },
       onError: (e, params) => {
         const value = params[0]?.value;
