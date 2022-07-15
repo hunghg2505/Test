@@ -21,27 +21,15 @@ import {
 } from 'modules/caseManagement/services';
 import { useParams } from 'react-router-dom';
 import Loading from 'libraries/components/loading';
+import CaseInfo from '../CaseInfo';
 
-const ICON_EDIT = (
-  <svg xmlns='http://www.w3.org/2000/svg' width={24} height={24} viewBox='0 0 24 24' fill='#CF2A2B'>
-    <path
-      d='M3.5 21H21.5'
-      stroke='#CF2A2B'
-      strokeWidth={2}
-      strokeLinecap='round'
-      strokeLinejoin='round'
-    />
-    <path
-      d='M5.5 13.36V17H9.1586L19.5 6.65405L15.8476 3L5.5 13.36Z'
-      fill='white'
-      stroke='#CF2A2B'
-      strokeWidth={2}
-      strokeLinejoin='round'
-    />
-  </svg>
-);
-
-const CreateCaseForm = ({ data, loading, refActivityLog }: any) => {
+const CreateCaseForm = ({
+  data,
+  loading,
+  refActivityLog,
+  refreshDataCaseDetail,
+  deleteCaseRequest,
+}: any) => {
   const { t } = useTranslation();
   const { id } = useParams();
   const [editCaseForm] = Form.useForm();
@@ -54,8 +42,10 @@ const CreateCaseForm = ({ data, loading, refActivityLog }: any) => {
 
   const onFinishSubmitForm = () => {
     setIsEdit(true);
-    if (refActivityLog.current.refreshDataActivityLog)
+    if (refActivityLog.current.refreshDataActivityLog) {
       refActivityLog.current.refreshDataActivityLog();
+    }
+    refreshDataCaseDetail();
   };
 
   const editCaseRequest = useEditCase(onFinishSubmitForm);
@@ -82,7 +72,7 @@ const CreateCaseForm = ({ data, loading, refActivityLog }: any) => {
     }
   }, [data]);
 
-  return (
+  return !isEdit ? (
     <div className={styles.form}>
       {loading ? (
         <Loading />
@@ -257,25 +247,29 @@ const CreateCaseForm = ({ data, loading, refActivityLog }: any) => {
         </Form>
       )}
 
-      {
-        <div className={styles.actions}>
-          {isEdit ? (
-            <Button onClick={() => setIsEdit(false)} icon={ICON_EDIT} className={styles.editBtn}>
-              Edit
-            </Button>
-          ) : (
-            <>
-              <Button onClick={() => setIsEdit(true)} className={styles.cancelBtn}>
-                Cancel
-              </Button>{' '}
-              <Button htmlType='submit' onClick={() => editCaseForm.submit()}>
-                Submit
-              </Button>
-            </>
-          )}
-        </div>
-      }
+      <div className={styles.actions}>
+        <>
+          <Button
+            onClick={() => {
+              setIsEdit(true);
+              editCaseForm.resetFields();
+            }}
+            className={styles.cancelBtn}
+          >
+            Cancel
+          </Button>{' '}
+          <Button htmlType='submit' onClick={() => editCaseForm.submit()}>
+            Submit
+          </Button>
+        </>
+      </div>
     </div>
+  ) : (
+    <CaseInfo
+      data={data}
+      onClickEdit={() => setIsEdit(false)}
+      deleteCaseRequest={deleteCaseRequest}
+    />
   );
 };
 

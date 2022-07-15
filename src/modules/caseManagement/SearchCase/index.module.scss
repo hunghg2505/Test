@@ -74,8 +74,8 @@
 
     .ant-form-item-explain {
       position: absolute;
-      top: 38px;
-      left: 12px;
+      top: 38px !important;
+      left: 12px !important;
     }
 
     .ant-input-status-error:not(.ant-input-disabled):not(.ant-input-borderless).ant-input:focus {

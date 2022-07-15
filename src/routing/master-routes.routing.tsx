@@ -62,6 +62,19 @@ export const getPermissionView = ({ path, exitsRoles }: any) => {
       if (!hasPermissionsUserViews) return false;
     }
 
+    if (path === routePath.CaseManagement) {
+      const hasPermissionsUserViewSearchCase = hasPermissionViewPage(
+        exitsRoles,
+        PERMISSIONS.PDPA_CaseManagement_ViewSearchCase,
+      );
+      const hasPermissionsUserViewAssignTo = hasPermissionViewPage(
+        exitsRoles,
+        PERMISSIONS.PDPA_CaseManagement_ViewAssignedTo,
+      );
+
+      if (!hasPermissionsUserViewSearchCase && !hasPermissionsUserViewAssignTo) return false;
+    }
+
     if (path === routePath.ConsentDetail || path === routePath.ConsentManagement) {
       const hasPermissionsUserViews = hasPermissionViewPage(
         exitsRoles,
