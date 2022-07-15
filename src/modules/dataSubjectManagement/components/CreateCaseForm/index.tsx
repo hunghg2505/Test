@@ -20,11 +20,12 @@ interface IProps {
   visible: boolean;
   onClose: () => void;
   refDataHistory: any;
+  consents: string[];
 }
 
 const { confirm } = Modal;
 
-const CreateCaseForm = ({ visible, onClose, refDataHistory }: IProps) => {
+const CreateCaseForm = ({ visible, onClose, refDataHistory, consents }: IProps) => {
   const { t } = useTranslation();
   const { id } = useParams();
 
@@ -52,6 +53,7 @@ const CreateCaseForm = ({ visible, onClose, refDataHistory }: IProps) => {
       userProfileId: Number(id),
       acceptedDate,
       dateOfResponse,
+      consents,
     });
     setDateOfResponse(null);
     setAcceptedDate(moment());
