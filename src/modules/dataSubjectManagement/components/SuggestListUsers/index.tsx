@@ -1,7 +1,7 @@
 import React, { useImperativeHandle, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import styles from '../../index.module.scss';
+import styles from './index.module.scss';
 
 const SuggestListUsers = (
   { data, loading, onSearchDataSubject, users, onLoadMoreUsers, onResetUsers }: any,
