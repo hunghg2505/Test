@@ -12,7 +12,7 @@ import { useRef } from 'react';
 function CaseManagementDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { data, loading, refresh } = useCaseDetail(id);
+  const { data, loading, refresh, deleteCaseRequest } = useCaseDetail(id);
   const refActivityLog: any = useRef(null);
 
   if (!id) {
@@ -30,6 +30,7 @@ function CaseManagementDetail() {
           loading={loading}
           refActivityLog={refActivityLog}
           refreshDataCaseDetail={refresh}
+          deleteCaseRequest={deleteCaseRequest}
         />
       </div>
     </ContainerLayout>
