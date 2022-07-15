@@ -5,6 +5,8 @@ import clsx from 'clsx';
 import InputForm from 'libraries/form/input/input-form';
 import ContainerLayout from 'libraries/layouts/container.layout';
 import Button from 'libraries/UI/Button';
+import SuggestListUsers from 'modules/dataSubjectManagement/components/SuggestListUsers';
+import { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import CaseManagementTable from '../components/CaseManagementTable';
 
@@ -13,17 +15,41 @@ import { useSearchCase } from './service';
 
 function SearchCase() {
   const { t } = useTranslation();
-  const { data, loading, onChangePage, onSearchCase } = useSearchCase();
+  const refListUsers: any = useRef();
+  const {
+    data,
+    loading,
+    onChangePage,
+    onSearchCaseSuggestion,
+    reqSearchCaseSuggestion,
+    onSearchCaseSuggestionDebounce,
+    onSearchCaseList,
+    onResetUsers,
+    onLoadMoreUsers,
+    users,
+  } = useSearchCase();
 
   const onFinish = (values: any) => {
-    onSearchCase({ ...values });
+    onSearchCaseSuggestion({ ...values, type: 'enter' }, () => {
+      if (refListUsers.current?.closeListUser) {
+        refListUsers.current.closeListUser();
+        onResetUsers();
+      }
+    });
+  };
+
+  const onFieldsChange = (values: any) => {
+    if (values?.length < 3) refListUsers.current.closeListUser();
+    onSearchCaseSuggestionDebounce(values, () => {
+      if (refListUsers.current?.openListUser) refListUsers.current.openListUser();
+    });
   };
 
   return (
     <ContainerLayout title='Assign To You'>
       <div className={styles.wrap}>
         <Row justify='center' align='middle' className={styles.searchCaseHeader}>
-          <Form onFinish={onFinish}>
+          <Form onFinish={onFinish} onFieldsChange={onFieldsChange}>
             <div className={styles.formSearchWrap}>
               <Row justify='center' align='middle' className={styles.searchForm}>
                 <IconSearch />
@@ -59,6 +85,21 @@ function SearchCase() {
                   {t('Search')}
                 </Button>
               </Row>
+
+              <SuggestListUsers
+                data={reqSearchCaseSuggestion.data}
+                loading={reqSearchCaseSuggestion.loading}
+                onSearchDataSubject={(v: any) => {
+                  onSearchCaseList({
+                    value: v?.firstname,
+                    isEqualSearch: v?.isEqualSearch,
+                  });
+                }}
+                ref={refListUsers}
+                users={users}
+                onLoadMoreUsers={onLoadMoreUsers}
+                onResetUsers={onResetUsers}
+              />
             </div>
           </Form>
 

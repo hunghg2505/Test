@@ -1,0 +1,72 @@
+@import '../../../../styles/variables.scss';
+
+.listUsers {
+  position: absolute;
+  top: calc(100% + 14px);
+  width: 100%;
+  z-index: 2;
+  left: 0;
+  background: transparent;
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.06);
+  border-radius: 4px;
+  background-color: $color-white;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: -14px;
+    left: 0;
+    width: 100%;
+    background-color: transparent;
+    height: 14px;
+  }
+
+  .btnLoadMore {
+    padding: 10px 14px;
+    text-align: center;
+    font-weight: 700;
+    font-size: 16px;
+    text-align: center;
+    color: #202225;
+    cursor: pointer;
+    transition: all 300ms;
+    &:hover {
+      background: $color-gray6;
+    }
+  }
+
+  ul {
+    max-height: 440px;
+    overflow-y: overlay;
+  }
+
+  li {
+    padding: 10px 14px;
+    background: $color-white;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 150%;
+    color: $color-gray4;
+    transition: all 300ms;
+    cursor: pointer;
+    min-height: 44px;
+
+    &:hover {
+      background: $color-gray6;
+      color: $color-secondary;
+    }
+  }
+
+  .active {
+    background: $color-gray6;
+    font-weight: 700;
+    font-size: 16px;
+    color: $color-secondary;
+  }
+}
+
+.noResultText {
+  text-align: center;
+  padding: 20px 0;
+  font-size: 20px;
+}
