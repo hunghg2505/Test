@@ -1,10 +1,12 @@
+import { Col, Divider, Modal, Row } from 'antd';
 import React, { useCallback } from 'react';
-import { Row, Col, Divider, Modal } from 'antd';
-import styles from './style.module.scss';
-import dayjs from 'dayjs';
+
 import Button from 'libraries/UI/Button';
-import IconDelete from 'assets/icons/icon-delete';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
+import IconDelete from 'assets/icons/icon-delete';
+import clsx from 'clsx';
+import dayjs from 'dayjs';
+import styles from './style.module.scss';
 
 const { confirm } = Modal;
 
@@ -51,58 +53,72 @@ const CaseInfo = ({ data, onClickEdit, deleteCaseRequest }: any) => {
   return (
     <div className={styles.caseInfo}>
       <Row>
-        <Col xs={8} className={styles.info}>
-          <p className={styles.label}>Data Subject Right</p>
+        <Col xs={11} className={styles.info}>
+          <p className={styles.label}>
+            Data Subject Rights<span className={styles.asterisk}>*</span>
+          </p>
           <p className={styles.value}>{data?.action}</p>
         </Col>
-        <Col xs={8}></Col>
-        <Col xs={8} className={styles.info}>
-          <p className={styles.label}>Related Department</p>
+        <Col xs={2}></Col>
+        <Col xs={11} className={styles.info}>
+          <p className={styles.label}>
+            Related Department<span className={styles.asterisk}>*</span>
+          </p>
           <p className={styles.value}>{data?.department}</p>
         </Col>
       </Row>
       <Row>
-        <Col xs={8} className={styles.info}>
-          <p className={styles.label}>Assign to</p>
+        <Col xs={11} className={styles.info}>
+          <p className={styles.label}>
+            Assign to<span className={styles.asterisk}>*</span>
+          </p>
           <p className={styles.value}>{data?.assignTo}</p>
         </Col>
-        <Col xs={8}></Col>
-        <Col xs={8} className={styles.info}>
-          <p className={styles.label}>Description</p>
-          <p className={styles.value}>{data?.description}</p>
+        <Col xs={2}></Col>
+        <Col xs={11} className={styles.info}>
+          <p className={styles.label}>
+            Description<span className={styles.asterisk}>*</span>
+          </p>
+          <p className={clsx(styles.value, styles.leftSpace)}>{data?.description}</p>
         </Col>
       </Row>
       <Row>
-        <Col xs={8} className={styles.info}>
-          <p className={styles.label}>Status</p>
+        <Col xs={11} className={styles.info}>
+          <p className={styles.label}>
+            Status<span className={styles.asterisk}>*</span>
+          </p>
           <p className={styles.value}>{data?.status}</p>
         </Col>
-        <Col xs={8}></Col>
-        <Col xs={8} className={styles.info}>
+        <Col xs={2}></Col>
+        <Col xs={11} className={styles.info}>
           <p className={styles.label}>Accepted Date</p>
           <p className={styles.value}>{dayjs(data?.acceptedDate).format('DD/MM/YY')}</p>
         </Col>
       </Row>
       <Divider />
       <Row>
-        <Col xs={8} className={styles.info}>
-          <p className={styles.label}>Result</p>
+        <Col xs={11} className={styles.info}>
+          <p className={styles.label}>
+            Result<span className={styles.asterisk}>*</span>
+          </p>
           <p className={styles.value}>{data?.responseStatus}</p>
         </Col>
-        <Col xs={8}></Col>
-        <Col xs={8} className={styles.info}>
-          <p className={styles.label}>Reason</p>
-          <p className={styles.value}>{data?.reason}</p>
+        <Col xs={2}></Col>
+        <Col xs={11} className={styles.info}>
+          <p className={styles.label}>
+            Reason<span className={styles.asterisk}>*</span>
+          </p>
+          <p className={clsx(styles.value, styles.leftSpace)}>{data?.reason}</p>
         </Col>
       </Row>
       <Row>
-        <Col xs={8} className={styles.info}>
+        <Col xs={11} className={styles.info}>
           <p className={styles.label}>Date of reponse</p>
           <p className={styles.value}>{dayjs(data?.dateOfResponse).format('DD/MM/YY')}</p>
         </Col>
-        <Col xs={8}></Col>
+        <Col xs={2}></Col>
       </Row>
-      <Row>
+      <Row className={styles.flexend}>
         <Button onClick={onClickEdit} icon={ICON_EDIT} className={styles.editBtn}>
           Edit
         </Button>
