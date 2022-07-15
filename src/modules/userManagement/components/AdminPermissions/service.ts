@@ -1,9 +1,9 @@
 import { useRequest, useMount } from 'ahooks';
 import { message } from 'antd';
 import { CheckboxChangeEvent } from 'antd/lib/checkbox';
-import useAuth from 'hooks/redux/auth/useAuth';
 import ApiUtils from 'utils/api/api.utils';
 import { API_PATH } from 'utils/api/constant';
+import get from 'lodash/get';
 
 const TEXT_PERMISSIONS: any = {
   PDPA_CaseManagement_Edit: 'Edit',
@@ -71,6 +71,7 @@ const getUserPermissions = async ({
         no: `${(current - 1) * 10 + idx + 1 || idx}`,
         firstName: `${item?.givenName}`,
         lastName: `${item?.familyName}`,
+        roleName: get(item, 'roles[0].roleName'),
         listRoles: item?.roles?.reduce((acc: any, v: any) => {
           v?.fatures?.forEach((feature: any) => {
             let listAction = feature?.permissions?.map((permission: any) => {

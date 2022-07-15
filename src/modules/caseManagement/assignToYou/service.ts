@@ -11,6 +11,7 @@ const getListAssignToYou = async (values: any, username: string) => {
     limit: 10,
     page: values?.page || 1,
     searchString: '',
+    isEqualSearch: true,
     assignTo: username,
   });
 
