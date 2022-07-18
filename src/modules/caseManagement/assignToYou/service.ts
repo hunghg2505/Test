@@ -6,13 +6,12 @@ import { formatIdSubjectHistory } from 'utils/common.utils';
 import dayjs from 'dayjs';
 
 const getListAssignToYou = async (values: any, username: string) => {
-  const response: any = await ApiUtils.post(API_PATH.GET_LIST_CASE_MANAGEMENT, {
+  const response: any = await ApiUtils.post(API_PATH.GET_LIST_CASE_MANAGEMENT_ASSIGN_TO, {
     userId: 1,
     limit: 10,
     page: values?.page || 1,
     searchString: '',
     isEqualSearch: true,
-    assignTo: '',
     advanceSearch: {
       assignTo: {
         searchString: username || '',
