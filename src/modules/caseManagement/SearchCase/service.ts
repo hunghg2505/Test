@@ -46,7 +46,7 @@ const getSuggestionCase = async (value: string, page: number) => {
   const res: any = await ApiUtils.fetch(API_PATH.SEARCH_CASE_AUTOCOMPLETE, params);
 
   return {
-    data: res?.content?.data?.map((v: any, idx: number) => ({ id: idx, name: v.assignTo })),
+    data: res?.content?.data?.map((v: any, idx: number) => ({ id: idx, name: v })),
     isLoadMore: +res?.content?.metadata?.currentPage < +res?.content?.metadata?.lastPage,
     currentPage: +res?.content?.metadata?.currentPage,
     value,

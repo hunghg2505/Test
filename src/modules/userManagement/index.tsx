@@ -8,12 +8,30 @@ import styles from './index.module.scss';
 
 const UserManagement = () => {
   // check role and show table tương ứng ở đây
-  const { data, loading, onChangePage, onSearchUserPermissions } = useAdminPermissions();
+  const {
+    data,
+    loading,
+    onChangePage,
+    onSearchUserPermissions,
+    onResetUsers,
+    onLoadMoreUsers,
+    onSearchUserSuggestionDebounce,
+
+    users,
+    reqSearchUserSuggestion,
+  } = useAdminPermissions();
 
   return (
     <ContainerLayout title='User Management'>
       <div className={styles.userWrap}>
-        <SearchUsers onSearchUserPermissions={onSearchUserPermissions} />
+        <SearchUsers
+          onSearchUserPermissions={onSearchUserPermissions}
+          onResetUsers={onResetUsers}
+          onLoadMoreUsers={onLoadMoreUsers}
+          onSearchUserSuggestionDebounce={onSearchUserSuggestionDebounce}
+          users={users}
+          reqSearchUserSuggestion={reqSearchUserSuggestion}
+        />
 
         <AdminPermissions data={data} loading={loading} onChangePage={onChangePage} />
       </div>
