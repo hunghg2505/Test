@@ -36,6 +36,15 @@ function App() {
     if (!location.pathname?.includes('data-subject')) {
       clearCache(['data-management']);
     }
+
+    if (!location.pathname?.includes('case-management')) {
+      clearCache(['search-case-management', 'case-assign-management']);
+    }
+
+    if (location.pathname === '/case-management/assign-to-you')
+      clearCache(['search-case-management']);
+    if (location.pathname === '/case-management/search-case')
+      clearCache(['case-assign-management']);
   }, [location.pathname]);
 
   useLayoutEffect(() => {

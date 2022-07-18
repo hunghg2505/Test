@@ -56,6 +56,7 @@ const useAssignToYou = () => {
     {
       manual: true,
       refreshDeps: [keycloak?.tokenParsed?.name],
+      cacheKey: 'case-assign-management',
     },
   );
 

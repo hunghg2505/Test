@@ -81,7 +81,7 @@ const useSearchCase = () => {
       getListCaseManagementService({ searchString: value, isEqualSearch, page, advanceSearch }),
     {
       manual: true,
-      cacheKey: 'case-management',
+      cacheKey: 'search-case-management',
     },
   );
 
@@ -130,11 +130,18 @@ const useSearchCase = () => {
   }, 350);
 
   const onChangePage = (page: number) => {
+    console.log('data', data);
+
     run({
       page,
       value: data?.searchString,
       isEqualSearch: data?.isEqualSearch,
-      advanceSearch: data['advanceSearch'],
+      advanceSearch: {
+        status: data?.advanceSearch?.status?.searchString,
+        dsName: data?.advanceSearch?.dsName?.searchString,
+        caseId: data?.advanceSearch?.caseId?.searchString,
+        assignTo: data?.advanceSearch?.assignTo?.searchString,
+      },
     });
   };
 
@@ -168,7 +175,12 @@ const useSearchCase = () => {
   };
 
   useMount(() => {
-    run(getListCaseManagementService);
+    run({
+      page: data?.current || 1,
+      value: data?.searchString,
+      isEqualSearch: data?.isEqualSearch,
+      advanceSearch: data?.advanceSearch,
+    });
   });
 
   return {
