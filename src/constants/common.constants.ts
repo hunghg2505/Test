@@ -43,7 +43,7 @@ export const STATUS_DROPDOWN_DATA = [
   { label: 'New', value: 'New' },
   { label: 'In Progress', value: 'In Progress' },
   { label: 'Pending', value: 'Pending' },
-  { label: 'Canceled', value: 'Canceled' },
+  { label: 'Canceled', value: 'Cancelled' },
   { label: 'Rejected', value: 'Rejected' },
   { label: 'Closed', value: 'Closed' },
 ];

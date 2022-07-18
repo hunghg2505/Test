@@ -49,8 +49,46 @@ const SearchCaseAdvance = ({ onSearchDataSubject, t }: any) => {
           >
             <Form
               onFinish={(values) => {
+                let conditions: { [key: string]: any } = {};
+                if (values?.status) {
+                  conditions = {
+                    ...conditions,
+                    status: {
+                      searchString: values?.status || '',
+                      isEqualSearch: false,
+                    },
+                  };
+                }
+                if (values?.dsName) {
+                  conditions = {
+                    ...conditions,
+                    dsName: {
+                      searchString: values?.dsName || '',
+                      isEqualSearch: false,
+                    },
+                  };
+                }
+                if (values?.caseId) {
+                  conditions = {
+                    ...conditions,
+                    caseId: {
+                      searchString: values?.caseId || '',
+                      isEqualSearch: false,
+                    },
+                  };
+                }
+                if (values?.assignTo) {
+                  conditions = {
+                    ...conditions,
+                    assignTo: {
+                      searchString: values?.assignTo || '',
+                      isEqualSearch: false,
+                    },
+                  };
+                }
+
                 onSearchDataSubject({
-                  advanceSearch: values,
+                  advanceSearch: { ...conditions },
                 });
                 setIsShowSearch(false);
               }}

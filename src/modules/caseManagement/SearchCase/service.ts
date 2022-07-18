@@ -16,46 +16,8 @@ const getListCaseManagementService = async (values: any): Promise<any> => {
     page: values?.page || 1,
     searchString: values.searchString || '',
     assignTo: '',
+    advanceSearch: values?.advanceSearch,
   };
-  if (!isEmpty(values?.advanceSearch)) {
-    params['advanceSearch'] = {};
-    if (values?.advanceSearch?.status) {
-      params['advanceSearch'] = {
-        ...params['advanceSearch'],
-        status: {
-          searchString: values?.advanceSearch?.status || '',
-          isEqualSearch: false,
-        },
-      };
-    }
-    if (values?.advanceSearch?.dsName) {
-      params['advanceSearch'] = {
-        ...params['advanceSearch'],
-        dsName: {
-          searchString: values?.advanceSearch?.dsName || '',
-          isEqualSearch: false,
-        },
-      };
-    }
-    if (values?.advanceSearch?.caseId) {
-      params['advanceSearch'] = {
-        ...params['advanceSearch'],
-        caseId: {
-          searchString: values?.advanceSearch?.caseId || '',
-          isEqualSearch: false,
-        },
-      };
-    }
-    if (values?.advanceSearch?.assignTo) {
-      params['advanceSearch'] = {
-        ...params['advanceSearch'],
-        assignTo: {
-          searchString: values?.advanceSearch?.assignTo || '',
-          isEqualSearch: false,
-        },
-      };
-    }
-  }
 
   const response: any = await ApiUtils.post(API_PATH.GET_LIST_CASE_MANAGEMENT, params);
 
