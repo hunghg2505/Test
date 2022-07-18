@@ -1,21 +1,21 @@
 import { useClickAway } from 'ahooks';
 import { Checkbox, Col, Collapse, Form, Pagination, Row } from 'antd';
 
+import ArrowDownCollapse from 'assets/icons/icon-arrow-down-collapse';
+import ArrowUpCollapse from 'assets/icons/icon-arrow-up-collapse';
 import IconSearch from 'assets/icons/icon-search';
+import useCaseManagementPermission from 'hooks/useCaseManagementPermission';
+import useDataSubjectManagementPermission from 'hooks/useDataSubjectManagementPermission';
 import Button from 'libraries/UI/Button';
 import Input from 'libraries/UI/Input';
 import { paginationItemRender } from 'libraries/UI/Pagination';
-import { useRef, useState, useImperativeHandle } from 'react';
+import get from 'lodash/get';
+import { useImperativeHandle, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import CreateCaseForm from '../CreateCaseForm';
 import styles from './index.module.scss';
 import { useConsent } from './service';
 import SuggestConsents from './SuggestConsents';
-import get from 'lodash/get';
-import ArrowDownCollapse from 'assets/icons/icon-arrow-down-collapse';
-import ArrowUpCollapse from 'assets/icons/icon-arrow-up-collapse';
-import CreateCaseForm from '../CreateCaseForm';
-import useDataSubjectManagementPermission from 'hooks/useDataSubjectManagementPermission';
-import useConsentManagementPermission from 'hooks/useConsentManagementPermission';
 
 const { Panel } = Collapse;
 
@@ -62,7 +62,7 @@ const SearchBox = ({
   const [disable, setDisable] = useState(true);
   const [consentsId, setConsentsId] = useState<string[]>([]);
 
-  const { isHavePermissionCreateCase } = useDataSubjectManagementPermission();
+  const { isHavePermissionCreateCase } = useCaseManagementPermission();
 
   const [isOpenCreateCaseForm, setIsOpenCreateCaseForm] = useState(false);
 

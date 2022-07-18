@@ -7,6 +7,7 @@ import IconDelete from 'assets/icons/icon-delete';
 import clsx from 'clsx';
 import dayjs from 'dayjs';
 import styles from './style.module.scss';
+import useCaseManagementPermission from 'hooks/useCaseManagementPermission';
 
 const { confirm } = Modal;
 
@@ -30,6 +31,8 @@ const ICON_EDIT = (
 );
 
 const CaseInfo = ({ data, onClickEdit, deleteCaseRequest }: any) => {
+  const { isHavePermissionEditCase, isHavePermissionDeleteCase } = useCaseManagementPermission();
+
   const showConfirm = useCallback(() => {
     confirm({
       title: 'Confirm Delete',
@@ -119,12 +122,16 @@ const CaseInfo = ({ data, onClickEdit, deleteCaseRequest }: any) => {
         <Col xs={2}></Col>
       </Row>
       <Row className={styles.flexend}>
-        <Button onClick={onClickEdit} icon={ICON_EDIT} className={styles.editBtn}>
-          Edit
-        </Button>
-        <Button className={styles.deleteBtn} icon={<IconDelete />} onClick={() => showConfirm()}>
-          Delete
-        </Button>
+        {isHavePermissionEditCase && (
+          <Button onClick={onClickEdit} icon={ICON_EDIT} className={styles.editBtn}>
+            Edit
+          </Button>
+        )}
+        {isHavePermissionDeleteCase && (
+          <Button className={styles.deleteBtn} icon={<IconDelete />} onClick={() => showConfirm()}>
+            Delete
+          </Button>
+        )}
       </Row>
     </div>
   );

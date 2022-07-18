@@ -5,14 +5,6 @@ import { PERMISSION_ID, FEATURE_NAME } from 'constants/common.constants';
 export default function useDataSubjectManagementPermission() {
   const { auth } = useAuth();
 
-  const isHavePermissionCreateCase = useMemo(
-    () =>
-      auth?.user?.roles
-        ?.find((item) => item.name === FEATURE_NAME.caseManagement)
-        ?.permissions.some((item) => item.permissionId === PERMISSION_ID.createCase),
-    [auth],
-  );
-
   const isHavePermissionSaveConsent = useMemo(
     () =>
       auth?.user?.roles
@@ -22,7 +14,6 @@ export default function useDataSubjectManagementPermission() {
   );
 
   return {
-    isHavePermissionCreateCase,
     isHavePermissionSaveConsent,
   };
 }
