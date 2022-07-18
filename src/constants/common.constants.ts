@@ -63,4 +63,6 @@ export const PERMISSION_ID = {
   createCase: 'PDPA_CaseManagement_Create',
   editConsent: 'PDPA_ConsentManagement_Edit',
   editDataSubject: 'PDPA_DataSubjectManagement_Edit',
+  deleteCase: 'PDPA_CaseManagement_Delete',
+  editCase: 'PDPA_CaseManagement_Edit',
 };
