@@ -1,5 +1,4 @@
 import { Form, Row } from 'antd';
-import IconCross from 'assets/icons/icon-cross';
 import IconSearch from 'assets/icons/icon-search';
 import clsx from 'clsx';
 import InputForm from 'libraries/form/input/input-form';
@@ -11,6 +10,7 @@ import { useTranslation } from 'react-i18next';
 import CaseManagementTable from '../components/CaseManagementTable';
 
 import styles from './index.module.scss';
+import SearchCaseAdvance from './SearchCaseAdvance';
 import { useSearchCase } from './service';
 
 function SearchCase() {
@@ -103,9 +103,7 @@ function SearchCase() {
             </div>
           </Form>
 
-          <Button typeDisplay='ghost' className={styles.btnSearchAdvanced} icon={<IconCross />}>
-            {t('advanced')}
-          </Button>
+          <SearchCaseAdvance onSearchDataSubject={(v: any) => onSearchCaseList(v)} t={t} />
         </Row>
 
         <div

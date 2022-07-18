@@ -1,5 +1,6 @@
 import { useMount, useRequest } from 'ahooks';
 import dayjs from 'dayjs';
+import isEmpty from 'lodash/isEmpty';
 import debounce from 'lodash/debounce';
 import get from 'lodash/get';
 import { useRef, useState } from 'react';
@@ -8,14 +9,55 @@ import { API_PATH } from 'utils/api/constant';
 import { formatIdSubjectHistory } from 'utils/common.utils';
 
 const getListCaseManagementService = async (values: any): Promise<any> => {
-  const response: any = await ApiUtils.post(API_PATH.GET_LIST_CASE_MANAGEMENT, {
+  const params: any = {
     userId: 1,
     limit: 10,
     isEqualSearch: !!values?.isEqualSearch,
     page: values?.page || 1,
-    searchString: '',
-    assignTo: values.searchString || '',
-  });
+    searchString: values.searchString || '',
+    assignTo: '',
+  };
+  if (!isEmpty(values?.advanceSearch)) {
+    params['advanceSearch'] = {};
+    if (values?.advanceSearch?.status) {
+      params['advanceSearch'] = {
+        ...params['advanceSearch'],
+        status: {
+          searchString: values?.advanceSearch?.status || '',
+          isEqualSearch: true,
+        },
+      };
+    }
+    if (values?.advanceSearch?.dsName) {
+      params['advanceSearch'] = {
+        ...params['advanceSearch'],
+        dsName: {
+          searchString: values?.advanceSearch?.dsName || '',
+          isEqualSearch: true,
+        },
+      };
+    }
+    if (values?.advanceSearch?.caseId) {
+      params['advanceSearch'] = {
+        ...params['advanceSearch'],
+        caseId: {
+          searchString: values?.advanceSearch?.caseId || '',
+          isEqualSearch: true,
+        },
+      };
+    }
+    if (values?.advanceSearch?.assignTo) {
+      params['advanceSearch'] = {
+        ...params['advanceSearch'],
+        assignTo: {
+          searchString: values?.advanceSearch?.assignTo || '',
+          isEqualSearch: true,
+        },
+      };
+    }
+  }
+
+  const response: any = await ApiUtils.post(API_PATH.GET_LIST_CASE_MANAGEMENT, params);
 
   const current = response?.content?.metadata?.currentPage || 1;
 
@@ -46,7 +88,7 @@ const getSuggestionCase = async (value: string, page: number) => {
   const res: any = await ApiUtils.fetch(API_PATH.SEARCH_CASE_AUTOCOMPLETE, params);
 
   return {
-    data: res?.content?.data?.map((v: any, idx: number) => ({ id: idx, name: v.assignTo })),
+    data: res?.content?.data?.map((v: any, idx: number) => ({ id: idx, name: v })),
     isLoadMore: +res?.content?.metadata?.currentPage < +res?.content?.metadata?.lastPage,
     currentPage: +res?.content?.metadata?.currentPage,
     value,
@@ -71,8 +113,8 @@ const useSearchCase = () => {
   });
 
   const { data, loading, run } = useRequest(
-    ({ value, isEqualSearch, page }: any) =>
-      getListCaseManagementService({ searchString: value, isEqualSearch, page }),
+    ({ value, isEqualSearch, page, advanceSearch }: any) =>
+      getListCaseManagementService({ searchString: value, isEqualSearch, page, advanceSearch }),
     {
       manual: true,
       cacheKey: 'case-management',
@@ -89,7 +131,7 @@ const useSearchCase = () => {
       page: number;
       isLoadMore: boolean;
     }) => {
-      // if (refCancelRequest.current) throw Error('Block request');
+      if (refCancelRequest.current) throw Error('Block request');
       return getSuggestionCase(value, page);
     },
     {
@@ -131,10 +173,13 @@ const useSearchCase = () => {
   };
 
   const onSearchCaseSuggestion = (values: { searchString: string }, callback: () => void) => {
-    reqSearchCaseSuggestion.run({
+    if (get(values, 'type') === 'enter') refCancelRequest.current = true;
+
+    run({
       value: values.searchString,
       page: 1,
       isLoadMore: false,
+      isEqualSearch: false,
     });
     if (callback) callback();
   };
