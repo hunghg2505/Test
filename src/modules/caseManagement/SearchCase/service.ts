@@ -24,7 +24,7 @@ const getListCaseManagementService = async (values: any): Promise<any> => {
         ...params['advanceSearch'],
         status: {
           searchString: values?.advanceSearch?.status || '',
-          isEqualSearch: true,
+          isEqualSearch: false,
         },
       };
     }
@@ -33,7 +33,7 @@ const getListCaseManagementService = async (values: any): Promise<any> => {
         ...params['advanceSearch'],
         dsName: {
           searchString: values?.advanceSearch?.dsName || '',
-          isEqualSearch: true,
+          isEqualSearch: false,
         },
       };
     }
@@ -51,7 +51,7 @@ const getListCaseManagementService = async (values: any): Promise<any> => {
         ...params['advanceSearch'],
         assignTo: {
           searchString: values?.advanceSearch?.assignTo || '',
-          isEqualSearch: true,
+          isEqualSearch: false,
         },
       };
     }
@@ -119,7 +119,7 @@ const useSearchCase = () => {
       getListCaseManagementService({ searchString: value, isEqualSearch, page, advanceSearch }),
     {
       manual: true,
-      cacheKey: 'case-management',
+      cacheKey: 'search-case-management',
     },
   );
 
@@ -168,11 +168,18 @@ const useSearchCase = () => {
   }, 350);
 
   const onChangePage = (page: number) => {
+    console.log('data', data);
+
     run({
       page,
       value: data?.searchString,
       isEqualSearch: data?.isEqualSearch,
-      advanceSearch: data['advanceSearch'],
+      advanceSearch: {
+        status: data?.advanceSearch?.status?.searchString,
+        dsName: data?.advanceSearch?.dsName?.searchString,
+        caseId: data?.advanceSearch?.caseId?.searchString,
+        assignTo: data?.advanceSearch?.assignTo?.searchString,
+      },
     });
   };
 
@@ -206,7 +213,12 @@ const useSearchCase = () => {
   };
 
   useMount(() => {
-    run(getListCaseManagementService);
+    run({
+      page: data?.current || 1,
+      value: data?.searchString,
+      isEqualSearch: data?.isEqualSearch,
+      advanceSearch: data?.advanceSearch,
+    });
   });
 
   return {
