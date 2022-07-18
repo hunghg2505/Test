@@ -130,18 +130,11 @@ const useSearchCase = () => {
   }, 350);
 
   const onChangePage = (page: number) => {
-    console.log('data', data);
-
     run({
       page,
       value: data?.searchString,
       isEqualSearch: data?.isEqualSearch,
-      advanceSearch: {
-        status: data?.advanceSearch?.status?.searchString,
-        dsName: data?.advanceSearch?.dsName?.searchString,
-        caseId: data?.advanceSearch?.caseId?.searchString,
-        assignTo: data?.advanceSearch?.assignTo?.searchString,
-      },
+      advanceSearch: data?.advanceSearch,
     });
   };
 
