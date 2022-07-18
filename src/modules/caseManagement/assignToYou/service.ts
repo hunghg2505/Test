@@ -12,7 +12,13 @@ const getListAssignToYou = async (values: any, username: string) => {
     page: values?.page || 1,
     searchString: '',
     isEqualSearch: true,
-    assignTo: username,
+    assignTo: '',
+    advanceSearch: {
+      assignTo: {
+        searchString: username || '',
+        isEqualSearch: true,
+      },
+    },
   });
 
   const current = response?.content?.metadata?.currentPage || 1;
@@ -31,6 +37,7 @@ const getListAssignToYou = async (values: any, username: string) => {
         caseStatus: item?.status,
         createdDate: dayjs(item?.createdAt).format('MMM DD, YYYY'),
       })) || [],
+    value: username,
   };
 };
 

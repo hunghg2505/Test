@@ -75,7 +75,9 @@ const getListCaseManagementService = async (values: any): Promise<any> => {
         caseStatus: item?.status,
         createdDate: dayjs(item?.createdAt).format('MMM DD, YYYY'),
       })) || [],
-    searchString: values.searchString || '',
+    searchString: params?.searchString || '',
+    isEqualSearch: params?.isEqualSearch || '',
+    advanceSearch: params['advanceSearch'],
   };
 };
 
@@ -168,7 +170,9 @@ const useSearchCase = () => {
   const onChangePage = (page: number) => {
     run({
       page,
-      searchString: data.searchString,
+      value: data?.searchString,
+      isEqualSearch: data?.isEqualSearch,
+      advanceSearch: data['advanceSearch'],
     });
   };
 
@@ -197,7 +201,7 @@ const useSearchCase = () => {
     reqSearchCaseSuggestion.run({
       value: users.value,
       page: users.currentPage + 1,
-      isLoadMore: false,
+      isLoadMore: true,
     });
   };
 
