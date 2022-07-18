@@ -94,30 +94,30 @@ const CaseInfo = ({ data, onClickEdit, deleteCaseRequest }: any) => {
         </Col>
         <Col xs={2}></Col>
         <Col xs={11} className={styles.info}>
-          <p className={styles.label}>Accepted Date</p>
+          <p className={styles.label}>
+            Accepted Date <span className={styles.asterisk}>*</span>
+          </p>
           <p className={styles.value}>{dayjs(data?.acceptedDate).format('DD/MM/YY')}</p>
         </Col>
       </Row>
       <Divider />
       <Row>
         <Col xs={11} className={styles.info}>
-          <p className={styles.label}>
-            Result<span className={styles.asterisk}>*</span>
-          </p>
+          <p className={styles.label}>Result</p>
           <p className={styles.value}>{data?.responseStatus}</p>
         </Col>
         <Col xs={2}></Col>
         <Col xs={11} className={styles.info}>
-          <p className={styles.label}>
-            Reason<span className={styles.asterisk}>*</span>
-          </p>
+          <p className={styles.label}>Reason</p>
           <p className={clsx(styles.value, styles.leftSpace)}>{data?.reason}</p>
         </Col>
       </Row>
       <Row>
         <Col xs={11} className={styles.info}>
-          <p className={styles.label}>Date of reponse</p>
-          <p className={styles.value}>{dayjs(data?.dateOfResponse).format('DD/MM/YY')}</p>
+          <p className={styles.label}>Date of Response</p>
+          <p className={styles.value}>
+            {data?.dateOfResponse ? dayjs(data?.dateOfResponse).format('DD/MM/YY') : 'N/A'}
+          </p>
         </Col>
         <Col xs={2}></Col>
       </Row>

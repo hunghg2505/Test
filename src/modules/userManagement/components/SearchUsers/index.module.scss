@@ -4,12 +4,11 @@
   flex-flow: nowrap;
   position: relative;
   width: 100%;
-  background: #FFFFFF;
-  border: 1px solid #F6F6F6;
+  background: #ffffff;
+  border: 1px solid #f6f6f6;
   box-shadow: 0px 5px 40px rgba(9, 44, 76, 0.02);
   border-radius: 8px;
   padding: 32px;
-  margin: 0 0 40px;
 }
 
 .usersHeader {
@@ -19,9 +18,14 @@
   }
 }
 .searchForm {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  flex-flow: nowrap;
+  position: relative;
+  width: 100%;
+  background-color: $color-white;
+  border: 1px solid $color-gray6;
+  box-shadow: 0px 5px 40px rgba(9, 44, 76, 0.02);
+  border-radius: 8px;
+  padding: 32px;
 }
 
 .searchForm {
