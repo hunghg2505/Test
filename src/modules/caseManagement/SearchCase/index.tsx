@@ -1,3 +1,4 @@
+import { useClickAway } from 'ahooks';
 import { Form, Row } from 'antd';
 import IconSearch from 'assets/icons/icon-search';
 import clsx from 'clsx';
@@ -28,6 +29,14 @@ function SearchCase() {
     onLoadMoreUsers,
     users,
   } = useSearchCase();
+  const refFormSearchCase: any = useRef();
+
+  useClickAway(() => {
+    if (refListUsers.current?.closeListUser) {
+      refListUsers.current.closeListUser();
+      onResetUsers();
+    }
+  }, refFormSearchCase);
 
   const onFinish = (values: any) => {
     onSearchCaseSuggestion({ ...values, type: 'enter' }, () => {
@@ -50,7 +59,7 @@ function SearchCase() {
       <div className={styles.wrap}>
         <Row justify='center' align='middle' className={styles.searchCaseHeader}>
           <Form onFinish={onFinish} onFieldsChange={onFieldsChange}>
-            <div className={styles.formSearchWrap}>
+            <div className={styles.formSearchWrap} ref={refFormSearchCase}>
               <Row justify='center' align='middle' className={styles.searchForm}>
                 <IconSearch />
 
