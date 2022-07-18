@@ -1,5 +1,5 @@
+import { useClickAway } from 'ahooks';
 import { Form, Row } from 'antd';
-import IconCross from 'assets/icons/icon-cross';
 import IconSearch from 'assets/icons/icon-search';
 import clsx from 'clsx';
 import InputForm from 'libraries/form/input/input-form';
@@ -11,6 +11,7 @@ import { useTranslation } from 'react-i18next';
 import CaseManagementTable from '../components/CaseManagementTable';
 
 import styles from './index.module.scss';
+import SearchCaseAdvance from './SearchCaseAdvance';
 import { useSearchCase } from './service';
 
 function SearchCase() {
@@ -28,6 +29,14 @@ function SearchCase() {
     onLoadMoreUsers,
     users,
   } = useSearchCase();
+  const refFormSearchCase: any = useRef();
+
+  useClickAway(() => {
+    if (refListUsers.current?.closeListUser) {
+      refListUsers.current.closeListUser();
+      onResetUsers();
+    }
+  }, refFormSearchCase);
 
   const onFinish = (values: any) => {
     onSearchCaseSuggestion({ ...values, type: 'enter' }, () => {
@@ -50,7 +59,7 @@ function SearchCase() {
       <div className={styles.wrap}>
         <Row justify='center' align='middle' className={styles.searchCaseHeader}>
           <Form onFinish={onFinish} onFieldsChange={onFieldsChange}>
-            <div className={styles.formSearchWrap}>
+            <div className={styles.formSearchWrap} ref={refFormSearchCase}>
               <Row justify='center' align='middle' className={styles.searchForm}>
                 <IconSearch />
 
@@ -103,9 +112,7 @@ function SearchCase() {
             </div>
           </Form>
 
-          <Button typeDisplay='ghost' className={styles.btnSearchAdvanced} icon={<IconCross />}>
-            {t('advanced')}
-          </Button>
+          <SearchCaseAdvance onSearchDataSubject={(v: any) => onSearchCaseList(v)} t={t} />
         </Row>
 
         <div

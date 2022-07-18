@@ -1,0 +1,56 @@
+@import '../../../../styles/variables.scss';
+
+.formSearchAdvanced {
+  padding: 20px 24px;
+  background-color: $white_color;
+  width: 391px;
+  border: 1px solid #f6f6f6;
+  box-shadow: 0px 5px 40px rgba(9, 44, 76, 0.05);
+  border-radius: 8px;
+
+  :global {
+    label {
+      color: $color-gray4;
+    }
+  }
+}
+
+
+.btnSearchAdvanced {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 15px;
+  border-radius: 40px;
+  padding: 7px 26px;
+  span {
+    font-weight: 700;
+    font-size: 16px;
+    margin-left: 10px;
+  }
+
+  &:hover svg path,
+  &:focus svg path {
+    stroke: $color-white !important;
+  }
+}
+
+.btnSearchAdvancedDd {
+  margin-top: 16px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  span {
+    font-weight: 700;
+    font-size: 16px;
+    margin-left: 10px;
+    color: #fafafa;
+  }
+
+  &:hover svg path,
+  &:focus svg path {
+    stroke: $color-white !important;
+  }
+}

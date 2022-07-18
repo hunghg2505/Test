@@ -1,5 +1,6 @@
 import { useMount, useRequest } from 'ahooks';
 import dayjs from 'dayjs';
+import isEmpty from 'lodash/isEmpty';
 import debounce from 'lodash/debounce';
 import get from 'lodash/get';
 import { useRef, useState } from 'react';
@@ -8,14 +9,55 @@ import { API_PATH } from 'utils/api/constant';
 import { formatIdSubjectHistory } from 'utils/common.utils';
 
 const getListCaseManagementService = async (values: any): Promise<any> => {
-  const response: any = await ApiUtils.post(API_PATH.GET_LIST_CASE_MANAGEMENT, {
+  const params: any = {
     userId: 1,
     limit: 10,
     isEqualSearch: !!values?.isEqualSearch,
     page: values?.page || 1,
-    searchString: '',
-    assignTo: values.searchString || '',
-  });
+    searchString: values.searchString || '',
+    assignTo: '',
+  };
+  if (!isEmpty(values?.advanceSearch)) {
+    params['advanceSearch'] = {};
+    if (values?.advanceSearch?.status) {
+      params['advanceSearch'] = {
+        ...params['advanceSearch'],
+        status: {
+          searchString: values?.advanceSearch?.status || '',
+          isEqualSearch: true,
+        },
+      };
+    }
+    if (values?.advanceSearch?.dsName) {
+      params['advanceSearch'] = {
+        ...params['advanceSearch'],
+        dsName: {
+          searchString: values?.advanceSearch?.dsName || '',
+          isEqualSearch: true,
+        },
+      };
+    }
+    if (values?.advanceSearch?.caseId) {
+      params['advanceSearch'] = {
+        ...params['advanceSearch'],
+        caseId: {
+          searchString: values?.advanceSearch?.caseId || '',
+          isEqualSearch: true,
+        },
+      };
+    }
+    if (values?.advanceSearch?.assignTo) {
+      params['advanceSearch'] = {
+        ...params['advanceSearch'],
+        assignTo: {
+          searchString: values?.advanceSearch?.assignTo || '',
+          isEqualSearch: true,
+        },
+      };
+    }
+  }
+
+  const response: any = await ApiUtils.post(API_PATH.GET_LIST_CASE_MANAGEMENT, params);
 
   const current = response?.content?.metadata?.currentPage || 1;
 
@@ -33,7 +75,9 @@ const getListCaseManagementService = async (values: any): Promise<any> => {
         caseStatus: item?.status,
         createdDate: dayjs(item?.createdAt).format('MMM DD, YYYY'),
       })) || [],
-    searchString: values.searchString || '',
+    searchString: params?.searchString || '',
+    isEqualSearch: params?.isEqualSearch || '',
+    advanceSearch: params['advanceSearch'],
   };
 };
 
@@ -71,8 +115,8 @@ const useSearchCase = () => {
   });
 
   const { data, loading, run } = useRequest(
-    ({ value, isEqualSearch, page }: any) =>
-      getListCaseManagementService({ searchString: value, isEqualSearch, page }),
+    ({ value, isEqualSearch, page, advanceSearch }: any) =>
+      getListCaseManagementService({ searchString: value, isEqualSearch, page, advanceSearch }),
     {
       manual: true,
       cacheKey: 'case-management',
@@ -89,7 +133,7 @@ const useSearchCase = () => {
       page: number;
       isLoadMore: boolean;
     }) => {
-      // if (refCancelRequest.current) throw Error('Block request');
+      if (refCancelRequest.current) throw Error('Block request');
       return getSuggestionCase(value, page);
     },
     {
@@ -126,15 +170,20 @@ const useSearchCase = () => {
   const onChangePage = (page: number) => {
     run({
       page,
-      searchString: data.searchString,
+      value: data?.searchString,
+      isEqualSearch: data?.isEqualSearch,
+      advanceSearch: data['advanceSearch'],
     });
   };
 
   const onSearchCaseSuggestion = (values: { searchString: string }, callback: () => void) => {
-    reqSearchCaseSuggestion.run({
+    if (get(values, 'type') === 'enter') refCancelRequest.current = true;
+
+    run({
       value: values.searchString,
       page: 1,
       isLoadMore: false,
+      isEqualSearch: false,
     });
     if (callback) callback();
   };
@@ -152,7 +201,7 @@ const useSearchCase = () => {
     reqSearchCaseSuggestion.run({
       value: users.value,
       page: users.currentPage + 1,
-      isLoadMore: false,
+      isLoadMore: true,
     });
   };
 

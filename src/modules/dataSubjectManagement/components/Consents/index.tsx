@@ -71,8 +71,6 @@ const SearchBox = ({
       enableButtonCreateConsent: () => setDisable(true),
       disableButtonCreateConsent: () => setDisable(false),
       updateConsentsId: (consentsId: string[]) => {
-        console.log('consentsId', consentsId);
-
         setConsentsId(consentsId);
       },
     };
