@@ -42,7 +42,7 @@ const getListCaseManagementService = async (values: any): Promise<any> => {
         ...params['advanceSearch'],
         caseId: {
           searchString: values?.advanceSearch?.caseId || '',
-          isEqualSearch: true,
+          isEqualSearch: false,
         },
       };
     }
