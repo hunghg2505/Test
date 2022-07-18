@@ -24,7 +24,7 @@ const getListCaseManagementService = async (values: any): Promise<any> => {
         ...params['advanceSearch'],
         status: {
           searchString: values?.advanceSearch?.status || '',
-          isEqualSearch: true,
+          isEqualSearch: false,
         },
       };
     }
@@ -33,7 +33,7 @@ const getListCaseManagementService = async (values: any): Promise<any> => {
         ...params['advanceSearch'],
         dsName: {
           searchString: values?.advanceSearch?.dsName || '',
-          isEqualSearch: true,
+          isEqualSearch: false,
         },
       };
     }
@@ -42,7 +42,7 @@ const getListCaseManagementService = async (values: any): Promise<any> => {
         ...params['advanceSearch'],
         caseId: {
           searchString: values?.advanceSearch?.caseId || '',
-          isEqualSearch: true,
+          isEqualSearch: false,
         },
       };
     }
@@ -51,7 +51,7 @@ const getListCaseManagementService = async (values: any): Promise<any> => {
         ...params['advanceSearch'],
         assignTo: {
           searchString: values?.advanceSearch?.assignTo || '',
-          isEqualSearch: true,
+          isEqualSearch: false,
         },
       };
     }
