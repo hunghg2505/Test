@@ -37,7 +37,7 @@ const CaseInfo = ({ data, onClickEdit, deleteCaseRequest }: any) => {
     confirm({
       title: 'Confirm Delete',
       icon: <ExclamationCircleOutlined style={{ color: 'red' }} />,
-      content: 'Are you sure you want to delete this Case?',
+      content: 'Are you sure you want to Delete the Case? This action can not be reversed',
       okText: 'Yes',
       cancelText: 'No',
       okType: 'danger',
