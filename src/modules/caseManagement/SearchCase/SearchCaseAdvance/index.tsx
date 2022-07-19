@@ -99,17 +99,7 @@ const SearchCaseAdvance = ({ onSearchDataSubject, t }: any) => {
             >
               <Row gutter={[0, 16]}>
                 <Col xs={24}>
-                  <Form.Item
-                    label='Case Status'
-                    name='status'
-                    required
-                    rules={[
-                      {
-                        required: true,
-                        message: t('messages.errors.require', { field: 'Status' }),
-                      },
-                    ]}
-                  >
+                  <Form.Item label='Case Status' name='status'>
                     <Select placeholder='Search Case Status'>
                       {STATUS_DROPDOWN_DATA.map((item, index) => (
                         <Select.Option value={item.value} key={`${index}${item.value}`}>
