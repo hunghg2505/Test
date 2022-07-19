@@ -1,27 +1,27 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
-import dayjs from 'dayjs';
-import { Col, Form, Row, Divider, DatePicker } from 'antd';
-import InputForm from 'libraries/form/input/input-form';
-import InputTextAreaForm from 'libraries/form/input/input-textarea-form';
-import Select from 'libraries/UI/Select';
-import { useTranslation } from 'react-i18next';
-import moment from 'moment';
+import { Col, DatePicker, Divider, Form, Row } from 'antd';
 import {
   DATA_SUBJECT_RIGHT_DROPDOWN_DATA,
-  STATUS_DROPDOWN_DATA,
   RESULT_DROPDOWN_DATA,
+  STATUS_DROPDOWN_DATA,
 } from 'constants/common.constants';
-
-import styles from './index.module.scss';
-import Button from 'libraries/UI/Button';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import {
   useCaseDetail,
   useEditCase,
   useGetListDataDropDropdown,
 } from 'modules/caseManagement/services';
-import { useParams } from 'react-router-dom';
-import Loading from 'libraries/components/loading';
+
+import Button from 'libraries/UI/Button';
 import CaseInfo from '../CaseInfo';
+import InputForm from 'libraries/form/input/input-form';
+import InputTextAreaForm from 'libraries/form/input/input-textarea-form';
+import Loading from 'libraries/components/loading';
+import Select from 'libraries/UI/Select';
+import dayjs from 'dayjs';
+import moment from 'moment';
+import styles from './index.module.scss';
+import { useParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 const CreateCaseForm = ({
   data,
@@ -240,6 +240,7 @@ const CreateCaseForm = ({
                   placeholder='Comment ...'
                   rows={6}
                   maxLength={250}
+                  uploadFile
                 />
               </Col>
             )}
