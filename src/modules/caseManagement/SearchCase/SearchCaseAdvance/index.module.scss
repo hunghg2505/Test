@@ -10,11 +10,11 @@
 
   :global {
     label {
-      color: $color-gray4;
+      color: $black_color !important;
+      font-weight: 600 !important;
     }
   }
 }
-
 
 .btnSearchAdvanced {
   display: flex;

@@ -100,7 +100,7 @@ const SearchCaseAdvance = ({ onSearchDataSubject, t }: any) => {
                   <InputForm
                     label='Status'
                     name='status'
-                    placeholder='Status'
+                    placeholder='Search Case Status'
                     maxLength={55}
                     rules={[
                       {
@@ -118,7 +118,7 @@ const SearchCaseAdvance = ({ onSearchDataSubject, t }: any) => {
                   <InputForm
                     label='DS Name'
                     name='dsName'
-                    placeholder='DS Name'
+                    placeholder='Search DS Name'
                     maxLength={55}
                     rules={[
                       {
@@ -137,7 +137,7 @@ const SearchCaseAdvance = ({ onSearchDataSubject, t }: any) => {
                   <InputForm
                     label='Case ID'
                     name='caseId'
-                    placeholder='Case ID'
+                    placeholder='Search Case ID'
                     maxLength={55}
                     rules={[
                       {
