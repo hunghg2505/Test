@@ -2,9 +2,11 @@ import { useClickAway } from 'ahooks';
 import { Col, Form, Row } from 'antd';
 import IconCross from 'assets/icons/icon-cross';
 import IconSearch from 'assets/icons/icon-search';
+import { STATUS_DROPDOWN_DATA } from 'constants/common.constants';
 import { useFadeEffect, _popoverStyles, _popoverVisibleStyles } from 'hooks/useFadeEffect';
 import InputForm from 'libraries/form/input/input-form';
 import Button from 'libraries/UI/Button';
+import Select from 'libraries/UI/Select';
 import React, { useRef } from 'react';
 import styles from './index.module.scss';
 
@@ -97,22 +99,25 @@ const SearchCaseAdvance = ({ onSearchDataSubject, t }: any) => {
             >
               <Row gutter={[0, 16]}>
                 <Col xs={24}>
-                  <InputForm
-                    label='Status'
+                  <Form.Item
+                    label='Case Status'
                     name='status'
-                    placeholder='Search Case Status'
-                    maxLength={55}
+                    required
                     rules={[
                       {
-                        min: 3,
-                        message: t('messages.errors.min', { min: 3 }),
-                      },
-                      {
-                        max: 55,
-                        message: t('messages.errors.max', { max: 55 }),
+                        required: true,
+                        message: t('messages.errors.require', { field: 'Status' }),
                       },
                     ]}
-                  />
+                  >
+                    <Select placeholder='Search Case Status'>
+                      {STATUS_DROPDOWN_DATA.map((item, index) => (
+                        <Select.Option value={item.value} key={`${index}${item.value}`}>
+                          {item.value}
+                        </Select.Option>
+                      ))}
+                    </Select>
+                  </Form.Item>
                 </Col>
                 <Col xs={24}>
                   <InputForm
