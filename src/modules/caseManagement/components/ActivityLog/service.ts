@@ -20,7 +20,8 @@ const getActivity = async (values: any) => {
         activityDesc: item?.description || '',
         activityFrom: '',
         activityDate: dayjs(item?.logDate).format('MMM DD,YYYY HH:MM:ss'),
-
+        linkFileDownload: item?.fileUrl,
+        linkFileDownloadName: item?.fileUrl?.split('commen-file/')?.[1],
         commentDetail: item?.detailComment || '',
       };
     }),
@@ -67,6 +68,15 @@ const useActivity = (caseId: number) => {
     getActivity({ caseId, current }),
   );
 
+  const reqDownloadComment = useRequest(
+    async (url: string) => {
+      return ApiUtils.fetch(url);
+    },
+    {
+      manual: true,
+    },
+  );
+
   useMount(() => {
     run({ current: 1 });
   });
@@ -82,6 +92,7 @@ const useActivity = (caseId: number) => {
     data,
     onChange: onChangeCurrent,
     refresh,
+    onDownloadComment: reqDownloadComment.run,
   };
 };
 
