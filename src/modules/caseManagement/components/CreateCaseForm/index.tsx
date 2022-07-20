@@ -222,7 +222,6 @@ const CreateCaseForm = ({
                 placeholder='Reason for Completed or Reject'
                 rows={6}
                 className={styles.textarea}
-                maxLength={250}
               />
             </Col>
             <Col xs={12}>
