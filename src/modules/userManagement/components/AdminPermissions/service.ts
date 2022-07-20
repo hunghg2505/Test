@@ -4,6 +4,8 @@ import { CheckboxChangeEvent } from 'antd/lib/checkbox';
 import ApiUtils from 'utils/api/api.utils';
 import { API_PATH } from 'utils/api/constant';
 import get from 'lodash/get';
+import { useRef, useState } from 'react';
+import { debounce, values } from 'lodash';
 
 const TEXT_PERMISSIONS: any = {
   PDPA_CaseManagement_Edit: 'Edit',
@@ -102,10 +104,107 @@ const getUserPermissions = async ({
   };
 };
 
+const getSuggestionUser = async (value: string, page: number) => {
+  const params = {
+    keyword: value,
+    limit: 10,
+    page: page || 1,
+  };
+
+  const response: any = await ApiUtils.post(API_PATH.GET_LIST_AUTOCOMPLETE_USER, params);
+
+  return {
+    data: response?.content?.data.map((item: any, index: number) => {
+      return {
+        key: `${item?.name}${index}`,
+        name: item,
+      };
+    }),
+    isLoadMore: +response?.content?.metadata?.currentPage < +response?.content?.metadata?.lastPage,
+    currentPage: +response?.content?.metadata?.currentPage,
+    value,
+  };
+};
+
 const useAdminPermissions = () => {
+  const refCancelRequest = useRef(false);
+
+  const [users, setUsers] = useState<{
+    data: any[];
+    isLoadMore: boolean;
+    currentPage: number;
+    value: string;
+  }>({
+    data: [],
+    isLoadMore: false,
+    currentPage: 1,
+    value: '',
+  });
+
   const { data, loading, run } = useRequest(getUserPermissions, {
     manual: true,
   });
+
+  const reqSearchUserSuggestion = useRequest(
+    async ({
+      value,
+      page = 1,
+      isLoadMore = false,
+    }: {
+      value: string;
+      page: number;
+      isLoadMore: boolean;
+    }) => {
+      if (refCancelRequest.current) throw Error('Block request');
+      return getSuggestionUser(value, page);
+    },
+    {
+      manual: true,
+      refreshDeps: [refCancelRequest.current],
+      onError: (err: any) => {
+        refCancelRequest.current = false;
+      },
+      onSuccess: (r: any, params) => {
+        const isLoadMore = params[0].isLoadMore;
+
+        setUsers((prev) => {
+          const newData = isLoadMore ? [...prev.data, ...r.data] : r.data;
+
+          return {
+            data: newData,
+            isLoadMore: r.isLoadMore,
+            currentPage: r.currentPage,
+            value: r.value,
+          };
+        });
+      },
+    },
+  );
+
+  const onSearchUserSuggestionDebounce = debounce(async (values: any[], callback: () => void) => {
+    const value = get(values, '[0].value', '');
+    if (value?.length < 1) return;
+
+    await reqSearchUserSuggestion.runAsync({ value, page: 1, isLoadMore: false });
+    if (callback) callback();
+  }, 350);
+
+  const onResetUsers = () => {
+    setUsers({
+      data: [],
+      isLoadMore: false,
+      currentPage: 1,
+      value: '',
+    });
+  };
+
+  const onLoadMoreUsers = () => {
+    reqSearchUserSuggestion.run({
+      value: users.value,
+      page: users.currentPage + 1,
+      isLoadMore: false,
+    });
+  };
 
   useMount(() => {
     run({ page: 1 });
@@ -115,8 +214,11 @@ const useAdminPermissions = () => {
     run({ keyword: data.keyword, page });
   };
 
-  const onSearchUserPermissions = ({ keyword }: { keyword: string }) => {
-    run({ keyword, page: 1 });
+  const onSearchUserPermissions = (values = {}, callback: () => void) => {
+    if (!Object.values(values)?.filter((v) => v).length) return;
+    if (get(values, 'type') === 'enter') refCancelRequest.current = true;
+    run({ ...values, page: 1 });
+    if (callback) callback();
   };
 
   return {
@@ -124,6 +226,11 @@ const useAdminPermissions = () => {
     loading,
     onChangePage,
     onSearchUserPermissions,
+    onResetUsers,
+    onLoadMoreUsers,
+    onSearchUserSuggestionDebounce,
+    users,
+    reqSearchUserSuggestion,
   };
 };
 

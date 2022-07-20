@@ -6,6 +6,7 @@ import { paginationItemRender } from 'libraries/UI/Pagination';
 import styles from './index.module.scss';
 import { CheckboxChangeEvent } from 'antd/lib/checkbox';
 import { useUpdatePermissions } from './service';
+import { useTranslation } from 'react-i18next';
 
 export interface DataType {
   key: React.ReactNode;
@@ -129,6 +130,7 @@ const AdminPermissions = ({
   onChangePage: any;
 }) => {
   const reqUpdatePermissions = useUpdatePermissions();
+  const { t } = useTranslation();
 
   return (
     <>
@@ -147,22 +149,26 @@ const AdminPermissions = ({
           [styles.usersContentEmpty]: !loading && !data?.data.length,
         })}
       >
-        <Table
-          className={styles.table}
-          columns={columns}
-          dataSource={data?.data}
-          loading={loading}
-          expandable={{
-            expandedRowRender: (record) => getExpandRowRender(record, reqUpdatePermissions),
-            expandIcon: customExpandIcon,
-          }}
-          pagination={{
-            current: data?.current,
-            total: data?.total,
-            onChange: onChangePage,
-            itemRender: paginationItemRender,
-          }}
-        />
+        {data?.data?.length === 0 ? (
+          <p className={styles.noResultText}>{t('no_result_found')}</p>
+        ) : (
+          <Table
+            className={styles.table}
+            columns={columns}
+            dataSource={data?.data}
+            loading={loading}
+            expandable={{
+              expandedRowRender: (record) => getExpandRowRender(record, reqUpdatePermissions),
+              expandIcon: customExpandIcon,
+            }}
+            pagination={{
+              current: data?.current,
+              total: data?.total,
+              onChange: onChangePage,
+              itemRender: paginationItemRender,
+            }}
+          />
+        )}
       </div>
       {/* {!!data?.data?.length && (
         <Row justify='start' align='middle' gutter={[16, 0]}>

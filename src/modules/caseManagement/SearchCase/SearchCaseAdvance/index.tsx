@@ -2,9 +2,11 @@ import { useClickAway } from 'ahooks';
 import { Col, Form, Row } from 'antd';
 import IconCross from 'assets/icons/icon-cross';
 import IconSearch from 'assets/icons/icon-search';
+import { STATUS_DROPDOWN_DATA } from 'constants/common.constants';
 import { useFadeEffect, _popoverStyles, _popoverVisibleStyles } from 'hooks/useFadeEffect';
 import InputForm from 'libraries/form/input/input-form';
 import Button from 'libraries/UI/Button';
+import Select from 'libraries/UI/Select';
 import React, { useRef } from 'react';
 import styles from './index.module.scss';
 
@@ -49,8 +51,46 @@ const SearchCaseAdvance = ({ onSearchDataSubject, t }: any) => {
           >
             <Form
               onFinish={(values) => {
+                let conditions: { [key: string]: any } = {};
+                if (values?.status) {
+                  conditions = {
+                    ...conditions,
+                    status: {
+                      searchString: values?.status || '',
+                      isEqualSearch: false,
+                    },
+                  };
+                }
+                if (values?.dsName) {
+                  conditions = {
+                    ...conditions,
+                    dsName: {
+                      searchString: values?.dsName || '',
+                      isEqualSearch: false,
+                    },
+                  };
+                }
+                if (values?.caseId) {
+                  conditions = {
+                    ...conditions,
+                    caseId: {
+                      searchString: values?.caseId || '',
+                      isEqualSearch: false,
+                    },
+                  };
+                }
+                if (values?.assignTo) {
+                  conditions = {
+                    ...conditions,
+                    assignTo: {
+                      searchString: values?.assignTo || '',
+                      isEqualSearch: false,
+                    },
+                  };
+                }
+
                 onSearchDataSubject({
-                  advanceSearch: values,
+                  advanceSearch: { ...conditions },
                 });
                 setIsShowSearch(false);
               }}
@@ -59,28 +99,21 @@ const SearchCaseAdvance = ({ onSearchDataSubject, t }: any) => {
             >
               <Row gutter={[0, 16]}>
                 <Col xs={24}>
-                  <InputForm
-                    label='Status'
-                    name='status'
-                    placeholder='Status'
-                    maxLength={55}
-                    rules={[
-                      {
-                        min: 3,
-                        message: t('messages.errors.min', { min: 3 }),
-                      },
-                      {
-                        max: 55,
-                        message: t('messages.errors.max', { max: 55 }),
-                      },
-                    ]}
-                  />
+                  <Form.Item label='Case Status' name='status'>
+                    <Select placeholder='Search Case Status'>
+                      {STATUS_DROPDOWN_DATA.map((item, index) => (
+                        <Select.Option value={item.value} key={`${index}${item.value}`}>
+                          {item.value}
+                        </Select.Option>
+                      ))}
+                    </Select>
+                  </Form.Item>
                 </Col>
                 <Col xs={24}>
                   <InputForm
                     label='DS Name'
                     name='dsName'
-                    placeholder='DS Name'
+                    placeholder='Search DS Name'
                     maxLength={55}
                     rules={[
                       {
@@ -99,7 +132,7 @@ const SearchCaseAdvance = ({ onSearchDataSubject, t }: any) => {
                   <InputForm
                     label='Case ID'
                     name='caseId'
-                    placeholder='Case ID'
+                    placeholder='Search Case ID'
                     maxLength={55}
                     rules={[
                       {

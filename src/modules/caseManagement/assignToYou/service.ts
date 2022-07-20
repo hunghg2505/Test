@@ -6,13 +6,18 @@ import { formatIdSubjectHistory } from 'utils/common.utils';
 import dayjs from 'dayjs';
 
 const getListAssignToYou = async (values: any, username: string) => {
-  const response: any = await ApiUtils.post(API_PATH.GET_LIST_CASE_MANAGEMENT, {
+  const response: any = await ApiUtils.post(API_PATH.GET_LIST_CASE_MANAGEMENT_ASSIGN_TO, {
     userId: 1,
     limit: 10,
     page: values?.page || 1,
     searchString: '',
     isEqualSearch: true,
-    assignTo: username,
+    advanceSearch: {
+      assignTo: {
+        searchString: username || '',
+        isEqualSearch: true,
+      },
+    },
   });
 
   const current = response?.content?.metadata?.currentPage || 1;
@@ -31,6 +36,7 @@ const getListAssignToYou = async (values: any, username: string) => {
         caseStatus: item?.status,
         createdDate: dayjs(item?.createdAt).format('MMM DD, YYYY'),
       })) || [],
+    value: username,
   };
 };
 
@@ -50,6 +56,7 @@ const useAssignToYou = () => {
     {
       manual: true,
       refreshDeps: [keycloak?.tokenParsed?.name],
+      cacheKey: 'case-assign-management',
     },
   );
 

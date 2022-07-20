@@ -16,46 +16,8 @@ const getListCaseManagementService = async (values: any): Promise<any> => {
     page: values?.page || 1,
     searchString: values.searchString || '',
     assignTo: '',
+    advanceSearch: values?.advanceSearch,
   };
-  if (!isEmpty(values?.advanceSearch)) {
-    params['advanceSearch'] = {};
-    if (values?.advanceSearch?.status) {
-      params['advanceSearch'] = {
-        ...params['advanceSearch'],
-        status: {
-          searchString: values?.advanceSearch?.status || '',
-          isEqualSearch: true,
-        },
-      };
-    }
-    if (values?.advanceSearch?.dsName) {
-      params['advanceSearch'] = {
-        ...params['advanceSearch'],
-        dsName: {
-          searchString: values?.advanceSearch?.dsName || '',
-          isEqualSearch: true,
-        },
-      };
-    }
-    if (values?.advanceSearch?.caseId) {
-      params['advanceSearch'] = {
-        ...params['advanceSearch'],
-        caseId: {
-          searchString: values?.advanceSearch?.caseId || '',
-          isEqualSearch: true,
-        },
-      };
-    }
-    if (values?.advanceSearch?.assignTo) {
-      params['advanceSearch'] = {
-        ...params['advanceSearch'],
-        assignTo: {
-          searchString: values?.advanceSearch?.assignTo || '',
-          isEqualSearch: true,
-        },
-      };
-    }
-  }
 
   const response: any = await ApiUtils.post(API_PATH.GET_LIST_CASE_MANAGEMENT, params);
 
@@ -75,7 +37,9 @@ const getListCaseManagementService = async (values: any): Promise<any> => {
         caseStatus: item?.status,
         createdDate: dayjs(item?.createdAt).format('MMM DD, YYYY'),
       })) || [],
-    searchString: values.searchString || '',
+    searchString: params?.searchString || '',
+    isEqualSearch: params?.isEqualSearch || '',
+    advanceSearch: params['advanceSearch'],
   };
 };
 
@@ -117,7 +81,7 @@ const useSearchCase = () => {
       getListCaseManagementService({ searchString: value, isEqualSearch, page, advanceSearch }),
     {
       manual: true,
-      cacheKey: 'case-management',
+      cacheKey: 'search-case-management',
     },
   );
 
@@ -168,7 +132,9 @@ const useSearchCase = () => {
   const onChangePage = (page: number) => {
     run({
       page,
-      searchString: data.searchString,
+      value: data?.searchString,
+      isEqualSearch: data?.isEqualSearch,
+      advanceSearch: data?.advanceSearch,
     });
   };
 
@@ -197,12 +163,17 @@ const useSearchCase = () => {
     reqSearchCaseSuggestion.run({
       value: users.value,
       page: users.currentPage + 1,
-      isLoadMore: false,
+      isLoadMore: true,
     });
   };
 
   useMount(() => {
-    run(getListCaseManagementService);
+    run({
+      page: data?.current || 1,
+      value: data?.searchString,
+      isEqualSearch: data?.isEqualSearch,
+      advanceSearch: data?.advanceSearch,
+    });
   });
 
   return {
