@@ -19,7 +19,7 @@ interface IActivity {
   linkFileDownloadName?: string;
 }
 
-const ActivityList = ({ data, onDownloadComment }: any) => {
+const ActivityList = ({ data }: any) => {
   return (
     <div className={styles.activityList}>
       <Collapse
@@ -43,12 +43,10 @@ const ActivityList = ({ data, onDownloadComment }: any) => {
                 <h2 className={styles.detailHeader}>Comment detail</h2>
                 <div className={styles.detailContent}>{activity.commentDetail}</div>
                 <p className={styles.attachedText}>Attached File</p>
-                <p
-                  onClick={() => onDownloadComment(activity?.linkFileDownload)}
-                  className={styles.downloadLink}
-                >
+
+                <a href={activity?.linkFileDownload} download className={styles.downloadLink}>
                   {activity?.linkFileDownloadName}
-                </p>
+                </a>
               </div>
             </Panel>
           );
@@ -69,7 +67,7 @@ const ActivityList = ({ data, onDownloadComment }: any) => {
 };
 
 function ActivityLog({ caseId }: { caseId: number }, ref: any) {
-  const { loading, data, onChange, refresh, onDownloadComment } = useActivity(caseId);
+  const { loading, data, onChange, refresh } = useActivity(caseId);
 
   useImperativeHandle(ref, () => {
     return {
@@ -82,7 +80,7 @@ function ActivityLog({ caseId }: { caseId: number }, ref: any) {
       <h2>Activity Log</h2>
       {!loading && data ? (
         <>
-          <ActivityList data={data?.data} onDownloadComment={onDownloadComment} />{' '}
+          <ActivityList data={data?.data} />{' '}
           <Row justify='end'>
             <Pagination
               current={data?.current}
