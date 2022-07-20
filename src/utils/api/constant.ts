@@ -32,6 +32,8 @@ export const API_PATH = {
   SEARCH_CASE_AUTOCOMPLETE: `${CASE_MANAGEMENT_BASE_URL}/data-autocomplete`,
   GET_CASE_CONSENT: `${CASE_MANAGEMENT_BASE_URL}/consent`,
   DELETE_CASE: `${CASE_MANAGEMENT_BASE_URL}/delete`,
+  UPLOAD_FILE: `${CASE_MANAGEMENT_BASE_URL}/upload-file`,
+  DOWNLOAD_FILE: (fileName: string) => `${CASE_MANAGEMENT_BASE_URL}/commen-file/${fileName}`,
 
   // User Management
   GET_LIST_USERS_ROLE_PERMISSION: `${USER_MANAGEMENT_BASE_URL}/users`,

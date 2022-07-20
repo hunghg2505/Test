@@ -4,24 +4,18 @@ import {
   RESULT_DROPDOWN_DATA,
   STATUS_DROPDOWN_DATA,
 } from 'constants/common.constants';
-import { useCallback, useEffect, useMemo, useState } from 'react';
-import {
-  useCaseDetail,
-  useEditCase,
-  useGetListDataDropDropdown,
-} from 'modules/caseManagement/services';
+import { useEditCase, useGetListDataDropDropdown } from 'modules/caseManagement/services';
+import { useEffect, useRef, useState } from 'react';
 
-import Button from 'libraries/UI/Button';
-import CaseInfo from '../CaseInfo';
-import InputForm from 'libraries/form/input/input-form';
-import InputTextAreaForm from 'libraries/form/input/input-textarea-form';
 import Loading from 'libraries/components/loading';
+import InputTextAreaForm from 'libraries/form/input/input-textarea-form';
+import Button from 'libraries/UI/Button';
 import Select from 'libraries/UI/Select';
-import dayjs from 'dayjs';
 import moment from 'moment';
-import styles from './index.module.scss';
-import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { useParams } from 'react-router-dom';
+import CaseInfo from '../CaseInfo';
+import styles from './index.module.scss';
 
 const CreateCaseForm = ({
   data,
@@ -33,7 +27,7 @@ const CreateCaseForm = ({
   const { t } = useTranslation();
   const { id } = useParams();
   const [editCaseForm] = Form.useForm();
-
+  const refFiles: any = useRef();
   const { actionsData, departmentsData, usersData } = useGetListDataDropDropdown();
 
   const [isEdit, setIsEdit] = useState(true);
@@ -51,14 +45,22 @@ const CreateCaseForm = ({
   const editCaseRequest = useEditCase(onFinishSubmitForm);
 
   const onFinish = (values: any) => {
-    editCaseRequest.run({
-      caseId: Number(id),
-      editCaseParam: {
-        ...values,
-        acceptedDate,
-        dateOfResponse,
+    let fileComment;
+    if (refFiles?.current?.getFileData) {
+      fileComment = refFiles.current.getFileData();
+    }
+
+    editCaseRequest.run(
+      {
+        caseId: Number(id),
+        editCaseParam: {
+          ...values,
+          acceptedDate,
+          dateOfResponse,
+        },
       },
-    });
+      fileComment,
+    );
   };
 
   useEffect(() => {
@@ -241,6 +243,7 @@ const CreateCaseForm = ({
                   rows={6}
                   maxLength={250}
                   uploadFile
+                  refFiles={refFiles}
                 />
               </Col>
             )}

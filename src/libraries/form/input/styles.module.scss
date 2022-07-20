@@ -24,6 +24,7 @@
 
 // input password
 .customInputPasswordFormItem {
+
   margin: 0;
 
   div[class='ant-col ant-form-item-label'] {
@@ -42,11 +43,19 @@
       }
     }
   }
+
+  :global {
+    textarea {
+      resize: none !important;
+    }
+  }
 }
 
 .customTextAreaFormItem {
   margin: 0;
   position: relative;
+
+
 
   div[class='ant-col ant-form-item-label'] {
     line-height: 14px;
@@ -64,41 +73,39 @@
       // }
     }
   }
-
-  .uploadButton {
-    border: none;
-    position: absolute;
-    right: 15px;
-    top: 130px;
+  > div {
+    position: relative;
   }
 }
 
-.customInputPasswordForm {
-  // border: 1px solid $white_500;
-  // border-radius: 16px;
-  // padding: 12px 24px;
-  // outline: none;
-  // font-style: normal;
-  // font-weight: 400;
-  // font-size: 14px;
-  // line-height: 24px;
-  // color: $white_500;
-  // max-height: 48px;
-
-  // &:focus {
-  //   border: 1px solid $white_500;
-  //   box-shadow: unset;
-  // }
-
-  // &:hover {
-  //   border: 1px solid $white_500;
-  // }
-
-  // input {
-  //   font-style: normal;
-  //   font-weight: 400;
-  //   font-size: 14px;
-  //   line-height: 24px;
-  //   color: $white_500;
-  // }
+.uploadWrap {
+  :global {
+    .ant-upload-disabled button {
+      cursor: not-allowed !important;
+    }
+  }
 }
+
+.uploadButton {
+  border: none;
+  position: absolute;
+  right: 15px;
+  top: 130px;
+  &::after {
+    display: none !important;
+  }
+}
+
+.fileItem {
+  padding: 8px 12px;
+  border-radius: 40px;
+  background-color: $color-gray3;
+  color: $color-white;
+  margin-right: 10px;
+}
+
+.btnDelete {
+  cursor: pointer;
+  margin-left: 8px;
+}
+

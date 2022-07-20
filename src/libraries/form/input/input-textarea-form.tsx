@@ -1,4 +1,4 @@
-import { Button, Form, Upload, message } from 'antd';
+import { Button, Form, Upload, message, Row, Col } from 'antd';
 
 import IconUpload from 'assets/icons/icon-upload';
 import Input from 'libraries/UI/Input';
@@ -6,6 +6,8 @@ import { Rule } from 'antd/lib/form';
 import type { UploadProps } from 'antd';
 import clsx from 'clsx';
 import styles from './styles.module.scss';
+import { AnyKindOfDictionary, debounce } from 'lodash';
+import { useImperativeHandle, useRef, useState } from 'react';
 
 interface Props {
   label?: string;
@@ -21,7 +23,12 @@ interface Props {
   // custom
   classNameFormInput?: any;
   className?: any;
+  refFiles?: any;
 }
+
+const funcDebounce = (func: any, time: any) => {
+  return debounce(func, time);
+};
 
 const InputTextAreaForm = ({
   label,
@@ -36,52 +43,84 @@ const InputTextAreaForm = ({
   uploadFile,
   rows,
   required,
+  refFiles,
 }: Props) => {
-  const uploadProps: UploadProps = {
-    name: 'file',
-    action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
-    headers: {
-      authorization: 'authorization-text',
-    },
-    maxCount: 1,
-    onChange(info) {
-      if (info.file.status !== 'uploading') {
-        console.log(info.file, info.fileList);
-      }
-      if (info.file.status === 'done') {
-        message.success(`${info.file.name} file uploaded successfully`);
-      } else if (info.file.status === 'error') {
-        message.error(`${info.file.name} file upload failed.`);
-      }
-    },
+  const refFileImage: any = useRef([]);
+  const [fileData, setFileData] = useState<any[]>([]);
+
+  useImperativeHandle(refFiles, () => {
+    return {
+      getFileData: () => fileData,
+    };
+  });
+
+  const selectFileDebounce = funcDebounce((values: any, fileData: any) => {
+    const newData = [...values];
+    setFileData(newData);
+  }, 500);
+
+  const handleBeforeUpload = (files: any) => {
+    refFileImage.current.push(files);
+    selectFileDebounce(refFileImage.current, fileData);
   };
+
+  const onDeleteFile = (id: string) => () => {
+    const newFile = fileData?.filter((v: any) => v?.uid !== id);
+    refFileImage.current = newFile;
+    setFileData(newFile);
+  };
+
   return (
-    <Form.Item
-      label={label}
-      name={name}
-      rules={rules}
-      className={clsx(styles.customTextAreaFormItem, {
-        [classNameFormInput]: true,
-      })}
-      required={required}
-    >
-      <Input
-        className={clsx(styles.customInputPasswordForm, {
-          [className]: true,
+    <div>
+      <Form.Item
+        label={label}
+        name={name}
+        rules={rules}
+        className={clsx(styles.customTextAreaFormItem, {
+          [classNameFormInput]: true,
         })}
-        placeholder={placeholder}
-        autoComplete={autoComplete}
-        type='textarea'
-        maxLength={maxLength}
-        rows={rows}
-        disabled={disabled}
-      />
+        required={required}
+      >
+        <Input
+          className={clsx(styles.customInputPasswordForm, {
+            [className]: true,
+          })}
+          placeholder={placeholder}
+          autoComplete={autoComplete}
+          type='textarea'
+          maxLength={maxLength}
+          rows={rows}
+          disabled={disabled}
+        />
+      </Form.Item>
       {uploadFile && (
-        <Upload {...uploadProps}>
+        <Upload
+          accept={'.doc, .docx, .xls, .xlsx, .txt, .jpg, .jpeg, .png'}
+          beforeUpload={handleBeforeUpload}
+          itemRender={() => <></>}
+          customRequest={function () {
+            return void 0;
+          }}
+          fileList={fileData}
+          disabled={fileData?.length >= 1}
+          className={styles.uploadWrap}
+        >
           <Button icon={<IconUpload />} className={styles.uploadButton} />
         </Upload>
       )}
-    </Form.Item>
+      <Row>
+        {fileData?.map((item: any) => {
+          return (
+            <Row key={item?.uid} className={styles.fileItem} align='middle'>
+              <Col>{item?.name}</Col>
+              <Col className={styles.btnDelete} onClick={onDeleteFile(item?.uid)}>
+                X
+              </Col>
+            </Row>
+          );
+        })}
+      </Row>
+    </div>
   );
 };
 
