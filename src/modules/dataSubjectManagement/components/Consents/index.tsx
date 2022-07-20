@@ -45,7 +45,6 @@ const SearchBox = ({
   onLoadMoreSuggestionConsents,
   onResetSuggestionConsents,
   refDataHistory,
-  refSearchConsent,
 }: {
   onSearchConsent: (search: string, callback?: any) => void;
   suggestionConsents: any;
@@ -53,28 +52,15 @@ const SearchBox = ({
   onLoadMoreSuggestionConsents: (value: string) => void;
   onResetSuggestionConsents: () => void;
   refDataHistory: any;
-  refSearchConsent: any;
 }) => {
   const { t } = useTranslation();
   const refForm: any = useRef();
   const refListConsents: any = useRef();
   const [formSearchConsent] = Form.useForm();
-  const [disable, setDisable] = useState(true);
-  const [consentsId, setConsentsId] = useState<string[]>([]);
 
   const { isHavePermissionCreateCase } = useCaseManagementPermission();
 
   const [isOpenCreateCaseForm, setIsOpenCreateCaseForm] = useState(false);
-
-  useImperativeHandle(refSearchConsent, () => {
-    return {
-      enableButtonCreateConsent: () => setDisable(true),
-      disableButtonCreateConsent: () => setDisable(false),
-      updateConsentsId: (consentsId: string[]) => {
-        setConsentsId(consentsId);
-      },
-    };
-  });
 
   const onFieldsChange = (values: any) => {
     const value = get(values, '[0].value', '');
@@ -165,7 +151,6 @@ const SearchBox = ({
           className={styles.btnCreateCase}
           typeDisplay='ghost'
           onClick={() => setIsOpenCreateCaseForm(true)}
-          disabled={disable}
         >
           {t('create_case')}
         </Button>
@@ -174,7 +159,6 @@ const SearchBox = ({
         visible={isOpenCreateCaseForm}
         onClose={() => setIsOpenCreateCaseForm(false)}
         refDataHistory={refDataHistory}
-        consents={consentsId}
       />
     </Row>
   );
@@ -214,14 +198,7 @@ const ConsentOption = ({ value, onChange, dataConsent, isHavePermissionSaveConse
   );
 };
 
-const ConsentsList = ({
-  data,
-  loading,
-  onChange,
-  onSaveConsent,
-  loadingUpdateConsent,
-  onCheckConsent,
-}: any) => {
+const ConsentsList = ({ data, loading, onChange, onSaveConsent, loadingUpdateConsent }: any) => {
   const { t } = useTranslation();
   const [formConsent] = Form.useForm();
 
@@ -242,7 +219,6 @@ const ConsentsList = ({
       acc[`${name}`] = get(v, 'value');
       return acc;
     }, {});
-    onCheckConsent(val, initialValues);
   };
 
   if (loading) return null;
@@ -343,21 +319,6 @@ function Consents({ userId, refDataHistory }: { userId: number; refDataHistory: 
     } catch (error) {}
   };
 
-  const onCheckConsentSelected = (values: any, initialValues: any) => {
-    const newConsent = onCheckConsent(values, initialValues);
-
-    if (!newConsent?.insert?.length) {
-      refSearchConsent?.current?.enableButtonCreateConsent();
-      return;
-    }
-    if (newConsent?.insert?.length && refSearchConsent?.current?.enableButtonCreateConsent) {
-      const consentsId = newConsent.insert.map((v: any) => v.consentId + '');
-
-      refSearchConsent?.current?.disableButtonCreateConsent();
-      refSearchConsent?.current?.updateConsentsId(consentsId);
-    }
-  };
-
   return (
     <div className={styles.consentsWrap}>
       <SearchBox
@@ -367,7 +328,6 @@ function Consents({ userId, refDataHistory }: { userId: number; refDataHistory: 
         onLoadMoreSuggestionConsents={onLoadMoreSuggestionConsents}
         onResetSuggestionConsents={onResetSuggestionConsents}
         refDataHistory={refDataHistory}
-        refSearchConsent={refSearchConsent}
       />
 
       <ConsentsList
@@ -376,7 +336,6 @@ function Consents({ userId, refDataHistory }: { userId: number; refDataHistory: 
         onChange={onChange}
         onSaveConsent={onSave}
         loadingUpdateConsent={loadingUpdateConsent}
-        onCheckConsent={onCheckConsentSelected}
       />
     </div>
   );

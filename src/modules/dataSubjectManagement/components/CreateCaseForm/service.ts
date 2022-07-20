@@ -15,7 +15,6 @@ interface ICreateCase {
   status: string;
   userProfileId: string | number;
   comment?: string;
-  consents: string[];
 }
 
 const createCaseService = async (body: ICreateCase) => {

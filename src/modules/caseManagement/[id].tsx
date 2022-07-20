@@ -23,7 +23,6 @@ function CaseManagementDetail() {
     <ContainerLayout title='Case Management Detail'>
       <div className={styles.wrap}>
         <UserInfo userInfo={data?.userProfile} />
-        <ActivityLog caseId={Number(id)} ref={refActivityLog} />
         <ConsentList />
         <CreateCaseForm
           data={data}
@@ -32,6 +31,7 @@ function CaseManagementDetail() {
           refreshDataCaseDetail={refresh}
           deleteCaseRequest={deleteCaseRequest}
         />
+        <ActivityLog caseId={Number(id)} ref={refActivityLog} />
       </div>
     </ContainerLayout>
   );
