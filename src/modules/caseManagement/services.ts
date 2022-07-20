@@ -1,9 +1,9 @@
-import ApiUtils from 'utils/api/api.utils';
 import { useMount, useRequest } from 'ahooks';
-import { API_PATH } from 'utils/api/constant';
-import { ResponseBase } from 'utils/api/api.types';
-import { useNavigate } from 'react-router-dom';
 import { message } from 'antd';
+import { useNavigate } from 'react-router-dom';
+import { ResponseBase } from 'utils/api/api.types';
+import ApiUtils from 'utils/api/api.utils';
+import { API_PATH } from 'utils/api/constant';
 
 interface IUserInfo {
   id?: string;
@@ -50,6 +50,7 @@ interface IEditCase {
     status?: string;
     dateOfResponse?: string;
     comment?: string;
+    attachFileUrl?: string;
   };
 }
 
@@ -169,9 +170,32 @@ const editCaseService = async (body: IEditCase) => {
   return ApiUtils.post<any, ResponseBase<any>>(API_PATH.EDIT_CASE, body);
 };
 
+const serviceUploadFileComment = async (filesData: any) => {
+  const fileData = filesData[0];
+  delete fileData.uid;
+  const formData = new FormData();
+  formData.append('attachFile', fileData, fileData.name);
+
+  return ApiUtils.postForm(API_PATH.UPLOAD_FILE, formData, {
+    isAuth: true,
+    'content-type': 'multipart/form-data',
+  });
+};
+
+export const updateFileComment = () => {
+  return useRequest(serviceUploadFileComment, { manual: true });
+};
+
 export const useEditCase = (onFinishSubmitForm: any) => {
   return useRequest(
-    async (data: IEditCase) => {
+    async (data: IEditCase, fileComment?: any) => {
+      let attachFileUrl;
+      if (fileComment) {
+        const r: any = await serviceUploadFileComment(fileComment);
+        attachFileUrl = r?.content?.fileUrl;
+      }
+      if (attachFileUrl)
+        data = { ...data, editCaseParam: { ...data.editCaseParam, attachFileUrl } };
       return editCaseService(data);
     },
     {

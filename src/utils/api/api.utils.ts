@@ -5,7 +5,8 @@ import { ResponseCode } from './api.types';
 import { API_PATH, BACKEND_URL } from './constant';
 
 interface CustomHeaders {
-  isAuth: boolean;
+  isAuth?: boolean;
+  [k: string]: any;
 }
 
 const REQ_TIMEOUT = 25 * 1000;
