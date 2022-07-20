@@ -2,9 +2,12 @@ import { Checkbox, Col, Collapse, Form, Pagination, Row } from 'antd';
 
 import ArrowDownCollapse from 'assets/icons/icon-arrow-down-collapse';
 import ArrowUpCollapse from 'assets/icons/icon-arrow-up-collapse';
+import IconSearch from 'assets/icons/icon-search';
+import Button from 'libraries/UI/Button';
+import Input from 'libraries/UI/Input';
 import { paginationItemRender } from 'libraries/UI/Pagination';
+import { get } from 'lodash';
 import { useTranslation } from 'react-i18next';
-import { useParams } from 'react-router-dom';
 import styles from './index.module.scss';
 import { useConsentList } from './service';
 
@@ -59,18 +62,19 @@ const ConsentOption = ({ value, onChange, dataConsent }: any) => {
   );
 };
 
-const Consents = ({ data, loading, onChange }: any) => {
+const Consents = ({ data, loading, onChange, onSearchConsent }: any) => {
   const { t } = useTranslation();
   const [formConsent] = Form.useForm();
 
-  const initialValues = data?.data?.reduce((acc: any, v: any) => {
-    if (!acc[v.key]) acc[v.key] = [];
-    v?.dataConsent?.list?.forEach((it: any) => {
-      acc[v.key].push(it?.value);
-    });
+  const initialValues = data?.data?.reduce(
+    (acc: any, v: any) => ({ ...acc, [v?.key]: Object.keys(v?.defaultValue) }),
+    {},
+  );
 
-    return acc;
-  }, {});
+  const onFinish = (values: any) => {
+    const value = get(values, 'search', '');
+    onSearchConsent(value);
+  };
 
   if (loading) return null;
 
@@ -79,6 +83,47 @@ const Consents = ({ data, loading, onChange }: any) => {
 
   return (
     <div className={styles.consentWrap}>
+      <Row className={styles.consentsSearch} align='middle'>
+        <Form onFinish={onFinish}>
+          <div
+            style={{
+              position: 'relative',
+            }}
+          >
+            <Row align='middle' className={styles.searchBox}>
+              <Row align='middle' className={styles.searchContent}>
+                <IconSearch />
+                <Form.Item
+                  name='search'
+                  className={styles.formSearchItem}
+                  rules={[
+                    {
+                      min: 3,
+                      message: t('messages.errors.min', { min: 3 }),
+                    },
+                    {
+                      max: 55,
+                      message: t('messages.errors.max_search_firstname', { max: 55 }),
+                    },
+                  ]}
+                >
+                  <Input placeholder='Search' maxLength={55} />
+                </Form.Item>
+              </Row>
+              <Button
+                htmlType='submit'
+                size='middle'
+                className={styles.btnSearch}
+                icon={<IconSearch />}
+                type='secondary'
+              >
+                {t('search')}
+              </Button>
+            </Row>
+          </div>
+        </Form>
+      </Row>
+
       <Form
         className={styles.formConsent}
         // onFinish={onUpdateConsent}
@@ -131,14 +176,18 @@ const Consents = ({ data, loading, onChange }: any) => {
   );
 };
 
-function ConsentList() {
-  const { id } = useParams();
-  const { data, loading, onChange } = useConsentList(`${id}`);
+function ConsentList({ userId }: { userId: string | undefined }) {
+  const { data, loading, onChange, onSearchConsent } = useConsentList({ userId: Number(userId) });
 
   return (
     <div className={styles.consentsWrap}>
       <h2>Consent</h2>
-      <Consents data={data} loading={loading} onChange={onChange} />
+      <Consents
+        data={data}
+        loading={loading}
+        onChange={onChange}
+        onSearchConsent={onSearchConsent}
+      />
     </div>
   );
 }

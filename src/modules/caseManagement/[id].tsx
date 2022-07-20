@@ -23,7 +23,7 @@ function CaseManagementDetail() {
     <ContainerLayout title='Case Management Detail'>
       <div className={styles.wrap}>
         <UserInfo userInfo={data?.userProfile} />
-        <ConsentList />
+        <ConsentList userId={data?.userProfile?.id} />
         <CreateCaseForm
           data={data}
           loading={loading}

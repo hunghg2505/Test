@@ -165,3 +165,69 @@
   padding: 20px 0;
   font-size: 20px;
 }
+
+.consentsSearch {
+  background-color: $color-white;
+  padding: 32px 64px;
+
+  form {
+    flex: 1;
+  }
+
+  input {
+    border: none !important;
+    outline: none !important;
+    background-color: $color-gray6 !important;
+    padding: 0 !important;
+    width: 100% !important;
+  }
+
+  :global {
+    .ant-form-item {
+      flex: 1;
+    }
+  }
+}
+
+.searchBox {
+  flex: 1;
+  // padding: 0 15px 0 90px;
+}
+
+.searchBox {
+  position: relative;
+  right: 15px;
+  > div:first-child {
+    padding: 11.5px 24px;
+    // height: 44px;
+    background: #fcfcfc;
+    border: 1px solid #f6f6f6;
+    border-radius: 8px;
+  }
+}
+
+.formSearchItem {
+  :global {
+    .ant-form-item-explain {
+      position: absolute;
+      top: 38px;
+    }
+
+    .ant-input-status-error:not(.ant-input-disabled):not(.ant-input-borderless).ant-input:focus {
+      box-shadow: none;
+    }
+  }
+}
+
+.searchContent {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  background-color: $color-gray6 !important;
+  svg {
+    margin-right: 18px;
+    path {
+      fill: #bdbdbd !important;
+    }
+  }
+}
