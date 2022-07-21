@@ -190,7 +190,7 @@ export const useEditCase = (onFinishSubmitForm: any) => {
   return useRequest(
     async (data: IEditCase, fileComment?: any) => {
       let attachFileUrl;
-      if (fileComment) {
+      if (fileComment?.length) {
         const r: any = await serviceUploadFileComment(fileComment);
         attachFileUrl = r?.content?.fileUrl;
       }
