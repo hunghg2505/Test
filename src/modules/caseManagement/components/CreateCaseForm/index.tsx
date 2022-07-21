@@ -74,205 +74,213 @@ const CreateCaseForm = ({
     }
   }, [data]);
 
-  return !isEdit ? (
-    <div className={styles.form}>
-      {loading ? (
-        <Loading />
+  return (
+    <>
+      <h2 className={styles.title}>Case Details</h2>
+      {!isEdit ? (
+        <div className={styles.form}>
+          {loading ? (
+            <Loading />
+          ) : (
+            <Form
+              layout='vertical'
+              form={editCaseForm}
+              disabled={isEdit}
+              initialValues={{
+                action: data?.action,
+                department: data?.department,
+                assignTo: data?.assignTo,
+                description: data?.description,
+                status: data?.status,
+                responseStatus: data?.responseStatus,
+                reason: data?.reason,
+              }}
+              onFinish={onFinish}
+            >
+              <Row gutter={[15, 24]}>
+                <Col xs={12}>
+                  <Form.Item
+                    label='Data Subject Rights'
+                    name='action'
+                    required
+                    rules={[
+                      {
+                        required: true,
+                        message: t('messages.errors.require', { field: 'Data Subject Rights' }),
+                      },
+                    ]}
+                  >
+                    <Select placeholder='Select a Right'>
+                      {DATA_SUBJECT_RIGHT_DROPDOWN_DATA.map((item, index) => (
+                        <Select.Option value={item.value} key={`${index}${item.value}`}>
+                          {item.value}
+                        </Select.Option>
+                      ))}
+                    </Select>
+                  </Form.Item>
+                </Col>
+                <Col xs={12}>
+                  <Form.Item
+                    label='Related Department'
+                    name='department'
+                    required
+                    rules={[
+                      {
+                        required: true,
+                        message: t('messages.errors.require', { field: 'Department' }),
+                      },
+                    ]}
+                  >
+                    <Select placeholder='Select a Department'>
+                      <Select.Option value={'Department 1'}>Department 1</Select.Option>
+                      <Select.Option value={'Department 2'}>Department 2</Select.Option>
+                    </Select>
+                  </Form.Item>
+                </Col>
+                <Col xs={12}>
+                  <Form.Item
+                    label='Assign to'
+                    name='assignTo'
+                    required
+                    rules={[
+                      {
+                        required: true,
+                        message: t('messages.errors.require', { field: 'Assign' }),
+                      },
+                    ]}
+                  >
+                    <Select placeholder='Assign to'>
+                      {usersData?.data?.map((item: any) => (
+                        <Select.Option value={item.value} key={`${item.sid}`}>
+                          {item.value}
+                        </Select.Option>
+                      ))}
+                    </Select>
+                  </Form.Item>
+                </Col>
+                <Col xs={24}>
+                  <InputTextAreaForm
+                    name='description'
+                    label='Description'
+                    placeholder='Details of Execution'
+                    rows={6}
+                    className={styles.textarea}
+                    required
+                    maxLength={250}
+                    rules={[
+                      {
+                        required: true,
+                        message: t('messages.errors.require', { field: 'Description' }),
+                      },
+                    ]}
+                  />
+                </Col>
+
+                <Col xs={12}>
+                  <Form.Item
+                    label='Status'
+                    name='status'
+                    required
+                    rules={[
+                      {
+                        required: true,
+                        message: t('messages.errors.require', { field: 'Status' }),
+                      },
+                    ]}
+                  >
+                    <Select placeholder='List of Status'>
+                      {STATUS_DROPDOWN_DATA.map((item, index) => (
+                        <Select.Option value={item.value} key={`${index}${item.value}`}>
+                          {item.value}
+                        </Select.Option>
+                      ))}
+                    </Select>
+                  </Form.Item>
+                </Col>
+                <Col xs={12}>
+                  <p className={styles.datePickerLabel}>
+                    Accepted Date <span style={{ color: 'red' }}>*</span>
+                  </p>
+                  <DatePicker
+                    getPopupContainer={(trigger: any) => trigger.parentElement}
+                    format='DD/MM/YYYY'
+                    onChange={(date: any) => setAcceptedDate(date)}
+                    allowClear={false}
+                    value={acceptedDate}
+                  />
+                </Col>
+                <Divider />
+                <Col xs={12}>
+                  <Form.Item label='Result' name='responseStatus'>
+                    <Select placeholder='Select Result'>
+                      {RESULT_DROPDOWN_DATA.map((item, index) => (
+                        <Select.Option value={item.value} key={`${index}${item.value}`}>
+                          {item.value}
+                        </Select.Option>
+                      ))}
+                    </Select>
+                  </Form.Item>
+                </Col>
+                <Col xs={24}>
+                  <InputTextAreaForm
+                    name='reason'
+                    label='Reason'
+                    placeholder='Reason for Completed or Reject'
+                    rows={6}
+                    className={styles.textarea}
+                    maxLength={250}
+                  />
+                </Col>
+                <Col xs={12}>
+                  <p className={styles.datePickerLabel}>Date of Response</p>
+                  <DatePicker
+                    getPopupContainer={(trigger: any) => trigger.parentElement}
+                    format='DD/MM/YYYY'
+                    onChange={(date: any) => setDateOfResponse(date)}
+                    value={dateOfResponse}
+                  />
+                </Col>
+                {!isEdit && (
+                  <Col xs={24}>
+                    <InputTextAreaForm
+                      name='comment'
+                      label='Update comment'
+                      placeholder='Comment ...'
+                      rows={6}
+                      uploadFile
+                      refFiles={refFiles}
+                    />
+                  </Col>
+                )}
+              </Row>
+            </Form>
+          )}
+
+          <div className={styles.actions}>
+            <>
+              <Button
+                onClick={() => {
+                  setIsEdit(true);
+                  editCaseForm.resetFields();
+                }}
+                className={styles.cancelBtn}
+              >
+                Cancel
+              </Button>{' '}
+              <Button htmlType='submit' onClick={() => editCaseForm.submit()}>
+                Submit
+              </Button>
+            </>
+          </div>
+        </div>
       ) : (
-        <Form
-          layout='vertical'
-          form={editCaseForm}
-          disabled={isEdit}
-          initialValues={{
-            action: data?.action,
-            department: data?.department,
-            assignTo: data?.assignTo,
-            description: data?.description,
-            status: data?.status,
-            responseStatus: data?.responseStatus,
-            reason: data?.reason,
-          }}
-          onFinish={onFinish}
-        >
-          <Row gutter={[15, 24]}>
-            <Col xs={12}>
-              <Form.Item
-                label='Data Subject Rights'
-                name='action'
-                required
-                rules={[
-                  {
-                    required: true,
-                    message: t('messages.errors.require', { field: 'Data Subject Rights' }),
-                  },
-                ]}
-              >
-                <Select placeholder='Select a Right'>
-                  {DATA_SUBJECT_RIGHT_DROPDOWN_DATA.map((item, index) => (
-                    <Select.Option value={item.value} key={`${index}${item.value}`}>
-                      {item.value}
-                    </Select.Option>
-                  ))}
-                </Select>
-              </Form.Item>
-            </Col>
-            <Col xs={12}>
-              <Form.Item
-                label='Related Department'
-                name='department'
-                required
-                rules={[
-                  {
-                    required: true,
-                    message: t('messages.errors.require', { field: 'Department' }),
-                  },
-                ]}
-              >
-                <Select placeholder='Select a Department'>
-                  <Select.Option value={'Department 1'}>Department 1</Select.Option>
-                  <Select.Option value={'Department 2'}>Department 2</Select.Option>
-                </Select>
-              </Form.Item>
-            </Col>
-            <Col xs={12}>
-              <Form.Item
-                label='Assign to'
-                name='assignTo'
-                required
-                rules={[
-                  { required: true, message: t('messages.errors.require', { field: 'Assign' }) },
-                ]}
-              >
-                <Select placeholder='Assign to'>
-                  {usersData?.data?.map((item: any) => (
-                    <Select.Option value={item.value} key={`${item.sid}`}>
-                      {item.value}
-                    </Select.Option>
-                  ))}
-                </Select>
-              </Form.Item>
-            </Col>
-            <Col xs={24}>
-              <InputTextAreaForm
-                name='description'
-                label='Description'
-                placeholder='Details of Execution'
-                rows={6}
-                className={styles.textarea}
-                required
-                maxLength={250}
-                rules={[
-                  {
-                    required: true,
-                    message: t('messages.errors.require', { field: 'Description' }),
-                  },
-                ]}
-              />
-            </Col>
-
-            <Col xs={12}>
-              <Form.Item
-                label='Status'
-                name='status'
-                required
-                rules={[
-                  {
-                    required: true,
-                    message: t('messages.errors.require', { field: 'Status' }),
-                  },
-                ]}
-              >
-                <Select placeholder='List of Status'>
-                  {STATUS_DROPDOWN_DATA.map((item, index) => (
-                    <Select.Option value={item.value} key={`${index}${item.value}`}>
-                      {item.value}
-                    </Select.Option>
-                  ))}
-                </Select>
-              </Form.Item>
-            </Col>
-            <Col xs={12}>
-              <p className={styles.datePickerLabel}>
-                Accepted Date <span style={{ color: 'red' }}>*</span>
-              </p>
-              <DatePicker
-                getPopupContainer={(trigger: any) => trigger.parentElement}
-                format='DD/MM/YYYY'
-                onChange={(date: any) => setAcceptedDate(date)}
-                allowClear={false}
-                value={acceptedDate}
-              />
-            </Col>
-            <Divider />
-            <Col xs={12}>
-              <Form.Item label='Result' name='responseStatus'>
-                <Select placeholder='Select Result'>
-                  {RESULT_DROPDOWN_DATA.map((item, index) => (
-                    <Select.Option value={item.value} key={`${index}${item.value}`}>
-                      {item.value}
-                    </Select.Option>
-                  ))}
-                </Select>
-              </Form.Item>
-            </Col>
-            <Col xs={24}>
-              <InputTextAreaForm
-                name='reason'
-                label='Reason'
-                placeholder='Reason for Completed or Reject'
-                rows={6}
-                className={styles.textarea}
-                maxLength={250}
-              />
-            </Col>
-            <Col xs={12}>
-              <p className={styles.datePickerLabel}>Date of Response</p>
-              <DatePicker
-                getPopupContainer={(trigger: any) => trigger.parentElement}
-                format='DD/MM/YYYY'
-                onChange={(date: any) => setDateOfResponse(date)}
-                value={dateOfResponse}
-              />
-            </Col>
-            {!isEdit && (
-              <Col xs={24}>
-                <InputTextAreaForm
-                  name='comment'
-                  label='Update comment'
-                  placeholder='Comment ...'
-                  rows={6}
-                  uploadFile
-                  refFiles={refFiles}
-                />
-              </Col>
-            )}
-          </Row>
-        </Form>
+        <CaseInfo
+          data={data}
+          onClickEdit={() => setIsEdit(false)}
+          deleteCaseRequest={deleteCaseRequest}
+        />
       )}
-
-      <div className={styles.actions}>
-        <>
-          <Button
-            onClick={() => {
-              setIsEdit(true);
-              editCaseForm.resetFields();
-            }}
-            className={styles.cancelBtn}
-          >
-            Cancel
-          </Button>{' '}
-          <Button htmlType='submit' onClick={() => editCaseForm.submit()}>
-            Submit
-          </Button>
-        </>
-      </div>
-    </div>
-  ) : (
-    <CaseInfo
-      data={data}
-      onClickEdit={() => setIsEdit(false)}
-      deleteCaseRequest={deleteCaseRequest}
-    />
+    </>
   );
 };
 

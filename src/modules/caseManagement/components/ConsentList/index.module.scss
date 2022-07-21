@@ -231,3 +231,15 @@
     }
   }
 }
+
+.btnSearch {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 24px;
+  margin-left: 16px;
+
+  svg {
+    margin-right: 10px;
+  }
+}
