@@ -121,7 +121,6 @@
 
 .panelHeader {
   .name {
-    color: #CF2A2B;
     margin: 0;
   }
   .desc {
@@ -151,13 +150,3 @@
     margin: 0 0 16px;
   }
 }
-
-.commentPanel {
-  :global {
-    .ant-collapse-header {
-      background: #fff;
-    }
-  }
-}
-
-
