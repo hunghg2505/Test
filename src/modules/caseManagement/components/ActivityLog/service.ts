@@ -42,7 +42,6 @@ const useActivity = (caseId: number) => {
       manual: true,
       onSuccess: (r: any, params: any) => {
         const fileName = params[1];
-        console.log({ r });
         saveAs(r, fileName);
       },
       onError: (err) => {

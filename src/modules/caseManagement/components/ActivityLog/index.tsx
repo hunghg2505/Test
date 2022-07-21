@@ -38,10 +38,13 @@ const ActivityList = ({ data, onDownloadComment }: any) => {
                   <p className={styles.fromDate}>Date: {activity.activityDate}</p>
                 </div>
               }
+              className={styles.commentPanel}
             >
               <div className={styles.detail}>
                 <h2 className={styles.detailHeader}>Comment detail</h2>
-                <div className={styles.detailContent}>{activity.commentDetail}</div>
+                {activity.commentDetail && (
+                  <div className={styles.detailContent}>{activity.commentDetail}</div>
+                )}
                 <p className={styles.attachedText}>Attached File</p>
                 <p
                   onClick={() =>
