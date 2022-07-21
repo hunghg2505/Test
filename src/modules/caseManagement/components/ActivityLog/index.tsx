@@ -45,15 +45,23 @@ const ActivityList = ({ data, onDownloadComment }: any) => {
                 {activity.commentDetail && (
                   <div className={styles.detailContent}>{activity.commentDetail}</div>
                 )}
-                <p className={styles.attachedText}>Attached File</p>
-                <p
-                  onClick={() =>
-                    onDownloadComment(activity?.linkFileDownload, activity?.linkFileDownloadName)
-                  }
-                  className={styles.downloadLink}
-                >
-                  {activity?.linkFileDownloadName}
-                </p>
+
+                {activity?.linkFileDownload && (
+                  <>
+                    <p className={styles.attachedText}>Attached File</p>
+                    <p
+                      onClick={() =>
+                        onDownloadComment(
+                          activity?.linkFileDownload,
+                          activity?.linkFileDownloadName,
+                        )
+                      }
+                      className={styles.downloadLink}
+                    >
+                      {activity?.linkFileDownloadName}
+                    </p>
+                  </>
+                )}
               </div>
             </Panel>
           );
