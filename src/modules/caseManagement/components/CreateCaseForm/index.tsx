@@ -222,6 +222,7 @@ const CreateCaseForm = ({
                 placeholder='Reason for Completed or Reject'
                 rows={6}
                 className={styles.textarea}
+                maxLength={250}
               />
             </Col>
             <Col xs={12}>
@@ -240,7 +241,6 @@ const CreateCaseForm = ({
                   label='Update comment'
                   placeholder='Comment ...'
                   rows={6}
-                  maxLength={250}
                   uploadFile
                   refFiles={refFiles}
                 />
