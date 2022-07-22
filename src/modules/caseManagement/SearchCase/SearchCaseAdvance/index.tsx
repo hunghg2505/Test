@@ -101,7 +101,6 @@ const SearchCaseAdvance = ({ onSearchDataSubject, t }: any) => {
                 <Col xs={24}>
                   <Form.Item label='Case Status' name='status'>
                     <Select placeholder='Search Case Status'>
-                      <Select.Option value={undefined}>Search Case Status</Select.Option>
                       {STATUS_DROPDOWN_DATA.map((item, index) => (
                         <Select.Option value={item.value} key={`${index}${item.value}`}>
                           {item.label}
