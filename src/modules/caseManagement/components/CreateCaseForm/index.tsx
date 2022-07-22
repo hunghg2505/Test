@@ -250,6 +250,7 @@ const CreateCaseForm = ({
                       rows={6}
                       uploadFile
                       refFiles={refFiles}
+                      defaultFileUrl={data?.fileUrl}
                     />
                   </Col>
                 )}

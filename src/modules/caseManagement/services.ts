@@ -35,6 +35,7 @@ interface IDetialCase {
   dateOfResponse?: string;
   comment?: string;
   userProfile?: IUserInfo;
+  fileUrl?: string;
 }
 
 interface IEditCase {
@@ -51,6 +52,7 @@ interface IEditCase {
     dateOfResponse?: string;
     comment?: string;
     attachFileUrl?: string;
+    fileUrl?: string;
   };
 }
 
@@ -73,6 +75,7 @@ const getDetailCaseService = async (caseId: string | undefined): Promise<IDetial
     dateOfResponse: response?.content?.data?.dateOfResponse,
     comment: response?.content?.data?.comment,
     acceptedDate: response?.content?.data?.acceptedDate,
+    fileUrl: response?.content?.data?.fileUrl,
     userProfile: response?.content?.data?.__userProfile__,
   };
 };
@@ -172,6 +175,7 @@ const editCaseService = async (body: IEditCase) => {
 
 const serviceUploadFileComment = async (filesData: any) => {
   const fileData = filesData[0];
+  if (fileData?.url) return { content: { fileUrl: fileData.url } };
   delete fileData.uid;
   const formData = new FormData();
   formData.append('attachFile', fileData, fileData.name);

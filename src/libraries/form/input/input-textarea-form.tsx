@@ -1,13 +1,12 @@
-import { Button, Form, Upload, message, Row, Col } from 'antd';
+import { Button, Col, Form, Row, Upload } from 'antd';
 
-import IconUpload from 'assets/icons/icon-upload';
-import Input from 'libraries/UI/Input';
 import { Rule } from 'antd/lib/form';
-import type { UploadProps } from 'antd';
+import IconUpload from 'assets/icons/icon-upload';
 import clsx from 'clsx';
-import styles from './styles.module.scss';
-import { AnyKindOfDictionary, debounce } from 'lodash';
+import Input from 'libraries/UI/Input';
+import debounce from 'lodash/debounce';
 import { useImperativeHandle, useRef, useState } from 'react';
+import styles from './styles.module.scss';
 
 interface Props {
   label?: string;
@@ -24,6 +23,7 @@ interface Props {
   classNameFormInput?: any;
   className?: any;
   refFiles?: any;
+  defaultFileUrl?: string;
 }
 
 const funcDebounce = (func: any, time: any) => {
@@ -44,9 +44,20 @@ const InputTextAreaForm = ({
   rows,
   required,
   refFiles,
+  defaultFileUrl,
 }: Props) => {
   const refFileImage: any = useRef([]);
-  const [fileData, setFileData] = useState<any[]>([]);
+  const [fileData, setFileData] = useState<any[]>(() => {
+    if (defaultFileUrl) {
+      return [
+        {
+          name: defaultFileUrl?.split('commen-file/')?.[1],
+          url: defaultFileUrl,
+        },
+      ];
+    }
+    return [];
+  });
 
   useImperativeHandle(refFiles, () => {
     return {
