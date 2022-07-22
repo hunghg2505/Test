@@ -76,7 +76,7 @@ const getDetailCaseService = async (caseId: string | undefined): Promise<IDetial
     comment: response?.content?.data?.comment,
     acceptedDate: response?.content?.data?.acceptedDate,
     fileUrl: response?.content?.data?.fileUrl,
-    userProfile: response?.content?.data?.__userProfile__,
+    userProfile: response?.content?.data?.userProfile,
   };
 };
 
