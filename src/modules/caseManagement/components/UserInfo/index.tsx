@@ -11,7 +11,7 @@ const UserInfo = ({ userInfo }: any) => {
 
   return (
     <>
-      <h2 className={styles.heading}>User&apos;s Infomation</h2>
+      <h2 className={styles.heading}>User&apos;s Information</h2>
       <div className={styles.form}>
         <Row gutter={[18, 25]}>
           <Col xs={12}>
