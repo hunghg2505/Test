@@ -19,7 +19,7 @@ interface IActivity {
   linkFileDownloadName?: string;
 }
 
-const ActivityList = ({ data }: any) => {
+const ActivityList = ({ data, onDownloadComment }: any) => {
   return (
     <div className={styles.activityList}>
       <Collapse
@@ -38,15 +38,29 @@ const ActivityList = ({ data }: any) => {
                   <p className={styles.fromDate}>Date: {activity.activityDate}</p>
                 </div>
               }
+              className={styles.commentPanel}
             >
               <div className={styles.detail}>
-                <h2 className={styles.detailHeader}>Comment detail</h2>
-                <div className={styles.detailContent}>{activity.commentDetail}</div>
-                <p className={styles.attachedText}>Attached File</p>
+                <h2 className={styles.detailHeader}>
+                  Comment detail {!activity.commentDetail && ': N/A'}
+                </h2>
+                {activity.commentDetail && (
+                  <div className={styles.detailContent}>{activity.commentDetail}</div>
+                )}
 
-                <a href={activity?.linkFileDownload} download className={styles.downloadLink}>
-                  {activity?.linkFileDownloadName}
-                </a>
+                <p className={styles.attachedText}>
+                  Attached File {!activity?.linkFileDownload && ': N/A'}
+                </p>
+                {activity?.linkFileDownload && (
+                  <p
+                    onClick={() =>
+                      onDownloadComment(activity?.linkFileDownload, activity?.linkFileDownloadName)
+                    }
+                    className={styles.downloadLink}
+                  >
+                    {activity?.linkFileDownloadName}
+                  </p>
+                )}
               </div>
             </Panel>
           );
@@ -67,7 +81,7 @@ const ActivityList = ({ data }: any) => {
 };
 
 function ActivityLog({ caseId }: { caseId: number }, ref: any) {
-  const { loading, data, onChange, refresh } = useActivity(caseId);
+  const { loading, data, onChange, refresh, onDownloadComment } = useActivity(caseId);
 
   useImperativeHandle(ref, () => {
     return {
@@ -80,7 +94,7 @@ function ActivityLog({ caseId }: { caseId: number }, ref: any) {
       <h2>Activity Log</h2>
       {!loading && data ? (
         <>
-          <ActivityList data={data?.data} />{' '}
+          <ActivityList data={data?.data} onDownloadComment={onDownloadComment} />{' '}
           <Row justify='end'>
             <Pagination
               current={data?.current}

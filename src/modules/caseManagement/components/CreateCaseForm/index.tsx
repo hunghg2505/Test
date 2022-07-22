@@ -94,6 +94,7 @@ const CreateCaseForm = ({
                 status: data?.status,
                 responseStatus: data?.responseStatus,
                 reason: data?.reason,
+                comment: data?.comment,
               }}
               onFinish={onFinish}
             >

@@ -2,6 +2,7 @@ import { useMount, useRequest } from 'ahooks';
 import dayjs from 'dayjs';
 import ApiUtils from 'utils/api/api.utils';
 import { API_PATH } from 'utils/api/constant';
+import { saveAs } from 'file-saver';
 
 const getActivity = async (values: any) => {
   const res: any = await ApiUtils.fetch(API_PATH.GET_ACTIVITY, {
@@ -34,11 +35,18 @@ const useActivity = (caseId: number) => {
   );
 
   const reqDownloadComment = useRequest(
-    async (url: string) => {
-      return ApiUtils.fetch(url);
+    async (url: string, fileName: string) => {
+      return ApiUtils.fetch(url, null, undefined, 'blob');
     },
     {
       manual: true,
+      onSuccess: (r: any, params: any) => {
+        const fileName = params[1];
+        saveAs(r, fileName);
+      },
+      onError: (err) => {
+        console.log('err', err);
+      },
     },
   );
 
