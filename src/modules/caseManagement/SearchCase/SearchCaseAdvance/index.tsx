@@ -103,7 +103,7 @@ const SearchCaseAdvance = ({ onSearchDataSubject, t }: any) => {
                     <Select placeholder='Search Case Status'>
                       {STATUS_DROPDOWN_DATA.map((item, index) => (
                         <Select.Option value={item.value} key={`${index}${item.value}`}>
-                          {item.value}
+                          {item.label}
                         </Select.Option>
                       ))}
                     </Select>
