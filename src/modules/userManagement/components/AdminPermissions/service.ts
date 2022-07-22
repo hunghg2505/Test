@@ -5,7 +5,9 @@ import ApiUtils from 'utils/api/api.utils';
 import { API_PATH } from 'utils/api/constant';
 import get from 'lodash/get';
 import { useRef, useState } from 'react';
-import { debounce, values } from 'lodash';
+import debounce from 'lodash/debounce';
+import useAuth from 'hooks/redux/auth/useAuth';
+import { PERMISSIONS } from 'types/common.types';
 
 const TEXT_PERMISSIONS: any = {
   PDPA_CaseManagement_Edit: 'Edit',
@@ -47,13 +49,16 @@ const SORT_IDX: any = {
   'User Management': 5,
 };
 
-const getUserPermissions = async ({
-  keyword,
-  page,
-}: {
-  keyword?: string | undefined;
-  page: number;
-}): Promise<any> => {
+const getUserPermissions = async (
+  {
+    keyword,
+    page,
+  }: {
+    keyword?: string | undefined;
+    page: number;
+  },
+  roles: any,
+): Promise<any> => {
   const response: any = await ApiUtils.fetch(API_PATH.GET_LIST_USERS_ROLE_PERMISSION, {
     keyword,
     limit: 10,
@@ -61,6 +66,14 @@ const getUserPermissions = async ({
   });
 
   const current = +response?.content?.metadata?.currentPage || 1;
+
+  const isEditRoles = roles?.find((role: any) => {
+    const isHasPermissionEdit = role?.permissions?.find(
+      (permission: any) => permission?.permissionId === PERMISSIONS.PDPA_UserManagement_Edit,
+    );
+    if (isHasPermissionEdit) return true;
+    return false;
+  });
 
   return {
     total: response?.content?.metadata?.total || 0,
@@ -83,6 +96,7 @@ const getUserPermissions = async ({
                 id: permission?.permissionId,
                 actionName: TEXT_PERMISSIONS[permission?.permissionId],
                 permission: permission?.isChecked,
+                isChecked: !isEditRoles,
               };
             });
 
@@ -128,6 +142,7 @@ const getSuggestionUser = async (value: string, page: number) => {
 
 const useAdminPermissions = () => {
   const refCancelRequest = useRef(false);
+  const { auth } = useAuth();
 
   const [users, setUsers] = useState<{
     data: any[];
@@ -141,9 +156,12 @@ const useAdminPermissions = () => {
     value: '',
   });
 
-  const { data, loading, run } = useRequest(getUserPermissions, {
-    manual: true,
-  });
+  const { data, loading, run } = useRequest(
+    (values) => getUserPermissions(values, auth?.user?.roles),
+    {
+      manual: true,
+    },
+  );
 
   const reqSearchUserSuggestion = useRequest(
     async ({

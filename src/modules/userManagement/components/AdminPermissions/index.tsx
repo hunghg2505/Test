@@ -109,6 +109,7 @@ const getExpandRowRender = (record: any, reqUpdatePermissions: any) => {
                   <Checkbox
                     defaultChecked={item.permission}
                     onChange={(evt) => onChange(evt, item)}
+                    disabled={item?.isChecked}
                   />
                 </Col>
               ))}
