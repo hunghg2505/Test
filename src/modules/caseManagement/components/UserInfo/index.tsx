@@ -1,82 +1,70 @@
-import { Col, Form, Row } from 'antd';
-import InputForm from 'libraries/form/input/input-form';
-import Select from 'libraries/UI/Select';
-import React from 'react';
+import { Col, Row } from 'antd';
+import dayjs from 'dayjs';
 import { useTranslation } from 'react-i18next';
 
 import styles from './index.module.scss';
 
-const UserInfo = () => {
+const UserInfo = ({ userInfo }: any) => {
   const { t } = useTranslation();
+
+  if (!userInfo) return null;
 
   return (
     <>
       <h2 className={styles.heading}>User&apos;s Infomation</h2>
       <div className={styles.form}>
-        <Form layout='vertical'>
-          <Row gutter={[15, 24]}>
-            <Col xs={12}>
-              <InputForm
-                label={t('first_name_en')}
-                name={'first_name_en'}
-                placeholder='First name'
-              />
-            </Col>
+        <Row gutter={[18, 25]}>
+          <Col xs={12}>
+            <div className={styles.label}>{t('first_name_en')}</div>
+            <div className={styles.content}>{userInfo.firstNameEn}</div>
+          </Col>
+          <Col xs={12}>
+            <div className={styles.label}>{t('last_name_en')}</div>
+            <div className={styles.content}>{userInfo.lastNameEn}</div>
+          </Col>
+          <Col xs={12}>
+            <div className={styles.label}>{t('first_name_th')}</div>
+            <div className={styles.content}>{userInfo.firstNameTh}</div>
+          </Col>
+          <Col xs={12}>
+            <div className={styles.label}>{t('last_name_th')}</div>
+            <div className={styles.content}>{userInfo.lastNameTh}</div>
+          </Col>
 
-            <Col xs={12}>
-              <InputForm label={t('last_name_en')} name={'last_name_en'} placeholder='Last name' />
-            </Col>
+          <Col xs={12}>
+            <div className={styles.label}>{t('mobile_number')}</div>
+            <div className={styles.content}>{userInfo.mobile}</div>
+          </Col>
+          <Col xs={12}>
+            <div className={styles.label}>{t('birthday')}</div>
+            <div className={styles.content}>{dayjs(userInfo.dateOfBirth).format('MM/DD/YYYY')}</div>
+          </Col>
 
-            <Col xs={12}>
-              <InputForm
-                label={t('first_name_th')}
-                name={'first_name_th'}
-                placeholder='First name'
-              />
-            </Col>
+          <Col xs={12}>
+            <div className={styles.label}>{t('email_address')}</div>
+            <div className={styles.content}>{userInfo.email}</div>
+          </Col>
 
-            <Col xs={12}>
-              <InputForm label={t('last_name_th')} name={'last_name_th'} placeholder='Last name' />
-            </Col>
+          <Col xs={12}>
+            <div className={styles.label}>{t('national_card_id')}</div>
+            <div className={styles.content}>{userInfo.cardId}</div>
+          </Col>
 
-            <Col xs={12}>
-              <InputForm label={t('address')} name={'address'} placeholder='Address' />
-            </Col>
+          <Col xs={12}>
+            <div className={styles.label}>{t('nationality')}</div>
+            <div className={styles.content}>{userInfo.nationality}</div>
+          </Col>
 
-            <Col xs={12}>
-              <InputForm
-                label={t('date_of_birthday')}
-                name={'date_of_birthday'}
-                placeholder='Date of Birthday'
-              />
-            </Col>
+          <Col xs={12}>
+            <div className={styles.label}>{t('passport_number')}</div>
+            <div className={styles.content}>{userInfo.passportNo}</div>
+          </Col>
 
-            <Col xs={12}>
-              <InputForm label={t('email')} name={'email'} placeholder='Email Address' />
-            </Col>
-
-            <Col xs={12}>
-              <InputForm label={t('card_id')} name={'card_id'} placeholder='National Card ID' />
-            </Col>
-
-            <Col xs={12}>
-              <Form.Item name={'nationality'} label={t('nationality')}>
-                <Select>
-                  <Select.Option value={1}>1</Select.Option>
-                  <Select.Option value={2}>2</Select.Option>
-                </Select>
-              </Form.Item>
-            </Col>
-
-            <Col xs={12}>
-              <InputForm label={t('passport')} name={'passport'} placeholder='Passport' />
-            </Col>
-
-            <Col xs={12}>
-              <InputForm label={t('laser_code')} name={'laser_code'} placeholder='Laser Code' />
-            </Col>
-          </Row>
-        </Form>
+          <Col xs={12}>
+            <div className={styles.label}>{t('laser_code')}</div>
+            <div className={styles.content}>{userInfo.laserCode}</div>
+          </Col>
+        </Row>
       </div>
     </>
   );

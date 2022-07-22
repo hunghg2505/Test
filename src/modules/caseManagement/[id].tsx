@@ -1,6 +1,6 @@
 import ContainerLayout from 'libraries/layouts/container.layout';
 import ConsentList from './components/ConsentList';
-import UserInfo from '../../libraries/components/UserInfo';
+import UserInfo from './components/UserInfo';
 import ActivityLog from './components/ActivityLog';
 
 import styles from './index.module.scss';
