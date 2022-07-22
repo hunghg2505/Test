@@ -106,6 +106,7 @@ const SearchCaseAdvance = ({ onSearchDataSubject, t }: any) => {
                           {item.value}
                         </Select.Option>
                       ))}
+                      <Select.Option value={undefined}>Search Case Status</Select.Option>
                     </Select>
                   </Form.Item>
                 </Col>
