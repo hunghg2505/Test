@@ -76,7 +76,7 @@ const CreateCaseForm = ({
 
   return (
     <>
-      <h2 className={styles.title}>Case Details</h2>
+      <h2 className={styles.title}>Case Detail</h2>
       {!isEdit ? (
         <div className={styles.form}>
           {loading ? (
