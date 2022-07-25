@@ -193,18 +193,14 @@ export const updateFileComment = () => {
 export const useEditCase = (onFinishSubmitForm: any) => {
   return useRequest(
     async (data: IEditCase, fileComment?: any) => {
-      let attachFileUrl = '';
+      let attachFileUrl = null;
       if (fileComment?.length) {
         const r: any = await serviceUploadFileComment(fileComment);
-        if (r?.content?.type === 'no_update') {
-          attachFileUrl = 'no_update';
-        } else {
-          attachFileUrl = r?.content?.fileUrl;
-        }
+        attachFileUrl = r?.content?.fileUrl;
       }
-      if (attachFileUrl !== 'no_update') {
-        data = { ...data, editCaseParam: { ...data.editCaseParam, attachFileUrl } };
-      }
+
+      data = { ...data, editCaseParam: { ...data.editCaseParam, attachFileUrl } };
+
       return editCaseService(data);
     },
     {
