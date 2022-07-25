@@ -2,6 +2,8 @@
 export enum KeyStorage {
   LOCALE = 'locale',
   AUTH = 'auth',
+  SAVE_LOGIN = 'save_login',
+  GET_PROFILE = 'get_profile',
 }
 
 const localStorageUtils = {

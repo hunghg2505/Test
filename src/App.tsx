@@ -15,21 +15,20 @@ function App() {
   const { saveUser, getProfile } = useAuth();
 
   useUpdateEffect(() => {
-    const isLogin = localStorage.getItem('save_login');
+    (async () => {
+      const isLogin = localStorage.getItem('save_login');
+      const isGetProfile = localStorage.getItem('get_profile');
 
-    if (initialized && keycloak?.token && !isLogin) {
-      localStorage.setItem('save_login', 'true');
-      saveUser();
-    }
-  }, [initialized, keycloak?.token]);
+      if (initialized && keycloak?.token && !isLogin) {
+        localStorage.setItem('save_login', 'true');
+        await saveUser();
+      }
 
-  useUpdateEffect(() => {
-    const isGetProfile = localStorage.getItem('get_profile');
-
-    if (initialized && keycloak?.token && !isGetProfile) {
-      localStorage.setItem('get_profile', 'true');
-      getProfile();
-    }
+      if (initialized && keycloak?.token && !isGetProfile) {
+        localStorage.setItem('get_profile', 'true');
+        getProfile();
+      }
+    })();
   }, [initialized, keycloak?.token]);
 
   useLayoutEffect(() => {

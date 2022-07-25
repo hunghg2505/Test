@@ -29,7 +29,7 @@ function useAuth() {
     {
       manual: true,
       onSuccess: (r: any) => {
-        localStorage.removeItem('get_profile');
+        localStorageUtils.remove(KeyStorage.GET_PROFILE);
         const data: LocalAuth = localStorageUtils.getObject(KeyStorage.AUTH);
 
         const actionChangeAuth = changeAuth({
@@ -43,7 +43,7 @@ function useAuth() {
         dispatch(actionChangeAuth);
       },
       onError: (err) => {
-        localStorage.removeItem('get_profile');
+        localStorageUtils.remove(KeyStorage.GET_PROFILE);
         console.log('get profile err', err);
       },
       refreshDeps: [auth],
@@ -59,9 +59,10 @@ function useAuth() {
   const onLogin = () => keycloak.login();
 
   const onLogout = () => {
-    localStorage.removeItem('save_login');
-    localStorage.removeItem('get_profile');
+    localStorageUtils.remove(KeyStorage.SAVE_LOGIN);
+    localStorageUtils.remove(KeyStorage.GET_PROFILE);
     localStorageUtils.remove(KeyStorage.AUTH);
+
     keycloak.logout();
   };
 
@@ -71,7 +72,7 @@ function useAuth() {
     isLogin: keycloak.authenticated,
     onLogin,
     onLogout,
-    saveUser: reqSaveUser.run,
+    saveUser: reqSaveUser.runAsync,
     getProfile: reqGetProfile.run,
   };
 }
