@@ -54,7 +54,7 @@ const CreateConsentForm = ({ visible, onClose }: IProps) => {
                 },
               ]}
             >
-              <Select placeholder='Select a Right'>
+              <Select>
                 <Select.Option value={'test1'}>Test 1</Select.Option>
                 <Select.Option value={'test2'}>Test 2</Select.Option>
               </Select>
