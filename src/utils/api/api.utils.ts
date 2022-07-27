@@ -70,17 +70,15 @@ const errorHandler = (error: AxiosError) => {
   const resError: AxiosResponse<any> | undefined = error.response;
   const originalRequest: any = error.config;
 
-  if (resError?.data?.code === ResponseCode.UNAUTHORIZED) {
-    if (originalRequest.url === API_PATH.REFRESH_TOKEN) {
-      localStorageUtils.setObject(KeyStorage.AUTH, 'null');
-      window.location.href = '/auth/sign-in';
-      return;
-    }
+  if (
+    resError?.data?.statusCode === ResponseCode.UNAUTHORIZED ||
+    resError?.data?.message === 'Unauthorized'
+  ) {
     if (!isRefreshing) {
       isRefreshing = true;
-      refreshTokenApi().then((data: any) => {
+      refreshTokenApi().then((newToken: any) => {
         isRefreshing = false;
-        onRefreshed(data);
+        if (newToken) onRefreshed(newToken);
       });
     }
     const retryOrigReq = new Promise((resolve, reject) => {
