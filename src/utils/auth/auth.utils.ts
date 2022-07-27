@@ -36,7 +36,8 @@ export const refreshTokenApi = async (): Promise<any> => {
     setTokenInfo({ ...tokenInfo, ...newTokenInfo });
     return res?.data?.access_token;
   } catch (error) {
-    // console.log('error refresh token', error);
+    localStorageUtils.setObject(KeyStorage.AUTH, 'null');
+    window.location.href = '/auth/sign-in';
   }
 };
 
