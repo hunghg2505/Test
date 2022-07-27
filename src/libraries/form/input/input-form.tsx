@@ -16,6 +16,7 @@ interface Props {
   // custom
   classNameFormInput?: any;
   className?: any;
+  required?: boolean;
 
   onBlur?: (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
 }
@@ -30,6 +31,7 @@ export default function InputForm({
   className,
   defaultValue,
   disabled = false,
+  required,
   onBlur,
 }: Props) {
   return (
@@ -40,6 +42,7 @@ export default function InputForm({
       className={clsx(styles.customInputFormItem, {
         [classNameFormInput]: true,
       })}
+      required={required}
     >
       <Input
         className={clsx(styles.customInputForm, {

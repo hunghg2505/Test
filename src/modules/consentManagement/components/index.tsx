@@ -16,6 +16,8 @@ import { paginationItemRender } from 'libraries/UI/Pagination';
 import IconCross2 from 'assets/icons/icon-cross2';
 import IconCross from 'assets/icons/icon-cross';
 import Button from 'libraries/UI/Button';
+import { useState } from 'react';
+import CreateConsentForm from './CreateConsentForm';
 
 const ICON_CONSENT_PLUS = (
   <svg xmlns='http://www.w3.org/2000/svg' width={24} height={24} viewBox='0 0 24 24' fill='none'>
@@ -87,7 +89,7 @@ const columns: ColumnsType<DataType> = [
     width: 110,
   },
   {
-    title: 'App Name',
+    title: 'Application Name',
     dataIndex: 'appName',
     key: 'appName',
     width: 283,
@@ -99,49 +101,33 @@ const columns: ColumnsType<DataType> = [
     width: 164,
   },
   {
-    title: 'Description',
+    title: 'Consent Content',
     dataIndex: 'description',
     key: 'description',
     width: 482,
   },
   {
-    title: (
-      <>
-        <div>Create Date</div>
-        <div>(dd/mm/yyyy)</div>
-      </>
-    ),
+    title: 'Created Date',
     dataIndex: 'createdAt',
     key: 'createdAt',
     width: 170,
   },
   {
-    title: (
-      <>
-        <div>Update Date</div>
-        <div>(dd/mm/yyyy)</div>
-      </>
-    ),
+    title: 'Update Date',
     dataIndex: 'updatedAt',
     key: 'updatedAt',
     width: 170,
   },
   {
     title: 'Action',
-    key: 'action',
-    dataIndex: 'action',
-    render: (_, { action }) => (
-      <Row
-        justify='space-between'
-        align='middle'
-        style={{ flexFlow: 'nowrap' }}
-        className={styles.btnActions}
-      >
-        <div>{ICON_CONSENT_PLUS}</div>
-        <Link to={`/consent/${action}`}>{ICON_EDIT}</Link>
+    key: 'id',
+    dataIndex: 'consentId',
+    render: (value) => (
+      <Row justify='center' align='middle' style={{ flexFlow: 'nowrap' }} className={styles.action}>
+        <Link to={`/consent/${value}`}>Detail</Link>
       </Row>
     ),
-    width: 105,
+    width: 178,
   },
 ];
 
@@ -150,6 +136,8 @@ function ConsentManagement() {
   const navigate = useNavigate();
 
   const { data, loading, onChange, onSearchConsent } = useConsentManagement();
+
+  const [isOpenCreateConsentForm, setIsOpenCreateConsentForm] = useState(false);
 
   return (
     <ContainerLayout title='Consent Management'>
@@ -185,7 +173,7 @@ function ConsentManagement() {
             typeDisplay='ghost'
             className={styles.btnCreateConsent}
             icon={ICON_CONSENT_PLUS}
-            onClick={() => navigate('/consent/new')}
+            onClick={() => setIsOpenCreateConsentForm(true)}
           >
             {t('create_consent')}
           </Button>
@@ -210,6 +198,10 @@ function ConsentManagement() {
           />
         </div>
       </div>
+      <CreateConsentForm
+        visible={isOpenCreateConsentForm}
+        onClose={() => setIsOpenCreateConsentForm(false)}
+      />
     </ContainerLayout>
   );
 }

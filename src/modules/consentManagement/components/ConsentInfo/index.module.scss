@@ -1,0 +1,119 @@
+@import '../../../../styles/variables.scss';
+
+.consentInfo {
+  padding: 32px 64px;
+  background: #ffffff;
+  border: 1px solid #f6f6f6;
+  box-shadow: 0px 5px 40px rgba(9, 44, 76, 0.02);
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+
+  .info {
+    display: flex;
+    justify-content: space-between;
+
+    .label {
+      font-style: normal;
+      font-weight: 400;
+      font-size: 14px;
+      color: $color-gray4;
+    }
+
+    .asterisk {
+      color: #ff4d4f;
+      margin-left: 3px;
+    }
+
+    .leftSpace {
+      margin-left: 20px;
+    }
+
+    .value {
+      font-style: normal;
+      font-weight: 400;
+      font-size: 14px;
+      color: $color-black4;
+    }
+  }
+
+  .flexend {
+    justify-content: flex-end;
+  }
+}
+
+.editBtn {
+  background-color: $color-primary !important;
+  border: 1px solid $white_color !important;
+  display: flex;
+  gap: 3px;
+  align-items: center;
+  justify-content: center;
+
+  span {
+    color: $white_color !important;
+  }
+
+  &:hover,
+  &:focus {
+    background-color: $color-primary !important;
+    border: 1px solid $white_color !important;
+
+    span {
+      color: $white_color !important;
+    }
+  }
+}
+
+.deleteBtn {
+  background-color: $color-gray5 !important;
+  border: 1px solid $white_color !important;
+  display: flex;
+  gap: 3px;
+  align-items: center;
+  justify-content: center;
+  margin-left: 16px;
+
+  span {
+    color: $color-black1 !important;
+  }
+
+  &:hover,
+  &:focus {
+    background-color: $color-gray5 !important;
+    border: 1px solid $color-black1 !important;
+
+    span {
+      color: $color-black1 !important;
+    }
+  }
+}
+
+.btnCancel {
+  background-color: $color-gray3;
+  border-radius: 100px;
+  color: $color-primary-light;
+
+  &:focus {
+    background-color: $color-gray3;
+    border-radius: 100px;
+    color: $color-primary-light;
+  }
+
+  &:hover {
+    background-color: $color-gray3;
+    border-radius: 100px;
+    color: $color-primary-light;
+    border-color: $color-gray3;
+  }
+}
+
+.content {
+  flex-direction: column;
+  gap: 12px;
+
+  .value {
+    margin-left: 16px;
+  }
+}

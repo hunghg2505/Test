@@ -15,16 +15,15 @@
       font-size: 14px;
       color: $color-gray4;
 
-      &::before {
-        display: none !important;
-      }
+      // &::before {
+      //   display: none !important;
+      // }
     }
   }
 }
 
 // input password
 .customInputPasswordFormItem {
-
   margin: 0;
 
   div[class='ant-col ant-form-item-label'] {
@@ -38,9 +37,9 @@
       font-size: 14px;
       color: $color-gray4;
 
-      &::before {
-        display: none !important;
-      }
+      // &::before {
+      //   display: none !important;
+      // }
     }
   }
 
@@ -54,8 +53,6 @@
 .customTextAreaFormItem {
   margin: 0;
   position: relative;
-
-
 
   div[class='ant-col ant-form-item-label'] {
     line-height: 14px;
@@ -75,6 +72,23 @@
   }
   > div {
     position: relative;
+  }
+
+  :global {
+    .ant-input-textarea-show-count {
+      padding: 0;
+      &:hover,
+      &:focus {
+        border-color: transparent;
+      }
+    }
+
+    .ant-input-textarea-show-count::after {
+      position: absolute;
+      top: 70%;
+      left: 4%;
+      content: 'Characters' ' ' attr(data-count);
+    }
   }
 }
 
@@ -108,4 +122,3 @@
   cursor: pointer;
   margin-left: 8px;
 }
-

@@ -19,6 +19,7 @@ interface Props {
   disabled?: boolean;
   required?: boolean;
   uploadFile?: boolean;
+  showCount?: boolean;
   // custom
   classNameFormInput?: any;
   className?: any;
@@ -44,6 +45,7 @@ const InputTextAreaForm = ({
   rows,
   required,
   refFiles,
+  showCount,
   defaultFileUrl,
 }: Props) => {
   const refFileImage: any = useRef([]);
@@ -102,6 +104,7 @@ const InputTextAreaForm = ({
           maxLength={maxLength}
           rows={rows}
           disabled={disabled}
+          showCount={showCount}
         />
       </Form.Item>
       {uploadFile && (

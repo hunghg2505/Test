@@ -19,6 +19,7 @@ interface Props {
   maxLength?: number;
   disabled?: boolean;
   rows?: number;
+  showCount?: boolean;
   onChange?: (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
   onBlur?: (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
 }
