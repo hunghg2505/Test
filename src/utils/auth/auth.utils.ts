@@ -19,7 +19,7 @@ export const refreshTokenApi = async (): Promise<any> => {
       method: 'POST',
       headers: { 'content-type': 'application/x-www-form-urlencoded' },
       data,
-      url: 'https://abc-auth-dev.abc-dev.network/realms/master/protocol/openid-connect/token',
+      url: `${process.env.REACT_APP_KEYCLOAK_URL}/realms/${process.env.REACT_APP_KEYCLOAK_REALM}/protocol/openid-connect/token`,
     };
 
     const res: any = await axios(options);
