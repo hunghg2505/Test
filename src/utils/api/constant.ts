@@ -2,6 +2,7 @@ export const BACKEND_URL = process.env.REACT_APP_API_DOMAIN;
 
 const CASE_MANAGEMENT_BASE_URL = '/case-management';
 const USER_MANAGEMENT_BASE_URL = '/user-management';
+const CONSENT_MANAGEMENT_BASE_URL = '/consent-management';
 
 export const API_PATH = {
   // Account
@@ -41,4 +42,10 @@ export const API_PATH = {
   GET_USERS_FEATURES: `${USER_MANAGEMENT_BASE_URL}/users/features`,
   UPDATE_PERMISSIONS_TO_USER: `${USER_MANAGEMENT_BASE_URL}/users/permissions`,
   GET_LIST_AUTOCOMPLETE_USER: `${USER_MANAGEMENT_BASE_URL}/autocomplete-user`,
+
+  // Consent Management
+  CONSENT_MANAGEMENT_BASE_URL,
+  UPDATE_CONSENT: (id: string | number) => `${CONSENT_MANAGEMENT_BASE_URL}/${id}`,
+  GET_DETAIL_CONSENT: (id: string | number) => `${CONSENT_MANAGEMENT_BASE_URL}/${id}`,
+  GET_LIST_APPLICATION: `${CONSENT_MANAGEMENT_BASE_URL}/list-application`,
 };

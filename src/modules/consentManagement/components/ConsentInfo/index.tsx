@@ -1,8 +1,7 @@
-import { Col, Divider, Modal, Row } from 'antd';
+import { Col, Divider, Row } from 'antd';
 import React from 'react';
 
 import Button from 'libraries/UI/Button';
-import IconDelete from 'assets/icons/icon-delete';
 import clsx from 'clsx';
 import dayjs from 'dayjs';
 import styles from './index.module.scss';
@@ -26,7 +25,7 @@ const ICON_EDIT = (
   </svg>
 );
 
-const ConsentInfo = ({ onClickEdit }: any) => {
+const ConsentInfo = ({ data, onClickEdit }: any) => {
   return (
     <div className={styles.consentInfo}>
       <Row>
@@ -34,14 +33,14 @@ const ConsentInfo = ({ onClickEdit }: any) => {
           <p className={styles.label}>
             Consent Name<span className={styles.asterisk}>*</span>
           </p>
-          <p className={styles.value}>Consent ABC</p>
+          <p className={styles.value}>{data?.name}</p>
         </Col>
         <Col xs={2}></Col>
         <Col xs={11} className={styles.info}>
           <p className={styles.label}>
             Application<span className={styles.asterisk}>*</span>
           </p>
-          <p className={styles.value}>Application Huy Hung</p>
+          <p className={styles.value}>{data?.application?.appName}</p>
         </Col>
       </Row>
       <Row>
@@ -49,14 +48,14 @@ const ConsentInfo = ({ onClickEdit }: any) => {
           <p className={styles.label}>
             Product ID<span className={styles.asterisk}>*</span>
           </p>
-          <p className={styles.value}>Text Product ID 12345</p>
+          <p className={styles.value}>{data?.productId}</p>
         </Col>
         <Col xs={2}></Col>
         <Col xs={11} className={styles.info}>
           <p className={styles.label}>
             Product Name<span className={styles.asterisk}>*</span>
           </p>
-          <p className={clsx(styles.value, styles.leftSpace)}>Product Test</p>
+          <p className={clsx(styles.value, styles.leftSpace)}>{data?.productName}</p>
         </Col>
       </Row>
       <Row>
@@ -64,7 +63,7 @@ const ConsentInfo = ({ onClickEdit }: any) => {
           <p className={styles.label}>
             Services<span className={styles.asterisk}>*</span>
           </p>
-          <p className={styles.value}>Service GHI</p>
+          <p className={styles.value}>{data?.service?.name}</p>
         </Col>
       </Row>
       <Divider />
@@ -73,23 +72,25 @@ const ConsentInfo = ({ onClickEdit }: any) => {
           <p className={styles.label}>
             Status<span className={styles.asterisk}>*</span>
           </p>
-          <p className={styles.value}>Test Status</p>
+          <p className={styles.value}>{data?.status}</p>
         </Col>
         <Col xs={2}></Col>
         <Col xs={11} className={styles.info}>
           <p className={styles.label}>Expiry Date</p>
-          <p className={clsx(styles.value, styles.leftSpace)}>27/05/2025</p>
+          <p className={clsx(styles.value, styles.leftSpace)}>
+            {data?.expireOn ? dayjs(data?.expireOn).format('DD/MM/YY') : 'N/A'}
+          </p>
         </Col>
       </Row>
       <Row>
         <Col xs={11} className={styles.info}>
           <p className={styles.label}>Title</p>
-          <p className={styles.value}>Test Title</p>
+          <p className={styles.value}>{data?.title}</p>
         </Col>
         <Col xs={2}></Col>
         <Col xs={11} className={styles.info}>
           <p className={styles.label}>Version</p>
-          <p className={styles.value}>12.333</p>
+          <p className={styles.value}>{data?.version}</p>
         </Col>
       </Row>
       <Row>
@@ -97,12 +98,7 @@ const ConsentInfo = ({ onClickEdit }: any) => {
           <p className={styles.label}>
             Content<span className={styles.asterisk}>*</span>
           </p>
-          <p className={styles.value}>
-            Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia
-            consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet. Amet
-            minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia
-            consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.
-          </p>
+          <p className={styles.value}>{data?.content}</p>
         </Col>
       </Row>
       <Row className={styles.flexend}>

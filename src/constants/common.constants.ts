@@ -67,3 +67,8 @@ export const PERMISSION_ID = {
   deleteCase: 'PDPA_CaseManagement_Delete',
   editCase: 'PDPA_CaseManagement_Edit',
 };
+
+export const STATUS_CONSENT_DROPDOWN_DATA = [
+  { label: 'Draft', value: 'draft' },
+  { label: 'Published', value: 'published' },
+];

@@ -10,6 +10,8 @@ export class RegexUtils {
     static REGEX_PHONE = /^[0-9\+]{10,12}$/;
 
     static REGEX_PASSWORD = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$/;
+
+    static REGEX_VERSION = /^\d+(\.\d+)*$/;
   };
 
   static isEmail(input: string): boolean {

@@ -16,6 +16,12 @@ interface IProps {
   showSearch?: boolean;
   onSelect?: (value: any) => void;
   onChange?: (value: any) => void;
+  onSearch?: (value: any) => void;
+  onBlur?: () => void;
+  dropdownRender?: any;
+  onMouseLeave?: () => void;
+  filterOption?: boolean;
+  ref?: any;
 }
 
 const Select = ({
@@ -24,6 +30,7 @@ const Select = ({
   placeholder = 'Placeholder',
   options,
   suffixIcon = <IconArrowDown2 />,
+  ref,
   ...props
 }: IProps) => {
   return (
@@ -36,6 +43,7 @@ const Select = ({
       options={options}
       {...props}
       getPopupContainer={(trigger) => trigger.parentNode}
+      ref={ref}
     >
       <>{children}</>
     </SelectAntd>
