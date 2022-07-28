@@ -1,16 +1,12 @@
-import { useRef, useCallback } from 'react';
 import { useMount, useRequest } from 'ahooks';
 import { message } from 'antd';
+import dayjs from 'dayjs';
 import debounce from 'lodash/debounce';
-import flattenDeep from 'lodash/flattenDeep';
 import get from 'lodash/get';
-import groupBy from 'lodash/groupBy';
-import isArray from 'lodash/isArray';
 import isEqual from 'lodash/isEqual';
 import uniqWith from 'lodash/uniqWith';
-import max from 'lodash/max';
+import { useRef } from 'react';
 import ApiUtils from 'utils/api/api.utils';
-import dayjs from 'dayjs';
 import { API_PATH } from 'utils/api/constant';
 
 const PAGE_SIZE = 10;
@@ -40,59 +36,23 @@ export const getConsentService = async ({
 
   const r: any = await ApiUtils.fetch(API_PATH.CONSENTS, params);
 
-  const listData =
-    r?.content?.data?.map((item: any) => {
-      if (!isArray(item?.myConsent) && item?.myConsent) {
+  const formatConsents = r?.content?.data?.map((item: any, idx: number) => {
+    return {
+      key: `${item?.app_name}`,
+      name: item?.app_name,
+      lastUpdated: dayjs().format('DD/MM/YYYY'),
+      version: 'V1.0',
+      status: idx % 2 === 0 ? 'Accepted' : 'Not Accepted',
+      description: 'Information storage and access, Personalisation, Data Reports',
+      list: item?.consents?.map((consent: any) => {
         return {
-          ...item,
-          myConsent: [item?.myConsent],
+          id: consent.consent_id,
+          title: get(consent, 'name', ''),
+          value: `${get(consent, 'name', '')}@${consent.consent_id}`,
+          description: get(consent, 'content', ''),
+          selected: !!consent?.my_consent_id,
         };
-      }
-      return item;
-    }) || [];
-
-  let formatConsents: any = groupBy(listData, 'consentData.application');
-
-  formatConsents = Object.keys(formatConsents).map((consentKey, i) => {
-    const consents: any[] = formatConsents[consentKey];
-
-    return {
-      key: `${consentKey}`,
-      dataConsent: {
-        name: consentKey,
-        lastUpdated: dayjs(max(consents.map((consent) => consent?.updatedAt))).format('DD/MM/YYYY'),
-        version: 'V1.0',
-        status: i % 2 === 0 ? 'Accepted' : 'Not Accepted',
-        description: get(consents, '[0].consentData.title', ''),
-        list: consents?.map((consent: any, idx: number) => ({
-          id: consent.id,
-          title: get(consent, 'consentData.consentName', ''),
-          description: get(consent, 'consentData.content', ''),
-          value: `${get(consent, 'consentData.consentName', '')}@${consent?.id}`,
-          lastUpdated: dayjs(get(consent, 'updatedAt', '')).format('MMM DD, YYYY'),
-          version: `Version ${get(consent, 'consentData.version', '')}`,
-          status: getStatusConstent(get(consent, 'updatedAt', '')),
-          selected: consent?.myConsent?.reduce((acc: any, i: any) => {
-            return {
-              ...acc,
-              [`${i?.key}@${consent?.id}`]: i?.value,
-            };
-          }, {}),
-        })),
-      },
-    };
-  });
-  formatConsents = formatConsents?.map((v: any) => {
-    const defaultValue = v?.dataConsent?.list?.reduce((acc: any, v: any) => {
-      const selected = v?.selected || {};
-      return {
-        ...acc,
-        ...selected,
-      };
-    }, {});
-    return {
-      ...v,
-      defaultValue,
+      }),
     };
   });
 
@@ -102,60 +62,46 @@ export const getConsentService = async ({
     pageSize: PAGE_SIZE,
     data: formatConsents,
     keyword: search,
-    listData,
+    listData: formatConsents,
   };
 };
 
-const getConsentsChecked = ({ content, ConsentList, initialValues }: any) => {
+const getConsentsChecked = ({ content, ConsentList }: any) => {
   const newConsent: any = {
     insert: [],
     update: [],
     delete: [],
   };
 
-  Object.keys(initialValues)?.forEach((initialKey) => {
-    if (!content[initialKey]) content[initialKey] = initialValues[initialKey];
-  });
-
-  const consentHasChecked = ConsentList?.filter((v: any) => v?.myConsent?.length > 0);
-  const valuesChecked = flattenDeep(Object.values(content))?.map((v) => v);
-
-  valuesChecked?.forEach((consentSelected: string) => {
-    const [key, consentId] = consentSelected?.split('@') || [];
-
-    newConsent.insert.push({
-      consentId: Number(consentId),
-      data: [
-        {
-          key: `${key}`,
-          value: 'true',
-        },
-      ],
+  Object.keys(content)?.forEach((initialKey) => {
+    const consentIniti = content[initialKey];
+    const itemSelect = ConsentList?.find((it: any) => it?.name === initialKey);
+    itemSelect?.list?.forEach((v: any) => {
+      const isExist = consentIniti?.find((id: any) => id === v?.value);
+      if (isExist && !v?.selected) {
+        newConsent.insert.push({
+          consentId: Number(v?.id),
+          data: [
+            {
+              key: `${v?.title}`,
+              value: 'true',
+            },
+          ],
+        });
+      }
+      if (!isExist && v?.selected) {
+        newConsent.delete.push({
+          consentId: Number(v?.id),
+        });
+      }
     });
-  });
-
-  consentHasChecked?.forEach((element: any) => {
-    const isExistInsert = newConsent.insert?.find(
-      (v: any) => `${v?.consentId}` === `${element?.id}`,
-    );
-    if (!isExistInsert) {
-      newConsent.delete.push({
-        consentId: Number(element?.id),
-      });
-    }
-  });
-
-  newConsent.insert = newConsent.insert?.filter((item: any) => {
-    const isExistOnList = consentHasChecked?.find((v: any) => `${v.id}` === `${item.consentId}`);
-    if (isExistOnList) return false;
-    return true;
   });
 
   return newConsent;
 };
 
-export const updateConsent = async ({ userId, content, ConsentList, initialValues }: any) => {
-  const newConsent = getConsentsChecked({ content, ConsentList, initialValues });
+export const updateConsent = async ({ userId, content, ConsentList }: any) => {
+  const newConsent = getConsentsChecked({ content, ConsentList });
 
   const body = {
     userId: userId,
@@ -273,26 +219,15 @@ export const useConsent = ({ userId }: { userId: number }) => {
     refCancelRequest.current = false;
   };
 
-  const onSaveConsent = async (consent: any, initialValues: any) => {
+  const onSaveConsent = async (consent: any) => {
     if (Object.keys(consent).length === 0) return;
 
     await reqUpdateConsent.runAsync({
       userId,
       content: consent,
       ConsentList: data?.listData,
-      initialValues,
     });
     refresh();
-  };
-
-  const onCheckConsent = (consent: any, initialValues: any) => {
-    const newConsent = getConsentsChecked({
-      content: consent,
-      ConsentList: data?.listData,
-      initialValues,
-    });
-
-    return newConsent;
   };
 
   return {
@@ -306,6 +241,5 @@ export const useConsent = ({ userId }: { userId: number }) => {
     onSuggestionConsentsDebounce,
     onLoadMoreSuggestionConsents,
     onResetSuggestionConsents,
-    onCheckConsent,
   };
 };

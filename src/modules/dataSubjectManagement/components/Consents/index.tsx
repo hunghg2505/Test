@@ -1,5 +1,5 @@
 import { useClickAway } from 'ahooks';
-import { Checkbox, Col, Collapse, Form, Pagination, Row } from 'antd';
+import { Checkbox, Collapse, Form, Pagination, Row } from 'antd';
 
 import ArrowDownCollapse from 'assets/icons/icon-arrow-down-collapse';
 import ArrowUpCollapse from 'assets/icons/icon-arrow-up-collapse';
@@ -10,7 +10,7 @@ import Button from 'libraries/UI/Button';
 import Input from 'libraries/UI/Input';
 import { paginationItemRender } from 'libraries/UI/Pagination';
 import get from 'lodash/get';
-import { useImperativeHandle, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import CreateCaseForm from '../CreateCaseForm';
 import styles from './index.module.scss';
@@ -19,7 +19,8 @@ import SuggestConsents from './SuggestConsents';
 
 const { Panel } = Collapse;
 
-interface IItem {
+export interface DataType {
+  key: string;
   name: string;
   lastUpdated: string;
   version: string;
@@ -30,11 +31,6 @@ interface IItem {
     description: string;
     value: string;
   }[];
-}
-
-export interface DataType {
-  key: string;
-  dataConsent: IItem;
   defaultValue: { [key: string]: string };
 }
 
@@ -183,13 +179,13 @@ const ConsentOption = ({ value, onChange, dataConsent, isHavePermissionSaveConse
         return (
           <Checkbox key={item.value} value={item.value}>
             <h4>{item.title}</h4>
-            <Row className={styles.consentInfo}>
+            {/* <Row className={styles.consentInfo}>
               <Col>{item?.lastUpdated}</Col>
               <Col>{item?.version}</Col>
               <Col className={item?.status === 'Published' ? styles.active : ''}>
                 {item?.status}
               </Col>
-            </Row>
+            </Row> */}
             <div>{item.description}</div>
           </Checkbox>
         );
@@ -204,13 +200,17 @@ const ConsentsList = ({ data, loading, onChange, onSaveConsent, loadingUpdateCon
 
   const { isHavePermissionSaveConsent } = useDataSubjectManagementPermission();
 
-  const initialValues = data?.data?.reduce(
-    (acc: any, v: any) => ({ ...acc, [v?.key]: Object.keys(v?.defaultValue) }),
-    {},
-  );
+  const initialValues = data?.data?.reduce((acc: any, v: any) => {
+    acc[v?.name] = [];
+    v?.list?.forEach((it: any) => {
+      if (it?.selected) acc[v?.name].push(it?.value);
+    });
+
+    return acc;
+  }, {});
 
   const onUpdateConsent = (value: any) => {
-    onSaveConsent(value, initialValues);
+    onSaveConsent(value);
   };
 
   const onFieldsChange = (values: any, allValues: any) => {
@@ -244,20 +244,31 @@ const ConsentsList = ({ data, loading, onChange, onSaveConsent, loadingUpdateCon
                 return isActive ? ArrowUpCollapse : ArrowDownCollapse;
               }}
             >
-              {data?.data?.map(({ dataConsent, key }: DataType) => {
+              {data?.data?.map((it: DataType) => {
                 const content = (
                   <Panel
-                    key={key}
+                    key={it?.key}
                     header={
                       <div className={styles.panelHeader}>
-                        <div className={styles.name}>{dataConsent.name}</div>
-                        <div className={styles.description}>{dataConsent.description}</div>
+                        <div className={styles.name}>{it?.name}</div>
+                        <Row align='middle'>
+                          <div className={styles.lastUpdated}>{it?.lastUpdated}</div>
+                          <div className={styles.version}>{it?.version}</div>
+                          <div
+                            className={`${styles.status} ${
+                              it?.status === 'Accepted' ? styles.active : ''
+                            }`}
+                          >
+                            {it?.status}
+                          </div>
+                        </Row>
+                        <div className={styles.description}>{it?.description}</div>
                       </div>
                     }
                   >
-                    <Form.Item className={styles.panelContent} name={`${key}`}>
+                    <Form.Item className={styles.panelContent} name={`${it?.key}`}>
                       <ConsentOption
-                        dataConsent={dataConsent?.list}
+                        dataConsent={it?.list}
                         isHavePermissionSaveConsent={isHavePermissionSaveConsent}
                       />
                     </Form.Item>
@@ -302,18 +313,15 @@ function Consents({ userId, refDataHistory }: { userId: number; refDataHistory: 
     onSuggestionConsentsDebounce,
     onLoadMoreSuggestionConsents,
     onResetSuggestionConsents,
-    onCheckConsent,
   } = useConsent({ userId });
-
-  const refSearchConsent: any = useRef();
 
   const onSearch = (search: string, callback?: any) => {
     onSearchConsent(search, callback);
   };
 
-  const onSave = async (values: any, initialValues: any) => {
+  const onSave = async (values: any) => {
     try {
-      await onSaveConsent(values, initialValues);
+      await onSaveConsent(values);
       if (refDataHistory.current?.refreshDataHistory) refDataHistory.current.refreshDataHistory();
       // eslint-disable-next-line no-empty
     } catch (error) {}
