@@ -3,9 +3,7 @@ import { message } from 'antd';
 import dayjs from 'dayjs';
 import debounce from 'lodash/debounce';
 import get from 'lodash/get';
-import isEqual from 'lodash/isEqual';
-import uniqWith from 'lodash/uniqWith';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import ApiUtils from 'utils/api/api.utils';
 import { API_PATH } from 'utils/api/constant';
 
@@ -111,7 +109,7 @@ export const updateConsent = async ({ userId, content, ConsentList }: any) => {
   return ApiUtils.post(API_PATH.OPT_OUT_IN, body);
 };
 
-const getSuggestionConsents = async (userId: any, search: string, page = 1) => {
+const getSuggestionConsents = async (userId: any, search: string, page = 1, prevValue = []) => {
   const params = {
     keyword: search,
     userId: userId,
@@ -127,14 +125,27 @@ const getSuggestionConsents = async (userId: any, search: string, page = 1) => {
   }));
 
   return {
-    total: +res?.content?.metadata?.total,
     data: dataUnique,
-    isLoadMore: res?.content?.metadata?.current < res?.content?.metadata?.lastPage,
+    isLoadMore: +res?.content?.metadata?.currentPage < +res?.content?.metadata?.lastPage,
+    currentPage: +res?.content?.metadata?.currentPage,
+    value: search,
   };
 };
 
 export const useConsent = ({ userId }: { userId: number }) => {
   const refCancelRequest: any = useRef(false);
+
+  const [consentSuggest, setConsentSuggest] = useState<{
+    data: any[];
+    isLoadMore: boolean;
+    currentPage: number;
+    value: string;
+  }>({
+    data: [],
+    isLoadMore: false,
+    currentPage: 1,
+    value: '',
+  });
 
   const { data, loading, run, runAsync, refresh } = useRequest(getConsentService, {
     manual: true,
@@ -156,44 +167,51 @@ export const useConsent = ({ userId }: { userId: number }) => {
 
   // suggestion consent
   const requestSuggestionConsents = useRequest(
-    async (value: string, page = 1) => {
+    async (value: string, page = 1, isLoadMore = false) => {
       if (refCancelRequest.current) throw new Error('Cancel Request');
 
       return getSuggestionConsents(userId, value, page);
     },
     {
       manual: true,
+      refreshDeps: [refCancelRequest.current],
+      onError: (err: any) => {
+        refCancelRequest.current = false;
+      },
+      onSuccess: (r: any, params) => {
+        const isLoadMore = params[2];
+
+        setConsentSuggest((prev) => {
+          const newData = isLoadMore ? [...prev.data, ...r.data] : r.data;
+
+          return {
+            data: newData,
+            isLoadMore: r.isLoadMore,
+            currentPage: r.currentPage,
+            value: r.value,
+          };
+        });
+      },
     },
   );
 
   const onResetSuggestionConsents = () => {
-    // requestSuggestionConsents.mutate({
-    //   current: 1,
-    //   data: [],
-    //   list: [],
-    //   total: 0,
-    //   isLoadMore: false,
-    // });
+    setConsentSuggest({
+      data: [],
+      isLoadMore: false,
+      currentPage: 1,
+      value: '',
+    });
   };
 
   const onLoadMoreSuggestionConsents = () => {
-    // const data: any = requestSuggestionConsents.data;
-    // const prevData = data?.data || [];
-    // const current = data?.current + 1 || 0;
-    // const nextData =
-    //   data?.list?.slice((current - 1) * PAGE_SIZE, (current - 1) * PAGE_SIZE + PAGE_SIZE) || [];
-    // requestSuggestionConsents.mutate({
-    //   ...data,
-    //   current: current,
-    //   isLoadMore: current < data?.total,
-    //   data: [...prevData, ...nextData],
-    // });
+    requestSuggestionConsents.run(consentSuggest.value, consentSuggest.currentPage + 1, true);
   };
 
   const onSuggestionConsentsDebounce = debounce(async (value: string, callback: any) => {
     if (value?.length < 3) return;
 
-    await requestSuggestionConsents.runAsync(value, 1);
+    await requestSuggestionConsents.runAsync(value, 1, false);
     if (callback) callback();
   }, 350);
 
@@ -206,7 +224,9 @@ export const useConsent = ({ userId }: { userId: number }) => {
     await runAsync({ search, page: 1, userId });
 
     if (callback) callback();
-    refCancelRequest.current = false;
+    setTimeout(() => {
+      refCancelRequest.current = false;
+    }, 500);
   };
 
   const onSaveConsent = async (consent: any) => {
@@ -227,7 +247,7 @@ export const useConsent = ({ userId }: { userId: number }) => {
     onSearchConsent,
     onSaveConsent,
     loadingUpdateConsent: reqUpdateConsent.loading,
-    suggestionConsents: requestSuggestionConsents.data,
+    suggestionConsents: consentSuggest,
     onSuggestionConsentsDebounce,
     onLoadMoreSuggestionConsents,
     onResetSuggestionConsents,
