@@ -7,12 +7,11 @@ import { useTranslation } from 'react-i18next';
 import InputTextAreaForm from 'libraries/form/input/input-textarea-form';
 import InputForm from 'libraries/form/input/input-form';
 import Button from 'libraries/UI/Button';
-import { useCreateConsent, useGetListApplication } from './service';
+import { useCreateConsent, useGetListApplication, useGetListService } from './service';
 import { STATUS_CONSENT_DROPDOWN_DATA } from 'constants/common.constants';
 import ExclamationCircleOutlined from '@ant-design/icons/lib/icons/ExclamationCircleOutlined';
 import { RegexUtils } from 'utils/regex-helper';
 import { paginationItemRender } from 'libraries/UI/Pagination';
-import { useClickAway } from 'ahooks';
 
 interface IProps {
   visible: boolean;
@@ -27,8 +26,8 @@ const CreateConsentForm = ({ visible, onClose }: IProps) => {
   const [createConsentForm] = Form.useForm();
 
   const [expireOn, setExpireOn] = useState(null);
-  const [value, setValue] = useState<string>();
-  const refSelectApplication: any = useRef();
+  const [valueApplication, setValueApplication] = useState<string>();
+  const [valueService, setValueService] = useState<string>();
 
   const onFinishSubmitForm = () => {
     onClose();
@@ -37,7 +36,18 @@ const CreateConsentForm = ({ visible, onClose }: IProps) => {
   };
 
   const createConsentRequest = useCreateConsent(onFinishSubmitForm);
-  const { data, loading, onChangePage, onSearchApplicationDebounce, run } = useGetListApplication();
+  const {
+    data: dataApplication,
+    onChangePage: onChangePageApplication,
+    onSearchApplicationDebounce,
+    run: runApplicationService,
+  } = useGetListApplication();
+  const {
+    data: dataService,
+    onChangePage: onChangePageService,
+    onSearchServiceDebounce,
+    run: runService,
+  } = useGetListService();
 
   const onFinish = (values: any) => {
     createConsentRequest.run({
@@ -52,7 +62,17 @@ const CreateConsentForm = ({ visible, onClose }: IProps) => {
       onSearchApplicationDebounce({ name: value });
     } else {
       setTimeout(() => {
-        run({ page: 1 });
+        runApplicationService({ page: 1 });
+      }, 351);
+    }
+  };
+
+  const onSearchService = (value: string) => {
+    if (value && value?.length > 0) {
+      onSearchServiceDebounce({ name: value });
+    } else {
+      setTimeout(() => {
+        runService({ page: 1 });
       }, 351);
     }
   };
@@ -119,12 +139,12 @@ const CreateConsentForm = ({ visible, onClose }: IProps) => {
               ]}
             >
               <Select
-                value={value}
-                onChange={(value) => setValue(value)}
+                value={valueApplication}
+                onChange={(value) => setValueApplication(value)}
                 showSearch
                 onSearch={onSearchApplication}
-                onSelect={() => run({ page: 1 })}
-                onBlur={() => run({ page: 1 })}
+                onSelect={() => runApplicationService({ page: 1 })}
+                onBlur={() => runApplicationService({ page: 1 })}
                 filterOption={false}
                 dropdownRender={(menu: any) => (
                   <>
@@ -132,17 +152,17 @@ const CreateConsentForm = ({ visible, onClose }: IProps) => {
                     <Divider style={{ margin: '8px 0' }} />
                     <Pagination
                       className={styles.pagination}
-                      current={data?.current}
-                      onChange={onChangePage}
-                      total={data?.total}
-                      defaultPageSize={data?.pageSize}
+                      current={dataApplication?.current}
+                      onChange={onChangePageApplication}
+                      total={dataApplication?.total}
+                      defaultPageSize={dataApplication?.pageSize}
                       itemRender={paginationItemRender}
                       showSizeChanger={false}
                     />
                   </>
                 )}
               >
-                {data?.data?.map((item: any, index: number) => (
+                {dataApplication?.data?.map((item: any, index: number) => (
                   <Select.Option value={Number(item.appId)} key={`${index}${item.appId}`}>
                     {item.appName}
                   </Select.Option>
@@ -180,19 +200,45 @@ const CreateConsentForm = ({ visible, onClose }: IProps) => {
           </Col>
           <Col xs={24}>
             <Form.Item
-              label='Services'
+              label='Service'
               name='serviceId'
               required
               rules={[
                 {
                   required: true,
-                  message: t('messages.errors.require', { field: 'Services' }),
+                  message: t('messages.errors.require', { field: 'Service' }),
                 },
               ]}
             >
-              <Select>
-                <Select.Option value={1}>Test service 1</Select.Option>
-                <Select.Option value={2}>Test service 2</Select.Option>
+              <Select
+                value={valueService}
+                onChange={(value) => setValueService(value)}
+                showSearch
+                onSearch={onSearchService}
+                onSelect={() => runService({ page: 1 })}
+                onBlur={() => runService({ page: 1 })}
+                filterOption={false}
+                dropdownRender={(menu: any) => (
+                  <>
+                    {menu}
+                    <Divider style={{ margin: '8px 0' }} />
+                    <Pagination
+                      className={styles.pagination}
+                      current={dataService?.current}
+                      onChange={onChangePageService}
+                      total={dataService?.total}
+                      defaultPageSize={dataService?.pageSize}
+                      itemRender={paginationItemRender}
+                      showSizeChanger={false}
+                    />
+                  </>
+                )}
+              >
+                {dataService?.data?.map((item: any, index: number) => (
+                  <Select.Option value={Number(item?.id)} key={`${index}${item?.appId}`}>
+                    {item?.name}
+                  </Select.Option>
+                ))}
               </Select>
             </Form.Item>
           </Col>

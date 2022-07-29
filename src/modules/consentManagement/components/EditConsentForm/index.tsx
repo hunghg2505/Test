@@ -9,7 +9,12 @@ import InputForm from 'libraries/form/input/input-form';
 import Button from 'libraries/UI/Button';
 import ConsentInfo from '../ConsentInfo';
 import { useParams } from 'react-router-dom';
-import { useConsentDetail, useGetListApplication, useUpdateConsent } from './service';
+import {
+  useConsentDetail,
+  useGetListApplication,
+  useGetListService,
+  useUpdateConsent,
+} from './service';
 import moment from 'moment';
 import Loading from 'libraries/components/loading';
 import { STATUS_CONSENT_DROPDOWN_DATA } from 'constants/common.constants';
@@ -21,7 +26,8 @@ export default function EditConsentForm() {
   const { id } = useParams();
 
   const [isEdit, setIsEdit] = useState(true);
-  const [value, setValue] = useState<string>();
+  const [valueApplication, setValueApplication] = useState<string>();
+  const [valueService, setValueService] = useState<string>();
   const [expireOn, setExpireOn] = useState<null | moment.Moment>(null);
   const [editConsentForm] = Form.useForm();
 
@@ -38,6 +44,12 @@ export default function EditConsentForm() {
     onSearchApplicationDebounce,
     run,
   } = useGetListApplication();
+  const {
+    data: dataService,
+    onChangePage: onChangePageService,
+    onSearchServiceDebounce,
+    run: runService,
+  } = useGetListService();
 
   useEffect(() => {
     if (!loading) {
@@ -57,6 +69,16 @@ export default function EditConsentForm() {
     } else {
       setTimeout(() => {
         run({ page: 1 });
+      }, 351);
+    }
+  };
+
+  const onSearchService = (value: string) => {
+    if (value && value?.length > 0) {
+      onSearchServiceDebounce({ name: value });
+    } else {
+      setTimeout(() => {
+        runService({ page: 1 });
       }, 351);
     }
   };
@@ -114,8 +136,8 @@ export default function EditConsentForm() {
                     ]}
                   >
                     <Select
-                      value={value}
-                      onChange={(value) => setValue(value)}
+                      value={valueApplication}
+                      onChange={(value) => setValueApplication(value)}
                       showSearch
                       onSearch={onSearchApplication}
                       filterOption={false}
@@ -261,21 +283,48 @@ export default function EditConsentForm() {
                   />
                 </Col>
                 <Col xs={24}>
-                  <InputTextAreaForm
-                    name='content'
-                    label='Content'
-                    rows={6}
-                    className={styles.textarea}
-                    maxLength={500}
+                  <Form.Item
+                    label='Service'
+                    name='serviceId'
                     required
-                    showCount={true}
                     rules={[
                       {
                         required: true,
-                        message: t('messages.errors.require', { field: 'Version' }),
+                        message: t('messages.errors.require', { field: 'Service' }),
                       },
                     ]}
-                  />
+                  >
+                    <Select
+                      value={valueService}
+                      onChange={(value) => setValueService(value)}
+                      showSearch
+                      onSearch={onSearchService}
+                      onSelect={() => runService({ page: 1 })}
+                      onBlur={() => runService({ page: 1 })}
+                      filterOption={false}
+                      dropdownRender={(menu: any) => (
+                        <>
+                          {menu}
+                          <Divider style={{ margin: '8px 0' }} />
+                          <Pagination
+                            className={styles.pagination}
+                            current={dataService?.current}
+                            onChange={onChangePageService}
+                            total={dataService?.total}
+                            defaultPageSize={dataService?.pageSize}
+                            itemRender={paginationItemRender}
+                            showSizeChanger={false}
+                          />
+                        </>
+                      )}
+                    >
+                      {dataService?.data?.map((item: any, index: number) => (
+                        <Select.Option value={Number(item?.id)} key={`${index}${item?.appId}`}>
+                          {item?.name}
+                        </Select.Option>
+                      ))}
+                    </Select>
+                  </Form.Item>
                 </Col>
               </Row>
             </Form>

@@ -11,7 +11,7 @@ export class RegexUtils {
 
     static REGEX_PASSWORD = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$/;
 
-    static REGEX_VERSION = /^\d+(\.\d+)*$/;
+    static REGEX_VERSION = /^(\d+)\.{1}(\d+)$/;
   };
 
   static isEmail(input: string): boolean {

@@ -48,4 +48,5 @@ export const API_PATH = {
   UPDATE_CONSENT: (id: string | number) => `${CONSENT_MANAGEMENT_BASE_URL}/${id}`,
   GET_DETAIL_CONSENT: (id: string | number) => `${CONSENT_MANAGEMENT_BASE_URL}/${id}`,
   GET_LIST_APPLICATION: `${CONSENT_MANAGEMENT_BASE_URL}/list-application`,
+  GET_LIST_SERVICE: `${CONSENT_MANAGEMENT_BASE_URL}/list-service`,
 };

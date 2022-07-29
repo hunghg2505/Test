@@ -112,3 +112,53 @@ export const useGetListApplication = () => {
     run,
   };
 };
+
+const getListService = async ({ name, page }: { name?: string | undefined; page: number }) => {
+  const response: any = await ApiUtils.fetch(API_PATH.GET_LIST_SERVICE, {
+    name,
+    limit: 10,
+    page: page || 1,
+  });
+
+  const current = +response?.content?.metadata?.currentPage || 1;
+
+  return {
+    total: response?.content?.metadata?.total || 0,
+    current: current,
+    pageSize: +response?.content?.metadata?.itemPage || 10,
+    data:
+      response?.content?.data?.map((item: any) => ({
+        id: item?.id,
+        name: item?.name,
+      })) || [],
+    name,
+  };
+};
+
+export const useGetListService = () => {
+  const { data, loading, run, runAsync } = useRequest((values) => getListService(values), {
+    manual: true,
+  });
+
+  const onSearchServiceDebounce = debounce(async (values = {}) => {
+    if (!Object.values(values)?.filter((v) => v).length) return;
+
+    await runAsync({ ...values, page: 1 });
+  }, 350);
+
+  useMount(() => {
+    run({ page: 1 });
+  });
+
+  const onChangePage = (page: number) => {
+    run({ name: data?.name, page });
+  };
+
+  return {
+    data,
+    loading,
+    onSearchServiceDebounce,
+    onChangePage,
+    run,
+  };
+};
