@@ -86,8 +86,8 @@
     .ant-input-textarea-show-count::after {
       position: absolute;
       top: 70%;
-      left: 4%;
-      content: 'Characters' ' ' attr(data-count);
+      left: 2%;
+      content: attr(data-count);
     }
   }
 }

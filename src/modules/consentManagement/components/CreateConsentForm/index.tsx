@@ -123,7 +123,7 @@ const CreateConsentForm = ({ visible, onClose, onReloadConsentData }: IProps) =>
               rules={[
                 {
                   required: true,
-                  message: t('messages.errors.require', { field: 'Data Subject Rights' }),
+                  message: t('messages.errors.require', { field: 'Consent Name' }),
                 },
               ]}
               placeholder='Consent name'
