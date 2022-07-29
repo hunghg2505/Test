@@ -113,6 +113,7 @@ export default function EditConsentForm() {
                   <InputForm
                     label='Consent Name'
                     name='name'
+                    placeholder='Consent name'
                     required
                     maxLength={55}
                     rules={[
@@ -136,6 +137,7 @@ export default function EditConsentForm() {
                     ]}
                   >
                     <Select
+                      placeholder='Select application'
                       value={valueApplication}
                       onChange={(value) => setValueApplication(value)}
                       showSearch
@@ -170,6 +172,7 @@ export default function EditConsentForm() {
                 <Col xs={12}>
                   <InputForm
                     label='Product ID'
+                    placeholder='Product ID'
                     name='productId'
                     maxLength={55}
                     required
@@ -185,99 +188,13 @@ export default function EditConsentForm() {
                   <InputForm
                     label='Product Name'
                     name='productName'
+                    placeholder='Product name'
                     required
                     maxLength={55}
                     rules={[
                       {
                         required: true,
                         message: t('messages.errors.require', { field: 'Product Name' }),
-                      },
-                    ]}
-                  />
-                </Col>
-                <Col xs={24}>
-                  <Form.Item
-                    label='Services'
-                    name='serviceId'
-                    required
-                    rules={[
-                      {
-                        required: true,
-                        message: t('messages.errors.require', { field: 'Services' }),
-                      },
-                    ]}
-                  >
-                    <Select>
-                      <Select.Option value={1}>Test service 1</Select.Option>
-                      <Select.Option value={2}>Test service 2</Select.Option>
-                    </Select>
-                  </Form.Item>
-                </Col>
-                <Col xs={12}>
-                  <Form.Item
-                    label='Status'
-                    name='status'
-                    required
-                    rules={[
-                      {
-                        required: true,
-                        message: t('messages.errors.require', { field: 'Status' }),
-                      },
-                    ]}
-                  >
-                    <Select>
-                      {STATUS_CONSENT_DROPDOWN_DATA.map((item, index) => (
-                        <Select.Option value={item.value} key={`${index}${item.value}`}>
-                          {item.value}
-                        </Select.Option>
-                      ))}
-                    </Select>
-                  </Form.Item>
-                </Col>
-                <Col xs={12}>
-                  <p className={styles.datePickerLabel}>Expiry Date</p>
-                  <DatePicker
-                    getPopupContainer={(trigger: any) => trigger.parentElement}
-                    format='DD/MM/YYYY'
-                    style={{ width: '100%' }}
-                    size='large'
-                    onChange={(date: any) => setExpireOn(date)}
-                    value={expireOn}
-                  />
-                </Col>
-                <Col xs={12}>
-                  <InputForm
-                    label='Title'
-                    name='title'
-                    required
-                    maxLength={55}
-                    rules={[
-                      {
-                        required: true,
-                        message: t('messages.errors.require', { field: 'Title' }),
-                      },
-                    ]}
-                  />
-                </Col>
-                <Col xs={12}>
-                  <InputForm
-                    label='Version'
-                    name='version'
-                    required
-                    maxLength={6}
-                    rules={[
-                      {
-                        required: true,
-                        message: t('messages.errors.require', { field: 'Version' }),
-                      },
-                      {
-                        max: 6,
-                        message: t('messages.errors.max', { max: 6 }),
-                      },
-
-                      {
-                        pattern: new RegExp(RegexUtils.RegexConstants.REGEX_VERSION),
-                        message: `${t('messages.errors.invalid_version')}`,
                       },
                     ]}
                   />
@@ -298,6 +215,7 @@ export default function EditConsentForm() {
                       value={valueService}
                       onChange={(value) => setValueService(value)}
                       showSearch
+                      placeholder='Select service'
                       onSearch={onSearchService}
                       onSelect={() => runService({ page: 1 })}
                       onBlur={() => runService({ page: 1 })}
@@ -325,6 +243,96 @@ export default function EditConsentForm() {
                       ))}
                     </Select>
                   </Form.Item>
+                </Col>
+                <Col xs={12}>
+                  <Form.Item
+                    label='Status'
+                    name='status'
+                    required
+                    rules={[
+                      {
+                        required: true,
+                        message: t('messages.errors.require', { field: 'Status' }),
+                      },
+                    ]}
+                  >
+                    <Select placeholder='Select status'>
+                      {STATUS_CONSENT_DROPDOWN_DATA.map((item, index) => (
+                        <Select.Option value={item.value} key={`${index}${item.value}`}>
+                          {item.value}
+                        </Select.Option>
+                      ))}
+                    </Select>
+                  </Form.Item>
+                </Col>
+                <Col xs={12}>
+                  <p className={styles.datePickerLabel}>Expiry Date</p>
+                  <DatePicker
+                    getPopupContainer={(trigger: any) => trigger.parentElement}
+                    format='DD/MM/YYYY'
+                    style={{ width: '100%' }}
+                    size='large'
+                    onChange={(date: any) => setExpireOn(date)}
+                    value={expireOn}
+                    placeholder='dd/mm/yyyy'
+                  />
+                </Col>
+                <Col xs={12}>
+                  <InputForm
+                    label='Title'
+                    name='title'
+                    placeholder='title'
+                    required
+                    maxLength={55}
+                    rules={[
+                      {
+                        required: true,
+                        message: t('messages.errors.require', { field: 'Title' }),
+                      },
+                    ]}
+                  />
+                </Col>
+                <Col xs={12}>
+                  <InputForm
+                    label='Version'
+                    name='version'
+                    required
+                    placeholder='Version no'
+                    maxLength={6}
+                    rules={[
+                      {
+                        required: true,
+                        message: t('messages.errors.require', { field: 'Version' }),
+                      },
+                      {
+                        max: 6,
+                        message: t('messages.errors.max', { max: 6 }),
+                      },
+
+                      {
+                        pattern: new RegExp(RegexUtils.RegexConstants.REGEX_VERSION),
+                        message: `${t('messages.errors.invalid_version')}`,
+                      },
+                    ]}
+                  />
+                </Col>
+                <Col xs={24}>
+                  <InputTextAreaForm
+                    name='content'
+                    label='Content'
+                    placeholder='Consent content'
+                    rows={6}
+                    className={styles.textarea}
+                    maxLength={500}
+                    required
+                    showCount={true}
+                    rules={[
+                      {
+                        required: true,
+                        message: t('messages.errors.require', { field: 'Content' }),
+                      },
+                    ]}
+                  />
                 </Col>
               </Row>
             </Form>

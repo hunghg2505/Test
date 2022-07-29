@@ -124,6 +124,7 @@ const CreateConsentForm = ({ visible, onClose }: IProps) => {
                   message: t('messages.errors.require', { field: 'Data Subject Rights' }),
                 },
               ]}
+              placeholder='Consent name'
             />
           </Col>
           <Col xs={12}>
@@ -140,6 +141,7 @@ const CreateConsentForm = ({ visible, onClose }: IProps) => {
             >
               <Select
                 value={valueApplication}
+                placeholder='Select application'
                 onChange={(value) => setValueApplication(value)}
                 showSearch
                 onSearch={onSearchApplication}
@@ -174,6 +176,7 @@ const CreateConsentForm = ({ visible, onClose }: IProps) => {
             <InputForm
               label='Product ID'
               name='productId'
+              placeholder='Product ID'
               maxLength={55}
               required
               rules={[
@@ -189,6 +192,7 @@ const CreateConsentForm = ({ visible, onClose }: IProps) => {
               label='Product Name'
               name='productName'
               required
+              placeholder='Product name'
               maxLength={55}
               rules={[
                 {
@@ -218,6 +222,7 @@ const CreateConsentForm = ({ visible, onClose }: IProps) => {
                 onSelect={() => runService({ page: 1 })}
                 onBlur={() => runService({ page: 1 })}
                 filterOption={false}
+                placeholder='Select service'
                 dropdownRender={(menu: any) => (
                   <>
                     {menu}
@@ -254,7 +259,7 @@ const CreateConsentForm = ({ visible, onClose }: IProps) => {
                 },
               ]}
             >
-              <Select>
+              <Select placeholder='Select status'>
                 {STATUS_CONSENT_DROPDOWN_DATA.map((item, index) => (
                   <Select.Option value={item.value} key={`${index}${item.value}`}>
                     {item.value}
@@ -272,6 +277,7 @@ const CreateConsentForm = ({ visible, onClose }: IProps) => {
               size='large'
               onChange={(date: any) => setExpireOn(date)}
               value={expireOn}
+              placeholder='dd/mm/yyyy'
             />
           </Col>
           <Col xs={12}>
@@ -286,6 +292,7 @@ const CreateConsentForm = ({ visible, onClose }: IProps) => {
                   message: t('messages.errors.require', { field: 'Title' }),
                 },
               ]}
+              placeholder='Title'
             />
           </Col>
           <Col xs={12}>
@@ -294,6 +301,7 @@ const CreateConsentForm = ({ visible, onClose }: IProps) => {
               name='version'
               required
               maxLength={6}
+              placeholder='Version no'
               rules={[
                 {
                   required: true,
@@ -315,6 +323,7 @@ const CreateConsentForm = ({ visible, onClose }: IProps) => {
             <InputTextAreaForm
               name='content'
               label='Content'
+              placeholder='Consent content'
               rows={6}
               className={styles.textarea}
               maxLength={500}
@@ -323,7 +332,7 @@ const CreateConsentForm = ({ visible, onClose }: IProps) => {
               rules={[
                 {
                   required: true,
-                  message: t('messages.errors.require', { field: 'Version' }),
+                  message: t('messages.errors.require', { field: 'Content' }),
                 },
               ]}
             />
