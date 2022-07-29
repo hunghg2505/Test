@@ -97,7 +97,7 @@ export default function EditConsentForm() {
               disabled={isEdit}
               initialValues={{
                 name: data?.name,
-                applicationId: Number(data?.application?.appId),
+                applicationId: Number(data?.application?.id),
                 productId: data?.productId,
                 productName: data?.productName,
                 serviceId: Number(data?.service?.id),
@@ -162,7 +162,7 @@ export default function EditConsentForm() {
                       )}
                     >
                       {dataListApplication?.data?.map((item: any, index: number) => (
-                        <Select.Option value={Number(item.appId)} key={`${index}${item.appId}`}>
+                        <Select.Option value={Number(item.id)} key={`${index}${item.id}`}>
                           {item.appName}
                         </Select.Option>
                       ))}
@@ -259,7 +259,7 @@ export default function EditConsentForm() {
                     <Select placeholder='Select status'>
                       {STATUS_CONSENT_DROPDOWN_DATA.map((item, index) => (
                         <Select.Option value={item.value} key={`${index}${item.value}`}>
-                          {item.value}
+                          {item.label}
                         </Select.Option>
                       ))}
                     </Select>

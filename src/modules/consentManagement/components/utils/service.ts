@@ -1,67 +1,86 @@
 import { useMount, useRequest } from 'ahooks';
+import dayjs from 'dayjs';
+import { ResponseBase } from 'utils/api/api.types';
+import ApiUtils from 'utils/api/api.utils';
+import { API_PATH } from 'utils/api/constant';
 
-const PAGE_SIZE = 10;
-
-// delay function js
-const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
-
-export const getConsentManagementService = async (value: any): Promise<any> => {
-  await delay(1000);
-  const r = new Array(15).fill(0).map((_, i) => ({
-    key: `${i}`,
-    consentId: '0345',
-    appId: '12340',
-    appName: 'Ascend Finance',
-    consentVersion: 'V1.23',
-    description: 'Description',
-    createdAt: '03/05/2022',
-    updatedAt: '03/05/2022',
-    action: i,
-  }));
-
-  const formatData = {
-    list: r,
-    current: 1,
+export const getConsentManagementService = async (values: any): Promise<any> => {
+  const params: any = {
+    limit: 10,
+    isEqualSearch: !!values?.isEqualSearch,
+    page: values?.page || 1,
+    appName: values.appName || '',
+    advanceSearch: values?.advanceSearch,
   };
 
+  const response: any = await ApiUtils.post(API_PATH.GET_LIST_CONSENTS, params);
+
   return {
-    ...formatData,
-    total: Math.ceil(formatData.list.length / PAGE_SIZE),
-    data: formatData?.list?.slice(
-      (formatData.current - 1) * PAGE_SIZE,
-      (formatData.current - 1) * PAGE_SIZE + PAGE_SIZE,
-    ),
+    total: response?.content?.metadata?.total || 0,
+    current: +response?.content?.metadata?.currentPage || 1,
+    pageSize: +response?.content?.metadata?.itemPage || 10,
+    data:
+      response?.content?.data?.map((item: any, idx: number) => ({
+        ...item,
+        key: `${item?.id}`,
+        updatedDate: dayjs(item?.updated).format('DD/MM/YYYY'),
+        createdDate: dayjs(item?.createdAt).format('DD/MM/YYYY'),
+        appName: item?.__application__?.appName,
+        appId: item?.__application__?.appId,
+      })) || [],
+    appName: params?.appName || '',
+    isEqualSearch: params?.isEqualSearch || '',
+    advanceSearch: params['advanceSearch'],
   };
 };
 
 export const useConsentManagement = () => {
-  const { data, loading, run, mutate } = useRequest(getConsentManagementService, {
-    manual: true,
-  });
+  const { data, loading, run } = useRequest(
+    ({ value, isEqualSearch, page, advanceSearch }: any) =>
+      getConsentManagementService({ appName: value, isEqualSearch, page, advanceSearch }),
+    {
+      manual: true,
+      cacheKey: 'consent-management',
+    },
+  );
+
+  const onChangePage = (page: number) => {
+    run({
+      page,
+      value: data?.appName,
+      isEqualSearch: data?.isEqualSearch,
+      advanceSearch: data?.advanceSearch,
+    });
+  };
+
+  const onSearchConsent = (values: any) => {
+    run({
+      page: 1,
+      value: values.appName,
+      isEqualSearch: false,
+    });
+  };
+
+  const onReloadConsentData = () => {
+    run({
+      page: data?.current || 1,
+    });
+  };
 
   useMount(() => {
-    run('');
+    run({
+      page: data?.current || 1,
+      value: data?.appName,
+      isEqualSearch: data?.isEqualSearch,
+      advanceSearch: data?.advanceSearch,
+    });
   });
-
-  const onChangeCurrent = (current: number) => {
-    if (mutate) {
-      mutate({
-        ...data,
-        current,
-        data: data?.list?.slice((current - 1) * PAGE_SIZE, (current - 1) * PAGE_SIZE + PAGE_SIZE),
-      });
-    }
-  };
-
-  const onSearchConsent = ({ search_consent }: { search_consent: string }) => {
-    run(search_consent);
-  };
 
   return {
     data,
     loading,
-    run,
-    onChange: onChangeCurrent,
+    onChangePage,
     onSearchConsent,
+    onReloadConsentData,
   };
 };

@@ -75,7 +75,7 @@ const getListApplicationService = async ({
     pageSize: +response?.content?.metadata?.itemPage || 10,
     data:
       response?.content?.data?.map((item: any) => ({
-        appId: item?.appId,
+        id: item?.id,
         appName: item?.appName,
       })) || [],
     name,

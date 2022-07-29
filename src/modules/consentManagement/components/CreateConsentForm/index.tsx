@@ -16,11 +16,12 @@ import { paginationItemRender } from 'libraries/UI/Pagination';
 interface IProps {
   visible: boolean;
   onClose: () => void;
+  onReloadConsentData?: any;
 }
 
 const { confirm } = Modal;
 
-const CreateConsentForm = ({ visible, onClose }: IProps) => {
+const CreateConsentForm = ({ visible, onClose, onReloadConsentData }: IProps) => {
   const { t } = useTranslation();
 
   const [createConsentForm] = Form.useForm();
@@ -33,6 +34,7 @@ const CreateConsentForm = ({ visible, onClose }: IProps) => {
     onClose();
     createConsentForm.resetFields();
     setExpireOn(null);
+    onReloadConsentData();
   };
 
   const createConsentRequest = useCreateConsent(onFinishSubmitForm);
@@ -165,7 +167,7 @@ const CreateConsentForm = ({ visible, onClose }: IProps) => {
                 )}
               >
                 {dataApplication?.data?.map((item: any, index: number) => (
-                  <Select.Option value={Number(item.appId)} key={`${index}${item.appId}`}>
+                  <Select.Option value={Number(item.id)} key={`${index}${item.id}`}>
                     {item.appName}
                   </Select.Option>
                 ))}
@@ -262,7 +264,7 @@ const CreateConsentForm = ({ visible, onClose }: IProps) => {
               <Select placeholder='Select status'>
                 {STATUS_CONSENT_DROPDOWN_DATA.map((item, index) => (
                   <Select.Option value={item.value} key={`${index}${item.value}`}>
-                    {item.value}
+                    {item.label}
                   </Select.Option>
                 ))}
               </Select>

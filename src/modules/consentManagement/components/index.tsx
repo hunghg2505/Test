@@ -78,8 +78,8 @@ export interface DataType {
 const columns: ColumnsType<DataType> = [
   {
     title: 'Consent ID',
-    dataIndex: 'consentId',
-    key: 'consentId',
+    dataIndex: 'id',
+    key: 'id',
     width: 110,
   },
   {
@@ -96,32 +96,32 @@ const columns: ColumnsType<DataType> = [
   },
   {
     title: 'Consent Version',
-    dataIndex: 'consentVersion',
+    dataIndex: 'version',
     key: 'consentVersion',
     width: 164,
   },
   {
     title: 'Consent Content',
-    dataIndex: 'description',
+    dataIndex: 'content',
     key: 'description',
     width: 482,
   },
   {
     title: 'Created Date',
-    dataIndex: 'createdAt',
+    dataIndex: 'createdDate',
     key: 'createdAt',
     width: 170,
   },
   {
     title: 'Update Date',
-    dataIndex: 'updatedAt',
+    dataIndex: 'updatedDate',
     key: 'updatedAt',
     width: 170,
   },
   {
     title: 'Action',
     key: 'id',
-    dataIndex: 'consentId',
+    dataIndex: 'id',
     render: (value) => (
       <Row justify='center' align='middle' style={{ flexFlow: 'nowrap' }} className={styles.action}>
         <Link to={`/consent/${value}`}>Detail</Link>
@@ -133,23 +133,27 @@ const columns: ColumnsType<DataType> = [
 
 function ConsentManagement() {
   const { t } = useTranslation();
-  const navigate = useNavigate();
 
-  const { data, loading, onChange, onSearchConsent } = useConsentManagement();
+  const { data, loading, onChangePage, onSearchConsent, onReloadConsentData } =
+    useConsentManagement();
 
   const [isOpenCreateConsentForm, setIsOpenCreateConsentForm] = useState(false);
+
+  const onFinish = (values: any) => {
+    onSearchConsent({ ...values, isEqualSearch: false });
+  };
 
   return (
     <ContainerLayout title='Consent Management'>
       <div className={styles.consentPage}>
         <Row justify='center' align='middle' className={styles.consentHeader}>
-          <Form onFinish={onSearchConsent}>
+          <Form onFinish={onFinish}>
             <Row justify='center' align='middle' className={styles.searchForm}>
               <IconSearch />
 
               <InputForm
-                name='search_consent'
-                placeholder='Search Consent ID'
+                name='appName'
+                placeholder='Search App Name'
                 className={styles.inputSearch}
                 classNameFormInput={styles.inputSearchForm}
               />
@@ -191,8 +195,9 @@ function ConsentManagement() {
             loading={loading}
             pagination={{
               current: data?.current,
-              total: data?.list?.length,
-              onChange,
+              total: data?.total,
+              showSizeChanger: false,
+              onChange: onChangePage,
               itemRender: paginationItemRender,
             }}
           />
@@ -201,6 +206,7 @@ function ConsentManagement() {
       <CreateConsentForm
         visible={isOpenCreateConsentForm}
         onClose={() => setIsOpenCreateConsentForm(false)}
+        onReloadConsentData={onReloadConsentData}
       />
     </ContainerLayout>
   );
