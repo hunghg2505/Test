@@ -1,6 +1,5 @@
 import { useMount, useRequest } from 'ahooks';
 import dayjs from 'dayjs';
-import { ResponseBase } from 'utils/api/api.types';
 import ApiUtils from 'utils/api/api.utils';
 import { API_PATH } from 'utils/api/constant';
 
