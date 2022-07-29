@@ -1,0 +1,90 @@
+@import '../../../../styles/variables.scss';
+
+.formSearchAdvanced {
+  padding: 20px 24px;
+  background-color: $white_color;
+  width: 400px;
+  border: 1px solid #f6f6f6;
+  box-shadow: 0px 5px 40px rgba(9, 44, 76, 0.05);
+  border-radius: 8px;
+
+  :global {
+    label {
+      color: $black_color !important;
+      font-weight: 600 !important;
+    }
+  }
+}
+
+.btnSearchAdvancedDd {
+  margin-top: 16px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  span {
+    font-weight: 700;
+    font-size: 16px;
+    margin-left: 10px;
+    color: #fafafa;
+  }
+
+  &:hover svg path,
+  &:focus svg path {
+    stroke: $color-white !important;
+  }
+}
+
+
+.inputSearchForm {
+  flex: 1;
+  :global {
+    .ant-form-item-control-input {
+      min-height: initial;
+    }
+  }
+}
+
+.inputSearch {
+  border: none !important;
+  border-radius: none !important;
+  height: initial;
+  padding: 0 8px;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 19px;
+  color: $black_color;
+
+  ::-webkit-input-placeholder {
+    /* Edge */
+    color: rgba(0, 0, 0, 0.5);
+  }
+
+  :-ms-input-placeholder {
+    /* Internet Explorer 10-11 */
+    color: rgba(0, 0, 0, 0.5);
+  }
+
+  ::placeholder {
+    color: rgba(0, 0, 0, 0.5);
+  }
+}
+
+.btnSearchConsent {
+  padding: 7px 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  span {
+    font-weight: 700;
+    font-size: 14px;
+  }
+  svg {
+    margin-right: 10px;
+    path {
+      fill: #fff;
+    }
+  }
+}

@@ -1,6 +1,5 @@
 import { useMount, useRequest } from 'ahooks';
 import dayjs from 'dayjs';
-import { ResponseBase } from 'utils/api/api.types';
 import ApiUtils from 'utils/api/api.utils';
 import { API_PATH } from 'utils/api/constant';
 
@@ -56,8 +55,9 @@ export const useConsentManagement = () => {
   const onSearchConsent = (values: any) => {
     run({
       page: 1,
-      value: values.appName,
+      value: values?.appName || '',
       isEqualSearch: false,
+      advanceSearch: values?.advanceSearch,
     });
   };
 

@@ -1,23 +1,22 @@
 import { Form, Row, Table } from 'antd';
-import { useTranslation } from 'react-i18next';
-import { Link, useNavigate } from 'react-router-dom';
 import type { ColumnsType } from 'antd/lib/table';
+import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
 
-import ButtonForm from 'libraries/form/button/button-form';
 import InputForm from 'libraries/form/input/input-form';
 import ContainerLayout from 'libraries/layouts/container.layout';
 
 import { useConsentManagement } from './utils/service';
 
-import styles from './index.module.scss';
-import clsx from 'clsx';
-import IconSearch from 'assets/icons/icon-search';
-import { paginationItemRender } from 'libraries/UI/Pagination';
-import IconCross2 from 'assets/icons/icon-cross2';
 import IconCross from 'assets/icons/icon-cross';
+import IconSearch from 'assets/icons/icon-search';
+import clsx from 'clsx';
 import Button from 'libraries/UI/Button';
+import { paginationItemRender } from 'libraries/UI/Pagination';
 import { useState } from 'react';
 import CreateConsentForm from './CreateConsentForm';
+import styles from './index.module.scss';
+import ModalSearchAdvance from './ModalSearchAdvance';
 
 const ICON_CONSENT_PLUS = (
   <svg xmlns='http://www.w3.org/2000/svg' width={24} height={24} viewBox='0 0 24 24' fill='none'>
@@ -170,7 +169,9 @@ function ConsentManagement() {
           </Form>
 
           <div className={styles.consentActions}>
-            <IconCross />
+            <ModalSearchAdvance onSearchConsent={onSearchConsent}>
+              <IconCross />
+            </ModalSearchAdvance>
           </div>
 
           <Button
