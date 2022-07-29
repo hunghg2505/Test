@@ -130,18 +130,26 @@
   font-size: 12px;
   color: #000;
   margin: 6px 0 27px;
+}
 
-  div:nth-child(2) {
-    margin: 0 30px 0 60px;
-  }
+.lastUpdated,
+.version {
+  font-weight: 400;
+  font-size: 14px;
+  color: #bdbdbd;
+}
 
-  div:nth-child(3) {
-    color: $color-warning;
-  }
+.version {
+  margin: 0 24px;
+}
 
-  .active {
-    color: $color-success !important;
-  }
+.status {
+  font-weight: 700;
+  font-size: 14px;
+  color: $color-error;
+}
+.active {
+  color: $color-success;
 }
 
 .description {

@@ -115,30 +115,21 @@ const getSuggestionConsents = async (userId: any, search: string, page = 1) => {
   const params = {
     keyword: search,
     userId: userId,
-    limit: 1000,
+    limit: 10,
     page,
   };
 
   const res: any = await ApiUtils.fetch(API_PATH.CONSENTS, params);
 
-  let dataUnique = res?.content?.data?.map((v: any) => v?.consentData?.application);
-
-  dataUnique = uniqWith(dataUnique, isEqual)?.map((item, idx) => ({ id: idx, name: item }));
-  const formatData = {
-    list: dataUnique,
-    current: 1,
-    total: Math.ceil(dataUnique.length / PAGE_SIZE),
-  };
+  const dataUnique = res?.content?.data?.map((v: any, idx: any) => ({
+    id: idx,
+    name: v?.app_name,
+  }));
 
   return {
-    ...formatData,
-    total: Math.ceil(formatData.list.length / PAGE_SIZE),
-    data:
-      formatData?.list?.slice(
-        (formatData.current - 1) * PAGE_SIZE,
-        (formatData.current - 1) * PAGE_SIZE + PAGE_SIZE,
-      ) || [],
-    isLoadMore: formatData.current < formatData.total,
+    total: +res?.content?.metadata?.total,
+    data: dataUnique,
+    isLoadMore: res?.content?.metadata?.current < res?.content?.metadata?.lastPage,
   };
 };
 
@@ -176,28 +167,27 @@ export const useConsent = ({ userId }: { userId: number }) => {
   );
 
   const onResetSuggestionConsents = () => {
-    requestSuggestionConsents.mutate({
-      current: 1,
-      data: [],
-      list: [],
-      total: 0,
-      isLoadMore: false,
-    });
+    // requestSuggestionConsents.mutate({
+    //   current: 1,
+    //   data: [],
+    //   list: [],
+    //   total: 0,
+    //   isLoadMore: false,
+    // });
   };
 
   const onLoadMoreSuggestionConsents = () => {
-    const data: any = requestSuggestionConsents.data;
-    const prevData = data?.data || [];
-    const current = data?.current + 1 || 0;
-    const nextData =
-      data?.list?.slice((current - 1) * PAGE_SIZE, (current - 1) * PAGE_SIZE + PAGE_SIZE) || [];
-
-    requestSuggestionConsents.mutate({
-      ...data,
-      current: current,
-      isLoadMore: current < data?.total,
-      data: [...prevData, ...nextData],
-    });
+    // const data: any = requestSuggestionConsents.data;
+    // const prevData = data?.data || [];
+    // const current = data?.current + 1 || 0;
+    // const nextData =
+    //   data?.list?.slice((current - 1) * PAGE_SIZE, (current - 1) * PAGE_SIZE + PAGE_SIZE) || [];
+    // requestSuggestionConsents.mutate({
+    //   ...data,
+    //   current: current,
+    //   isLoadMore: current < data?.total,
+    //   data: [...prevData, ...nextData],
+    // });
   };
 
   const onSuggestionConsentsDebounce = debounce(async (value: string, callback: any) => {

@@ -13,7 +13,8 @@ import { useConsentList } from './service';
 
 const { Panel } = Collapse;
 
-interface IItem {
+export interface DataType {
+  key: string;
   name: string;
   lastUpdated: string;
   version: string;
@@ -24,11 +25,6 @@ interface IItem {
     description: string;
     value: string;
   }[];
-}
-
-export interface DataType {
-  key: string;
-  dataConsent: IItem;
   defaultValue: { [key: string]: string };
 }
 
@@ -42,18 +38,18 @@ const ConsentOption = ({ value, onChange, dataConsent }: any) => {
   }
 
   return (
-    <Checkbox.Group onChange={onChangeValues} defaultValue={value}>
+    <Checkbox.Group onChange={onChangeValues} defaultValue={value} disabled={true}>
       {dataConsent.map((item: any) => {
         return (
-          <Checkbox key={item.value} value={item.value} disabled>
+          <Checkbox key={item.value} value={item.value}>
             <h4>{item.title}</h4>
-            <Row className={styles.consentInfo}>
+            {/* <Row className={styles.consentInfo}>
               <Col>{item?.lastUpdated}</Col>
               <Col>{item?.version}</Col>
               <Col className={item?.status === 'Published' ? styles.active : ''}>
                 {item?.status}
               </Col>
-            </Row>
+            </Row> */}
             <div>{item.description}</div>
           </Checkbox>
         );
@@ -66,10 +62,14 @@ const Consents = ({ data, loading, onChange, onSearchConsent }: any) => {
   const { t } = useTranslation();
   const [formConsent] = Form.useForm();
 
-  const initialValues = data?.data?.reduce(
-    (acc: any, v: any) => ({ ...acc, [v?.key]: Object.keys(v?.defaultValue) }),
-    {},
-  );
+  const initialValues = data?.data?.reduce((acc: any, v: any) => {
+    acc[v?.name] = [];
+    v?.list?.forEach((it: any) => {
+      if (it?.selected) acc[v?.name].push(it?.value);
+    });
+
+    return acc;
+  }, {});
 
   const onFinish = (values: any) => {
     const value = get(values, 'search', '');
@@ -135,23 +135,35 @@ const Consents = ({ data, loading, onChange, onSearchConsent }: any) => {
         ) : (
           <div className={styles.listConsent}>
             <Collapse
+              // accordion
               expandIcon={({ isActive }) => {
                 return isActive ? ArrowUpCollapse : ArrowDownCollapse;
               }}
             >
-              {data?.data?.map(({ dataConsent, key }: DataType) => {
+              {data?.data?.map((it: DataType) => {
                 const content = (
                   <Panel
-                    key={key}
+                    key={it?.key}
                     header={
                       <div className={styles.panelHeader}>
-                        <div className={styles.name}>{dataConsent.name}</div>
-                        <div className={styles.description}>{dataConsent.description}</div>
+                        <div className={styles.name}>{it?.name}</div>
+                        <Row align='middle'>
+                          <div className={styles.lastUpdated}>{it?.lastUpdated}</div>
+                          <div className={styles.version}>{it?.version}</div>
+                          <div
+                            className={`${styles.status} ${
+                              it?.status === 'Accepted' ? styles.active : ''
+                            }`}
+                          >
+                            {it?.status}
+                          </div>
+                        </Row>
+                        <div className={styles.description}>{it?.description}</div>
                       </div>
                     }
                   >
-                    <Form.Item className={styles.panelContent} name={`${key}`}>
-                      <ConsentOption dataConsent={dataConsent?.list} />
+                    <Form.Item className={styles.panelContent} name={`${it?.key}`}>
+                      <ConsentOption dataConsent={it?.list} />
                     </Form.Item>
                   </Panel>
                 );
