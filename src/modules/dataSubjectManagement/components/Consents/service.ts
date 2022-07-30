@@ -9,13 +9,11 @@ import { API_PATH } from 'utils/api/constant';
 
 const PAGE_SIZE = 10;
 
-export const getStatusConstent = (lastUpdated: string) => {
-  const date1 = dayjs('2022-05-19');
-  const date2 = dayjs(lastUpdated);
-
-  return date1.diff(date2) >= 0 ? 'Published' : 'Draft';
-};
-
+function capitalizeFirstLetter(string: string) {
+  if (!string) return;
+  const stringLowercase = string?.toLowerCase();
+  return stringLowercase.charAt(0).toUpperCase() + stringLowercase.slice(1);
+}
 export const getConsentService = async ({
   search,
   userId,
@@ -34,20 +32,25 @@ export const getConsentService = async ({
 
   const r: any = await ApiUtils.fetch(API_PATH.CONSENTS, params);
 
-  const formatConsents = r?.content?.data?.map((item: any, idx: number) => {
+  const formatConsents = r?.content?.data?.map((item: any) => {
+    const appDes = item?.consents?.reduce((acc: string, consent: any) => {
+      acc = acc + ', ' + get(consent, 'name', '');
+      return acc;
+    }, '');
+
     return {
       key: `${item?.app_name}`,
       name: item?.app_name,
-      lastUpdated: dayjs().format('DD/MM/YYYY'),
-      version: 'V1.0',
-      status: idx % 2 === 0 ? 'Accepted' : 'Not Accepted',
-      description: 'Information storage and access, Personalisation, Data Reports',
+      description: appDes || '',
       list: item?.consents?.map((consent: any) => {
         return {
           id: consent.consent_id,
           title: get(consent, 'name', ''),
           value: `${get(consent, 'name', '')}@${consent.consent_id}`,
           description: get(consent, 'content', ''),
+          lastUpdated: dayjs(get(consent, 'updated_at', '')).format('MMM DD, YYYY'),
+          version: `Version ${get(consent, 'version', '')}`,
+          status: capitalizeFirstLetter(get(consent, 'status', '')),
           selected: !!consent?.my_consent_id,
         };
       }),

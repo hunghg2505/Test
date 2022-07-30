@@ -1,5 +1,5 @@
 import { useClickAway } from 'ahooks';
-import { Checkbox, Collapse, Form, Pagination, Row } from 'antd';
+import { Checkbox, Col, Collapse, Form, Pagination, Row } from 'antd';
 
 import ArrowDownCollapse from 'assets/icons/icon-arrow-down-collapse';
 import ArrowUpCollapse from 'assets/icons/icon-arrow-up-collapse';
@@ -179,13 +179,13 @@ const ConsentOption = ({ value, onChange, dataConsent, isHavePermissionSaveConse
         return (
           <Checkbox key={item.value} value={item.value}>
             <h4>{item.title}</h4>
-            {/* <Row className={styles.consentInfo}>
+            <Row className={styles.consentInfo}>
               <Col>{item?.lastUpdated}</Col>
               <Col>{item?.version}</Col>
               <Col className={item?.status === 'Published' ? styles.active : ''}>
                 {item?.status}
               </Col>
-            </Row> */}
+            </Row>
             <div>{item.description}</div>
           </Checkbox>
         );
@@ -251,17 +251,6 @@ const ConsentsList = ({ data, loading, onChange, onSaveConsent, loadingUpdateCon
                     header={
                       <div className={styles.panelHeader}>
                         <div className={styles.name}>{it?.name}</div>
-                        <Row align='middle'>
-                          <div className={styles.lastUpdated}>{it?.lastUpdated}</div>
-                          <div className={styles.version}>{it?.version}</div>
-                          <div
-                            className={`${styles.status} ${
-                              it?.status === 'Accepted' ? styles.active : ''
-                            }`}
-                          >
-                            {it?.status}
-                          </div>
-                        </Row>
                         <div className={styles.description}>{it?.description}</div>
                       </div>
                     }

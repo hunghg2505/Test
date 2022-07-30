@@ -43,13 +43,13 @@ const ConsentOption = ({ value, onChange, dataConsent }: any) => {
         return (
           <Checkbox key={item.value} value={item.value}>
             <h4>{item.title}</h4>
-            {/* <Row className={styles.consentInfo}>
+            <Row className={styles.consentInfo}>
               <Col>{item?.lastUpdated}</Col>
               <Col>{item?.version}</Col>
               <Col className={item?.status === 'Published' ? styles.active : ''}>
                 {item?.status}
               </Col>
-            </Row> */}
+            </Row>
             <div>{item.description}</div>
           </Checkbox>
         );
@@ -146,17 +146,6 @@ const Consents = ({ data, loading, onChange, onSearchConsent }: any) => {
                       header={
                         <div className={styles.panelHeader}>
                           <div className={styles.name}>{it?.name}</div>
-                          <Row align='middle'>
-                            <div className={styles.lastUpdated}>{it?.lastUpdated}</div>
-                            <div className={styles.version}>{it?.version}</div>
-                            <div
-                              className={`${styles.status} ${
-                                it?.status === 'Accepted' ? styles.active : ''
-                              }`}
-                            >
-                              {it?.status}
-                            </div>
-                          </Row>
                           <div className={styles.description}>{it?.description}</div>
                         </div>
                       }
