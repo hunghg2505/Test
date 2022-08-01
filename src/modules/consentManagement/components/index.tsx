@@ -112,7 +112,7 @@ const columns: ColumnsType<DataType> = [
     width: 170,
   },
   {
-    title: 'Update Date',
+    title: 'Updated Date',
     dataIndex: 'updatedDate',
     key: 'updatedAt',
     width: 170,

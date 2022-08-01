@@ -302,7 +302,7 @@ export default function EditConsentForm() {
                     name='version'
                     required
                     placeholder='Version no'
-                    maxLength={6}
+                    maxLength={8}
                     rules={[
                       {
                         required: true,
@@ -310,7 +310,7 @@ export default function EditConsentForm() {
                       },
                       {
                         max: 8,
-                        message: t('messages.errors.max', { max: 6 }),
+                        message: t('messages.errors.max', { max: 8 }),
                       },
 
                       {

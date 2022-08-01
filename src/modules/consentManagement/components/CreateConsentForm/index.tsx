@@ -305,7 +305,7 @@ const CreateConsentForm = ({ visible, onClose, onReloadConsentData }: IProps) =>
               label='Version'
               name='version'
               required
-              maxLength={6}
+              maxLength={8}
               placeholder='Version no'
               rules={[
                 {
@@ -314,7 +314,7 @@ const CreateConsentForm = ({ visible, onClose, onReloadConsentData }: IProps) =>
                 },
                 {
                   max: 8,
-                  message: t('messages.errors.max', { max: 6 }),
+                  message: t('messages.errors.max', { max: 8 }),
                 },
 
                 {
