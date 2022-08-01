@@ -55,6 +55,7 @@ export const RESULT_DROPDOWN_DATA = [
 ];
 
 export const FEATURE_NAME = {
+  userProfile: 'User Profile',
   caseManagement: 'Case Management',
   consentManagement: 'Consent Management',
   dataSubjectManagement: 'Data Subject Management',
@@ -66,6 +67,8 @@ export const PERMISSION_ID = {
   editDataSubject: 'PDPA_DataSubjectManagement_Edit',
   deleteCase: 'PDPA_CaseManagement_Delete',
   editCase: 'PDPA_CaseManagement_Edit',
+  editProfile: 'PDPA_UserProfile_Edit',
+  createLink: 'PDPA_DataSubjectManagement_Create',
 };
 
 export const STATUS_CONSENT_DROPDOWN_DATA = [

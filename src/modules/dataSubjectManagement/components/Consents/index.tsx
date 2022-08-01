@@ -206,7 +206,8 @@ const ConsentsList = ({
   const { t } = useTranslation();
   const [formConsent] = Form.useForm();
   const [, copy] = useCopyToClipboard();
-  const { isHavePermissionSaveConsent } = useDataSubjectManagementPermission();
+  const { isHavePermissionSaveConsent, isHavePermissionCreateLink } =
+    useDataSubjectManagementPermission();
   const requestGenerateLink = useGenerateLink(userId);
 
   const initialValues = data?.data?.reduce((acc: any, v: any) => {
@@ -304,13 +305,15 @@ const ConsentsList = ({
               {t('save')}
             </Button>
           )}
-          <Button
-            className={styles.btnGenerateLink}
-            onClick={requestGenerateLink.run}
-            loading={requestGenerateLink.loading}
-          >
-            {t('generate_link')}
-          </Button>
+          {isHavePermissionCreateLink && (
+            <Button
+              className={styles.btnGenerateLink}
+              onClick={requestGenerateLink.run}
+              loading={requestGenerateLink.loading}
+            >
+              {t('generate_link')}
+            </Button>
+          )}
         </Row>
       </Form>
 

@@ -13,7 +13,25 @@ export default function useDataSubjectManagementPermission() {
     [auth],
   );
 
+  const isHavePermissionCreateLink = useMemo(
+    () =>
+      auth?.user?.roles
+        ?.find((item) => item.name === FEATURE_NAME.dataSubjectManagement)
+        ?.permissions.some((item) => item.permissionId === PERMISSION_ID.createLink),
+    [auth],
+  );
+
+  const isHavePermissionEditProfile = useMemo(
+    () =>
+      auth?.user?.roles
+        ?.find((item) => item.name === FEATURE_NAME.userProfile)
+        ?.permissions.some((item) => item.permissionId === PERMISSION_ID.editProfile),
+    [auth],
+  );
+
   return {
     isHavePermissionSaveConsent,
+    isHavePermissionCreateLink,
+    isHavePermissionEditProfile,
   };
 }

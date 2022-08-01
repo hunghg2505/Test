@@ -21,8 +21,10 @@ const TEXT_PERMISSIONS: any = {
   PDPA_DataSubjectManagement_Edit: 'Edit',
   PDPA_DataSubjectManagement_View: 'View',
   PDPA_UserManagement_Edit: 'Edit',
+  PDPA_UserProfile_Edit: 'Edit',
   PDPA_UserManagement_View: 'View',
   PDPA_UserProfile_View: 'View',
+  PDPA_DataSubjectManagement_Create: 'Create',
 };
 
 const SORT_PERMISSIONS: any = {
@@ -34,9 +36,11 @@ const SORT_PERMISSIONS: any = {
   PDPA_ConsentManagement_Edit: 3,
   PDPA_ConsentManagement_View: 1,
   PDPA_ConsentManagement_Create: 2,
+  PDPA_DataSubjectManagement_Create: 2,
   PDPA_DataSubjectManagement_Edit: 3,
   PDPA_DataSubjectManagement_View: 1,
   PDPA_UserManagement_Edit: 3,
+  PDPA_UserProfile_Edit: 3,
   PDPA_UserManagement_View: 1,
   PDPA_UserProfile_View: 1,
 };
