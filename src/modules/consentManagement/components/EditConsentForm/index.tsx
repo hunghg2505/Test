@@ -276,9 +276,11 @@ export default function EditConsentForm() {
                     onChange={(date: any) => setExpireOn(date)}
                     value={expireOn}
                     placeholder='dd/mm/yyyy'
-                    disabledDate={(current) => {
-                      return current && current.valueOf() <= Date.now();
-                    }}
+                    disabledDate={(current) => current.isBefore(moment().subtract(1, 'day'))}
+                    superPrevIcon={null}
+                    prevIcon={null}
+                    dropdownClassName={styles.datePickerDropdown}
+                    allowClear={false}
                   />
                 </Col>
                 <Col xs={12}>
@@ -327,6 +329,7 @@ export default function EditConsentForm() {
                     placeholder='Consent content'
                     rows={6}
                     className={styles.textarea}
+                    classNameFormInput={styles.errorMessage}
                     maxLength={500}
                     required
                     showCount={true}

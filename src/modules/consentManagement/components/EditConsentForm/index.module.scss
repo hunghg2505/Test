@@ -71,3 +71,24 @@
     }
   }
 }
+
+.errorMessage {
+  :global {
+    .ant-form-item-explain {
+      position: absolute;
+      top: 111%;
+    }
+  }
+}
+
+.datePickerDropdown {
+  :global {
+    .ant-picker-header-super-prev-btn {
+      display: none;
+    }
+
+    .ant-picker-header-prev-btn {
+      display: none;
+    }
+  }
+}

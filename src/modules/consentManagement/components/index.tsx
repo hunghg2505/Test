@@ -224,9 +224,7 @@ function ConsentManagement() {
           </Form>
 
           <div className={styles.consentActions}>
-            <ModalSearchAdvance onSearchConsent={onSearchConsent}>
-              <IconCross />
-            </ModalSearchAdvance>
+            <ModalSearchAdvance onSearchConsent={onSearchConsent}></ModalSearchAdvance>
           </div>
 
           <Button
