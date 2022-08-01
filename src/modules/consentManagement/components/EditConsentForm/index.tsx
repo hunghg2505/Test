@@ -33,9 +33,10 @@ export default function EditConsentForm() {
 
   const onFinishSubmitForm = () => {
     setIsEdit(true);
+    refresh();
   };
 
-  const { data, loading } = useConsentDetail(`${id}`);
+  const { data, loading, refresh } = useConsentDetail(`${id}`);
   const updateConsentRequest = useUpdateConsent(`${id}`, onFinishSubmitForm);
   const {
     data: dataListApplication,
@@ -119,7 +120,7 @@ export default function EditConsentForm() {
                     rules={[
                       {
                         required: true,
-                        message: t('messages.errors.require', { field: 'Data Subject Rights' }),
+                        message: t('messages.errors.require', { field: 'Consent Name' }),
                       },
                     ]}
                   />
@@ -275,13 +276,16 @@ export default function EditConsentForm() {
                     onChange={(date: any) => setExpireOn(date)}
                     value={expireOn}
                     placeholder='dd/mm/yyyy'
+                    disabledDate={(current) => {
+                      return current && current.valueOf() <= Date.now();
+                    }}
                   />
                 </Col>
                 <Col xs={12}>
                   <InputForm
                     label='Title'
                     name='title'
-                    placeholder='title'
+                    placeholder='Title'
                     required
                     maxLength={55}
                     rules={[
@@ -305,7 +309,7 @@ export default function EditConsentForm() {
                         message: t('messages.errors.require', { field: 'Version' }),
                       },
                       {
-                        max: 6,
+                        max: 8,
                         message: t('messages.errors.max', { max: 6 }),
                       },
 

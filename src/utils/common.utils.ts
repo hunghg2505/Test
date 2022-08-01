@@ -41,3 +41,7 @@ export const formatIdSubjectHistory = (
 
   return `${(current - 1) * 10 + index + 1 || index}`;
 };
+
+export function capitalizeFirstLetter(string: string) {
+  return string?.charAt(0).toUpperCase() + string?.slice(1);
+}

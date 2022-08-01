@@ -62,6 +62,15 @@
     .ant-form-item-control-input {
       min-height: initial;
     }
+    .ant-form-item-explain {
+      position: absolute;
+      top: 38px;
+      left: 12px;
+    }
+
+    .ant-input-status-error:not(.ant-input-disabled):not(.ant-input-borderless).ant-input:focus {
+      box-shadow: none;
+    }
   }
 }
 
@@ -69,25 +78,24 @@
   border: none !important;
   border-radius: none !important;
   height: initial;
-  padding: 0 8px;
+  padding: 0 15px !important;
   font-style: normal;
   font-weight: 400;
-  font-size: 16px;
-  line-height: 19px;
+  font-size: 14px;
   color: $black_color;
 
   ::-webkit-input-placeholder {
     /* Edge */
-    color: rgba(0, 0, 0, 0.5);
+    color: $color-gray4;
   }
 
   :-ms-input-placeholder {
     /* Internet Explorer 10-11 */
-    color: rgba(0, 0, 0, 0.5);
+    color: $color-gray4;
   }
 
   ::placeholder {
-    color: rgba(0, 0, 0, 0.5);
+    color: $color-gray4;
   }
 }
 
@@ -179,4 +187,10 @@
     line-height: 150%;
     color: #cf2a2b;
   }
+}
+
+.noResultText {
+  text-align: center;
+  padding: 20px 0;
+  font-size: 20px;
 }
