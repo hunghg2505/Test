@@ -6,6 +6,7 @@ import clsx from 'clsx';
 import dayjs from 'dayjs';
 import styles from './index.module.scss';
 import { capitalizeFirstLetter } from 'utils/common.utils';
+import useConsentManagementPermission from 'hooks/useConsentManagementPermission';
 
 const ICON_EDIT = (
   <svg xmlns='http://www.w3.org/2000/svg' width={24} height={24} viewBox='0 0 24 24' fill='white'>
@@ -27,6 +28,8 @@ const ICON_EDIT = (
 );
 
 const ConsentInfo = ({ data, onClickEdit }: any) => {
+  const { isHavePermissionEditConsent } = useConsentManagementPermission();
+
   return (
     <div className={styles.consentInfo}>
       <Row>
@@ -102,11 +105,13 @@ const ConsentInfo = ({ data, onClickEdit }: any) => {
           <p className={styles.value}>{data?.content}</p>
         </Col>
       </Row>
-      <Row className={styles.flexend}>
-        <Button onClick={onClickEdit} icon={ICON_EDIT} className={styles.editBtn}>
-          Edit
-        </Button>
-      </Row>
+      {isHavePermissionEditConsent && (
+        <Row className={styles.flexend}>
+          <Button onClick={onClickEdit} icon={ICON_EDIT} className={styles.editBtn}>
+            Edit
+          </Button>
+        </Row>
+      )}
     </div>
   );
 };

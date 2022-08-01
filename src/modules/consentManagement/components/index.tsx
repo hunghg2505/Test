@@ -19,6 +19,7 @@ import styles from './index.module.scss';
 import ModalSearchAdvance from './ModalSearchAdvance';
 import SuggestListUsers from 'modules/dataSubjectManagement/components/SuggestListUsers';
 import { useClickAway } from 'ahooks';
+import useConsentManagementPermission from 'hooks/useConsentManagementPermission';
 
 const ICON_CONSENT_PLUS = (
   <svg xmlns='http://www.w3.org/2000/svg' width={24} height={24} viewBox='0 0 24 24' fill='none'>
@@ -136,6 +137,7 @@ function ConsentManagement() {
   const { t } = useTranslation();
   const refListUsers: any = useRef();
   const refForm: any = useRef();
+  const { isHavePermissionCreateConsent } = useConsentManagementPermission();
 
   const {
     data,
@@ -227,14 +229,16 @@ function ConsentManagement() {
             <ModalSearchAdvance onSearchConsent={onSearchConsent}></ModalSearchAdvance>
           </div>
 
-          <Button
-            typeDisplay='ghost'
-            className={styles.btnCreateConsent}
-            icon={ICON_CONSENT_PLUS}
-            onClick={() => setIsOpenCreateConsentForm(true)}
-          >
-            {t('create_consent')}
-          </Button>
+          {isHavePermissionCreateConsent && (
+            <Button
+              typeDisplay='ghost'
+              className={styles.btnCreateConsent}
+              icon={ICON_CONSENT_PLUS}
+              onClick={() => setIsOpenCreateConsentForm(true)}
+            >
+              {t('create_consent')}
+            </Button>
+          )}
         </Row>
 
         <div
