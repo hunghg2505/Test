@@ -215,6 +215,7 @@ function ConsentManagement() {
                 onSearchDataSubject={(item: any) => {
                   onSearchConsent({
                     appName: item?.firstname,
+                    isEqualSearch: true,
                   });
                 }}
                 ref={refListUsers}

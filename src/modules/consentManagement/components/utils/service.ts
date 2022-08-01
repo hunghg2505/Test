@@ -82,7 +82,15 @@ export const useConsentManagement = () => {
   );
 
   const reqSearchApplicationSuggestion = useRequest(
-    async ({ value, page = 1 }: { value: string; page: number; isLoadMore: boolean }) => {
+    async ({
+      value,
+      page = 1,
+      isLoadMore = false,
+    }: {
+      value: string;
+      page: number;
+      isLoadMore: boolean;
+    }) => {
       if (refCancelRequest.current) throw Error('Block request');
       return getListSuggestionApp(value, page);
     },
@@ -133,7 +141,7 @@ export const useConsentManagement = () => {
     reqSearchApplicationSuggestion.run({
       value: applications.value,
       page: applications.currentPage + 1,
-      isLoadMore: false,
+      isLoadMore: true,
     });
   };
 
@@ -150,7 +158,7 @@ export const useConsentManagement = () => {
     run({
       page: 1,
       value: values?.appName || '',
-      isEqualSearch: false,
+      isEqualSearch: values?.isEqualSearch,
       advanceSearch: values?.advanceSearch,
     });
     if (callback) callback();
