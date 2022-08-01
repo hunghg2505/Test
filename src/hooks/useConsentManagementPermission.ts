@@ -5,5 +5,21 @@ import { PERMISSION_ID, FEATURE_NAME } from 'constants/common.constants';
 export default function useConsentManagementPermission() {
   const { auth } = useAuth();
 
-  return {};
+  const isHavePermissionCreateConsent = useMemo(
+    () =>
+      auth?.user?.roles
+        ?.find((item) => item.name === FEATURE_NAME.consentManagement)
+        ?.permissions.some((item) => item.permissionId === PERMISSION_ID.createConsent),
+    [auth],
+  );
+
+  const isHavePermissionEditConsent = useMemo(
+    () =>
+      auth?.user?.roles
+        ?.find((item) => item.name === FEATURE_NAME.consentManagement)
+        ?.permissions.some((item) => item.permissionId === PERMISSION_ID.editConsent),
+    [auth],
+  );
+
+  return { isHavePermissionEditConsent, isHavePermissionCreateConsent };
 }

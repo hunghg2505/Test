@@ -11,7 +11,7 @@
       font-style: normal;
       font-weight: 400;
       font-size: 14px;
-      color: $color-gray4;
+      color: $black_color;
       display: flex;
       flex-direction: row-reverse;
       justify-content: flex-end;
@@ -52,7 +52,7 @@
   font-style: normal;
   font-weight: 400;
   font-size: 14px;
-  color: $color-gray4;
+  color: $black_color;
   margin-bottom: 8px;
 }
 
@@ -68,6 +68,27 @@
   :global {
     .ant-input::placeholder {
       color: $color-gray4;
+    }
+  }
+}
+
+.errorMessage {
+  :global {
+    .ant-form-item-explain {
+      position: absolute;
+      top: 111%;
+    }
+  }
+}
+
+.datePickerDropdown {
+  :global {
+    .ant-picker-header-super-prev-btn {
+      display: none;
+    }
+
+    .ant-picker-header-prev-btn {
+      display: none;
     }
   }
 }

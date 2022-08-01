@@ -1,5 +1,6 @@
 import { useClickAway } from 'ahooks';
 import { Col, Divider, Form, Pagination, Row } from 'antd';
+import IconCross from 'assets/icons/icon-cross';
 import IconSearch from 'assets/icons/icon-search';
 import { STATUS_CONSENT_DROPDOWN_DATA } from 'constants/common.constants';
 import { useFadeEffect, _popoverStyles, _popoverVisibleStyles } from 'hooks/useFadeEffect';
@@ -73,9 +74,20 @@ const ModalSearchAdvance = ({ children, onSearchConsent }: any) => {
     });
   };
 
+  const onVisibleSearch = () => {
+    setIsShowSearch(!isShowSearch);
+  };
+
   return (
     <div style={{ position: 'relative' }} ref={refSearch}>
-      <div onClick={() => setIsShowSearch(true)}>{children}</div>
+      <Button
+        typeDisplay='ghost'
+        className={styles.btnSearchAdvanced}
+        icon={<IconCross />}
+        onClick={onVisibleSearch}
+      >
+        {t('advanced')}
+      </Button>
 
       <div
         id='searchAdvanceOverlay'

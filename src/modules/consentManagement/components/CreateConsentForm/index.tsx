@@ -12,6 +12,7 @@ import { STATUS_CONSENT_DROPDOWN_DATA } from 'constants/common.constants';
 import ExclamationCircleOutlined from '@ant-design/icons/lib/icons/ExclamationCircleOutlined';
 import { RegexUtils } from 'utils/regex-helper';
 import { paginationItemRender } from 'libraries/UI/Pagination';
+import moment from 'moment';
 
 interface IProps {
   visible: boolean;
@@ -280,9 +281,10 @@ const CreateConsentForm = ({ visible, onClose, onReloadConsentData }: IProps) =>
               onChange={(date: any) => setExpireOn(date)}
               value={expireOn}
               placeholder='dd/mm/yyyy'
-              disabledDate={(current) => {
-                return current && current.valueOf() <= Date.now();
-              }}
+              disabledDate={(current) => current.isBefore(moment().subtract(1, 'day'))}
+              superPrevIcon={null}
+              prevIcon={null}
+              dropdownClassName={styles.datePickerDropdown}
             />
           </Col>
           <Col xs={12}>
@@ -305,7 +307,7 @@ const CreateConsentForm = ({ visible, onClose, onReloadConsentData }: IProps) =>
               label='Version'
               name='version'
               required
-              maxLength={6}
+              maxLength={8}
               placeholder='Version no'
               rules={[
                 {
@@ -314,7 +316,7 @@ const CreateConsentForm = ({ visible, onClose, onReloadConsentData }: IProps) =>
                 },
                 {
                   max: 8,
-                  message: t('messages.errors.max', { max: 6 }),
+                  message: t('messages.errors.max', { max: 8 }),
                 },
 
                 {
@@ -331,6 +333,7 @@ const CreateConsentForm = ({ visible, onClose, onReloadConsentData }: IProps) =>
               placeholder='Consent content'
               rows={6}
               className={styles.textarea}
+              classNameFormInput={styles.errorMessage}
               maxLength={500}
               required
               showCount={true}

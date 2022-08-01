@@ -1,5 +1,7 @@
 import { useMount, useRequest } from 'ahooks';
 import dayjs from 'dayjs';
+import { debounce, get } from 'lodash';
+import { useRef, useState } from 'react';
 import ApiUtils from 'utils/api/api.utils';
 import { API_PATH } from 'utils/api/constant';
 
@@ -22,7 +24,7 @@ export const getConsentManagementService = async (values: any): Promise<any> => 
       response?.content?.data?.map((item: any, idx: number) => ({
         ...item,
         key: `${item?.id}`,
-        updatedDate: dayjs(item?.updated).format('DD/MM/YYYY'),
+        updatedDate: dayjs(item?.updatedAt).format('DD/MM/YYYY'),
         createdDate: dayjs(item?.createdAt).format('DD/MM/YYYY'),
         appName: item?.__application__?.appName,
         appId: item?.__application__?.appId,
@@ -33,7 +35,43 @@ export const getConsentManagementService = async (values: any): Promise<any> => 
   };
 };
 
+const getListSuggestionApp = async (value: string, page: number) => {
+  const params = {
+    name: value,
+    limit: 10,
+    page: page || 1,
+  };
+
+  const response: any = await ApiUtils.fetch(API_PATH.GET_LIST_APPLICATION, params);
+
+  return {
+    data: response?.content?.data.map((item: any, index: number) => {
+      return {
+        key: `${item?.id}${index}`,
+        name: item.appName,
+      };
+    }),
+    isLoadMore: +response?.content?.metadata?.currentPage < +response?.content?.metadata?.lastPage,
+    currentPage: +response?.content?.metadata?.currentPage,
+    value,
+  };
+};
+
 export const useConsentManagement = () => {
+  const refCancelRequest = useRef(false);
+
+  const [applications, setApplications] = useState<{
+    data: any[];
+    isLoadMore: boolean;
+    currentPage: number;
+    value: string;
+  }>({
+    data: [],
+    isLoadMore: false,
+    currentPage: 1,
+    value: '',
+  });
+
   const { data, loading, run } = useRequest(
     ({ value, isEqualSearch, page, advanceSearch }: any) =>
       getConsentManagementService({ appName: value, isEqualSearch, page, advanceSearch }),
@@ -42,6 +80,70 @@ export const useConsentManagement = () => {
       cacheKey: 'consent-management',
     },
   );
+
+  const reqSearchApplicationSuggestion = useRequest(
+    async ({
+      value,
+      page = 1,
+      isLoadMore = false,
+    }: {
+      value: string;
+      page: number;
+      isLoadMore: boolean;
+    }) => {
+      if (refCancelRequest.current) throw Error('Block request');
+      return getListSuggestionApp(value, page);
+    },
+    {
+      manual: true,
+      refreshDeps: [refCancelRequest.current],
+      onError: (err: any) => {
+        refCancelRequest.current = false;
+      },
+      onSuccess: (r: any, params) => {
+        const isLoadMore = params[0].isLoadMore;
+
+        setApplications((prev) => {
+          const newData = isLoadMore ? [...prev.data, ...r.data] : r.data;
+
+          return {
+            data: newData,
+            isLoadMore: r.isLoadMore,
+            currentPage: r.currentPage,
+            value: r.value,
+          };
+        });
+      },
+    },
+  );
+
+  const onSearchApplicationSuggestionDebounce = debounce(
+    async (values: any[], callback: () => void) => {
+      const value = get(values, '[0].value', '');
+      if (value?.length < 3) return;
+
+      await reqSearchApplicationSuggestion.runAsync({ value, page: 1, isLoadMore: false });
+      if (callback) callback();
+    },
+    350,
+  );
+
+  const onResetApplication = () => {
+    setApplications({
+      data: [],
+      isLoadMore: false,
+      currentPage: 1,
+      value: '',
+    });
+  };
+
+  const onLoadMoreApplications = () => {
+    reqSearchApplicationSuggestion.run({
+      value: applications.value,
+      page: applications.currentPage + 1,
+      isLoadMore: true,
+    });
+  };
 
   const onChangePage = (page: number) => {
     run({
@@ -52,13 +154,14 @@ export const useConsentManagement = () => {
     });
   };
 
-  const onSearchConsent = (values: any) => {
+  const onSearchConsent = (values: any, callback?: () => void) => {
     run({
       page: 1,
       value: values?.appName || '',
-      isEqualSearch: false,
+      isEqualSearch: values?.isEqualSearch,
       advanceSearch: values?.advanceSearch,
     });
+    if (callback) callback();
   };
 
   const onReloadConsentData = () => {
@@ -82,5 +185,10 @@ export const useConsentManagement = () => {
     onChangePage,
     onSearchConsent,
     onReloadConsentData,
+    applications,
+    reqSearchApplicationSuggestion,
+    onSearchApplicationSuggestionDebounce,
+    onLoadMoreApplications,
+    onResetApplication,
   };
 };

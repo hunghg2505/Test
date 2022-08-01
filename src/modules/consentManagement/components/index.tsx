@@ -13,10 +13,13 @@ import IconSearch from 'assets/icons/icon-search';
 import clsx from 'clsx';
 import Button from 'libraries/UI/Button';
 import { paginationItemRender } from 'libraries/UI/Pagination';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import CreateConsentForm from './CreateConsentForm';
 import styles from './index.module.scss';
 import ModalSearchAdvance from './ModalSearchAdvance';
+import SuggestListUsers from 'modules/dataSubjectManagement/components/SuggestListUsers';
+import { useClickAway } from 'ahooks';
+import useConsentManagementPermission from 'hooks/useConsentManagementPermission';
 
 const ICON_CONSENT_PLUS = (
   <svg xmlns='http://www.w3.org/2000/svg' width={24} height={24} viewBox='0 0 24 24' fill='none'>
@@ -112,7 +115,7 @@ const columns: ColumnsType<DataType> = [
     width: 170,
   },
   {
-    title: 'Update Date',
+    title: 'Updated Date',
     dataIndex: 'updatedDate',
     key: 'updatedAt',
     width: 170,
@@ -132,63 +135,111 @@ const columns: ColumnsType<DataType> = [
 
 function ConsentManagement() {
   const { t } = useTranslation();
+  const refListUsers: any = useRef();
+  const refForm: any = useRef();
+  const { isHavePermissionCreateConsent } = useConsentManagementPermission();
 
-  const { data, loading, onChangePage, onSearchConsent, onReloadConsentData } =
-    useConsentManagement();
+  const {
+    data,
+    loading,
+    onChangePage,
+    onSearchConsent,
+    onReloadConsentData,
+    applications,
+    reqSearchApplicationSuggestion,
+    onSearchApplicationSuggestionDebounce,
+    onLoadMoreApplications,
+    onResetApplication,
+  } = useConsentManagement();
 
   const [isOpenCreateConsentForm, setIsOpenCreateConsentForm] = useState(false);
 
+  useClickAway(() => {
+    if (refListUsers.current?.closeListUser) {
+      refListUsers.current.closeListUser();
+      onResetApplication();
+    }
+  }, refForm);
+
   const onFinish = (values: any) => {
-    onSearchConsent({ ...values, isEqualSearch: false });
+    onSearchConsent({ ...values, isEqualSearch: false }, () => {
+      if (refListUsers.current?.closeListUser) {
+        refListUsers.current.closeListUser();
+        onResetApplication();
+      }
+    });
+  };
+
+  const onFieldsChange = (values: any) => {
+    if (values[0]?.value.length === 0) refListUsers.current.closeListUser();
+    onSearchApplicationSuggestionDebounce(values, () => {
+      if (refListUsers.current?.openListUser) refListUsers.current.openListUser();
+    });
   };
 
   return (
     <ContainerLayout title='Consent Management'>
       <div className={styles.consentPage}>
         <Row justify='center' align='middle' className={styles.consentHeader}>
-          <Form onFinish={onFinish}>
-            <Row justify='center' align='middle' className={styles.searchForm}>
-              <IconSearch />
+          <Form onFinish={onFinish} onFieldsChange={onFieldsChange}>
+            <div ref={refForm} className={styles.formSearchWrap}>
+              <Row justify='center' align='middle' className={styles.searchForm}>
+                <IconSearch />
 
-              <InputForm
-                name='appName'
-                placeholder='Search Application'
-                className={styles.inputSearch}
-                classNameFormInput={styles.inputSearchForm}
-                maxLength={55}
-                rules={[
-                  {
-                    min: 3,
-                    message: t('messages.errors.min', { min: 3 }),
-                  },
-                ]}
+                <InputForm
+                  name='appName'
+                  placeholder='Search Application'
+                  className={styles.inputSearch}
+                  classNameFormInput={styles.inputSearchForm}
+                  maxLength={55}
+                  rules={[
+                    {
+                      min: 3,
+                      message: t('messages.errors.min', { min: 3 }),
+                    },
+                  ]}
+                />
+
+                <Button
+                  icon={<IconSearch />}
+                  className={styles.btnSearchConsent}
+                  htmlType='submit'
+                  type='secondary'
+                >
+                  {t('Search')}
+                </Button>
+              </Row>
+              <SuggestListUsers
+                data={reqSearchApplicationSuggestion.data}
+                loading={reqSearchApplicationSuggestion.loading}
+                onSearchDataSubject={(item: any) => {
+                  onSearchConsent({
+                    appName: item?.firstname,
+                    isEqualSearch: true,
+                  });
+                }}
+                ref={refListUsers}
+                users={applications}
+                onLoadMoreUsers={onLoadMoreApplications}
+                onResetUsers={onResetApplication}
               />
-
-              <Button
-                icon={<IconSearch />}
-                className={styles.btnSearchConsent}
-                htmlType='submit'
-                type='secondary'
-              >
-                {t('Search')}
-              </Button>
-            </Row>
+            </div>
           </Form>
 
           <div className={styles.consentActions}>
-            <ModalSearchAdvance onSearchConsent={onSearchConsent}>
-              <IconCross />
-            </ModalSearchAdvance>
+            <ModalSearchAdvance onSearchConsent={onSearchConsent}></ModalSearchAdvance>
           </div>
 
-          <Button
-            typeDisplay='ghost'
-            className={styles.btnCreateConsent}
-            icon={ICON_CONSENT_PLUS}
-            onClick={() => setIsOpenCreateConsentForm(true)}
-          >
-            {t('create_consent')}
-          </Button>
+          {isHavePermissionCreateConsent && (
+            <Button
+              typeDisplay='ghost'
+              className={styles.btnCreateConsent}
+              icon={ICON_CONSENT_PLUS}
+              onClick={() => setIsOpenCreateConsentForm(true)}
+            >
+              {t('create_consent')}
+            </Button>
+          )}
         </Row>
 
         <div

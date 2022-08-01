@@ -1,6 +1,5 @@
 @import '../../../../styles/variables.scss';
 
-
 .heading {
   font-weight: 700;
   font-size: 18px;
@@ -9,8 +8,8 @@
 }
 .form {
   padding: 32px;
-  background: #FFFFFF;
-  border: 1px solid #F6F6F6;
+  background: #ffffff;
+  border: 1px solid #f6f6f6;
   box-shadow: 0px 5px 40px rgba(9, 44, 76, 0.02);
   border-radius: 8px;
 }
@@ -22,9 +21,9 @@
 }
 
 .label {
-  font-weight: 400;
+  font-weight: 700;
   font-size: 14px;
-  color: $color-gray4;
+  color: $black_color;
   margin: 0 0 6px;
 }
 
