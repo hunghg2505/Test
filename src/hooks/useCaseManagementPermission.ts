@@ -29,9 +29,27 @@ export default function useCaseManagementPermission() {
     [auth],
   );
 
+  const isHavePermissionViewSearchCase = useMemo(
+    () =>
+      auth?.user?.roles
+        ?.find((item) => item.name === FEATURE_NAME.caseManagement)
+        ?.permissions.some((item) => item.permissionId === PERMISSION_ID.viewSearchCase),
+    [auth],
+  );
+
+  const isHavePermissionViewAssignToCase = useMemo(
+    () =>
+      auth?.user?.roles
+        ?.find((item) => item.name === FEATURE_NAME.caseManagement)
+        ?.permissions.some((item) => item.permissionId === PERMISSION_ID.viewAssignToCase),
+    [auth],
+  );
+
   return {
     isHavePermissionCreateCase,
     isHavePermissionEditCase,
     isHavePermissionDeleteCase,
+    isHavePermissionViewSearchCase,
+    isHavePermissionViewAssignToCase,
   };
 }

@@ -19,20 +19,28 @@ function CaseManagementDetail() {
     navigate('/case-management');
     return null;
   }
+
+  if (data?.redirect) {
+    navigate('/');
+    return null;
+  }
+
   return (
     <ContainerLayout title='Case Management Detail'>
-      <div className={styles.wrap}>
-        <UserInfo userInfo={data?.userProfile} />
-        <ConsentList userId={data?.userProfile?.id} />
-        <CreateCaseForm
-          data={data}
-          loading={loading}
-          refActivityLog={refActivityLog}
-          refreshDataCaseDetail={refresh}
-          deleteCaseRequest={deleteCaseRequest}
-        />
-        <ActivityLog caseId={Number(id)} ref={refActivityLog} />
-      </div>
+      {data?.userProfile && (
+        <div className={styles.wrap}>
+          <UserInfo userInfo={data?.userProfile} />
+          <ConsentList userId={data?.userProfile?.id} />
+          <CreateCaseForm
+            data={data}
+            loading={loading}
+            refActivityLog={refActivityLog}
+            refreshDataCaseDetail={refresh}
+            deleteCaseRequest={deleteCaseRequest}
+          />
+          <ActivityLog caseId={Number(id)} ref={refActivityLog} />
+        </div>
+      )}
     </ContainerLayout>
   );
 }
