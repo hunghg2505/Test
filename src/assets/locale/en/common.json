@@ -47,5 +47,6 @@
   "consent": "Consent",
   "create_request": "Create Request",
   "reports": "Reports",
-  "settings": "Settings"
+  "settings": "Settings",
+  "generate_link": "Generate Link"
 }

@@ -174,6 +174,13 @@ const configRoutes: IRouter[] = [
     ],
   },
 
+  // Profile hash
+  {
+    path: routePath.ProfileHash,
+    element: lazy(() => import('modules/profile/[hash]')),
+    isAuth: false,
+    roles: ['@'],
+  },
   // Not Found
   {
     path: '*',
