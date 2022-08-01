@@ -1,7 +1,6 @@
 import { useMount, useRequest } from 'ahooks';
 import { message } from 'antd';
-import { debounce, get } from 'lodash';
-import { useNavigate } from 'react-router-dom';
+import debounce from 'lodash/debounce';
 import { ResponseBase } from 'utils/api/api.types';
 import ApiUtils from 'utils/api/api.utils';
 import { API_PATH } from 'utils/api/constant';
@@ -57,27 +56,32 @@ export const useCreateConsent = (onFinishSubmitForm: () => void) => {
 const getListApplicationService = async ({
   name,
   page,
+  prevList = [],
 }: {
   name?: string | undefined;
   page: number;
+  prevList: any[];
 }) => {
   const response: any = await ApiUtils.fetch(API_PATH.GET_LIST_APPLICATION, {
-    name,
-    limit: 10,
+    name: name || '',
+    limit: 1,
     page: page || 1,
   });
 
   const current = +response?.content?.metadata?.currentPage || 1;
 
+  const currentData =
+    response?.content?.data?.map((item: any) => ({
+      id: item?.id,
+      appName: item?.appName,
+    })) || [];
+
   return {
     total: response?.content?.metadata?.total || 0,
-    current: current,
+    current: current || 1,
     pageSize: +response?.content?.metadata?.itemPage || 10,
-    data:
-      response?.content?.data?.map((item: any) => ({
-        id: item?.id,
-        appName: item?.appName,
-      })) || [],
+    data: [...prevList, ...currentData],
+    isLoadMore: +response?.content?.metadata?.currentPage < +response?.content?.metadata?.lastPage,
     name,
   };
 };
@@ -91,29 +95,39 @@ export const useGetListApplication = () => {
   );
 
   const onSearchApplicationDebounce = debounce(async (values = {}) => {
-    if (!Object.values(values)?.filter((v) => v).length) return;
-
-    await runAsync({ ...values, page: 1 });
+    await runAsync({ name: values?.values || values, page: 1, prevList: [] });
   }, 350);
 
   useMount(() => {
-    run({ page: 1 });
+    run({ page: 1, prevList: [] });
   });
 
-  const onChangePage = (page: number) => {
-    run({ name: data?.name, page });
+  const onLoadMore = () => {
+    run({ name: data?.name, page: (data?.current || 1) + 1, prevList: data?.data });
+  };
+
+  const onReset = () => {
+    console.log('reset data');
   };
 
   return {
     data,
     loading,
     onSearchApplicationDebounce,
-    onChangePage,
-    run,
+    onLoadMore,
+    isLoadMore: data?.isLoadMore,
   };
 };
 
-const getListService = async ({ name, page }: { name?: string | undefined; page: number }) => {
+const getListService = async ({
+  name,
+  page,
+  prevList = [],
+}: {
+  name?: string | undefined;
+  page: number;
+  prevList: any[];
+}) => {
   const response: any = await ApiUtils.fetch(API_PATH.GET_LIST_SERVICE, {
     name,
     limit: 10,
@@ -121,16 +135,18 @@ const getListService = async ({ name, page }: { name?: string | undefined; page:
   });
 
   const current = +response?.content?.metadata?.currentPage || 1;
+  const currentData =
+    response?.content?.data?.map((item: any) => ({
+      id: item?.id,
+      appName: item?.appName,
+    })) || [];
 
   return {
     total: response?.content?.metadata?.total || 0,
     current: current,
     pageSize: +response?.content?.metadata?.itemPage || 10,
-    data:
-      response?.content?.data?.map((item: any) => ({
-        id: item?.id,
-        name: item?.name,
-      })) || [],
+    data: [...prevList, ...currentData],
+    isLoadMore: +response?.content?.metadata?.currentPage < +response?.content?.metadata?.lastPage,
     name,
   };
 };
@@ -141,24 +157,26 @@ export const useGetListService = () => {
   });
 
   const onSearchServiceDebounce = debounce(async (values = {}) => {
-    if (!Object.values(values)?.filter((v) => v).length) return;
-
-    await runAsync({ ...values, page: 1 });
+    await runAsync({ name: values?.values || values, page: 1, prevList: [] });
   }, 350);
 
   useMount(() => {
     run({ page: 1 });
   });
 
-  const onChangePage = (page: number) => {
-    run({ name: data?.name, page });
+  const onLoadMore = () => {
+    run({ name: data?.name, page: (data?.current || 1) + 1, prevList: data?.data });
+  };
+
+  const onReset = () => {
+    console.log('reset data');
   };
 
   return {
     data,
     loading,
     onSearchServiceDebounce,
-    onChangePage,
-    run,
+    onLoadMore,
+    isLoadMore: data?.isLoadMore,
   };
 };

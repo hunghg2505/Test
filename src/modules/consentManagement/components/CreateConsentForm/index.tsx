@@ -1,18 +1,17 @@
-import React, { useCallback, useRef, useState } from 'react';
+import { useCallback, useState } from 'react';
 
-import styles from './index.module.scss';
-import { Col, DatePicker, Form, Row, Modal, Divider, Pagination } from 'antd';
-import Select from 'libraries/UI/Select';
-import { useTranslation } from 'react-i18next';
-import InputTextAreaForm from 'libraries/form/input/input-textarea-form';
-import InputForm from 'libraries/form/input/input-form';
-import Button from 'libraries/UI/Button';
-import { useCreateConsent, useGetListApplication, useGetListService } from './service';
-import { STATUS_CONSENT_DROPDOWN_DATA } from 'constants/common.constants';
 import ExclamationCircleOutlined from '@ant-design/icons/lib/icons/ExclamationCircleOutlined';
-import { RegexUtils } from 'utils/regex-helper';
-import { paginationItemRender } from 'libraries/UI/Pagination';
+import { Col, DatePicker, Divider, Form, Modal, Row } from 'antd';
+import { STATUS_CONSENT_DROPDOWN_DATA } from 'constants/common.constants';
+import InputForm from 'libraries/form/input/input-form';
+import InputTextAreaForm from 'libraries/form/input/input-textarea-form';
+import Button from 'libraries/UI/Button';
+import Select from 'libraries/UI/Select';
 import moment from 'moment';
+import { useTranslation } from 'react-i18next';
+import { RegexUtils } from 'utils/regex-helper';
+import styles from './index.module.scss';
+import { useCreateConsent, useGetListApplication, useGetListService } from './service';
 
 interface IProps {
   visible: boolean;
@@ -22,14 +21,81 @@ interface IProps {
 
 const { confirm } = Modal;
 
-const CreateConsentForm = ({ visible, onClose, onReloadConsentData }: IProps) => {
+export const CustomSelectDropdown = ({
+  value,
+  onChange,
+  data,
+  onLoadMore,
+  onSearchDebounce,
+}: any) => {
   const { t } = useTranslation();
 
-  const [createConsentForm] = Form.useForm();
+  return (
+    <Select
+      value={value}
+      placeholder='Select application'
+      showSearch
+      onSearch={onSearchDebounce}
+      onSelect={onChange}
+      filterOption={false}
+      dropdownRender={(menu: any) => (
+        <>
+          {menu}
 
+          {data?.isLoadMore && (
+            <>
+              <Divider style={{ margin: '8px 0' }} />
+              <div onClick={onLoadMore} className={styles.btnLoadmore}>
+                {t('load_more')}
+              </div>
+            </>
+          )}
+        </>
+      )}
+    >
+      {data?.data?.map((item: any, index: number) => (
+        <Select.Option value={Number(item.id)} key={`${index}${item.id}`}>
+          {item.appName}
+        </Select.Option>
+      ))}
+    </Select>
+  );
+};
+
+export const FormItemApplication = (props: any) => {
+  const {
+    data,
+    onLoadMore,
+    onSearchApplicationDebounce: onSearchDebounce,
+  } = useGetListApplication();
+
+  return (
+    <CustomSelectDropdown
+      {...props}
+      data={data}
+      onLoadMore={onLoadMore}
+      onSearchDebounce={onSearchDebounce}
+    />
+  );
+};
+
+export const FormItemService = (props: any) => {
+  const { data, onLoadMore, onSearchServiceDebounce: onSearchDebounce } = useGetListService();
+
+  return (
+    <CustomSelectDropdown
+      {...props}
+      data={data}
+      onLoadMore={onLoadMore}
+      onSearchDebounce={onSearchDebounce}
+    />
+  );
+};
+
+const CreateConsentForm = ({ visible, onClose, onReloadConsentData }: IProps) => {
+  const { t } = useTranslation();
+  const [createConsentForm] = Form.useForm();
   const [expireOn, setExpireOn] = useState(null);
-  const [valueApplication, setValueApplication] = useState<string>();
-  const [valueService, setValueService] = useState<string>();
 
   const onFinishSubmitForm = () => {
     onClose();
@@ -39,18 +105,6 @@ const CreateConsentForm = ({ visible, onClose, onReloadConsentData }: IProps) =>
   };
 
   const createConsentRequest = useCreateConsent(onFinishSubmitForm);
-  const {
-    data: dataApplication,
-    onChangePage: onChangePageApplication,
-    onSearchApplicationDebounce,
-    run: runApplicationService,
-  } = useGetListApplication();
-  const {
-    data: dataService,
-    onChangePage: onChangePageService,
-    onSearchServiceDebounce,
-    run: runService,
-  } = useGetListService();
 
   const onFinish = (values: any) => {
     createConsentRequest.run({
@@ -58,26 +112,6 @@ const CreateConsentForm = ({ visible, onClose, onReloadConsentData }: IProps) =>
       expireOn,
     });
     setExpireOn(null);
-  };
-
-  const onSearchApplication = (value: string) => {
-    if (value && value?.length > 0) {
-      onSearchApplicationDebounce({ name: value });
-    } else {
-      setTimeout(() => {
-        runApplicationService({ page: 1 });
-      }, 351);
-    }
-  };
-
-  const onSearchService = (value: string) => {
-    if (value && value?.length > 0) {
-      onSearchServiceDebounce({ name: value });
-    } else {
-      setTimeout(() => {
-        runService({ page: 1 });
-      }, 351);
-    }
   };
 
   const showConfirm = useCallback(() => {
@@ -142,37 +176,7 @@ const CreateConsentForm = ({ visible, onClose, onReloadConsentData }: IProps) =>
                 },
               ]}
             >
-              <Select
-                value={valueApplication}
-                placeholder='Select application'
-                onChange={(value) => setValueApplication(value)}
-                showSearch
-                onSearch={onSearchApplication}
-                onSelect={() => runApplicationService({ page: 1 })}
-                onBlur={() => runApplicationService({ page: 1 })}
-                filterOption={false}
-                dropdownRender={(menu: any) => (
-                  <>
-                    {menu}
-                    <Divider style={{ margin: '8px 0' }} />
-                    <Pagination
-                      className={styles.pagination}
-                      current={dataApplication?.current}
-                      onChange={onChangePageApplication}
-                      total={dataApplication?.total}
-                      defaultPageSize={dataApplication?.pageSize}
-                      itemRender={paginationItemRender}
-                      showSizeChanger={false}
-                    />
-                  </>
-                )}
-              >
-                {dataApplication?.data?.map((item: any, index: number) => (
-                  <Select.Option value={Number(item.id)} key={`${index}${item.id}`}>
-                    {item.appName}
-                  </Select.Option>
-                ))}
-              </Select>
+              <FormItemApplication />
             </Form.Item>
           </Col>
           <Col xs={12}>
@@ -217,37 +221,7 @@ const CreateConsentForm = ({ visible, onClose, onReloadConsentData }: IProps) =>
                 },
               ]}
             >
-              <Select
-                value={valueService}
-                onChange={(value) => setValueService(value)}
-                showSearch
-                onSearch={onSearchService}
-                onSelect={() => runService({ page: 1 })}
-                onBlur={() => runService({ page: 1 })}
-                filterOption={false}
-                placeholder='Select service'
-                dropdownRender={(menu: any) => (
-                  <>
-                    {menu}
-                    <Divider style={{ margin: '8px 0' }} />
-                    <Pagination
-                      className={styles.pagination}
-                      current={dataService?.current}
-                      onChange={onChangePageService}
-                      total={dataService?.total}
-                      defaultPageSize={dataService?.pageSize}
-                      itemRender={paginationItemRender}
-                      showSizeChanger={false}
-                    />
-                  </>
-                )}
-              >
-                {dataService?.data?.map((item: any, index: number) => (
-                  <Select.Option value={Number(item?.id)} key={`${index}${item?.appId}`}>
-                    {item?.name}
-                  </Select.Option>
-                ))}
-              </Select>
+              <FormItemService />
             </Form.Item>
           </Col>
           <Col xs={12}>
