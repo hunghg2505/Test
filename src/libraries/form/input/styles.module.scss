@@ -85,7 +85,7 @@
 
     .ant-input-textarea-show-count::after {
       position: absolute;
-      top: 70%;
+      top: 100%;
       left: 2%;
       content: attr(data-count);
     }

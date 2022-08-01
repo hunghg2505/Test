@@ -5,6 +5,7 @@ import Button from 'libraries/UI/Button';
 import clsx from 'clsx';
 import dayjs from 'dayjs';
 import styles from './index.module.scss';
+import { capitalizeFirstLetter } from 'utils/common.utils';
 
 const ICON_EDIT = (
   <svg xmlns='http://www.w3.org/2000/svg' width={24} height={24} viewBox='0 0 24 24' fill='white'>
@@ -59,7 +60,7 @@ const ConsentInfo = ({ data, onClickEdit }: any) => {
         </Col>
       </Row>
       <Row>
-        <Col xs={24} className={styles.info}>
+        <Col xs={11} className={styles.info}>
           <p className={styles.label}>
             Services<span className={styles.asterisk}>*</span>
           </p>
@@ -72,7 +73,7 @@ const ConsentInfo = ({ data, onClickEdit }: any) => {
           <p className={styles.label}>
             Status<span className={styles.asterisk}>*</span>
           </p>
-          <p className={styles.value}>{data?.status}</p>
+          <p className={styles.value}>{capitalizeFirstLetter(data?.status)}</p>
         </Col>
         <Col xs={2}></Col>
         <Col xs={11} className={styles.info}>

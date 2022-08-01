@@ -61,3 +61,11 @@
 .pagination {
   margin-left: auto;
 }
+
+.textarea {
+  :global {
+    .ant-input::placeholder {
+      color: $color-gray4;
+    }
+  }
+}

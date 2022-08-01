@@ -63,3 +63,11 @@
   margin-bottom: 12px;
   margin-top: 60px;
 }
+
+.textarea {
+  :global {
+    .ant-input::placeholder {
+      color: $color-gray4;
+    }
+  }
+}

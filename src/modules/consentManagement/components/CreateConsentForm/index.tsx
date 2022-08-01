@@ -280,6 +280,9 @@ const CreateConsentForm = ({ visible, onClose, onReloadConsentData }: IProps) =>
               onChange={(date: any) => setExpireOn(date)}
               value={expireOn}
               placeholder='dd/mm/yyyy'
+              disabledDate={(current) => {
+                return current && current.valueOf() <= Date.now();
+              }}
             />
           </Col>
           <Col xs={12}>
@@ -310,7 +313,7 @@ const CreateConsentForm = ({ visible, onClose, onReloadConsentData }: IProps) =>
                   message: t('messages.errors.require', { field: 'Version' }),
                 },
                 {
-                  max: 6,
+                  max: 8,
                   message: t('messages.errors.max', { max: 6 }),
                 },
 

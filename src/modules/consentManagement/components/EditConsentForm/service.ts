@@ -52,7 +52,8 @@ const getConsentDetailService = async (id: string): Promise<IDetailConsent> => {
 };
 
 export const useConsentDetail = (id: string) => {
-  return useRequest(async () => getConsentDetailService(id));
+  const { data, loading, refresh } = useRequest(async () => getConsentDetailService(id));
+  return { data, loading, refresh };
 };
 
 const updateConsentService = (id: string, body: IEditConsent) => {

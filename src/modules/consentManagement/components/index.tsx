@@ -152,9 +152,16 @@ function ConsentManagement() {
 
               <InputForm
                 name='appName'
-                placeholder='Search App Name'
+                placeholder='Search Application'
                 className={styles.inputSearch}
                 classNameFormInput={styles.inputSearchForm}
+                maxLength={55}
+                rules={[
+                  {
+                    min: 3,
+                    message: t('messages.errors.min', { min: 3 }),
+                  },
+                ]}
               />
 
               <Button
@@ -189,19 +196,23 @@ function ConsentManagement() {
             [styles.userPermissionsEmpty]: !loading && !data?.list?.length,
           })}
         >
-          <Table
-            className={styles.table}
-            columns={columns}
-            dataSource={data?.data}
-            loading={loading}
-            pagination={{
-              current: data?.current,
-              total: data?.total,
-              showSizeChanger: false,
-              onChange: onChangePage,
-              itemRender: paginationItemRender,
-            }}
-          />
+          {data?.data?.length === 0 ? (
+            <p className={styles.noResultText}>{t('no_result_found')}</p>
+          ) : (
+            <Table
+              className={styles.table}
+              columns={columns}
+              dataSource={data?.data}
+              loading={loading}
+              pagination={{
+                current: data?.current,
+                total: data?.total,
+                showSizeChanger: false,
+                onChange: onChangePage,
+                itemRender: paginationItemRender,
+              }}
+            />
+          )}
         </div>
       </div>
       <CreateConsentForm
