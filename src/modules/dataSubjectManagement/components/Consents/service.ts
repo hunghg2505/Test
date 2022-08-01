@@ -33,10 +33,10 @@ export const getConsentService = async ({
   const r: any = await ApiUtils.fetch(API_PATH.CONSENTS, params);
 
   const formatConsents = r?.content?.data?.map((item: any) => {
-    const appDes = item?.consents?.reduce((acc: string, consent: any) => {
-      acc = acc + ', ' + get(consent, 'name', '');
-      return acc;
-    }, '');
+    const appDes = item?.consents
+      ?.map((consent: any) => get(consent, 'name', ''))
+      ?.filter((v: any) => v)
+      ?.join(', ');
 
     return {
       key: `${item?.app_name}`,
@@ -49,8 +49,8 @@ export const getConsentService = async ({
           value: `${get(consent, 'name', '')}@${consent.consent_id}`,
           description: get(consent, 'content', ''),
           lastUpdated: dayjs(get(consent, 'updated_at', '')).format('MMM DD, YYYY'),
-          version: `Version ${get(consent, 'version', '')}`,
-          status: capitalizeFirstLetter(get(consent, 'status', '')),
+          version: `Version ${get(consent, 'version', '') || ''}`,
+          status: capitalizeFirstLetter(get(consent, 'status', '') || 'draft'),
           selected: !!consent?.my_consent_id,
         };
       }),
@@ -255,4 +255,18 @@ export const useConsent = ({ userId }: { userId: number }) => {
     onLoadMoreSuggestionConsents,
     onResetSuggestionConsents,
   };
+};
+
+export const useGenerateLink = (userId: any) => {
+  return useRequest(
+    async () => {
+      const res: any = await ApiUtils.post(API_PATH.GENERATE_LINK, {
+        userId: `${userId}`,
+      });
+      return `${window?.location?.origin}/profile/${res?.content}` || '';
+    },
+    {
+      manual: true,
+    },
+  );
 };

@@ -1,10 +1,11 @@
 import { useClickAway } from 'ahooks';
-import { Checkbox, Col, Collapse, Form, Pagination, Row } from 'antd';
+import { Checkbox, Col, Collapse, Form, message, Pagination, Row } from 'antd';
 
 import ArrowDownCollapse from 'assets/icons/icon-arrow-down-collapse';
 import ArrowUpCollapse from 'assets/icons/icon-arrow-up-collapse';
 import IconSearch from 'assets/icons/icon-search';
 import useCaseManagementPermission from 'hooks/useCaseManagementPermission';
+import useCopyToClipboard from 'hooks/useCopyToClipboard';
 import useDataSubjectManagementPermission from 'hooks/useDataSubjectManagementPermission';
 import Button from 'libraries/UI/Button';
 import Input from 'libraries/UI/Input';
@@ -14,7 +15,7 @@ import { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import CreateCaseForm from '../CreateCaseForm';
 import styles from './index.module.scss';
-import { useConsent } from './service';
+import { useConsent, useGenerateLink } from './service';
 import SuggestConsents from './SuggestConsents';
 
 const { Panel } = Collapse;
@@ -194,11 +195,19 @@ const ConsentOption = ({ value, onChange, dataConsent, isHavePermissionSaveConse
   );
 };
 
-const ConsentsList = ({ data, loading, onChange, onSaveConsent, loadingUpdateConsent }: any) => {
+const ConsentsList = ({
+  data,
+  loading,
+  onChange,
+  onSaveConsent,
+  loadingUpdateConsent,
+  userId,
+}: any) => {
   const { t } = useTranslation();
   const [formConsent] = Form.useForm();
-
+  const [, copy] = useCopyToClipboard();
   const { isHavePermissionSaveConsent } = useDataSubjectManagementPermission();
+  const requestGenerateLink = useGenerateLink(userId);
 
   const initialValues = data?.data?.reduce((acc: any, v: any) => {
     acc[v?.name] = [];
@@ -219,6 +228,15 @@ const ConsentsList = ({ data, loading, onChange, onSaveConsent, loadingUpdateCon
       acc[`${name}`] = get(v, 'value');
       return acc;
     }, {});
+  };
+
+  const onCopyLink = () => {
+    try {
+      copy(requestGenerateLink?.data || '');
+      message.success('Copied is successfully');
+    } catch (err) {
+      console.log('err', err);
+    }
   };
 
   if (loading) return null;
@@ -280,12 +298,27 @@ const ConsentsList = ({ data, loading, onChange, onSaveConsent, loadingUpdateCon
           </div>
         )}
 
-        {isHavePermissionSaveConsent && (
-          <Button htmlType='submit' className={styles.btnSave} loading={loadingUpdateConsent}>
-            {t('save')}
+        <Row align='middle' justify='start'>
+          {isHavePermissionSaveConsent && (
+            <Button htmlType='submit' className={styles.btnSave} loading={loadingUpdateConsent}>
+              {t('save')}
+            </Button>
+          )}
+          <Button
+            className={styles.btnGenerateLink}
+            onClick={requestGenerateLink.run}
+            loading={requestGenerateLink.loading}
+          >
+            {t('generate_link')}
           </Button>
-        )}
+        </Row>
       </Form>
+
+      {requestGenerateLink?.data && (
+        <div className={styles.textLink} onClick={onCopyLink}>
+          {requestGenerateLink?.data}
+        </div>
+      )}
     </div>
   );
 };
@@ -333,6 +366,7 @@ function Consents({ userId, refDataHistory }: { userId: number; refDataHistory: 
         onChange={onChange}
         onSaveConsent={onSave}
         loadingUpdateConsent={loadingUpdateConsent}
+        userId={userId}
       />
     </div>
   );

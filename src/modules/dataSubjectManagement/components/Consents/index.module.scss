@@ -198,10 +198,23 @@
   margin-bottom: 2px;
 }
 
-.btnSave {
-  margin: 0 auto;
-  display: block;
+.btnSave, .btnGenerateLink {
   padding: 10px 46px;
+}
+
+.btnGenerateLink {
+  margin-left: 10px;
+}
+
+.textLink {
+  margin: 20px 0 0;
+  background: $color-white;
+  border: 1px solid #dadada;
+  box-shadow: 0px 5px 40px #09284605;
+  border-radius: 8px;
+  padding: 18px 10px;
+  cursor: pointer;
+  word-break: break-all;
 }
 
 .consentInfo {
