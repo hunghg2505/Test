@@ -6,7 +6,7 @@ import IconSearch from 'assets/icons/icon-search';
 import Button from 'libraries/UI/Button';
 import Input from 'libraries/UI/Input';
 import { paginationItemRender } from 'libraries/UI/Pagination';
-import { get } from 'lodash';
+import get from 'lodash/get';
 import { useTranslation } from 'react-i18next';
 import styles from './index.module.scss';
 import { useConsentList } from './service';
