@@ -155,6 +155,7 @@ export const useConsentManagement = () => {
   };
 
   const onSearchConsent = (values: any, callback?: () => void) => {
+    if (values?.type === 'enter') refCancelRequest.current = true;
     run({
       page: 1,
       value: values?.appName || '',

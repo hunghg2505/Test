@@ -174,7 +174,7 @@ function ConsentManagement() {
   }, refForm);
 
   const onFinish = (values: any) => {
-    onSearchConsent({ ...values, isEqualSearch: false }, () => {
+    onSearchConsent({ ...values, isEqualSearch: false, type: 'enter' }, () => {
       if (refListUsers.current?.closeListUser) {
         refListUsers.current.closeListUser();
         onResetApplication();
