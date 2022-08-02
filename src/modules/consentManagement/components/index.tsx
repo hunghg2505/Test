@@ -8,18 +8,17 @@ import ContainerLayout from 'libraries/layouts/container.layout';
 
 import { useConsentManagement } from './utils/service';
 
-import IconCross from 'assets/icons/icon-cross';
+import { useClickAway } from 'ahooks';
 import IconSearch from 'assets/icons/icon-search';
 import clsx from 'clsx';
+import useConsentManagementPermission from 'hooks/useConsentManagementPermission';
 import Button from 'libraries/UI/Button';
 import { paginationItemRender } from 'libraries/UI/Pagination';
+import SuggestListUsers from 'modules/dataSubjectManagement/components/SuggestListUsers';
 import { useRef, useState } from 'react';
 import CreateConsentForm from './CreateConsentForm';
 import styles from './index.module.scss';
 import ModalSearchAdvance from './ModalSearchAdvance';
-import SuggestListUsers from 'modules/dataSubjectManagement/components/SuggestListUsers';
-import { useClickAway } from 'ahooks';
-import useConsentManagementPermission from 'hooks/useConsentManagementPermission';
 
 const ICON_CONSENT_PLUS = (
   <svg xmlns='http://www.w3.org/2000/svg' width={24} height={24} viewBox='0 0 24 24' fill='none'>
@@ -41,25 +40,6 @@ const ICON_CONSENT_PLUS = (
       stroke='#CF2A2B'
       strokeWidth={2}
       strokeLinecap='round'
-      strokeLinejoin='round'
-    />
-  </svg>
-);
-
-const ICON_EDIT = (
-  <svg xmlns='http://www.w3.org/2000/svg' width={24} height={24} viewBox='0 0 24 24' fill='none'>
-    <path
-      d='M3.5 21H21.5'
-      stroke='#000'
-      strokeWidth={2}
-      strokeLinecap='round'
-      strokeLinejoin='round'
-    />
-    <path
-      d='M5.5 13.36V17H9.1586L19.5 6.65405L15.8476 3L5.5 13.36Z'
-      fill='white'
-      stroke='#000'
-      strokeWidth={2}
       strokeLinejoin='round'
     />
   </svg>

@@ -1,6 +1,7 @@
 import { useCallback, useState } from 'react';
 
 import ExclamationCircleOutlined from '@ant-design/icons/lib/icons/ExclamationCircleOutlined';
+import { useDebounceFn } from 'ahooks';
 import { Col, DatePicker, Divider, Form, Modal, Row } from 'antd';
 import { STATUS_CONSENT_DROPDOWN_DATA } from 'constants/common.constants';
 import InputForm from 'libraries/form/input/input-form';
@@ -29,6 +30,16 @@ export const CustomSelectDropdown = ({
   onSearchDebounce,
 }: any) => {
   const { t } = useTranslation();
+  const [visible, setVisible] = useState(false);
+
+  const { run } = useDebounceFn(
+    () => {
+      setVisible(!visible);
+    },
+    {
+      wait: 300,
+    },
+  );
 
   return (
     <Select
@@ -37,6 +48,8 @@ export const CustomSelectDropdown = ({
       showSearch
       onSearch={onSearchDebounce}
       onSelect={onChange}
+      open={visible}
+      onMouseDown={run}
       filterOption={false}
       dropdownRender={(menu: any) => (
         <>
