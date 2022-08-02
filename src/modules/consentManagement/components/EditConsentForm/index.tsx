@@ -20,6 +20,7 @@ import Loading from 'libraries/components/loading';
 import { STATUS_CONSENT_DROPDOWN_DATA } from 'constants/common.constants';
 import { RegexUtils } from 'utils/regex-helper';
 import { paginationItemRender } from 'libraries/UI/Pagination';
+import { FormItemApplication, FormItemService } from '../CreateConsentForm';
 
 export default function EditConsentForm() {
   const { t } = useTranslation();
@@ -137,37 +138,7 @@ export default function EditConsentForm() {
                       },
                     ]}
                   >
-                    <Select
-                      placeholder='Select application'
-                      value={valueApplication}
-                      onChange={(value) => setValueApplication(value)}
-                      showSearch
-                      onSearch={onSearchApplication}
-                      filterOption={false}
-                      onSelect={() => run({ page: 1 })}
-                      onBlur={() => run({ page: 1 })}
-                      dropdownRender={(menu: any) => (
-                        <>
-                          {menu}
-                          <Divider style={{ margin: '8px 0' }} />
-                          <Pagination
-                            className={styles.pagination}
-                            current={dataListApplication?.current}
-                            onChange={onChangePage}
-                            total={dataListApplication?.total}
-                            defaultPageSize={dataListApplication?.pageSize}
-                            itemRender={paginationItemRender}
-                            showSizeChanger={false}
-                          />
-                        </>
-                      )}
-                    >
-                      {dataListApplication?.data?.map((item: any, index: number) => (
-                        <Select.Option value={Number(item.id)} key={`${index}${item.id}`}>
-                          {item.appName}
-                        </Select.Option>
-                      ))}
-                    </Select>
+                    <FormItemApplication />
                   </Form.Item>
                 </Col>
                 <Col xs={12}>
@@ -212,37 +183,7 @@ export default function EditConsentForm() {
                       },
                     ]}
                   >
-                    <Select
-                      value={valueService}
-                      onChange={(value) => setValueService(value)}
-                      showSearch
-                      placeholder='Select service'
-                      onSearch={onSearchService}
-                      onSelect={() => runService({ page: 1 })}
-                      onBlur={() => runService({ page: 1 })}
-                      filterOption={false}
-                      dropdownRender={(menu: any) => (
-                        <>
-                          {menu}
-                          <Divider style={{ margin: '8px 0' }} />
-                          <Pagination
-                            className={styles.pagination}
-                            current={dataService?.current}
-                            onChange={onChangePageService}
-                            total={dataService?.total}
-                            defaultPageSize={dataService?.pageSize}
-                            itemRender={paginationItemRender}
-                            showSizeChanger={false}
-                          />
-                        </>
-                      )}
-                    >
-                      {dataService?.data?.map((item: any, index: number) => (
-                        <Select.Option value={Number(item?.id)} key={`${index}${item?.appId}`}>
-                          {item?.name}
-                        </Select.Option>
-                      ))}
-                    </Select>
+                    <FormItemService />
                   </Form.Item>
                 </Col>
                 <Col xs={12}>
