@@ -55,6 +55,7 @@ export const CustomSelectDropdown = ({
       open={visible}
       onMouseDown={run}
       filterOption={false}
+      // allowClear={true}
       dropdownRender={(menu: any) => (
         <>
           {menu}
