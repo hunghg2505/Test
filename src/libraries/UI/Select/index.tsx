@@ -1,11 +1,11 @@
 import React from 'react';
-import { Select as SelectAntd } from 'antd';
+import { Select as SelectAntd, SelectProps } from 'antd';
 
 import styles from './index.module.scss';
 import clsx from 'clsx';
 import IconArrowDown2 from 'assets/icons/icon-arrow-down-2';
 
-interface IProps {
+interface IProps extends SelectProps {
   children?: React.ReactNode;
   className?: string;
   suffixIcon?: React.ReactNode;

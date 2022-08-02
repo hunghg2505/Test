@@ -1,5 +1,7 @@
+import { useKeycloak } from '@react-keycloak/web';
 import { useMount, useRequest } from 'ahooks';
 import { message } from 'antd';
+import useCaseManagementPermission from 'hooks/useCaseManagementPermission';
 import { useNavigate } from 'react-router-dom';
 import { ResponseBase } from 'utils/api/api.types';
 import ApiUtils from 'utils/api/api.utils';
@@ -36,6 +38,7 @@ interface IDetialCase {
   comment?: string;
   userProfile?: IUserInfo;
   fileUrl?: string;
+  redirect?: boolean;
 }
 
 interface IEditCase {
@@ -77,6 +80,7 @@ const getDetailCaseService = async (caseId: string | undefined): Promise<IDetial
     acceptedDate: response?.content?.data?.acceptedDate,
     fileUrl: response?.content?.data?.fileUrl,
     userProfile: response?.content?.data?.userProfile,
+    redirect: false,
   };
 };
 
@@ -85,7 +89,30 @@ const deleteCaseService = async (caseId: string | undefined) => {
 };
 
 export const useCaseDetail = (caseId: string | undefined) => {
-  const { data, loading, refresh } = useRequest(async () => getDetailCaseService(caseId));
+  const { keycloak } = useKeycloak();
+  const { isHavePermissionViewSearchCase, isHavePermissionViewAssignToCase } =
+    useCaseManagementPermission();
+
+  const { data, loading, refresh } = useRequest(async () => {
+    const r = await getDetailCaseService(caseId);
+
+    if (r && r?.assignTo !== keycloak?.tokenParsed?.name && !isHavePermissionViewSearchCase) {
+      return {
+        ...r,
+        redirect: true,
+        userProfile: null,
+      };
+    }
+
+    if (r && r?.assignTo === keycloak?.tokenParsed?.name && !isHavePermissionViewAssignToCase) {
+      return {
+        ...r,
+        redirect: true,
+        userProfile: null,
+      };
+    }
+    return r;
+  });
 
   const navigate = useNavigate();
 

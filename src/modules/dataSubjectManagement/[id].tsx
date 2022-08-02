@@ -6,11 +6,17 @@ import Consents from './components/Consents';
 import DataSubjectHistory from './components/DataSubjectHistory';
 import UserInfo from '../../libraries/components/UserInfo';
 import { useDataSubjectDetail } from './utils/service';
+import useDataSubjectManagementPermission from 'hooks/useDataSubjectManagementPermission';
+import { Row } from 'antd';
+import Button from 'libraries/UI/Button';
+
+import styles from './index.module.scss';
 
 function DataSubjectDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
   const refDataHistory: any = useRef(null);
+  const { isHavePermissionEditProfile } = useDataSubjectManagementPermission();
 
   const { loading, data } = useDataSubjectDetail(`${id}`);
 
@@ -29,6 +35,12 @@ function DataSubjectDetail() {
 
   return (
     <ContainerLayout title='Data Subject Detail'>
+      {isHavePermissionEditProfile && (
+        <Row justify='end' className={styles.btnEdit}>
+          <Button>Submit</Button>
+          <Button className={styles.btnCancel}>Cancel</Button>
+        </Row>
+      )}
       <UserInfo userInfo={data?.userInfo} />
       <Consents userId={Number(data?.userInfo?.id)} refDataHistory={refDataHistory} />
       <DataSubjectHistory userId={data?.userInfo?.id || ''} subjectId={id} ref={refDataHistory} />
