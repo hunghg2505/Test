@@ -1,7 +1,7 @@
 export const routePath = {
   HomePage: '/',
   Profile: '/profile',
-  ProfileHash: '/profile/:hash',
+  ProfileHash: '/:hash',
   Reports: '/reports',
   DataSubjectManagement: '/data-subject',
   DataSubjectDetail: '/data-subject/:id',
