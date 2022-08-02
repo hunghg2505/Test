@@ -6,7 +6,7 @@
   :global {
     .ant-form-item-label > label {
       font-style: normal;
-      font-weight: 400;
+      font-weight: 700;
       font-size: 14px;
       color: $black_color;
       display: flex;
@@ -52,7 +52,7 @@
 
 .datePickerLabel {
   font-style: normal;
-  font-weight: 400;
+  font-weight: 700;
   font-size: 14px;
   color: $black_color;
   margin-bottom: 8px;
@@ -98,6 +98,7 @@
   color: #202225;
   cursor: pointer;
   transition: all 300ms;
+  text-align: center;
   &:hover {
     background: $color-gray6;
   }

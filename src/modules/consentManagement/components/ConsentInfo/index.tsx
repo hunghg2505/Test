@@ -42,9 +42,9 @@ const ConsentInfo = ({ data, onClickEdit }: any) => {
         <Col xs={2}></Col>
         <Col xs={11} className={styles.info}>
           <p className={styles.label}>
-            Application<span className={styles.asterisk}>*</span>
+            Consent ID<span className={styles.asterisk}>*</span>
           </p>
-          <p className={styles.value}>{data?.application?.appName}</p>
+          <p className={styles.value}>{data?.consentId}</p>
         </Col>
       </Row>
       <Row>
@@ -57,17 +57,24 @@ const ConsentInfo = ({ data, onClickEdit }: any) => {
         <Col xs={2}></Col>
         <Col xs={11} className={styles.info}>
           <p className={styles.label}>
-            Product Name<span className={styles.asterisk}>*</span>
+            Application<span className={styles.asterisk}>*</span>
           </p>
-          <p className={clsx(styles.value, styles.leftSpace)}>{data?.productName}</p>
+          <p className={styles.value}>{data?.application?.appName}</p>
         </Col>
       </Row>
       <Row>
         <Col xs={11} className={styles.info}>
           <p className={styles.label}>
-            Services<span className={styles.asterisk}>*</span>
+            Service<span className={styles.asterisk}>*</span>
           </p>
           <p className={styles.value}>{data?.service?.name}</p>
+        </Col>
+        <Col xs={2}></Col>
+        <Col xs={11} className={styles.info}>
+          <p className={styles.label}>
+            Product Name<span className={styles.asterisk}>*</span>
+          </p>
+          <p className={clsx(styles.value, styles.leftSpace)}>{data?.productName}</p>
         </Col>
       </Row>
       <Divider />
@@ -88,12 +95,16 @@ const ConsentInfo = ({ data, onClickEdit }: any) => {
       </Row>
       <Row>
         <Col xs={11} className={styles.info}>
-          <p className={styles.label}>Title</p>
+          <p className={styles.label}>
+            Title <span className={styles.asterisk}>*</span>
+          </p>
           <p className={styles.value}>{data?.title}</p>
         </Col>
         <Col xs={2}></Col>
         <Col xs={11} className={styles.info}>
-          <p className={styles.label}>Version</p>
+          <p className={styles.label}>
+            Version <span className={styles.asterisk}>*</span>
+          </p>
           <p className={styles.value}>{data?.version}</p>
         </Col>
       </Row>

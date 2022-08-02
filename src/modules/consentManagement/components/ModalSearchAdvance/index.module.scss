@@ -30,8 +30,7 @@
     color: #fafafa;
   }
 
-  &:hover svg path,
-  &:focus svg path {
+  &:hover svg path {
     stroke: $color-white !important;
   }
 }
@@ -100,8 +99,7 @@
     margin-left: 10px;
   }
 
-  &:hover svg path,
-  &:focus svg path {
+  &:hover svg path {
     stroke: $color-white !important;
   }
 }
