@@ -1,0 +1,118 @@
+@import '../../../../styles/variables.scss';
+
+.form {
+  padding: 32px;
+  background: #ffffff;
+  border: 1px solid #f6f6f6;
+  box-shadow: 0px 5px 40px rgba(9, 44, 76, 0.02);
+  border-radius: 8px;
+  :global {
+    .ant-form-item-label > label {
+      font-style: normal;
+      font-weight: 700;
+      font-size: 14px;
+      color: $black_color;
+      display: flex;
+      flex-direction: row-reverse;
+      justify-content: flex-end;
+    }
+  }
+}
+
+.actions {
+  margin-top: 20px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 5px;
+  margin-bottom: 16px;
+}
+
+.cancelBtn {
+  background-color: $background_button_light !important;
+
+  display: flex;
+  gap: 3px;
+  align-items: center;
+  justify-content: center;
+
+  span {
+    color: $grey_900 !important;
+  }
+
+  &:hover,
+  &:focus {
+    background-color: $background_button_light !important;
+
+    span {
+      color: $grey_900 !important;
+    }
+  }
+}
+
+.datePickerLabel {
+  font-style: normal;
+  font-weight: 700;
+  font-size: 14px;
+  color: $black_color;
+  margin-bottom: 8px;
+}
+
+.title {
+  font-weight: 700;
+  font-size: 18px;
+  color: #202225;
+  margin-bottom: 12px;
+  margin-top: 60px;
+}
+
+.textarea {
+  :global {
+    .ant-input::placeholder {
+      color: $color-gray4;
+    }
+  }
+}
+
+.errorMessage {
+  :global {
+    .ant-form-item-explain {
+      position: absolute;
+      top: 111%;
+    }
+  }
+}
+
+.datePickerDropdown {
+  :global {
+    .ant-picker-header-super-prev-btn {
+      display: none;
+    }
+
+    .ant-picker-header-prev-btn {
+      display: none;
+    }
+  }
+}
+
+.editBtn {
+  background-color: $color-primary !important;
+  border: 1px solid $white_color !important;
+  display: flex;
+  gap: 3px;
+  align-items: center;
+  justify-content: center;
+
+  span {
+    color: $white_color !important;
+  }
+
+  &:hover,
+  &:focus {
+    background-color: $color-primary !important;
+    border: 1px solid $white_color !important;
+
+    span {
+      color: $white_color !important;
+    }
+  }
+}

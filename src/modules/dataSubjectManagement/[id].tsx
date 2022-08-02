@@ -11,6 +11,7 @@ import { Row } from 'antd';
 import Button from 'libraries/UI/Button';
 
 import styles from './index.module.scss';
+import EditProfile from './components/EditUserProfileForm';
 
 function DataSubjectDetail() {
   const { id } = useParams();
@@ -41,7 +42,8 @@ function DataSubjectDetail() {
           <Button className={styles.btnCancel}>Cancel</Button>
         </Row>
       )}
-      <UserInfo userInfo={data?.userInfo} />
+      {/* <UserInfo userInfo={data?.userInfo} /> */}
+      <EditProfile userInfo={data?.userInfo} loading={loading} />
       <Consents userId={Number(data?.userInfo?.id)} refDataHistory={refDataHistory} />
       <DataSubjectHistory userId={data?.userInfo?.id || ''} subjectId={id} ref={refDataHistory} />
     </ContainerLayout>
