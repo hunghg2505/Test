@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 
 import ExclamationCircleOutlined from '@ant-design/icons/lib/icons/ExclamationCircleOutlined';
 import { useDebounceFn } from 'ahooks';
@@ -31,9 +31,13 @@ export const CustomSelectDropdown = ({
 }: any) => {
   const { t } = useTranslation();
   const [visible, setVisible] = useState(false);
+  const refLoadMoreBtn: any = useRef(null);
 
   const { run } = useDebounceFn(
     () => {
+      if (refLoadMoreBtn.current) {
+        return;
+      }
       setVisible(!visible);
     },
     {
@@ -58,7 +62,7 @@ export const CustomSelectDropdown = ({
           {data?.isLoadMore && (
             <>
               <Divider style={{ margin: '8px 0' }} />
-              <div onClick={onLoadMore} className={styles.btnLoadmore}>
+              <div onClick={onLoadMore} className={styles.btnLoadmore} ref={refLoadMoreBtn}>
                 {t('load_more')}
               </div>
             </>
@@ -148,6 +152,11 @@ const CreateConsentForm = ({ visible, onClose, onReloadConsentData }: IProps) =>
       },
     });
   }, []);
+
+  const disabledDate = (current: any) => {
+    const customDate = moment().format('YYYY-MM-DD');
+    return current && current < moment(customDate, 'YYYY-MM-DD');
+  };
 
   return (
     <Modal
@@ -268,7 +277,7 @@ const CreateConsentForm = ({ visible, onClose, onReloadConsentData }: IProps) =>
               onChange={(date: any) => setExpireOn(date)}
               value={expireOn}
               placeholder='dd/mm/yyyy'
-              disabledDate={(current) => current.isBefore(moment().subtract(1, 'day'))}
+              disabledDate={disabledDate}
               superPrevIcon={null}
               prevIcon={null}
               dropdownClassName={styles.datePickerDropdown}

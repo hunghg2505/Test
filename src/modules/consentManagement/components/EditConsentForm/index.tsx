@@ -85,6 +85,11 @@ export default function EditConsentForm() {
     }
   };
 
+  const disabledDate = (current: any) => {
+    const customDate = moment().format('YYYY-MM-DD');
+    return current && current < moment(customDate, 'YYYY-MM-DD');
+  };
+
   return (
     <>
       <h2 className={styles.title}>Consent Detail</h2>
@@ -217,7 +222,7 @@ export default function EditConsentForm() {
                     onChange={(date: any) => setExpireOn(date)}
                     value={expireOn}
                     placeholder='dd/mm/yyyy'
-                    disabledDate={(current) => current.isBefore(moment().subtract(1, 'day'))}
+                    disabledDate={disabledDate}
                     superPrevIcon={null}
                     prevIcon={null}
                     dropdownClassName={styles.datePickerDropdown}

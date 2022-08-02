@@ -188,8 +188,7 @@
     margin-left: 10px;
   }
 
-  &:hover svg path,
-  &:focus svg path {
+  &:hover svg path {
     stroke: $color-white !important;
   }
 }
@@ -208,8 +207,7 @@
     color: #fafafa;
   }
 
-  &:hover svg path,
-  &:focus svg path {
+  &:hover svg path {
     stroke: $color-white !important;
   }
 }
@@ -217,7 +215,6 @@
 .formSearchWrap {
   position: relative;
 }
-
 
 .emailFiled {
   :global {
