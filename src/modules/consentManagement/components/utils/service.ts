@@ -1,6 +1,7 @@
 import { useMount, useRequest } from 'ahooks';
 import dayjs from 'dayjs';
-import { debounce, get } from 'lodash';
+import debounce from 'lodash/debounce';
+import get from 'lodash/get';
 import { useRef, useState } from 'react';
 import ApiUtils from 'utils/api/api.utils';
 import { API_PATH } from 'utils/api/constant';

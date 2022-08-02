@@ -1,7 +1,6 @@
 import { useMount, useRequest } from 'ahooks';
 import { message } from 'antd';
-import { debounce } from 'lodash';
-import { useNavigate } from 'react-router-dom';
+import debounce from 'lodash/debounce';
 import { ResponseBase } from 'utils/api/api.types';
 import ApiUtils from 'utils/api/api.utils';
 import { API_PATH } from 'utils/api/constant';
