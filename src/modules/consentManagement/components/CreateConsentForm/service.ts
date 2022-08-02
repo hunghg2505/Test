@@ -64,7 +64,7 @@ const getListApplicationService = async ({
 }) => {
   const response: any = await ApiUtils.fetch(API_PATH.GET_LIST_APPLICATION, {
     name: name || '',
-    limit: 1,
+    limit: 10,
     page: page || 1,
   });
 
