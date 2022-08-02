@@ -138,7 +138,7 @@ const getListService = async ({
   const currentData =
     response?.content?.data?.map((item: any) => ({
       id: item?.id,
-      appName: item?.appName,
+      appName: item?.name,
     })) || [];
 
   return {

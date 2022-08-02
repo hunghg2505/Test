@@ -65,6 +65,12 @@ const columns: ColumnsType<DataType> = [
     width: 110,
   },
   {
+    title: 'Consent Name',
+    dataIndex: 'name',
+    key: 'name',
+    width: 110,
+  },
+  {
     title: 'App ID',
     dataIndex: 'appId',
     key: 'appId',
@@ -80,13 +86,19 @@ const columns: ColumnsType<DataType> = [
     title: 'Consent Version',
     dataIndex: 'version',
     key: 'consentVersion',
-    width: 164,
+    width: 100,
   },
   {
     title: 'Consent Content',
     dataIndex: 'content',
     key: 'description',
-    width: 482,
+    width: 546,
+  },
+  {
+    title: 'Status',
+    dataIndex: 'status',
+    key: 'Status',
+    width: 110,
   },
   {
     title: 'Created Date',

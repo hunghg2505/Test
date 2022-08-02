@@ -67,8 +67,8 @@ export const CustomSelectDropdown = ({
       )}
     >
       {data?.data?.map((item: any, index: number) => (
-        <Select.Option value={Number(item.id)} key={`${index}${item.id}`}>
-          {item.appName}
+        <Select.Option value={Number(item?.id)} key={`${index}${item.id}`}>
+          {item?.appName}
         </Select.Option>
       ))}
     </Select>

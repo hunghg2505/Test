@@ -3,7 +3,7 @@
 .formSearchAdvanced {
   padding: 20px 24px;
   background-color: $white_color;
-  width: 400px;
+  width: 800px;
   border: 1px solid #f6f6f6;
   box-shadow: 0px 5px 40px rgba(9, 44, 76, 0.05);
   border-radius: 8px;
@@ -104,4 +104,12 @@
   &:focus svg path {
     stroke: $color-white !important;
   }
+}
+
+.datePickerLabel {
+  font-style: normal;
+  font-weight: 700;
+  font-size: 14px;
+  color: $black_color;
+  margin-bottom: 8px;
 }

@@ -1,5 +1,5 @@
 import { useClickAway } from 'ahooks';
-import { Col, Form, Row } from 'antd';
+import { Col, DatePicker, Form, Row } from 'antd';
 import IconCross from 'assets/icons/icon-cross';
 import IconSearch from 'assets/icons/icon-search';
 import { STATUS_CONSENT_DROPDOWN_DATA } from 'constants/common.constants';
@@ -9,7 +9,7 @@ import Button from 'libraries/UI/Button';
 import Select from 'libraries/UI/Select';
 import { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { FormItemApplication, FormItemService } from '../CreateConsentForm';
+import { FormItemApplication } from '../CreateConsentForm';
 
 import styles from './index.module.scss';
 
@@ -29,11 +29,11 @@ const ModalSearchAdvance = ({ onSearchConsent }: any) => {
     onSearchConsent({
       advanceSearch: {
         name: values?.consent_name || '',
-        productId: values?.product_id || '',
-        productName: values?.product_name || '',
+        id: values?.id || '',
+        applicationId: values?.application_id || '',
+        applicationName: values?.application_name || '',
         status: values?.status || '',
         version: values?.version || '',
-        service: values?.serviceId,
       },
     });
   };
@@ -69,44 +69,39 @@ const ModalSearchAdvance = ({ onSearchConsent }: any) => {
             style={shouldBeVisible ? _popoverVisibleStyles : _popoverStyles}
           >
             <Form form={formSearch} layout='vertical' onFinish={onFinish}>
-              <Row gutter={[0, 16]}>
-                <Col xs={24}>
+              <Row gutter={[0, 16]} justify='space-between'>
+                <Col xs={11}>
                   <InputForm
-                    label='Consent Name'
+                    label='Application ID'
+                    name='application_id'
+                    placeholder='Application ID'
+                    maxLength={55}
+                  />
+                </Col>
+                <Col xs={11}>
+                  <Form.Item label='Application Name' name='application_name'>
+                    <FormItemApplication />
+                  </Form.Item>
+                </Col>
+
+                <Col xs={11}>
+                  <InputForm
+                    label='Consent ID'
+                    name='consent_id'
+                    placeholder='Consent ID'
+                    maxLength={55}
+                  />
+                </Col>
+                <Col xs={11}>
+                  <InputForm
+                    label='Cosnent Name'
                     name='consent_name'
                     placeholder='Consent Name'
                     maxLength={55}
                   />
                 </Col>
-                <Col xs={24}>
-                  <Form.Item label='Application' name='application_id'>
-                    <FormItemApplication />
-                  </Form.Item>
-                </Col>
 
-                <Col xs={24}>
-                  <InputForm
-                    label='Product ID'
-                    name='product_id'
-                    placeholder='Product ID'
-                    maxLength={55}
-                  />
-                </Col>
-                <Col xs={24}>
-                  <InputForm
-                    label='Product Name'
-                    name='product_name'
-                    placeholder='Product Name'
-                    maxLength={55}
-                  />
-                </Col>
-
-                <Col xs={24}>
-                  <Form.Item label='Service' name='serviceId'>
-                    <FormItemService />
-                  </Form.Item>
-                </Col>
-                <Col xs={24}>
+                <Col xs={11}>
                   <Form.Item label='Status' name='status'>
                     <Select placeholder='Select status'>
                       {STATUS_CONSENT_DROPDOWN_DATA.map((item, index) => (
@@ -118,8 +113,83 @@ const ModalSearchAdvance = ({ onSearchConsent }: any) => {
                   </Form.Item>
                 </Col>
 
+                <Col xs={11}>
+                  <InputForm
+                    label='Version'
+                    name='version'
+                    placeholder='Version no'
+                    maxLength={55}
+                  />
+                </Col>
                 <Col xs={24}>
-                  <InputForm label='Version' name='version' placeholder='Version' maxLength={55} />
+                  <p className={styles.datePickerLabel}>Created Date</p>
+                </Col>
+                <Col xs={11}>
+                  <p className={styles.datePickerLabel}>From</p>
+                  <DatePicker
+                    getPopupContainer={(trigger: any) => trigger.parentElement}
+                    format='DD/MM/YYYY'
+                    style={{ width: '100%' }}
+                    size='large'
+                    // onChange={(date: any) => setExpireOn(date)}
+                    // value={expireOn}
+                    // placeholder='dd/mm/yyyy'
+                    // disabledDate={(current) => current.isBefore(moment().subtract(1, 'day'))}
+                    // superPrevIcon={null}
+                    // prevIcon={null}
+                    // dropdownClassName={styles.datePickerDropdown}
+                  />
+                </Col>
+                <Col xs={11}>
+                  <p className={styles.datePickerLabel}>To</p>
+                  <DatePicker
+                    getPopupContainer={(trigger: any) => trigger.parentElement}
+                    format='DD/MM/YYYY'
+                    style={{ width: '100%' }}
+                    size='large'
+                    // onChange={(date: any) => setExpireOn(date)}
+                    // value={expireOn}
+                    // placeholder='dd/mm/yyyy'
+                    // disabledDate={(current) => current.isBefore(moment().subtract(1, 'day'))}
+                    // superPrevIcon={null}
+                    // prevIcon={null}
+                    // dropdownClassName={styles.datePickerDropdown}
+                  />
+                </Col>
+                <Col xs={24}>
+                  <p className={styles.datePickerLabel}>Updated Date</p>
+                </Col>
+                <Col xs={11}>
+                  <p className={styles.datePickerLabel}>From</p>
+                  <DatePicker
+                    getPopupContainer={(trigger: any) => trigger.parentElement}
+                    format='DD/MM/YYYY'
+                    style={{ width: '100%' }}
+                    size='large'
+                    // onChange={(date: any) => setExpireOn(date)}
+                    // value={expireOn}
+                    // placeholder='dd/mm/yyyy'
+                    // disabledDate={(current) => current.isBefore(moment().subtract(1, 'day'))}
+                    // superPrevIcon={null}
+                    // prevIcon={null}
+                    // dropdownClassName={styles.datePickerDropdown}
+                  />
+                </Col>
+                <Col xs={11}>
+                  <p className={styles.datePickerLabel}>To</p>
+                  <DatePicker
+                    getPopupContainer={(trigger: any) => trigger.parentElement}
+                    format='DD/MM/YYYY'
+                    style={{ width: '100%' }}
+                    size='large'
+                    // onChange={(date: any) => setExpireOn(date)}
+                    // value={expireOn}
+                    // placeholder='dd/mm/yyyy'
+                    // disabledDate={(current) => current.isBefore(moment().subtract(1, 'day'))}
+                    // superPrevIcon={null}
+                    // prevIcon={null}
+                    // dropdownClassName={styles.datePickerDropdown}
+                  />
                 </Col>
               </Row>
 
