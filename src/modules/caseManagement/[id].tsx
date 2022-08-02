@@ -8,6 +8,8 @@ import CreateCaseForm from './components/CreateCaseForm';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useCaseDetail } from './services';
 import { useRef } from 'react';
+import Button from 'libraries/UI/Button';
+import { Row } from 'antd';
 
 function CaseManagementDetail() {
   const { id } = useParams();
@@ -29,6 +31,12 @@ function CaseManagementDetail() {
     <ContainerLayout title='Case Management Detail'>
       {data?.userProfile && (
         <div className={styles.wrap}>
+          <Row justify='end'>
+            <Button onClick={() => navigate(`/data-subject/${data?.userProfile?.id}`)}>
+              View DSM Detail
+            </Button>
+          </Row>
+
           <UserInfo userInfo={data?.userProfile} />
           <ConsentList userId={data?.userProfile?.id} />
           <CreateCaseForm
