@@ -166,12 +166,13 @@ function ConsentManagement() {
       if (refListUsers.current?.closeListUser) {
         refListUsers.current.closeListUser();
         onResetApplication();
+        console.log('callback');
       }
     });
   };
 
   const onFieldsChange = (values: any) => {
-    if (values[0]?.value.length === 0) refListUsers.current.closeListUser();
+    if (values?.length < 3) refListUsers.current.closeListUser();
     onSearchApplicationSuggestionDebounce(values, () => {
       if (refListUsers.current?.openListUser) refListUsers.current.openListUser();
     });

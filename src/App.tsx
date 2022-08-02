@@ -44,6 +44,10 @@ function App() {
       clearCache(['search-case-management']);
     if (location.pathname === '/case-management/search-case')
       clearCache(['case-assign-management']);
+
+    if (!location.pathname?.includes('consent-management')) {
+      clearCache(['consent-management']);
+    }
   }, [location.pathname]);
 
   useLayoutEffect(() => {
