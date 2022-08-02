@@ -5,8 +5,9 @@
   "dependencies": {
     "@react-keycloak/web": "^3.4.0",
     "@reduxjs/toolkit": "^1.8.2",
-    "@testing-library/jest-dom": "^5.16.4",
-    "@testing-library/react": "^12.1.2",
+    "@testing-library/jest-dom": "^5.16.2",
+    "@testing-library/react": "^12.1.4",
+    "@testing-library/user-event": "^13.5.0",
     "ahooks": "^3.4.0",
     "antd": "^4.20.6",
     "axios": "^0.27.2",
@@ -37,7 +38,7 @@
     "build": "env-cmd -f .env.dev react-scripts build",
     "build-local": "env-cmd -f .env react-scripts build",
     "format": "prettier --write \"./src/**/*.{ts,tsx,json}\"",
-    "test": "react-scripts test --watchAll=false --maxWorkers=4",
+    "test": "react-scripts test --coverage --watchAll=false --maxWorkers=4",
     "eject": "react-scripts eject",
     "lint": "eslint --ext .ts,.tsx src --color",
     "analyze": "source-map-explorer 'build/static/js/*.js'"
