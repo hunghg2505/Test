@@ -263,7 +263,7 @@ export const useGenerateLink = (userId: any) => {
       const res: any = await ApiUtils.post(API_PATH.GENERATE_LINK, {
         userId: `${userId}`,
       });
-      return `${window?.location?.origin}/profile/${res?.content}` || '';
+      return `${window?.location?.origin}/${res?.content}` || '';
     },
     {
       manual: true,
