@@ -12,6 +12,12 @@ export class RegexUtils {
     static REGEX_PASSWORD = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$/;
 
     static REGEX_VERSION = /^(\d+)\.{1}(\d+)$/;
+
+    static REGEX_MOBILE_NUMBER = /^(66)[6|8|9][0-9]{9}$/g;
+
+    static REGEX_PASSPORT = /^(AA)[0-9]{7}$/g;
+
+    static REGEX_LASER_CODE = /^(AA)[0-9]{10}$/g;
   };
 
   static isEmail(input: string): boolean {
