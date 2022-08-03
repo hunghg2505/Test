@@ -36,12 +36,12 @@ function DataSubjectDetail() {
 
   return (
     <ContainerLayout title='Data Subject Detail'>
-      {isHavePermissionEditProfile && (
+      {/* {isHavePermissionEditProfile && (
         <Row justify='end' className={styles.btnEdit}>
           <Button>Submit</Button>
           <Button className={styles.btnCancel}>Cancel</Button>
         </Row>
-      )}
+      )} */}
       {/* <UserInfo userInfo={data?.userInfo} /> */}
       <EditProfile userInfo={data?.userInfo} loading={loading} />
       <Consents userId={Number(data?.userInfo?.id)} refDataHistory={refDataHistory} />
