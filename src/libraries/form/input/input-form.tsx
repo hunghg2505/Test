@@ -1,4 +1,4 @@
-import { Form } from 'antd';
+import { Form, InputProps } from 'antd';
 import { Rule } from 'antd/lib/form';
 import clsx from 'clsx';
 import Input from 'libraries/UI/Input';
@@ -17,6 +17,7 @@ interface Props {
   classNameFormInput?: any;
   className?: any;
   required?: boolean;
+  normalize?: (value: any, prevValue: any, allValues: any) => any;
 
   onBlur?: (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
 }
@@ -32,6 +33,7 @@ export default function InputForm({
   defaultValue,
   disabled = false,
   required,
+  normalize,
   onBlur,
 }: Props) {
   return (
@@ -43,6 +45,7 @@ export default function InputForm({
         [classNameFormInput]: true,
       })}
       required={required}
+      normalize={normalize}
     >
       <Input
         className={clsx(styles.customInputForm, {
