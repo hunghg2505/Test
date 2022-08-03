@@ -122,7 +122,10 @@ const ModalSearchAdvance = ({ onSearchConsent }: any) => {
                 </Col>
                 <Col xs={11}>
                   <Form.Item label='Application Name' name='application_name'>
-                    <FormItemApplication onClearValue={onClearValue} />
+                    <FormItemApplication
+                      onClearValue={onClearValue}
+                      isInModalAdvancedSearch={true}
+                    />
                   </Form.Item>
                 </Col>
 
