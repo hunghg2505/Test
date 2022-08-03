@@ -112,6 +112,7 @@ export default function EditConsentForm() {
                 version: data?.version,
                 content: data?.content,
                 title: data?.title,
+                id: data?.consentId,
               }}
               onFinish={onFinish}
             >
@@ -130,6 +131,9 @@ export default function EditConsentForm() {
                       },
                     ]}
                   />
+                </Col>
+                <Col xs={12}>
+                  <InputForm label='Consent ID' name='id' disabled required />
                 </Col>
                 <Col xs={12}>
                   <Form.Item
@@ -161,6 +165,22 @@ export default function EditConsentForm() {
                     ]}
                   />
                 </Col>
+
+                <Col xs={12}>
+                  <Form.Item
+                    label='Service'
+                    name='serviceId'
+                    required
+                    rules={[
+                      {
+                        required: true,
+                        message: t('messages.errors.require', { field: 'Service' }),
+                      },
+                    ]}
+                  >
+                    <FormItemService />
+                  </Form.Item>
+                </Col>
                 <Col xs={12}>
                   <InputForm
                     label='Product Name'
@@ -175,21 +195,6 @@ export default function EditConsentForm() {
                       },
                     ]}
                   />
-                </Col>
-                <Col xs={24}>
-                  <Form.Item
-                    label='Service'
-                    name='serviceId'
-                    required
-                    rules={[
-                      {
-                        required: true,
-                        message: t('messages.errors.require', { field: 'Service' }),
-                      },
-                    ]}
-                  >
-                    <FormItemService />
-                  </Form.Item>
                 </Col>
                 <Col xs={12}>
                   <Form.Item

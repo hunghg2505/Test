@@ -112,12 +112,6 @@ const ModalSearchAdvance = ({ onSearchConsent }: any) => {
                     name='application_id'
                     placeholder='Application ID'
                     maxLength={55}
-                    rules={[
-                      {
-                        min: 3,
-                        message: t('messages.errors.min', { min: 3 }),
-                      },
-                    ]}
                   />
                 </Col>
                 <Col xs={11}>
@@ -139,7 +133,7 @@ const ModalSearchAdvance = ({ onSearchConsent }: any) => {
                 </Col>
                 <Col xs={11}>
                   <InputForm
-                    label='Cosnent Name'
+                    label='Consent Name'
                     name='consent_name'
                     placeholder='Consent Name'
                     maxLength={55}
