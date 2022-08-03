@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 
 import ExclamationCircleOutlined from '@ant-design/icons/lib/icons/ExclamationCircleOutlined';
 import { useDebounceFn } from 'ahooks';
@@ -13,6 +13,7 @@ import { useTranslation } from 'react-i18next';
 import { RegexUtils } from 'utils/regex-helper';
 import styles from './index.module.scss';
 import { useCreateConsent, useGetListApplication, useGetListService } from './service';
+import { CloseOutlined } from '@ant-design/icons';
 
 interface IProps {
   visible: boolean;
@@ -28,18 +29,40 @@ export const CustomSelectDropdown = ({
   data,
   onLoadMore,
   onSearchDebounce,
+  isInModalAdvancedSearch,
+  onClearValue,
 }: any) => {
   const { t } = useTranslation();
   const [visible, setVisible] = useState(false);
+  const refHiddenDropdown: any = useRef(null);
 
   const { run } = useDebounceFn(
     () => {
+      if (refHiddenDropdown.current) {
+        return;
+      }
       setVisible(!visible);
     },
     {
       wait: 300,
     },
   );
+
+  const LoadMore = () => {
+    refHiddenDropdown.current = true;
+    onLoadMore();
+    setTimeout(() => {
+      refHiddenDropdown.current = false;
+    }, 400);
+  };
+
+  const clearValue = () => {
+    refHiddenDropdown.current = true;
+    onClearValue();
+    setTimeout(() => {
+      refHiddenDropdown.current = false;
+    }, 400);
+  };
 
   return (
     <Select
@@ -51,6 +74,8 @@ export const CustomSelectDropdown = ({
       open={visible}
       onMouseDown={run}
       filterOption={false}
+      allowClear={isInModalAdvancedSearch ? true : false}
+      clearIcon={<CloseOutlined onMouseDown={clearValue} />}
       dropdownRender={(menu: any) => (
         <>
           {menu}
@@ -58,7 +83,7 @@ export const CustomSelectDropdown = ({
           {data?.isLoadMore && (
             <>
               <Divider style={{ margin: '8px 0' }} />
-              <div onClick={onLoadMore} className={styles.btnLoadmore}>
+              <div onMouseDown={LoadMore} className={styles.btnLoadmore}>
                 {t('load_more')}
               </div>
             </>
@@ -67,7 +92,10 @@ export const CustomSelectDropdown = ({
       )}
     >
       {data?.data?.map((item: any, index: number) => (
-        <Select.Option value={Number(item?.id)} key={`${index}${item.id}`}>
+        <Select.Option
+          value={isInModalAdvancedSearch ? item?.appName : Number(item?.id)}
+          key={`${index}${item.id}`}
+        >
           {item?.appName}
         </Select.Option>
       ))}
@@ -148,6 +176,11 @@ const CreateConsentForm = ({ visible, onClose, onReloadConsentData }: IProps) =>
       },
     });
   }, []);
+
+  const disabledDate = (current: any) => {
+    const customDate = moment().format('YYYY-MM-DD');
+    return current && current < moment(customDate, 'YYYY-MM-DD');
+  };
 
   return (
     <Modal
@@ -268,7 +301,7 @@ const CreateConsentForm = ({ visible, onClose, onReloadConsentData }: IProps) =>
               onChange={(date: any) => setExpireOn(date)}
               value={expireOn}
               placeholder='dd/mm/yyyy'
-              disabledDate={(current) => current.isBefore(moment().subtract(1, 'day'))}
+              disabledDate={disabledDate}
               superPrevIcon={null}
               prevIcon={null}
               dropdownClassName={styles.datePickerDropdown}

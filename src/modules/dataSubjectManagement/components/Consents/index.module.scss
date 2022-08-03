@@ -87,6 +87,10 @@
   svg {
     margin-right: 10px;
   }
+
+  &:focus {
+    background-color: $color-secondary;
+  }
 }
 
 .btnCreateCase {

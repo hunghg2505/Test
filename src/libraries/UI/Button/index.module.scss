@@ -71,7 +71,7 @@
   }
 }
 
-.large{
+.large {
   padding: 10px 24px;
 
   span {
@@ -92,7 +92,7 @@
     color: $color-primary-light;
   }
 
-  &:hover, &:focus {
+  &:hover {
     background-color: $color-primary-dark;
   }
 
@@ -104,7 +104,7 @@
       color: $color-primary;
     }
 
-    &:hover, &:focus {
+    &:hover {
       background-color: $color-primary-dark;
       border-color: $color-primary-dark;
       span {
@@ -121,7 +121,7 @@
     color: $color-white;
   }
 
-  &:hover, &:focus {
+  &:hover {
     background-color: $color-black1;
   }
   &.ghost {
@@ -132,7 +132,7 @@
       color: $color-secondary;
     }
 
-    &:hover, &:focus {
+    &:hover {
       background-color: $color-black1;
       border-color: $color-black1;
       span {

@@ -1,5 +1,5 @@
-import { useClickAway } from 'ahooks';
-import { Col, DatePicker, Form, Row } from 'antd';
+import { useClickAway, useDebounceFn } from 'ahooks';
+import { Col, DatePicker, Divider, Form, Row } from 'antd';
 import IconCross from 'assets/icons/icon-cross';
 import IconSearch from 'assets/icons/icon-search';
 import { STATUS_CONSENT_DROPDOWN_DATA } from 'constants/common.constants';
@@ -7,8 +7,10 @@ import { useFadeEffect, _popoverStyles, _popoverVisibleStyles } from 'hooks/useF
 import InputForm from 'libraries/form/input/input-form';
 import Button from 'libraries/UI/Button';
 import Select from 'libraries/UI/Select';
+import moment from 'moment';
 import { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { RegexUtils } from 'utils/regex-helper';
 import { FormItemApplication } from '../CreateConsentForm';
 
 import styles from './index.module.scss';
@@ -17,6 +19,10 @@ const ModalSearchAdvance = ({ onSearchConsent }: any) => {
   const { t } = useTranslation();
   const [formSearch] = Form.useForm();
   const [isShowSearch, setIsShowSearch] = useState(false);
+  const [createdStartDate, setCreatedStartDate] = useState(null);
+  const [createdEndDate, setCreatedEndDate] = useState(null);
+  const [updatedStartDate, setUpdatedStartDate] = useState(null);
+  const [updatedEndDate, setUpdatedEndDate] = useState(null);
   const [_isTransitioning, shouldBeVisible, refFormModal] = useFadeEffect(isShowSearch);
   const refSearch: any = useRef();
 
@@ -26,20 +32,50 @@ const ModalSearchAdvance = ({ onSearchConsent }: any) => {
   }, refSearch);
 
   const onFinish = (values: any) => {
+    const createdAt =
+      createdStartDate || createdEndDate
+        ? {
+            startDate: createdStartDate,
+            endDate: createdEndDate,
+          }
+        : undefined;
+    const updatedAt =
+      updatedStartDate || updatedEndDate
+        ? {
+            startDate: updatedStartDate,
+            endDate: updatedEndDate,
+          }
+        : undefined;
     onSearchConsent({
+      appName: values?.application_name || '',
       advanceSearch: {
-        name: values?.consent_name || '',
-        id: values?.id || '',
-        applicationId: values?.application_id || '',
-        applicationName: values?.application_name || '',
-        status: values?.status || '',
-        version: values?.version || '',
+        name: values?.consent_name || undefined,
+        id: values?.consent_id || undefined,
+        appId: values?.application_id || undefined,
+        status: values?.status || undefined,
+        version: values?.version || undefined,
+        createdAt,
+        updatedAt,
       },
     });
+    setIsShowSearch(false);
   };
 
   const onVisibleSearch = () => {
     setIsShowSearch(!isShowSearch);
+  };
+
+  const disabledStartedDate = (current: any) => (date: any) => {
+    const customDate = moment(date).format('YYYY-MM-DD');
+    return current && date && current > moment(customDate, 'YYYY-MM-DD');
+  };
+  const disabledEndedDate = (current: any) => (date: any) => {
+    const customDate = moment(date).format('YYYY-MM-DD');
+    return current && date && current < moment(customDate, 'YYYY-MM-DD');
+  };
+
+  const onClearValue = () => {
+    formSearch.resetFields(['application_name']);
   };
 
   return (
@@ -76,11 +112,20 @@ const ModalSearchAdvance = ({ onSearchConsent }: any) => {
                     name='application_id'
                     placeholder='Application ID'
                     maxLength={55}
+                    rules={[
+                      {
+                        min: 3,
+                        message: t('messages.errors.min', { min: 3 }),
+                      },
+                    ]}
                   />
                 </Col>
                 <Col xs={11}>
                   <Form.Item label='Application Name' name='application_name'>
-                    <FormItemApplication />
+                    <FormItemApplication
+                      onClearValue={onClearValue}
+                      isInModalAdvancedSearch={true}
+                    />
                   </Form.Item>
                 </Col>
 
@@ -98,12 +143,18 @@ const ModalSearchAdvance = ({ onSearchConsent }: any) => {
                     name='consent_name'
                     placeholder='Consent Name'
                     maxLength={55}
+                    rules={[
+                      {
+                        min: 3,
+                        message: t('messages.errors.min', { min: 3 }),
+                      },
+                    ]}
                   />
                 </Col>
 
                 <Col xs={11}>
                   <Form.Item label='Status' name='status'>
-                    <Select placeholder='Select status'>
+                    <Select placeholder='Select status' allowClear={true}>
                       {STATUS_CONSENT_DROPDOWN_DATA.map((item, index) => (
                         <Select.Option value={item.value} key={`${index}${item.value}`}>
                           {item.label}
@@ -118,7 +169,13 @@ const ModalSearchAdvance = ({ onSearchConsent }: any) => {
                     label='Version'
                     name='version'
                     placeholder='Version no'
-                    maxLength={55}
+                    maxLength={8}
+                    rules={[
+                      {
+                        pattern: new RegExp(RegexUtils.RegexConstants.REGEX_VERSION),
+                        message: `${t('messages.errors.invalid_version')}`,
+                      },
+                    ]}
                   />
                 </Col>
                 <Col xs={24}>
@@ -131,13 +188,10 @@ const ModalSearchAdvance = ({ onSearchConsent }: any) => {
                     format='DD/MM/YYYY'
                     style={{ width: '100%' }}
                     size='large'
-                    // onChange={(date: any) => setExpireOn(date)}
-                    // value={expireOn}
-                    // placeholder='dd/mm/yyyy'
-                    // disabledDate={(current) => current.isBefore(moment().subtract(1, 'day'))}
-                    // superPrevIcon={null}
-                    // prevIcon={null}
-                    // dropdownClassName={styles.datePickerDropdown}
+                    onChange={(date: any) => setCreatedStartDate(date)}
+                    value={createdStartDate}
+                    placeholder='dd/mm/yyyy'
+                    disabledDate={(current) => disabledStartedDate(current)(createdEndDate)}
                   />
                 </Col>
                 <Col xs={11}>
@@ -147,13 +201,10 @@ const ModalSearchAdvance = ({ onSearchConsent }: any) => {
                     format='DD/MM/YYYY'
                     style={{ width: '100%' }}
                     size='large'
-                    // onChange={(date: any) => setExpireOn(date)}
-                    // value={expireOn}
-                    // placeholder='dd/mm/yyyy'
-                    // disabledDate={(current) => current.isBefore(moment().subtract(1, 'day'))}
-                    // superPrevIcon={null}
-                    // prevIcon={null}
-                    // dropdownClassName={styles.datePickerDropdown}
+                    onChange={(date: any) => setCreatedEndDate(date)}
+                    value={createdEndDate}
+                    placeholder='dd/mm/yyyy'
+                    disabledDate={(current) => disabledEndedDate(current)(createdStartDate)}
                   />
                 </Col>
                 <Col xs={24}>
@@ -166,13 +217,10 @@ const ModalSearchAdvance = ({ onSearchConsent }: any) => {
                     format='DD/MM/YYYY'
                     style={{ width: '100%' }}
                     size='large'
-                    // onChange={(date: any) => setExpireOn(date)}
-                    // value={expireOn}
-                    // placeholder='dd/mm/yyyy'
-                    // disabledDate={(current) => current.isBefore(moment().subtract(1, 'day'))}
-                    // superPrevIcon={null}
-                    // prevIcon={null}
-                    // dropdownClassName={styles.datePickerDropdown}
+                    onChange={(date: any) => setUpdatedStartDate(date)}
+                    value={updatedStartDate}
+                    placeholder='dd/mm/yyyy'
+                    disabledDate={(current) => disabledStartedDate(current)(updatedEndDate)}
                   />
                 </Col>
                 <Col xs={11}>
@@ -182,13 +230,10 @@ const ModalSearchAdvance = ({ onSearchConsent }: any) => {
                     format='DD/MM/YYYY'
                     style={{ width: '100%' }}
                     size='large'
-                    // onChange={(date: any) => setExpireOn(date)}
-                    // value={expireOn}
-                    // placeholder='dd/mm/yyyy'
-                    // disabledDate={(current) => current.isBefore(moment().subtract(1, 'day'))}
-                    // superPrevIcon={null}
-                    // prevIcon={null}
-                    // dropdownClassName={styles.datePickerDropdown}
+                    onChange={(date: any) => setUpdatedEndDate(date)}
+                    value={updatedEndDate}
+                    placeholder='dd/mm/yyyy'
+                    disabledDate={(current) => disabledEndedDate(current)(updatedEndDate)}
                   />
                 </Col>
               </Row>

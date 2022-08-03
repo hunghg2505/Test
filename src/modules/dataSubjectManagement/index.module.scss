@@ -128,6 +128,10 @@
     min-width: 13px;
     min-height: 13px;
   }
+
+  &:focus {
+    background-color: $color-secondary;
+  }
 }
 
 .dataSubjectContent {
@@ -188,8 +192,7 @@
     margin-left: 10px;
   }
 
-  &:hover svg path,
-  &:focus svg path {
+  &:hover svg path {
     stroke: $color-white !important;
   }
 }
@@ -208,8 +211,7 @@
     color: #fafafa;
   }
 
-  &:hover svg path,
-  &:focus svg path {
+  &:hover svg path {
     stroke: $color-white !important;
   }
 }
@@ -217,7 +219,6 @@
 .formSearchWrap {
   position: relative;
 }
-
 
 .emailFiled {
   :global {

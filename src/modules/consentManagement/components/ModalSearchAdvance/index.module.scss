@@ -30,8 +30,7 @@
     color: #fafafa;
   }
 
-  &:hover svg path,
-  &:focus svg path {
+  &:hover svg path {
     stroke: $color-white !important;
   }
 }
@@ -86,6 +85,10 @@
       fill: #fff;
     }
   }
+
+  &:focus {
+    background-color: $color-secondary;
+  }
 }
 .btnSearchAdvanced {
   display: flex;
@@ -100,8 +103,7 @@
     margin-left: 10px;
   }
 
-  &:hover svg path,
-  &:focus svg path {
+  &:hover svg path {
     stroke: $color-white !important;
   }
 }
@@ -112,4 +114,17 @@
   font-size: 14px;
   color: $black_color;
   margin-bottom: 8px;
+}
+
+.btnLoadmore {
+  padding: 6px 14px;
+  font-weight: 700;
+  font-size: 16px;
+  color: #202225;
+  cursor: pointer;
+  transition: all 300ms;
+  text-align: center;
+  &:hover {
+    background: $color-gray6;
+  }
 }

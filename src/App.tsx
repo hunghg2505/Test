@@ -45,7 +45,7 @@ function App() {
     if (location.pathname === '/case-management/search-case')
       clearCache(['case-assign-management']);
 
-    if (!location.pathname?.includes('consent-management')) {
+    if (!location.pathname?.includes('consent')) {
       clearCache(['consent-management']);
     }
   }, [location.pathname]);
