@@ -85,6 +85,10 @@
       fill: #fff;
     }
   }
+
+  &:focus {
+    background-color: $color-secondary;
+  }
 }
 .btnSearchAdvanced {
   display: flex;

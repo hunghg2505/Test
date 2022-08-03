@@ -105,4 +105,8 @@
     min-width: 13px;
     min-height: 13px;
   }
+
+  &:focus {
+    background-color: $color-secondary;
+  }
 }

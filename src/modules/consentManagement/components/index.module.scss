@@ -103,6 +103,10 @@
       fill: #fff;
     }
   }
+
+  &:focus {
+    background-color: $color-secondary;
+  }
 }
 
 .btnCreateConsent {
