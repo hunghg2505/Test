@@ -11,8 +11,9 @@ const localStorageUtils = {
     try {
       localStorage.setItem(key, value);
       return true;
-    } catch (error) {}
-    return false;
+    } catch (error) {
+      return false;
+    }
   },
 
   setObject: (key: KeyStorage, value: unknown): boolean => {
@@ -20,8 +21,9 @@ const localStorageUtils = {
       const newValue = JSON.stringify(value);
       localStorage.setItem(key, newValue);
       return true;
-    } catch (error) {}
-    return false;
+    } catch (error) {
+      return false;
+    }
   },
 
   get: (key: KeyStorage, defaultValue: string | null = null): string | null => {
