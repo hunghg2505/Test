@@ -22,6 +22,7 @@ interface IProps extends SelectProps {
   onMouseLeave?: () => void;
   filterOption?: boolean;
   ref?: any;
+  clearIcon?: any;
 }
 
 const Select = ({
@@ -31,6 +32,7 @@ const Select = ({
   options,
   suffixIcon = <IconArrowDown2 />,
   ref,
+  clearIcon,
   ...props
 }: IProps) => {
   return (
@@ -44,6 +46,7 @@ const Select = ({
       {...props}
       getPopupContainer={(trigger) => trigger.parentNode}
       ref={ref}
+      clearIcon={clearIcon}
     >
       <>{children}</>
     </SelectAntd>

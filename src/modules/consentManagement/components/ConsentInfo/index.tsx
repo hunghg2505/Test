@@ -113,7 +113,9 @@ const ConsentInfo = ({ data, onClickEdit }: any) => {
           <p className={styles.label}>
             Content<span className={styles.asterisk}>*</span>
           </p>
-          <p className={styles.value}>{data?.content}</p>
+          <p className={styles.value} style={{ lineHeight: 1.5 }}>
+            {data?.content}
+          </p>
         </Col>
       </Row>
       {isHavePermissionEditConsent && (

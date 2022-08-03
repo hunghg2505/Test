@@ -11,86 +11,9 @@ import moment from 'moment';
 import { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { RegexUtils } from 'utils/regex-helper';
-// import { FormItemApplication } from '../CreateConsentForm';
-import { useGetListApplication } from '../CreateConsentForm/service';
+import { FormItemApplication } from '../CreateConsentForm';
 
 import styles from './index.module.scss';
-
-export const CustomSelectDropdown = ({
-  value,
-  onChange,
-  data,
-  onLoadMore,
-  onSearchDebounce,
-}: any) => {
-  const { t } = useTranslation();
-  const [visible, setVisible] = useState(false);
-  const refLoadMoreBtn: any = useRef(null);
-
-  const { run } = useDebounceFn(
-    () => {
-      if (refLoadMoreBtn.current) {
-        return;
-      }
-      setVisible(!visible);
-    },
-    {
-      wait: 300,
-    },
-  );
-
-  return (
-    <Select
-      value={value}
-      placeholder='Select application'
-      showSearch
-      onSearch={onSearchDebounce}
-      onSelect={onChange}
-      open={visible}
-      onMouseDown={run}
-      filterOption={false}
-      // allowClear={true}
-      dropdownRender={(menu: any) => (
-        <>
-          {menu}
-
-          {data?.isLoadMore && (
-            <>
-              <Divider style={{ margin: '8px 0' }} />
-              <div onClick={onLoadMore} className={styles.btnLoadmore} ref={refLoadMoreBtn}>
-                {t('load_more')}
-              </div>
-            </>
-          )}
-        </>
-      )}
-    >
-      <Select.Option value={undefined}>Please select</Select.Option>
-      {data?.data?.map((item: any, index: number) => (
-        <Select.Option value={item?.appName} key={`${index}${item.id}`}>
-          {item?.appName}
-        </Select.Option>
-      ))}
-    </Select>
-  );
-};
-
-export const FormItemApplication = (props: any) => {
-  const {
-    data,
-    onLoadMore,
-    onSearchApplicationDebounce: onSearchDebounce,
-  } = useGetListApplication();
-
-  return (
-    <CustomSelectDropdown
-      {...props}
-      data={data}
-      onLoadMore={onLoadMore}
-      onSearchDebounce={onSearchDebounce}
-    />
-  );
-};
 
 const ModalSearchAdvance = ({ onSearchConsent }: any) => {
   const { t } = useTranslation();
@@ -151,6 +74,10 @@ const ModalSearchAdvance = ({ onSearchConsent }: any) => {
     return current && date && current < moment(customDate, 'YYYY-MM-DD');
   };
 
+  const onClearValue = () => {
+    formSearch.resetFields(['application_name']);
+  };
+
   return (
     <div style={{ position: 'relative' }} ref={refSearch}>
       <Button
@@ -185,11 +112,17 @@ const ModalSearchAdvance = ({ onSearchConsent }: any) => {
                     name='application_id'
                     placeholder='Application ID'
                     maxLength={55}
+                    rules={[
+                      {
+                        min: 3,
+                        message: t('messages.errors.min', { min: 3 }),
+                      },
+                    ]}
                   />
                 </Col>
                 <Col xs={11}>
                   <Form.Item label='Application Name' name='application_name'>
-                    <FormItemApplication />
+                    <FormItemApplication onClearValue={onClearValue} />
                   </Form.Item>
                 </Col>
 
@@ -207,6 +140,12 @@ const ModalSearchAdvance = ({ onSearchConsent }: any) => {
                     name='consent_name'
                     placeholder='Consent Name'
                     maxLength={55}
+                    rules={[
+                      {
+                        min: 3,
+                        message: t('messages.errors.min', { min: 3 }),
+                      },
+                    ]}
                   />
                 </Col>
 
