@@ -40,7 +40,6 @@ export const DATA_SUBJECT_RIGHT_DROPDOWN_DATA = [
 ];
 
 export const STATUS_DROPDOWN_DATA = [
-  { label: 'Please Select', value: null },
   { label: 'New', value: 'New' },
   { label: 'In Progress', value: 'In Progress' },
   { label: 'Pending', value: 'Pending' },

@@ -166,8 +166,8 @@ const ModalSearchAdvance = ({ onSearchConsent }: any) => {
                     maxLength={8}
                     rules={[
                       {
-                        pattern: new RegExp(RegexUtils.RegexConstants.REGEX_VERSION),
-                        message: `${t('messages.errors.invalid_version')}`,
+                        min: 3,
+                        message: t('messages.errors.min', { min: 3 }),
                       },
                     ]}
                   />
@@ -227,7 +227,7 @@ const ModalSearchAdvance = ({ onSearchConsent }: any) => {
                     onChange={(date: any) => setUpdatedEndDate(date)}
                     value={updatedEndDate}
                     placeholder='dd/mm/yyyy'
-                    disabledDate={(current) => disabledEndedDate(current)(updatedEndDate)}
+                    disabledDate={(current) => disabledEndedDate(current)(updatedStartDate)}
                   />
                 </Col>
               </Row>
