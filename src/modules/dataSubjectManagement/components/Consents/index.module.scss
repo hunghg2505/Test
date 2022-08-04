@@ -209,9 +209,18 @@
 
 .btnGenerateLink {
   margin-left: 10px;
+  background-color: rgba(207, 42, 43, 0.15);
 
-  &:focus {
-    background-color: $color-primary;
+  span {
+    color: $color-primary;
+  }
+
+  &:focus,
+  &:hover {
+    background-color: rgba(207, 42, 43, 0.15);
+    span {
+      color: $color-primary;
+    }
   }
 }
 
