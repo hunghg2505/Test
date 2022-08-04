@@ -14,7 +14,8 @@
       "invalid_version": "Version number must have at least two numbers and one dot in between",
       "onlyNumber": "{{field}} must be number.",
       "invalid_passport": "Passport number should be in format AA0123456",
-      "invalid_lasercode": "Laser code should be in format AA0123456789"
+      "invalid_lasercode": "Laser code should be in format AA0123456789",
+      "invalid_mobile_number": "Mobile number should be in the format: 668123456789"
     }
   }
 }

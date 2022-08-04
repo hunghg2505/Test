@@ -23,6 +23,7 @@ export const API_PATH = {
   GENERATE_LINK: '/data-subject/generate-linkok',
   GENERATE_LINK_DETAIL: (token: string) => `data-subject/generate-link/${token}`,
   CHECK_PARAMS: '/data-subject/check-valid-param',
+  EDIT_USER_PROFILE: '/data-subject/edit-profile',
 
   // Case Management
   CASE_MANAGEMENT_BASE_URL,
