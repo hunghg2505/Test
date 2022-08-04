@@ -202,12 +202,17 @@
   margin-bottom: 2px;
 }
 
-.btnSave, .btnGenerateLink {
+.btnSave,
+.btnGenerateLink {
   padding: 10px 46px;
 }
 
 .btnGenerateLink {
   margin-left: 10px;
+
+  &:focus {
+    background-color: $color-primary;
+  }
 }
 
 .textLink {
@@ -239,7 +244,6 @@
     color: $color-success !important;
   }
 }
-
 
 .description {
   font-weight: 400;
