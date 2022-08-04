@@ -17,7 +17,13 @@ const Consents = ({ userId }: any) => {
   return (
     <div className={styles.consentsWrap}>
       <h3>Consents</h3>
-      <ConsentsList data={data} loading={loading} onChange={onChange} userId={data?.id || ''} />
+      <ConsentsList
+        data={data}
+        loading={loading}
+        onChange={onChange}
+        userId={data?.id || ''}
+        onlyView={true}
+      />
     </div>
   );
 };

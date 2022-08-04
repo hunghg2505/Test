@@ -1,8 +1,7 @@
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse, ResponseType } from 'axios';
 import { getTokenInfo, refreshTokenApi } from 'utils/auth/auth.utils';
-import localStorageUtils, { KeyStorage } from 'utils/local-storage.utils';
 import { ResponseCode } from './api.types';
-import { API_PATH, BACKEND_URL } from './constant';
+import { BACKEND_URL } from './constant';
 
 interface CustomHeaders {
   isAuth?: boolean;

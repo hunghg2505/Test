@@ -202,6 +202,7 @@ export const ConsentsList = ({
   onSaveConsent,
   loadingUpdateConsent,
   userId,
+  onlyView = false,
 }: any) => {
   const { t } = useTranslation();
   const [formConsent] = Form.useForm();
@@ -299,22 +300,24 @@ export const ConsentsList = ({
           </div>
         )}
 
-        <Row align='middle' justify='start'>
-          {isHavePermissionSaveConsent && (
-            <Button htmlType='submit' className={styles.btnSave} loading={loadingUpdateConsent}>
-              {t('save')}
-            </Button>
-          )}
-          {isHavePermissionCreateLink && (
-            <Button
-              className={styles.btnGenerateLink}
-              onClick={requestGenerateLink.run}
-              loading={requestGenerateLink.loading}
-            >
-              {t('generate_link')}
-            </Button>
-          )}
-        </Row>
+        {!onlyView && (
+          <Row align='middle' justify='start'>
+            {isHavePermissionSaveConsent && (
+              <Button htmlType='submit' className={styles.btnSave} loading={loadingUpdateConsent}>
+                {t('save')}
+              </Button>
+            )}
+            {isHavePermissionCreateLink && (
+              <Button
+                className={styles.btnGenerateLink}
+                onClick={requestGenerateLink.run}
+                loading={requestGenerateLink.loading}
+              >
+                {t('generate_link')}
+              </Button>
+            )}
+          </Row>
+        )}
       </Form>
 
       {requestGenerateLink?.data && (
