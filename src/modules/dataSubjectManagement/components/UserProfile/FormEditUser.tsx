@@ -182,7 +182,7 @@ export const FormEditUser = ({ form, userInfo, t }: any) => {
                 },
               },
             ]}
-            maxLength={12}
+            maxLength={14}
           />
         </Col>
 
