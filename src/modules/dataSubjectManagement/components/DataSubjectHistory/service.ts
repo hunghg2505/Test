@@ -1,4 +1,3 @@
-import { routePath } from 'routing/path.routing';
 import { message } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { useRequest, useMount } from 'ahooks';
@@ -8,7 +7,9 @@ import { API_PATH } from 'utils/api/constant';
 import { formatIdSubjectHistory } from 'utils/common.utils';
 
 export const getDataSubjectHistoryService = async (value: any): Promise<any> => {
-  const r: any = await ApiUtils.fetch(API_PATH.SUBJECT_HISTORY, {
+  const PATH = !value?.onlyView ? API_PATH.SUBJECT_HISTORY : API_PATH.SUBJECT_HISTORY_ONLY_VIEW;
+
+  const r: any = await ApiUtils.fetch(PATH, {
     userId: value?.userId,
     limit: 10,
     page: value?.current || 1,
@@ -36,14 +37,16 @@ const forgotMeService = (id: any) => {
 export const useDataSubjectHistory = ({
   userId,
   subjectId,
+  onlyView = false,
 }: {
   userId: string;
   subjectId: string;
+  onlyView?: boolean;
 }) => {
   const navigate = useNavigate();
 
   const { data, loading, run, refresh } = useRequest(
-    async ({ current }) => getDataSubjectHistoryService({ userId, current }),
+    async ({ current }) => getDataSubjectHistoryService({ userId, current, onlyView }),
     {
       manual: true,
     },

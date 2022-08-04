@@ -195,7 +195,7 @@ const ConsentOption = ({ value, onChange, dataConsent, isHavePermissionSaveConse
   );
 };
 
-const ConsentsList = ({
+export const ConsentsList = ({
   data,
   loading,
   onChange,
@@ -220,7 +220,7 @@ const ConsentsList = ({
   }, {});
 
   const onUpdateConsent = (value: any) => {
-    onSaveConsent(value);
+    if (onSaveConsent) onSaveConsent(value);
   };
 
   const onFieldsChange = (values: any, allValues: any) => {

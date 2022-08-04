@@ -1,16 +1,40 @@
-import { useRequest } from 'ahooks';
+import { useRequest, useUnmount } from 'ahooks';
 import UserInfo from 'libraries/components/UserInfo';
-import React from 'react';
+import { ConsentsList } from 'modules/dataSubjectManagement/components/Consents';
+import { useConsent } from 'modules/dataSubjectManagement/components/Consents/service';
+import DataSubjectHistory from 'modules/dataSubjectManagement/components/DataSubjectHistory';
 import { useNavigate, useParams } from 'react-router-dom';
 import ApiUtils from 'utils/api/api.utils';
 import { API_PATH } from 'utils/api/constant';
+
+import styles from './index.module.scss';
+
+const Consents = ({ userId }: any) => {
+  const { data, loading, onChange } = useConsent({ userId, onlyView: true });
+
+  if (loading || !data) return null;
+
+  return (
+    <div className={styles.consentsWrap}>
+      <h3>Consents</h3>
+      <ConsentsList data={data} loading={loading} onChange={onChange} userId={data?.id || ''} />
+    </div>
+  );
+};
 
 const ProfileHash = () => {
   const { hash } = useParams();
   const navigate = useNavigate();
 
   const { data, loading } = useRequest(async () => {
-    const r: any = await ApiUtils.fetch(API_PATH.GENERATE_LINK_DETAIL(hash || ''));
+    localStorage.setItem('user_token_profile_public', `${hash}`);
+    const r: any = await ApiUtils.fetch(
+      API_PATH.GENERATE_LINK_DETAIL(hash || ''),
+      {},
+      {
+        user_token_profile_public: hash,
+      },
+    );
 
     return {
       id: r?.content?.id,
@@ -30,17 +54,23 @@ const ProfileHash = () => {
     };
   });
 
-  if (!hash) {
+  useUnmount(() => {
+    localStorage.removeItem('user_token_profile_public');
+  });
+
+  if (!hash || (!loading && !data?.id)) {
     navigate('/');
     return null;
   }
 
-  if (loading || !data) return null;
+  if (loading) return null;
 
   return (
-    <>
+    <div className={styles.container}>
       <UserInfo userInfo={data} isChangeProfile={false} />
-    </>
+      <Consents userId={data?.id || ''} />
+      <DataSubjectHistory userId={data?.id || ''} subjectId={data?.id} onlyView={true} />
+    </div>
   );
 };
 

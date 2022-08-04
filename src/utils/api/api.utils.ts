@@ -39,6 +39,10 @@ export const getHeader = async (customHeaders?: CustomHeaders) => {
     const authToken = await getAccessToken();
     header.Authorization = `Bearer ${authToken}`;
   }
+
+  const user_token_profile_public = localStorage.getItem('user_token_profile_public');
+  if (user_token_profile_public) header['user_token_profile_public'] = user_token_profile_public;
+
   return { ...header };
 };
 

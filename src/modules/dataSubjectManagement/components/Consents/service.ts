@@ -9,28 +9,29 @@ import { API_PATH } from 'utils/api/constant';
 
 const PAGE_SIZE = 10;
 
+type TConsentService = {
+  search?: string | undefined;
+  userId: number;
+  page: number;
+};
+
 function capitalizeFirstLetter(string: string) {
   if (!string) return;
   const stringLowercase = string?.toLowerCase();
   return stringLowercase.charAt(0).toUpperCase() + stringLowercase.slice(1);
 }
-export const getConsentService = async ({
-  search,
-  userId,
-  page,
-}: {
-  search?: string | undefined;
-  userId: number;
-  page: number;
-}): Promise<any> => {
+export const getConsentService = async (
+  { search, userId, page }: TConsentService,
+  onlyView = false,
+): Promise<any> => {
   const params = {
     keyword: search,
     userId: userId,
     limit: PAGE_SIZE,
     page: page || 1,
   };
-
-  const r: any = await ApiUtils.fetch(API_PATH.CONSENTS, params);
+  const PATH = !onlyView ? API_PATH.CONSENTS : API_PATH.CONSENT_ONLY_VIEW;
+  const r: any = await ApiUtils.fetch(PATH, params);
 
   const formatConsents = r?.content?.data?.map((item: any) => {
     const appDes = item?.consents
@@ -135,7 +136,13 @@ const getSuggestionConsents = async (userId: any, search: string, page = 1, prev
   };
 };
 
-export const useConsent = ({ userId }: { userId: number }) => {
+export const useConsent = ({
+  userId,
+  onlyView = false,
+}: {
+  userId: number;
+  onlyView?: boolean;
+}) => {
   const refCancelRequest: any = useRef(false);
 
   const [consentSuggest, setConsentSuggest] = useState<{
@@ -150,9 +157,12 @@ export const useConsent = ({ userId }: { userId: number }) => {
     value: '',
   });
 
-  const { data, loading, run, runAsync, refresh } = useRequest(getConsentService, {
-    manual: true,
-  });
+  const { data, loading, run, runAsync, refresh } = useRequest(
+    (values: any) => getConsentService(values, onlyView),
+    {
+      manual: true,
+    },
+  );
 
   const reqUpdateConsent = useRequest(updateConsent, {
     manual: true,
