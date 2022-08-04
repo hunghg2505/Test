@@ -30,7 +30,7 @@ const CreateCaseForm = ({
   const refFiles: any = useRef();
   const { actionsData, departmentsData, usersData } = useGetListDataDropDropdown();
 
-  const [isEdit, setIsEdit] = useState(true);
+  const [isEdit, setIsEdit] = useState<boolean>(true);
   const [acceptedDate, setAcceptedDate] = useState<null | moment.Moment>(null);
   const [dateOfResponse, setDateOfResponse] = useState<null | moment.Moment>(null);
 

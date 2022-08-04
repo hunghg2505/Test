@@ -23,7 +23,7 @@ export const FormEditUser = ({ form, onUpdateProfile, userInfo, t }: any) => {
         laserCode: userInfo?.laserCode || '',
         lastNameEn: userInfo?.lastNameEn || '',
         lastNameTh: userInfo?.lastNameTh || '',
-        // mobile: userInfo?.mobile || '',
+        mobile: userInfo?.mobile || '',
         nationality: userInfo?.nationality || '',
         passportNo: userInfo?.passportNo || '',
       }}
@@ -97,14 +97,14 @@ export const FormEditUser = ({ form, onUpdateProfile, userInfo, t }: any) => {
               },
             ]}
           >
-            <DatePicker placeholder={t('birthday')} format={'MM/DD/YYYY'} />
+            <DatePicker placeholder='dd/mm/yyyy' format={'MM/DD/YYYY'} />
           </Form.Item>
         </Col>
 
         <Col xs={12}>
           <InputForm
             name='email'
-            placeholder={t('email_address')}
+            placeholder='example@domain.com'
             label={t('email_address')}
             maxLength={30}
             rules={[
@@ -136,16 +136,16 @@ export const FormEditUser = ({ form, onUpdateProfile, userInfo, t }: any) => {
         <Col xs={12}>
           <InputForm
             name='mobile'
-            placeholder={t('mobile_number')}
+            placeholder='eg. 66 8 123456789'
             label={t('mobile_number')}
-            normalize={(value, prevValue) => {
-              if (!RegexUtils.isNumber(value)) return prevValue;
-              console.log({
-                value,
-                prevValue,
-              });
-              return value;
-            }}
+            // normalize={(value, prevValue) => {
+            //   if (!RegexUtils.isNumber(value)) return prevValue;
+            //   console.log({
+            //     value,
+            //     prevValue,
+            //   });
+            //   return value;
+            // }}
             rules={[
               {
                 validator: async (_, value) => {

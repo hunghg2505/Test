@@ -50,6 +50,13 @@ function UserProfile({
 
   return (
     <div className={styles.userInfoWrap}>
+      <CustomButton
+        typeDisplay='ghost'
+        className={styles.btnEdit}
+        onClick={() => setFormDisabled(false)}
+      >
+        {IconEdit}Edit
+      </CustomButton>
       {isHavePermissionEditProfile && (
         <Row justify='end' className={styles.btnActions}>
           {formDisabled ? (

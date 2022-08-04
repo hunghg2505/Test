@@ -3,6 +3,7 @@ import { Col, DatePicker, Divider, Form, Row } from 'antd';
 import IconCross from 'assets/icons/icon-cross';
 import IconSearch from 'assets/icons/icon-search';
 import { STATUS_CONSENT_DROPDOWN_DATA } from 'constants/common.constants';
+import dayjs from 'dayjs';
 import { useFadeEffect, _popoverStyles, _popoverVisibleStyles } from 'hooks/useFadeEffect';
 import InputForm from 'libraries/form/input/input-form';
 import Button from 'libraries/UI/Button';
@@ -19,10 +20,10 @@ const ModalSearchAdvance = ({ onSearchConsent }: any) => {
   const { t } = useTranslation();
   const [formSearch] = Form.useForm();
   const [isShowSearch, setIsShowSearch] = useState(false);
-  const [createdStartDate, setCreatedStartDate] = useState(null);
-  const [createdEndDate, setCreatedEndDate] = useState(null);
-  const [updatedStartDate, setUpdatedStartDate] = useState(null);
-  const [updatedEndDate, setUpdatedEndDate] = useState(null);
+  const [createdStartDate, setCreatedStartDate] = useState<any>(null);
+  const [createdEndDate, setCreatedEndDate] = useState<any>(null);
+  const [updatedStartDate, setUpdatedStartDate] = useState<any>(null);
+  const [updatedEndDate, setUpdatedEndDate] = useState<any>(null);
   const [_isTransitioning, shouldBeVisible, refFormModal] = useFadeEffect(isShowSearch);
   const refSearch: any = useRef();
 
@@ -35,15 +36,23 @@ const ModalSearchAdvance = ({ onSearchConsent }: any) => {
     const createdAt =
       createdStartDate || createdEndDate
         ? {
-            startDate: createdStartDate,
-            endDate: createdEndDate,
+            startDate: createdStartDate
+              ? moment(createdStartDate).format('YYYY-MM-DD') + 'T00:00:00.000Z'
+              : null,
+            endDate: createdEndDate
+              ? moment(createdEndDate).format('YYYY-MM-DD') + 'T00:00:00.000Z'
+              : null,
           }
         : undefined;
     const updatedAt =
       updatedStartDate || updatedEndDate
         ? {
-            startDate: updatedStartDate,
-            endDate: updatedEndDate,
+            startDate: updatedStartDate
+              ? moment(updatedStartDate).format('YYYY-MM-DD') + 'T00:00:00.000Z'
+              : null,
+            endDate: updatedEndDate
+              ? moment(updatedEndDate).format('YYYY-MM-DD') + 'T00:00:00.000Z'
+              : null,
           }
         : undefined;
     onSearchConsent({
@@ -67,7 +76,7 @@ const ModalSearchAdvance = ({ onSearchConsent }: any) => {
 
   const disabledStartedDate = (current: any) => (date: any) => {
     const customDate = moment(date).format('YYYY-MM-DD');
-    return current && date && current > moment(customDate, 'YYYY-MM-DD');
+    return current && date && current > moment(customDate, 'YYYY-MM-DD').add(1, 'd');
   };
   const disabledEndedDate = (current: any) => (date: any) => {
     const customDate = moment(date).format('YYYY-MM-DD');
