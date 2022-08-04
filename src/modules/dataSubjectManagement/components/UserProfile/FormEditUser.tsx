@@ -152,7 +152,7 @@ export const FormEditUser = ({ form, onUpdateProfile, userInfo, t }: any) => {
             placeholder='eg. 66 8 123456789'
             label={t('mobile_number')}
             normalize={(value, prevValue) => {
-              if (!RegexUtils.isNumber(value)) return prevValue;
+              if (!RegexUtils.isNumber(value) && value !== '') return prevValue;
               return value;
             }}
             rules={[
