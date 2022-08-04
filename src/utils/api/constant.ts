@@ -22,6 +22,7 @@ export const API_PATH = {
   OPT_OUT_IN: '/data-subject/opt-out-in',
   GENERATE_LINK: '/data-subject/generate-linkok',
   GENERATE_LINK_DETAIL: (token: string) => `data-subject/generate-link/${token}`,
+  CHECK_PARAMS: '/data-subject/check-valid-param',
 
   // Case Management
   CASE_MANAGEMENT_BASE_URL,

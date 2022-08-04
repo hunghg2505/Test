@@ -9,8 +9,11 @@ import { RegexUtils } from 'utils/regex-helper';
 import { isNumber } from 'lodash';
 import country from 'country-list-js';
 import { disabledFutureDate } from 'utils/common.utils';
+import { useCheckParams } from './service';
 
 export const FormEditUser = ({ form, onUpdateProfile, userInfo, t }: any) => {
+  const requestCheckParams = useCheckParams();
+
   return (
     <Form
       onFinish={onUpdateProfile}
@@ -116,23 +119,27 @@ export const FormEditUser = ({ form, onUpdateProfile, userInfo, t }: any) => {
             rules={[
               {
                 validator: async (_, value) => {
-                  const email = `${value}`?.trim();
-                  if (!email)
-                    return Promise.reject(
-                      t('messages.errors.require', { field: t('email_address') }),
-                    );
+                  try {
+                    const email = `${value}`?.trim();
+                    if (!email)
+                      return Promise.reject(
+                        t('messages.errors.require', { field: t('email_address') }),
+                      );
 
-                  const isEmail = RegexUtils.isEmail(email);
+                    const isEmail = RegexUtils.isEmail(email);
 
-                  if (!isEmail)
-                    return Promise.reject('Please input correct email format example@domain.com');
+                    if (!isEmail)
+                      return Promise.reject('Please input correct email format example@domain.com');
 
-                  const isEmailExist = true;
+                    const r = await requestCheckParams.runAsync({ email });
 
-                  if (isEmailExist)
-                    return Promise.reject('Email already exist, please use another email');
+                    if (r?.existed)
+                      return Promise.reject('Email already exist, please use another email');
 
-                  return Promise.resolve();
+                    return Promise.resolve();
+                  } catch (error) {
+                    return Promise.resolve();
+                  }
                 },
               },
             ]}
@@ -144,14 +151,10 @@ export const FormEditUser = ({ form, onUpdateProfile, userInfo, t }: any) => {
             name='mobile'
             placeholder='eg. 66 8 123456789'
             label={t('mobile_number')}
-            // normalize={(value, prevValue) => {
-            //   if (!RegexUtils.isNumber(value)) return prevValue;
-            //   console.log({
-            //     value,
-            //     prevValue,
-            //   });
-            //   return value;
-            // }}
+            normalize={(value, prevValue) => {
+              if (!RegexUtils.isNumber(value)) return prevValue;
+              return value;
+            }}
             rules={[
               {
                 validator: async (_, value) => {
@@ -179,10 +182,27 @@ export const FormEditUser = ({ form, onUpdateProfile, userInfo, t }: any) => {
             name='cardId'
             placeholder={t('national_card_id')}
             label={t('national_card_id')}
+            normalize={(val = '') => val.replace(/\s/, '')}
             rules={[
               {
-                required: true,
-                message: t('messages.errors.require', { field: t('national_card_id') }),
+                validator: async (_, value) => {
+                  try {
+                    const cardId = `${value}`?.trim();
+                    if (!cardId)
+                      return Promise.reject(
+                        t('messages.errors.require', { field: t('national_card_id') }),
+                      );
+
+                    const r = await requestCheckParams.runAsync({ cardId });
+
+                    if (r?.existed)
+                      return Promise.reject('National Card ID already exist, please check again');
+
+                    return Promise.resolve();
+                  } catch (error) {
+                    return Promise.resolve();
+                  }
+                },
               },
             ]}
             maxLength={13}
@@ -209,14 +229,31 @@ export const FormEditUser = ({ form, onUpdateProfile, userInfo, t }: any) => {
             name='passportNo'
             placeholder={t('passport_number')}
             label={t('passport_number')}
+            normalize={(val = '') => val.replace(/\s/, '')}
             rules={[
-              {
-                required: true,
-                message: t('messages.errors.require', { field: t('passport_number') }),
-              },
               {
                 pattern: new RegExp(RegexUtils.RegexConstants.REGEX_PASSPORT),
                 message: `${t('messages.errors.onlyNumber', { field: t('passport_number') })}`,
+              },
+              {
+                validator: async (_, value) => {
+                  try {
+                    const passportNo = `${value}`?.trim();
+                    if (!passportNo)
+                      return Promise.reject(
+                        t('messages.errors.require', { field: t('national_card_id') }),
+                      );
+
+                    const r = await requestCheckParams.runAsync({ passportNo });
+
+                    if (r?.existed)
+                      return Promise.reject('Passport number already exist, please check again');
+
+                    return Promise.resolve();
+                  } catch (error) {
+                    return Promise.resolve();
+                  }
+                },
               },
             ]}
             maxLength={9}
@@ -228,15 +265,32 @@ export const FormEditUser = ({ form, onUpdateProfile, userInfo, t }: any) => {
             name='laserCode'
             placeholder={t('laser_code')}
             label={t('laser_code')}
+            normalize={(val = '') => val.replace(/\s/, '')}
             maxLength={12}
             rules={[
               {
-                required: true,
-                message: t('messages.errors.require', { field: t('laser_code') }),
-              },
-              {
                 pattern: new RegExp(RegexUtils.RegexConstants.REGEX_LASER_CODE),
                 message: `${t('messages.errors.onlyNumber', { field: t('laser_code') })}`,
+              },
+              {
+                validator: async (_, value) => {
+                  try {
+                    const laserCode = `${value}`?.trim();
+                    if (!laserCode)
+                      return Promise.reject(
+                        t('messages.errors.require', { field: t('laser_code') }),
+                      );
+
+                    const r = await requestCheckParams.runAsync({ laserCode });
+
+                    if (r?.existed)
+                      return Promise.reject('Laser code already exist, please check again');
+
+                    return Promise.resolve();
+                  } catch (error) {
+                    return Promise.resolve();
+                  }
+                },
               },
             ]}
           />
