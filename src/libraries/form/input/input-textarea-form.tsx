@@ -123,9 +123,9 @@ const InputTextAreaForm = ({
         </Upload>
       )}
       <Row>
-        {fileData?.map((item: any) => {
+        {fileData?.map((item: any, idx: number) => {
           return (
-            <Row key={item?.uid} className={styles.fileItem} align='middle'>
+            <Row key={idx} className={styles.fileItem} align='middle'>
               <Col>{item?.name}</Col>
               <Col className={styles.btnDelete} onClick={onDeleteFile(item?.uid)}>
                 X
