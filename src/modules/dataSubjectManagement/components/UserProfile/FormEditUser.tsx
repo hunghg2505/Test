@@ -8,6 +8,7 @@ import moment from 'moment';
 import { RegexUtils } from 'utils/regex-helper';
 import { isNumber } from 'lodash';
 import country from 'country-list-js';
+import { disabledFutureDate } from 'utils/common.utils';
 
 export const FormEditUser = ({ form, onUpdateProfile, userInfo, t }: any) => {
   return (
@@ -98,7 +99,11 @@ export const FormEditUser = ({ form, onUpdateProfile, userInfo, t }: any) => {
               },
             ]}
           >
-            <DatePicker placeholder='dd/mm/yyyy' format={'MM/DD/YYYY'} />
+            <DatePicker
+              placeholder='dd/mm/yyyy'
+              format={'DD/MM/YYYY'}
+              disabledDate={disabledFutureDate}
+            />
           </Form.Item>
         </Col>
 

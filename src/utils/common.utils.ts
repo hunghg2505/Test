@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 export const formatIdSubjectHistory = (
   current: number,
   index: number,
@@ -47,3 +49,8 @@ export function capitalizeFirstLetter(string: string) {
   const stringLowercase = string.toLowerCase();
   return stringLowercase?.charAt(0).toUpperCase() + stringLowercase?.slice(1);
 }
+
+export const disabledFutureDate = (current: any) => {
+  const customDate = moment().format('YYYY-MM-DD');
+  return current && current > moment(customDate, 'YYYY-MM-DD').add(1, 'day');
+};
