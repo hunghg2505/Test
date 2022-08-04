@@ -234,7 +234,7 @@ const ConsentsList = ({
   const onCopyLink = () => {
     try {
       copy(requestGenerateLink?.data || '');
-      message.success('Copied is successfully');
+      message.success('Public Link Copied');
     } catch (err) {
       console.log('err', err);
     }
