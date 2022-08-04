@@ -1,4 +1,9 @@
-import { capitalizeFirstLetter, formatIdSubjectHistory } from 'utils/common.utils';
+import moment from 'moment';
+import {
+  capitalizeFirstLetter,
+  disabledFutureDate,
+  formatIdSubjectHistory,
+} from 'utils/common.utils';
 
 test('Test FormatIdSubjectHistory', () => {
   const now = new Date();
@@ -43,4 +48,8 @@ test('Test CapitalizeFirstLetter', () => {
   expect(capitalizeFirstLetter('ABC')).toBe('Abc');
   expect(capitalizeFirstLetter('aBC')).toBe('Abc');
   expect(capitalizeFirstLetter('Abc')).toBe('Abc');
+});
+
+test('Test DisabledFutureDate', () => {
+  expect(disabledFutureDate(moment())).toBe(false);
 });
