@@ -7,6 +7,7 @@ import Select from 'libraries/UI/Select';
 import moment from 'moment';
 import { RegexUtils } from 'utils/regex-helper';
 import { isNumber } from 'lodash';
+import country from 'country-list-js';
 
 export const FormEditUser = ({ form, onUpdateProfile, userInfo, t }: any) => {
   return (
@@ -185,10 +186,12 @@ export const FormEditUser = ({ form, onUpdateProfile, userInfo, t }: any) => {
 
         <Col xs={12}>
           <Form.Item name='nationality' label={t('nationality')}>
-            <Select placeholder={t('nationality')}>
-              <Select.Option value=''>Select Nationality</Select.Option>
-              <Select.Option value='Thailand'>Thailand</Select.Option>
-              <Select.Option value='Other'>Other</Select.Option>
+            <Select placeholder={t('nationality')} allowClear={true} showSearch>
+              {country.names().map((name, index) => (
+                <Select.Option value={name} key={`${name}${index}`}>
+                  {name}
+                </Select.Option>
+              ))}
             </Select>
           </Form.Item>
         </Col>

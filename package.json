@@ -12,6 +12,7 @@
     "antd": "^4.22.3",
     "axios": "^0.27.2",
     "clsx": "^1.1.1",
+    "country-list-js": "^3.1.7",
     "dayjs": "^1.11.3",
     "env-cmd": "^10.1.0",
     "file-saver": "^2.0.5",
@@ -63,6 +64,7 @@
   },
   "devDependencies": {
     "@ant-design/icons": "^4.7.0",
+    "@types/country-list-js": "^3.1.2",
     "@types/file-saver": "^2.0.5",
     "@types/jest": "^27.4.1",
     "@types/lodash": "^4.14.182",
