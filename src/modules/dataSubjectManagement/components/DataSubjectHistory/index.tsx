@@ -102,12 +102,13 @@ const ICON_GRID = (
 );
 
 function DataSubjectHistory(
-  { userId, subjectId }: { userId: string; subjectId: string },
+  { userId, subjectId, onlyView }: { userId: string; subjectId: string; onlyView?: boolean },
   ref: any,
 ) {
   const { data, loading, onChange, subjectHistoryData, refresh } = useDataSubjectHistory({
     userId,
     subjectId,
+    onlyView,
   });
 
   useImperativeHandle(ref, () => {

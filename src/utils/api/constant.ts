@@ -20,9 +20,11 @@ export const API_PATH = {
   SEARCH_USERS: '/data-subject/data-autocomplete',
   CONSENTS: '/data-subject/consents',
   OPT_OUT_IN: '/data-subject/opt-out-in',
-  GENERATE_LINK: '/data-subject/generate-linkok',
+  GENERATE_LINK: '/data-subject/generate-link',
   GENERATE_LINK_DETAIL: (token: string) => `data-subject/generate-link/${token}`,
   CHECK_PARAMS: '/data-subject/check-valid-param',
+  CONSENT_ONLY_VIEW: '/data-subject/consents-public',
+  SUBJECT_HISTORY_ONLY_VIEW: '/data-subject/subject-histories-public',
   EDIT_USER_PROFILE: '/data-subject/edit-profile',
 
   // Case Management

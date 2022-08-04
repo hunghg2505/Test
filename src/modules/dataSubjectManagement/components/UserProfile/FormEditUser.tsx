@@ -6,7 +6,6 @@ import InputForm from 'libraries/form/input/input-form';
 import Select from 'libraries/UI/Select';
 import moment from 'moment';
 import { RegexUtils } from 'utils/regex-helper';
-import { isNumber } from 'lodash';
 import country from 'country-list-js';
 import { disabledFutureDate } from 'utils/common.utils';
 import { useCheckParams } from './service';
