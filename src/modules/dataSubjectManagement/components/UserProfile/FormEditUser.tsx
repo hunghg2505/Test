@@ -6,7 +6,6 @@ import InputForm from 'libraries/form/input/input-form';
 import Select from 'libraries/UI/Select';
 import moment from 'moment';
 import { RegexUtils } from 'utils/regex-helper';
-import { isNumber } from 'lodash';
 import country from 'country-list-js';
 import { disabledFutureDate } from 'utils/common.utils';
 import { useCheckParams } from './service';
@@ -151,11 +150,15 @@ export const FormEditUser = ({ form, onUpdateProfile, userInfo, t }: any) => {
             name='mobile'
             placeholder='eg. 66 8 123456789'
             label={t('mobile_number')}
-            normalize={(value, prevValue) => {
-              if (!RegexUtils.isNumber(value) && value !== '') return prevValue;
-              return value;
-            }}
+            // normalize={(value, prevValue) => {
+            //   if (!RegexUtils.isNumber(value)) return prevValue;
+            //   return value;
+            // }}
             rules={[
+              {
+                pattern: new RegExp(RegexUtils.RegexConstants.REGEX_MOBILE_NUMBER),
+                message: `${t('messages.errors.invalid_mobile_number')}`,
+              },
               {
                 validator: async (_, value) => {
                   const phone = `${value}`?.trim();
@@ -173,7 +176,7 @@ export const FormEditUser = ({ form, onUpdateProfile, userInfo, t }: any) => {
                 },
               },
             ]}
-            maxLength={11}
+            maxLength={12}
           />
         </Col>
 
@@ -233,7 +236,7 @@ export const FormEditUser = ({ form, onUpdateProfile, userInfo, t }: any) => {
             rules={[
               {
                 pattern: new RegExp(RegexUtils.RegexConstants.REGEX_PASSPORT),
-                message: `${t('messages.errors.onlyNumber', { field: t('passport_number') })}`,
+                message: `${t('messages.errors.invalid_passport')}`,
               },
               {
                 validator: async (_, value) => {
@@ -270,7 +273,7 @@ export const FormEditUser = ({ form, onUpdateProfile, userInfo, t }: any) => {
             rules={[
               {
                 pattern: new RegExp(RegexUtils.RegexConstants.REGEX_LASER_CODE),
-                message: `${t('messages.errors.onlyNumber', { field: t('laser_code') })}`,
+                message: `${t('messages.errors.invalid_lasercode')}`,
               },
               {
                 validator: async (_, value) => {

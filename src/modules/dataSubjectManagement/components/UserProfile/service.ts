@@ -1,6 +1,23 @@
 import { useRequest } from 'ahooks';
+import { message } from 'antd';
+import { ResponseBase } from 'utils/api/api.types';
 import ApiUtils from 'utils/api/api.utils';
 import { API_PATH } from 'utils/api/constant';
+
+interface IEditUserProfile {
+  userProfileId: 0;
+  firstNameEn?: string;
+  lastNameEn?: string;
+  firstNameTh?: string;
+  lastNameTh?: string;
+  dateOfBirth?: string;
+  email?: string;
+  mobile?: string;
+  cardId?: string;
+  nationality?: string;
+  passportNo?: string;
+  laserCode?: string;
+}
 
 export const checkParams = async (values: any) => {
   let params: any = {
@@ -24,5 +41,23 @@ export const useCheckParams = () => {
   return useRequest(checkParams, {
     manual: true,
     debounceWait: 300,
+  });
+};
+
+const updateUserProfileService = async (body: IEditUserProfile) => {
+  return await ApiUtils.post<IEditUserProfile, ResponseBase<any>>(API_PATH.EDIT_USER_PROFILE, body);
+};
+
+export const useUpdateConsent = (onFinishSubmitForm: () => void) => {
+  return useRequest(async (data: IEditUserProfile) => updateUserProfileService(data), {
+    manual: true,
+    onSuccess: () => {
+      message.success('Edit User Profile Success');
+      onFinishSubmitForm();
+    },
+    onError: () => {
+      message.error('Edit User Profile Error');
+      onFinishSubmitForm();
+    },
   });
 };

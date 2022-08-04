@@ -25,6 +25,7 @@ export const API_PATH = {
   CHECK_PARAMS: '/data-subject/check-valid-param',
   CONSENT_ONLY_VIEW: '/data-subject/consents-public',
   SUBJECT_HISTORY_ONLY_VIEW: '/data-subject/subject-histories-public',
+  EDIT_USER_PROFILE: '/data-subject/edit-profile',
 
   // Case Management
   CASE_MANAGEMENT_BASE_URL,

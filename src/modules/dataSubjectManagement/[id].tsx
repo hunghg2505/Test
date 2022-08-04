@@ -13,7 +13,7 @@ function DataSubjectDetail() {
   const navigate = useNavigate();
   const refDataHistory: any = useRef(null);
 
-  const { loading, data } = useDataSubjectDetail(`${id}`);
+  const { loading, data, refresh } = useDataSubjectDetail(`${id}`);
 
   if (!id) {
     navigate('/data-subject');
@@ -30,7 +30,7 @@ function DataSubjectDetail() {
 
   return (
     <ContainerLayout title='Data Subject Detail'>
-      <UserProfile userInfo={data?.userInfo} />
+      <UserProfile userInfo={data?.userInfo} refresh={refresh} />
       <Consents userId={Number(data?.userInfo?.id)} refDataHistory={refDataHistory} />
       <DataSubjectHistory userId={data?.userInfo?.id || ''} subjectId={id} ref={refDataHistory} />
     </ContainerLayout>

@@ -11,6 +11,8 @@ import { useState } from 'react';
 import ImgUserProfile from '../../../../assets/images/user-profile.png';
 import { FromDisplayUser } from './FromDisplayUser';
 import { FormEditUser } from './FormEditUser';
+import { useUpdateConsent } from './service';
+import { useParams } from 'react-router-dom';
 
 const IconEdit = (
   <svg xmlns='http://www.w3.org/2000/svg' width={20} height={20} viewBox='0 0 20 20' fill='none'>
@@ -33,24 +35,55 @@ const IconEdit = (
 function UserProfile({
   userInfo,
   isChangeProfile = true,
+  refresh,
 }: {
   userInfo?: IUserInfo;
   isChangeProfile?: boolean;
+  refresh?: any;
 }) {
   const { t } = useTranslation();
   const { isHavePermissionEditProfile } = useDataSubjectManagementPermission();
   const [formDisabled, setFormDisabled] = useState(true);
   const [form] = Form.useForm();
+  const { id } = useParams();
 
-  const onUpdateProfile = (values: any) => {
+  const onFinishSubmitForm = () => {
     setFormDisabled(true);
+    refresh();
   };
 
+  const updateUserProfileRequest = useUpdateConsent(onFinishSubmitForm);
+
+  const onUpdateProfile = (values: any) => {
+    console.log('submit');
+
+    updateUserProfileRequest.run({ ...values, userProfileId: id });
+  };
   if (!userInfo) return null;
 
   return (
     <div className={styles.userInfoWrap}>
-      {isHavePermissionEditProfile && (
+      <Row justify='end' className={styles.btnActions}>
+        {formDisabled ? (
+          <CustomButton
+            typeDisplay='ghost'
+            className={styles.btnEdit}
+            onClick={() => setFormDisabled(false)}
+          >
+            {IconEdit}Edit
+          </CustomButton>
+        ) : (
+          <>
+            <CustomButton className={styles.btnSave} onClick={() => form.submit()}>
+              Submit
+            </CustomButton>
+            <CustomButton onClick={() => setFormDisabled(true)} className={styles.btnCancel}>
+              Cancel
+            </CustomButton>
+          </>
+        )}
+      </Row>
+      {/* {isHavePermissionEditProfile && (
         <Row justify='end' className={styles.btnActions}>
           {formDisabled ? (
             <CustomButton
@@ -71,7 +104,7 @@ function UserProfile({
             </>
           )}
         </Row>
-      )}
+      )} */}
       <Row className={styles.users}>
         <Col className={styles.avatar}>
           <div>

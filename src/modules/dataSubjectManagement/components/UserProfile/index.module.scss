@@ -11,8 +11,8 @@
       line-height: 14px !important;
     }
     .ant-form-item-label label {
-      color: #BDBDBD !important;
-      font-weight: 400 !important;
+      color: $black_color !important;
+      font-weight: 700 !important;
       &::before {
         display: none !important;
       }
@@ -45,9 +45,9 @@
   }
 
   .txtLabel {
-    font-weight: 400;
+    font-weight: 700;
     font-size: 14px;
-    color: #BDBDBD;
+    color: $black_color;
   }
   .txtContent {
     font-weight: 400;
