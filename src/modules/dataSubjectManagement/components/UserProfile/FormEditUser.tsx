@@ -192,11 +192,14 @@ export const FormEditUser = ({ form, onUpdateProfile, userInfo, t }: any) => {
         <Col xs={12}>
           <Form.Item name='nationality' label={t('nationality')}>
             <Select placeholder={t('nationality')} allowClear={true} showSearch>
-              {country.names().map((name, index) => (
-                <Select.Option value={name} key={`${name}${index}`}>
-                  {name}
-                </Select.Option>
-              ))}
+              {country
+                .names()
+                .sort()
+                .map((name, index) => (
+                  <Select.Option value={name} key={`${name}${index}`}>
+                    {name}
+                  </Select.Option>
+                ))}
             </Select>
           </Form.Item>
         </Col>
