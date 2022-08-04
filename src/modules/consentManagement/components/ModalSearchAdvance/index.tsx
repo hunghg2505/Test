@@ -36,23 +36,15 @@ const ModalSearchAdvance = ({ onSearchConsent }: any) => {
     const createdAt =
       createdStartDate || createdEndDate
         ? {
-            startDate: createdStartDate
-              ? moment(createdStartDate).format('YYYY-MM-DD') + 'T00:00:00.000Z'
-              : null,
-            endDate: createdEndDate
-              ? moment(createdEndDate).format('YYYY-MM-DD') + 'T00:00:00.000Z'
-              : null,
+            startDate: createdStartDate ? moment(createdStartDate).toISOString() : null,
+            endDate: createdEndDate ? moment(createdEndDate).toISOString() : null,
           }
         : undefined;
     const updatedAt =
       updatedStartDate || updatedEndDate
         ? {
-            startDate: updatedStartDate
-              ? moment(updatedStartDate).format('YYYY-MM-DD') + 'T00:00:00.000Z'
-              : null,
-            endDate: updatedEndDate
-              ? moment(updatedEndDate).format('YYYY-MM-DD') + 'T00:00:00.000Z'
-              : null,
+            startDate: updatedStartDate ? moment(updatedStartDate).toISOString() : null,
+            endDate: updatedEndDate ? moment(updatedEndDate).toISOString() : null,
           }
         : undefined;
     onSearchConsent({

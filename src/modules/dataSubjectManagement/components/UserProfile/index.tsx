@@ -54,16 +54,22 @@ function UserProfile({
 
   const updateUserProfileRequest = useUpdateConsent(onFinishSubmitForm);
 
-  const onUpdateProfile = (values: any) => {
-    console.log('submit');
-
-    updateUserProfileRequest.run({ ...values, userProfileId: id });
+  const onSubmit = () => {
+    try {
+      if (form.getFieldsError().filter((item: any) => item?.errors?.length !== 0).length === 0) {
+        const values = form.getFieldsValue(true);
+        updateUserProfileRequest.run({ ...values, userProfileId: id });
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
+
   if (!userInfo) return null;
 
   return (
     <div className={styles.userInfoWrap}>
-      <Row justify='end' className={styles.btnActions}>
+      {/* <Row justify='end' className={styles.btnActions}>
         {formDisabled ? (
           <CustomButton
             typeDisplay='ghost'
@@ -74,7 +80,7 @@ function UserProfile({
           </CustomButton>
         ) : (
           <>
-            <CustomButton className={styles.btnSave} onClick={() => form.submit()}>
+            <CustomButton className={styles.btnSave} onClick={onSubmit}>
               Submit
             </CustomButton>
             <CustomButton onClick={() => setFormDisabled(true)} className={styles.btnCancel}>
@@ -82,8 +88,8 @@ function UserProfile({
             </CustomButton>
           </>
         )}
-      </Row>
-      {/* {isHavePermissionEditProfile && (
+      </Row> */}
+      {isHavePermissionEditProfile && (
         <Row justify='end' className={styles.btnActions}>
           {formDisabled ? (
             <CustomButton
@@ -104,7 +110,7 @@ function UserProfile({
             </>
           )}
         </Row>
-      )} */}
+      )}
       <Row className={styles.users}>
         <Col className={styles.avatar}>
           <div>
@@ -120,7 +126,7 @@ function UserProfile({
           {formDisabled ? (
             <FromDisplayUser userInfo={userInfo} />
           ) : (
-            <FormEditUser form={form} onUpdateProfile={onUpdateProfile} userInfo={userInfo} t={t} />
+            <FormEditUser form={form} userInfo={userInfo} t={t} />
           )}
         </Col>
       </Row>
