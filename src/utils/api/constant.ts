@@ -1,8 +1,8 @@
 export const BACKEND_URL = process.env.REACT_APP_API_DOMAIN;
 
-const CASE_MANAGEMENT_BASE_URL = '/case-management';
-const USER_MANAGEMENT_BASE_URL = '/user-management';
-const CONSENT_MANAGEMENT_BASE_URL = '/consent-management';
+export const CASE_MANAGEMENT_BASE_URL = '/case-management';
+export const USER_MANAGEMENT_BASE_URL = '/user-management';
+export const CONSENT_MANAGEMENT_BASE_URL = '/consent-management';
 
 export const API_PATH = {
   // Account
