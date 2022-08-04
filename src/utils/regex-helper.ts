@@ -13,11 +13,13 @@ export class RegexUtils {
 
     static REGEX_VERSION = /^(\d+)\.{1}(\d+)$/;
 
-    static REGEX_MOBILE_NUMBER = /^(66)[6|8|9][0-9]{9}$/g;
+    static REGEX_MOBILE_NUMBER = /^(66) [6|8|9] [0-9]{9}$/g;
 
     static REGEX_PASSPORT = /^(AA)[0-9]{7}$/g;
 
     static REGEX_LASER_CODE = /^(AA)[0-9]{10}$/g;
+
+    static REGEX_NATIONAL_ID_CARD = /^([0-8]{1})(-[0-9]{2})([0-9]{2})(-[0-9]{5})(-[0-9]{2})(-\d)$/g;
   };
 
   static isEmail(input: string): boolean {
@@ -27,6 +29,11 @@ export class RegexUtils {
 
   static isNumber(input: string): boolean {
     const re = new RegExp(RegexUtils.RegexConstants.REGEX_NUMBER);
+    return re.test(input);
+  }
+
+  static isNationalIdCard(input: string): boolean {
+    const re = new RegExp(RegexUtils.RegexConstants.REGEX_NATIONAL_ID_CARD);
     return re.test(input);
   }
 }

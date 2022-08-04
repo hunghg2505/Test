@@ -1,4 +1,4 @@
-import { Col, DatePicker, Form, Row } from 'antd';
+import { Button, Col, DatePicker, Form, Row } from 'antd';
 
 import styles from './index.module.scss';
 
@@ -10,27 +10,29 @@ import country from 'country-list-js';
 import { disabledFutureDate } from 'utils/common.utils';
 import { useCheckParams } from './service';
 
-export const FormEditUser = ({ form, onUpdateProfile, userInfo, t }: any) => {
+export const FormEditUser = ({ form, userInfo, t }: any) => {
   const requestCheckParams = useCheckParams();
+
+  const initialValues = {
+    birthday: moment(userInfo?.dateOfBirth),
+    cardId: userInfo?.cardId || '',
+    email: userInfo?.email || '',
+    firstNameEn: userInfo?.firstNameEn || '',
+    firstNameTh: userInfo?.firstNameTh || '',
+    laserCode: userInfo?.laserCode || '',
+    lastNameEn: userInfo?.lastNameEn || '',
+    lastNameTh: userInfo?.lastNameTh || '',
+    mobile: userInfo?.mobile || '',
+    nationality: userInfo?.nationality || '',
+    passportNo: userInfo?.passportNo || '',
+  };
 
   return (
     <Form
-      onFinish={onUpdateProfile}
+      // onFinish={onUpdateProfile}
       form={form}
       layout='vertical'
-      initialValues={{
-        birthday: moment(userInfo?.dateOfBirth),
-        cardId: userInfo?.cardId || '',
-        email: userInfo?.email || '',
-        firstNameEn: userInfo?.firstNameEn || '',
-        firstNameTh: userInfo?.firstNameTh || '',
-        laserCode: userInfo?.laserCode || '',
-        lastNameEn: userInfo?.lastNameEn || '',
-        lastNameTh: userInfo?.lastNameTh || '',
-        mobile: userInfo?.mobile || '',
-        nationality: userInfo?.nationality || '',
-        passportNo: userInfo?.passportNo || '',
-      }}
+      initialValues={initialValues}
     >
       <Row gutter={[18, 25]}>
         <Col xs={12}>
@@ -130,6 +132,10 @@ export const FormEditUser = ({ form, onUpdateProfile, userInfo, t }: any) => {
                     if (!isEmail)
                       return Promise.reject('Please input correct email format example@domain.com');
 
+                    if (value === initialValues.email) {
+                      return Promise.resolve();
+                    }
+
                     const r = await requestCheckParams.runAsync({ email });
 
                     if (r?.existed)
@@ -176,7 +182,7 @@ export const FormEditUser = ({ form, onUpdateProfile, userInfo, t }: any) => {
                 },
               },
             ]}
-            maxLength={12}
+            maxLength={14}
           />
         </Col>
 
@@ -196,6 +202,29 @@ export const FormEditUser = ({ form, onUpdateProfile, userInfo, t }: any) => {
                         t('messages.errors.require', { field: t('national_card_id') }),
                       );
 
+                    const isNationalIdCard = RegexUtils.isNationalIdCard(cardId);
+
+                    const valueNoDash = cardId.split('-').join('');
+                    const first12Digits = valueNoDash.slice(0, 12);
+                    const lastDigit = valueNoDash[valueNoDash.length - 1];
+                    const sum = first12Digits
+                      .split('')
+                      .reduce(
+                        (previousValue: any, currentValue: any, currentIndex: any, array: any) => {
+                          return previousValue + (13 - currentIndex) * array[currentIndex];
+                        },
+                        0,
+                      );
+                    const remainder = 11 - ((sum % 11) % 10);
+
+                    if (Number(lastDigit) !== Number(remainder) || !isNationalIdCard) {
+                      return Promise.reject(`${t('messages.errors.invalid_national_code')}`);
+                    }
+
+                    if (value === initialValues.nationality) {
+                      return Promise.resolve();
+                    }
+
                     const r = await requestCheckParams.runAsync({ cardId });
 
                     if (r?.existed)
@@ -208,7 +237,7 @@ export const FormEditUser = ({ form, onUpdateProfile, userInfo, t }: any) => {
                 },
               },
             ]}
-            maxLength={13}
+            maxLength={17}
           />
         </Col>
 
@@ -247,6 +276,9 @@ export const FormEditUser = ({ form, onUpdateProfile, userInfo, t }: any) => {
                         t('messages.errors.require', { field: t('national_card_id') }),
                       );
 
+                    if (value === initialValues.passportNo) {
+                      return Promise.resolve();
+                    }
                     const r = await requestCheckParams.runAsync({ passportNo });
 
                     if (r?.existed)
@@ -283,6 +315,10 @@ export const FormEditUser = ({ form, onUpdateProfile, userInfo, t }: any) => {
                       return Promise.reject(
                         t('messages.errors.require', { field: t('laser_code') }),
                       );
+
+                    if (value === initialValues.laserCode) {
+                      return Promise.resolve();
+                    }
 
                     const r = await requestCheckParams.runAsync({ laserCode });
 
