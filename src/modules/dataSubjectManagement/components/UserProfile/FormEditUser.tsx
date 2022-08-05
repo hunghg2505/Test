@@ -10,6 +10,23 @@ import { disabledFutureDate } from 'utils/common.utils';
 import { RegexUtils } from 'utils/regex-helper';
 import { useCheckParams } from './service';
 
+const assertThaiId = (thaiId: string): boolean => {
+  const m = thaiId.match(/(\d{12})(\d)/);
+  if (!m) {
+    throw new Error('thai-id-must-be-13-digits');
+  }
+  const digits = m[1].split('');
+  const sum = digits.reduce((total: number, digit: string, i: number) => {
+    return total + (13 - i) * +digit;
+  }, 0);
+  const lastDigit = `${(11 - (sum % 11)) % 10}`;
+  const inputLastDigit = m[2];
+  if (lastDigit !== inputLastDigit) {
+    return false;
+  }
+  return true;
+};
+
 export const FormEditUser = ({ form, userInfo, t }: any) => {
   const requestCheckParams = useCheckParams();
 
@@ -202,27 +219,15 @@ export const FormEditUser = ({ form, userInfo, t }: any) => {
                         t('messages.errors.require', { field: t('national_card_id') }),
                       );
 
-                    const isNationalIdCard = RegexUtils.isNationalIdCard(cardId);
-
                     const valueNoDash = cardId.split('-').join('');
 
                     if (valueNoDash.length < 13) {
                       return Promise.reject(`National ID card must be 13 digits`);
                     }
 
-                    const first12Digits = valueNoDash.slice(0, 12);
-                    const lastDigit = valueNoDash[valueNoDash.length - 1];
-                    const sum = first12Digits
-                      .split('')
-                      .reduce(
-                        (previousValue: any, currentValue: any, currentIndex: any, array: any) => {
-                          return previousValue + (13 - currentIndex) * array[currentIndex];
-                        },
-                        0,
-                      );
-                    const remainder = 11 - ((sum % 11) % 10);
+                    const isValid = assertThaiId(valueNoDash);
 
-                    if (Number(lastDigit) !== Number(remainder) || !isNationalIdCard) {
+                    if (!isValid) {
                       return Promise.reject(`${t('messages.errors.invalid_national_code')}`);
                     }
 
