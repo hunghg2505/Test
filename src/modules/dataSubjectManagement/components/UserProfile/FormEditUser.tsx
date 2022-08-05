@@ -205,6 +205,11 @@ export const FormEditUser = ({ form, userInfo, t }: any) => {
                     const isNationalIdCard = RegexUtils.isNationalIdCard(cardId);
 
                     const valueNoDash = cardId.split('-').join('');
+
+                    if (valueNoDash.length < 13) {
+                      return Promise.reject(`National ID card must be 13 digits`);
+                    }
+
                     const first12Digits = valueNoDash.slice(0, 12);
                     const lastDigit = valueNoDash[valueNoDash.length - 1];
                     const sum = first12Digits

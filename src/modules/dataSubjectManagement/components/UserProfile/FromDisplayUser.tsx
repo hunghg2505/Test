@@ -44,7 +44,7 @@ export const FromDisplayUser = ({ userInfo }: any) => {
       <Col span={12}>
         <Row gutter={[40, 0]} className={styles.row}>
           <Col className={styles.txtLabel} span={12}>
-            Date of Birthday
+            Date of Birth
           </Col>
           <Col className={styles.txtContent}>
             {moment(userInfo?.dateOfBirth).format('MM/DD/YYYY')}

@@ -32,6 +32,9 @@
   ::placeholder {
     color: $color-black4;
   }
+  &:global(.ant-input::placeholder) {
+    font-size: 14px;
+  }
 }
 
 .success {
