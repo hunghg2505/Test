@@ -37,6 +37,9 @@
   "scripts": {
     "start": "env-cmd -f .env.local react-scripts start",
     "build": "env-cmd -f .env.dev react-scripts build",
+    "build:qa": "env-cmd -f .env.qa react-scripts build",
+    "build:stg": "env-cmd -f .env.stg react-scripts build",
+    "build:prod": "env-cmd -f .env.prod react-scripts build",
     "build-local": "env-cmd -f .env react-scripts build",
     "format": "prettier --write \"./src/**/*.{ts,tsx,json}\"",
     "test": "react-scripts test --coverage --watchAll=false --maxWorkers=4",
