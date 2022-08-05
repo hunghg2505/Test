@@ -5,7 +5,7 @@ import { useRef, useState } from 'react';
 import ApiUtils from 'utils/api/api.utils';
 import { API_PATH } from 'utils/api/constant';
 
-export interface IUserInfo {
+export type IUserInfo = {
   id?: string;
   imageUrl?: string;
   email?: string;
@@ -21,7 +21,9 @@ export interface IUserInfo {
   nationality?: string;
   passportNo?: string;
   laserCode?: string;
-}
+};
+
+export type TKeyUserInfo = keyof IUserInfo;
 
 export interface IDataSubjectDetail {
   userInfo: IUserInfo;

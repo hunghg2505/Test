@@ -30,6 +30,10 @@
         border-color: #202225 !important;
       }
     }
+
+    input#nationality {
+      color: #202225 !important;
+    }
   }
 }
 
@@ -39,6 +43,7 @@
 
 .userInfoDisplay {
   width: 100%;
+  row-gap: 25px;
 
   .row {
     flex-flow: nowrap;
@@ -53,6 +58,10 @@
     font-weight: 400;
     font-size: 14px;
     color: #202225;
+    max-width: 200px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    line-height: 18px;
   }
 }
 
