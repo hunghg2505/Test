@@ -1,4 +1,4 @@
-import { Button, Col, Form, Row, Upload } from 'antd';
+import { Button, Col, Form, Modal, Row, Upload } from 'antd';
 import IconCamera from 'assets/icons/icon-camera';
 import { IUserInfo, useDataSubjectDetail } from 'modules/dataSubjectManagement/utils/service';
 import { useTranslation } from 'react-i18next';
@@ -13,6 +13,10 @@ import { FromDisplayUser } from './FromDisplayUser';
 import { FormEditUser } from './FormEditUser';
 import { useUpdateConsent } from './service';
 import Loading from 'libraries/components/loading';
+import { useCallback } from 'react';
+import { ExclamationCircleOutlined } from '@ant-design/icons';
+
+const { confirm } = Modal;
 
 const IconEdit = (
   <svg xmlns='http://www.w3.org/2000/svg' width={20} height={20} viewBox='0 0 20 20' fill='none'>
@@ -58,6 +62,27 @@ function UserProfile({ id, isChangeProfile = true }: { id: any; isChangeProfile?
     }
   };
 
+  const showConfirm = useCallback(() => {
+    confirm({
+      title: 'Confirm Cancel',
+      icon: <ExclamationCircleOutlined style={{ color: 'red' }} />,
+      content: 'Are you sure you want to cancel Editing?',
+      okText: 'Yes',
+      cancelText: 'No',
+      okType: 'danger',
+      okButtonProps: {
+        className: styles.btnDelete,
+      },
+      cancelButtonProps: {
+        className: styles.btnNo,
+      },
+      onOk() {
+        setFormDisabled(true);
+        form.resetFields();
+      },
+    });
+  }, []);
+
   if (loading) {
     return <Loading />;
   }
@@ -66,26 +91,6 @@ function UserProfile({ id, isChangeProfile = true }: { id: any; isChangeProfile?
 
   return (
     <div className={styles.userInfoWrap}>
-      {/* <Row justify='end' className={styles.btnActions}>
-        {formDisabled ? (
-          <CustomButton
-            typeDisplay='ghost'
-            className={styles.btnEdit}
-            onClick={() => setFormDisabled(false)}
-          >
-            {IconEdit}Edit
-          </CustomButton>
-        ) : (
-          <>
-            <CustomButton className={styles.btnSave} onClick={onSubmit}>
-              Submit
-            </CustomButton>
-            <CustomButton onClick={() => setFormDisabled(true)} className={styles.btnCancel}>
-              Cancel
-            </CustomButton>
-          </>
-        )}
-      </Row> */}
       {isHavePermissionEditProfile && (
         <Row justify='end' className={styles.btnActions}>
           {formDisabled ? (
@@ -101,7 +106,12 @@ function UserProfile({ id, isChangeProfile = true }: { id: any; isChangeProfile?
               <CustomButton className={styles.btnSave} onClick={onSubmit}>
                 Submit
               </CustomButton>
-              <CustomButton onClick={() => setFormDisabled(true)} className={styles.btnCancel}>
+              <CustomButton
+                onClick={() => {
+                  showConfirm();
+                }}
+                className={styles.btnCancel}
+              >
                 Cancel
               </CustomButton>
             </>

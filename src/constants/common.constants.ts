@@ -73,6 +73,7 @@ export const PERMISSION_ID = {
   viewSearchCase: 'PDPA_CaseManagement_ViewSearchCase',
   viewAssignToCase: 'PDPA_CaseManagement_ViewAssignedTo',
   viewUserProfile: 'PDPA_UserProfile_View',
+  viewDSM: 'PDPA_DataSubjectManagement_View',
 };
 
 export const STATUS_CONSENT_DROPDOWN_DATA = [

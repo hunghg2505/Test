@@ -29,9 +29,18 @@ export default function useDataSubjectManagementPermission() {
     [auth],
   );
 
+  const isHavePermissionViewDSM = useMemo(
+    () =>
+      auth?.user?.roles
+        ?.find((item) => item.name === FEATURE_NAME.dataSubjectManagement)
+        ?.permissions.some((item) => item.permissionId === PERMISSION_ID.viewDSM),
+    [auth],
+  );
+
   return {
     isHavePermissionSaveConsent,
     isHavePermissionCreateLink,
     isHavePermissionEditProfile,
+    isHavePermissionViewDSM,
   };
 }

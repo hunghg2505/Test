@@ -182,7 +182,7 @@ export const FormEditUser = ({ form, userInfo, t }: any) => {
                 },
               },
             ]}
-            maxLength={14}
+            maxLength={11}
           />
         </Col>
 
@@ -247,7 +247,16 @@ export const FormEditUser = ({ form, userInfo, t }: any) => {
         </Col>
 
         <Col xs={12}>
-          <Form.Item name='nationality' label={t('nationality')}>
+          <Form.Item
+            name='nationality'
+            label={t('nationality')}
+            rules={[
+              {
+                required: true,
+                message: t('messages.errors.require', { field: t('nationality') }),
+              },
+            ]}
+          >
             <Select placeholder={t('nationality')} allowClear={true} showSearch>
               {country
                 .names()

@@ -11,6 +11,7 @@ import { useRef } from 'react';
 import Button from 'libraries/UI/Button';
 import { Row } from 'antd';
 import useConsentManagementPermission from 'hooks/useConsentManagementPermission';
+import useDataSubjectManagementPermission from 'hooks/useDataSubjectManagementPermission';
 
 function CaseManagementDetail() {
   const { id } = useParams();
@@ -18,6 +19,7 @@ function CaseManagementDetail() {
   const { data, loading, refresh, deleteCaseRequest } = useCaseDetail(id);
   const refActivityLog: any = useRef(null);
   const { isHavePermissionViewConsent } = useConsentManagementPermission();
+  const { isHavePermissionViewDSM } = useDataSubjectManagementPermission();
 
   if (!id) {
     navigate('/case-management');
@@ -33,11 +35,13 @@ function CaseManagementDetail() {
     <ContainerLayout title='Case Management Detail'>
       {data?.userProfile && (
         <div className={styles.wrap}>
-          <Row justify='end'>
-            <Button onClick={() => navigate(`/data-subject/${data?.userProfile?.id}`)}>
-              View DSM Detail
-            </Button>
-          </Row>
+          {isHavePermissionViewDSM && (
+            <Row justify='end'>
+              <Button onClick={() => navigate(`/data-subject/${data?.userProfile?.id}`)}>
+                View DSM Detail
+              </Button>
+            </Row>
+          )}
 
           <UserInfo userInfo={data?.userProfile} />
           {isHavePermissionViewConsent && <ConsentList userId={data?.userProfile?.id} />}

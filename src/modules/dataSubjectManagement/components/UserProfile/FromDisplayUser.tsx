@@ -6,7 +6,7 @@ import moment from 'moment';
 
 export const FromDisplayUser = ({ userInfo }: any) => {
   return (
-    <Row gutter={[36, 25]} className={styles.userInfoDisplay}>
+    <Row gutter={[100, 25]} className={styles.userInfoDisplay}>
       <Col span={12}>
         <Row gutter={[40, 0]} className={styles.row}>
           <Col className={styles.txtLabel} span={12}>
