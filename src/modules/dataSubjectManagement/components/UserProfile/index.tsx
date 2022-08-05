@@ -1,6 +1,10 @@
 import { Button, Col, Form, Modal, Row, Upload } from 'antd';
 import IconCamera from 'assets/icons/icon-camera';
-import { IUserInfo, useDataSubjectDetail } from 'modules/dataSubjectManagement/utils/service';
+import {
+  IUserInfo,
+  TKeyUserInfo,
+  useDataSubjectDetail,
+} from 'modules/dataSubjectManagement/utils/service';
 import { useTranslation } from 'react-i18next';
 
 import useDataSubjectManagementPermission from 'hooks/useDataSubjectManagementPermission';
@@ -15,6 +19,7 @@ import { useUpdateConsent } from './service';
 import Loading from 'libraries/components/loading';
 import { useCallback } from 'react';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
+import moment from 'moment';
 
 const { confirm } = Modal;
 
@@ -63,6 +68,21 @@ function UserProfile({ id, isChangeProfile = true }: { id: any; isChangeProfile?
   };
 
   const showConfirm = useCallback(() => {
+    let isChange = false;
+    const userInfor: any = { ...userInfo };
+    const values: any = form.getFieldsValue(true);
+    Object.keys(values)?.forEach((key: string) => {
+      if (values[key] !== userInfor[key] && key !== 'dateOfBirth') isChange = true;
+      if (moment(values['dateOfBirth']).diff(moment(userInfo['dateOfBirth'])) !== 0)
+        isChange = true;
+    });
+
+    if (!isChange) {
+      setFormDisabled(true);
+      form.resetFields();
+      return;
+    }
+
     confirm({
       title: 'Confirm Cancel',
       icon: <ExclamationCircleOutlined style={{ color: 'red' }} />,
@@ -81,7 +101,7 @@ function UserProfile({ id, isChangeProfile = true }: { id: any; isChangeProfile?
         form.resetFields();
       },
     });
-  }, []);
+  }, [userInfo, form]);
 
   if (loading) {
     return <Loading />;
@@ -106,12 +126,7 @@ function UserProfile({ id, isChangeProfile = true }: { id: any; isChangeProfile?
               <CustomButton className={styles.btnSave} onClick={onSubmit}>
                 Submit
               </CustomButton>
-              <CustomButton
-                onClick={() => {
-                  showConfirm();
-                }}
-                className={styles.btnCancel}
-              >
+              <CustomButton onClick={showConfirm} className={styles.btnCancel}>
                 Cancel
               </CustomButton>
             </>

@@ -1,20 +1,20 @@
-import { Button, Col, DatePicker, Form, Row } from 'antd';
+import { Col, DatePicker, Form, Row } from 'antd';
 
 import styles from './index.module.scss';
 
+import country from 'country-list-js';
 import InputForm from 'libraries/form/input/input-form';
 import Select from 'libraries/UI/Select';
 import moment from 'moment';
-import { RegexUtils } from 'utils/regex-helper';
-import country from 'country-list-js';
 import { disabledFutureDate } from 'utils/common.utils';
+import { RegexUtils } from 'utils/regex-helper';
 import { useCheckParams } from './service';
 
 export const FormEditUser = ({ form, userInfo, t }: any) => {
   const requestCheckParams = useCheckParams();
 
   const initialValues = {
-    birthday: moment(userInfo?.dateOfBirth),
+    dateOfBirth: moment(userInfo?.dateOfBirth),
     cardId: userInfo?.cardId || '',
     email: userInfo?.email || '',
     firstNameEn: userInfo?.firstNameEn || '',
@@ -94,7 +94,7 @@ export const FormEditUser = ({ form, userInfo, t }: any) => {
 
         <Col xs={12} className={styles.itemBirthday}>
           <Form.Item
-            name='birthday'
+            name='dateOfBirth'
             label={t('birthday')}
             rules={[
               {
