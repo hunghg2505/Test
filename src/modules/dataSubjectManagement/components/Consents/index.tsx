@@ -161,21 +161,26 @@ const SearchBox = ({
   );
 };
 
-const ConsentOption = ({ value, onChange, dataConsent, isHavePermissionSaveConsent }: any) => {
+const ConsentOption = ({
+  value,
+  onChange,
+  dataConsent,
+  isHavePermissionSaveConsent,
+  onlyView,
+}: any) => {
   const onChangeValues = (checkedValues: any) => {
     onChange(checkedValues);
   };
+
+  let disable = !isHavePermissionSaveConsent;
+  if (onlyView) disable = true;
 
   if (!dataConsent?.length) {
     return null;
   }
 
   return (
-    <Checkbox.Group
-      onChange={onChangeValues}
-      defaultValue={value}
-      disabled={!isHavePermissionSaveConsent}
-    >
+    <Checkbox.Group onChange={onChangeValues} defaultValue={value} disabled={disable}>
       {dataConsent.map((item: any) => {
         return (
           <Checkbox key={item.value} value={item.value}>
@@ -279,6 +284,7 @@ export const ConsentsList = ({
                       <ConsentOption
                         dataConsent={it?.list}
                         isHavePermissionSaveConsent={isHavePermissionSaveConsent}
+                        onlyView={onlyView}
                       />
                     </Form.Item>
                   </Panel>
