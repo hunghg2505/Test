@@ -86,11 +86,11 @@
   }
 }
 
-.inputSearch {
+.inputSearch.inputSearch {
   border: none !important;
   border-radius: none !important;
   height: initial;
-  padding: 0 15px;
+  padding: 0 15px !important;
   font-style: normal;
   font-weight: 400;
   font-size: 14px;
