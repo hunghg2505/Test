@@ -1,4 +1,4 @@
-import { Button, Col, Form, Row, Upload } from 'antd';
+import { Button, Col, Form, Modal, Row, Upload } from 'antd';
 import IconCamera from 'assets/icons/icon-camera';
 import { IUserInfo } from 'modules/dataSubjectManagement/utils/service';
 import { useTranslation } from 'react-i18next';
@@ -13,6 +13,10 @@ import { FromDisplayUser } from './FromDisplayUser';
 import { FormEditUser } from './FormEditUser';
 import { useUpdateConsent } from './service';
 import { useParams } from 'react-router-dom';
+import { useCallback } from 'react';
+import { ExclamationCircleOutlined } from '@ant-design/icons';
+
+const { confirm } = Modal;
 
 const IconEdit = (
   <svg xmlns='http://www.w3.org/2000/svg' width={20} height={20} viewBox='0 0 20 20' fill='none'>
@@ -65,6 +69,27 @@ function UserProfile({
     }
   };
 
+  const showConfirm = useCallback(() => {
+    confirm({
+      title: 'Confirm Cancel',
+      icon: <ExclamationCircleOutlined style={{ color: 'red' }} />,
+      content: 'Are you sure you want to cancel Editing?',
+      okText: 'Yes',
+      cancelText: 'No',
+      okType: 'danger',
+      okButtonProps: {
+        className: styles.btnDelete,
+      },
+      cancelButtonProps: {
+        className: styles.btnNo,
+      },
+      onOk() {
+        setFormDisabled(true);
+        form.resetFields();
+      },
+    });
+  }, []);
+
   if (!userInfo) return null;
 
   return (
@@ -86,8 +111,7 @@ function UserProfile({
               </CustomButton>
               <CustomButton
                 onClick={() => {
-                  setFormDisabled(true);
-                  form.resetFields();
+                  showConfirm();
                 }}
                 className={styles.btnCancel}
               >

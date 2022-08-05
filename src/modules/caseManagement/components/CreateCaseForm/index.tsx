@@ -213,7 +213,7 @@ const CreateCaseForm = ({
                 <Divider />
                 <Col xs={12}>
                   <Form.Item label='Result' name='responseStatus'>
-                    <Select placeholder='Select Result'>
+                    <Select placeholder='Select Result' allowClear>
                       {RESULT_DROPDOWN_DATA.map((item, index) => (
                         <Select.Option value={item.value} key={`${index}${item.value}`}>
                           {item.value}
