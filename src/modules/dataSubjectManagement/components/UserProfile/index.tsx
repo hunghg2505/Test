@@ -1,6 +1,6 @@
 import { Button, Col, Form, Row, Upload } from 'antd';
 import IconCamera from 'assets/icons/icon-camera';
-import { IUserInfo } from 'modules/dataSubjectManagement/utils/service';
+import { IUserInfo, useDataSubjectDetail } from 'modules/dataSubjectManagement/utils/service';
 import { useTranslation } from 'react-i18next';
 
 import useDataSubjectManagementPermission from 'hooks/useDataSubjectManagementPermission';
@@ -12,7 +12,7 @@ import ImgUserProfile from '../../../../assets/images/user-profile.png';
 import { FromDisplayUser } from './FromDisplayUser';
 import { FormEditUser } from './FormEditUser';
 import { useUpdateConsent } from './service';
-import { useParams } from 'react-router-dom';
+import Loading from 'libraries/components/loading';
 
 const IconEdit = (
   <svg xmlns='http://www.w3.org/2000/svg' width={20} height={20} viewBox='0 0 20 20' fill='none'>
@@ -32,20 +32,13 @@ const IconEdit = (
   </svg>
 );
 
-function UserProfile({
-  userInfo,
-  isChangeProfile = true,
-  refresh,
-}: {
-  userInfo?: IUserInfo;
-  isChangeProfile?: boolean;
-  refresh?: any;
-}) {
+function UserProfile({ id, isChangeProfile = true }: { id: any; isChangeProfile?: boolean }) {
   const { t } = useTranslation();
+  const { loading, data, refresh } = useDataSubjectDetail(`${id}`);
   const { isHavePermissionEditProfile } = useDataSubjectManagementPermission();
   const [formDisabled, setFormDisabled] = useState(true);
   const [form] = Form.useForm();
-  const { id } = useParams();
+  const userInfo = data?.userInfo as IUserInfo;
 
   const onFinishSubmitForm = () => {
     setFormDisabled(true);
@@ -64,6 +57,10 @@ function UserProfile({
       console.log(error);
     }
   };
+
+  if (loading) {
+    return <Loading />;
+  }
 
   if (!userInfo) return null;
 
