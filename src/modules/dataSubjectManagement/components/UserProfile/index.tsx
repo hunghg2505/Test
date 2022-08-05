@@ -69,26 +69,6 @@ function UserProfile({
 
   return (
     <div className={styles.userInfoWrap}>
-      {/* <Row justify='end' className={styles.btnActions}>
-        {formDisabled ? (
-          <CustomButton
-            typeDisplay='ghost'
-            className={styles.btnEdit}
-            onClick={() => setFormDisabled(false)}
-          >
-            {IconEdit}Edit
-          </CustomButton>
-        ) : (
-          <>
-            <CustomButton className={styles.btnSave} onClick={onSubmit}>
-              Submit
-            </CustomButton>
-            <CustomButton onClick={() => setFormDisabled(true)} className={styles.btnCancel}>
-              Cancel
-            </CustomButton>
-          </>
-        )}
-      </Row> */}
       {isHavePermissionEditProfile && (
         <Row justify='end' className={styles.btnActions}>
           {formDisabled ? (
