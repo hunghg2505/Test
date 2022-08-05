@@ -84,7 +84,13 @@ function UserProfile({
               <CustomButton className={styles.btnSave} onClick={onSubmit}>
                 Submit
               </CustomButton>
-              <CustomButton onClick={() => setFormDisabled(true)} className={styles.btnCancel}>
+              <CustomButton
+                onClick={() => {
+                  setFormDisabled(true);
+                  form.resetFields();
+                }}
+                className={styles.btnCancel}
+              >
                 Cancel
               </CustomButton>
             </>

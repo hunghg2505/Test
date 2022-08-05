@@ -71,6 +71,7 @@ export const PERMISSION_ID = {
   createLink: 'PDPA_DataSubjectManagement_Create',
   viewSearchCase: 'PDPA_CaseManagement_ViewSearchCase',
   viewAssignToCase: 'PDPA_CaseManagement_ViewAssignedTo',
+  viewDSM: 'PDPA_DataSubjectManagement_View',
 };
 
 export const STATUS_CONSENT_DROPDOWN_DATA = [

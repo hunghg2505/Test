@@ -10,12 +10,14 @@ import { useCaseDetail } from './services';
 import { useRef } from 'react';
 import Button from 'libraries/UI/Button';
 import { Row } from 'antd';
+import useDataSubjectManagementPermission from 'hooks/useDataSubjectManagementPermission';
 
 function CaseManagementDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
   const { data, loading, refresh, deleteCaseRequest } = useCaseDetail(id);
   const refActivityLog: any = useRef(null);
+  const { isHavePermissionViewDSM } = useDataSubjectManagementPermission();
 
   if (!id) {
     navigate('/case-management');
@@ -31,11 +33,13 @@ function CaseManagementDetail() {
     <ContainerLayout title='Case Management Detail'>
       {data?.userProfile && (
         <div className={styles.wrap}>
-          <Row justify='end'>
-            <Button onClick={() => navigate(`/data-subject/${data?.userProfile?.id}`)}>
-              View DSM Detail
-            </Button>
-          </Row>
+          {isHavePermissionViewDSM && (
+            <Row justify='end'>
+              <Button onClick={() => navigate(`/data-subject/${data?.userProfile?.id}`)}>
+                View DSM Detail
+              </Button>
+            </Row>
+          )}
 
           <UserInfo userInfo={data?.userProfile} />
           <ConsentList userId={data?.userProfile?.id} />
