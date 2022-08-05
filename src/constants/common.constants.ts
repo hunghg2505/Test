@@ -62,6 +62,7 @@ export const FEATURE_NAME = {
 
 export const PERMISSION_ID = {
   createCase: 'PDPA_CaseManagement_Create',
+  viewConsent: 'PDPA_ConsentManagement_View',
   editConsent: 'PDPA_ConsentManagement_Edit',
   createConsent: 'PDPA_ConsentManagement_Create',
   editDataSubject: 'PDPA_DataSubjectManagement_Edit',
@@ -71,6 +72,7 @@ export const PERMISSION_ID = {
   createLink: 'PDPA_DataSubjectManagement_Create',
   viewSearchCase: 'PDPA_CaseManagement_ViewSearchCase',
   viewAssignToCase: 'PDPA_CaseManagement_ViewAssignedTo',
+  viewUserProfile: 'PDPA_UserProfile_View',
   viewDSM: 'PDPA_DataSubjectManagement_View',
 };
 

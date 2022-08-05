@@ -1,10 +1,10 @@
-import Loading from 'libraries/components/loading';
+import useConsentManagementPermission from 'hooks/useConsentManagementPermission';
+import userProfilePermission from 'hooks/userProfilePermission';
 import ContainerLayout from 'libraries/layouts/container.layout';
 import { useRef } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import Consents from './components/Consents';
 import DataSubjectHistory from './components/DataSubjectHistory';
-import { useDataSubjectDetail } from './utils/service';
 
 import UserProfile from './components/UserProfile';
 
@@ -12,27 +12,21 @@ function DataSubjectDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
   const refDataHistory: any = useRef(null);
-
-  const { loading, data, refresh } = useDataSubjectDetail(`${id}`);
+  const { isHavePermissionViewConsent } = useConsentManagementPermission();
+  const { isHavePermissionViewProfile } = userProfilePermission();
 
   if (!id) {
     navigate('/data-subject');
     return null;
   }
 
-  if (loading) {
-    return (
-      <ContainerLayout title='Data Subject Detail'>
-        <Loading />
-      </ContainerLayout>
-    );
-  }
-
   return (
     <ContainerLayout title='Data Subject Detail'>
-      <UserProfile userInfo={data?.userInfo} refresh={refresh} />
-      <Consents userId={Number(data?.userInfo?.id)} refDataHistory={refDataHistory} />
-      <DataSubjectHistory userId={data?.userInfo?.id || ''} subjectId={id} ref={refDataHistory} />
+      {isHavePermissionViewProfile && <UserProfile id={id} />}
+      {isHavePermissionViewConsent && (
+        <Consents userId={Number(id)} refDataHistory={refDataHistory} />
+      )}
+      <DataSubjectHistory userId={id || ''} subjectId={id} ref={refDataHistory} />
     </ContainerLayout>
   );
 }

@@ -10,6 +10,7 @@ import { useCaseDetail } from './services';
 import { useRef } from 'react';
 import Button from 'libraries/UI/Button';
 import { Row } from 'antd';
+import useConsentManagementPermission from 'hooks/useConsentManagementPermission';
 import useDataSubjectManagementPermission from 'hooks/useDataSubjectManagementPermission';
 
 function CaseManagementDetail() {
@@ -17,6 +18,7 @@ function CaseManagementDetail() {
   const navigate = useNavigate();
   const { data, loading, refresh, deleteCaseRequest } = useCaseDetail(id);
   const refActivityLog: any = useRef(null);
+  const { isHavePermissionViewConsent } = useConsentManagementPermission();
   const { isHavePermissionViewDSM } = useDataSubjectManagementPermission();
 
   if (!id) {
@@ -42,7 +44,7 @@ function CaseManagementDetail() {
           )}
 
           <UserInfo userInfo={data?.userProfile} />
-          <ConsentList userId={data?.userProfile?.id} />
+          {isHavePermissionViewConsent && <ConsentList userId={data?.userProfile?.id} />}
           <CreateCaseForm
             data={data}
             loading={loading}
