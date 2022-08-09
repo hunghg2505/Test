@@ -127,6 +127,44 @@ const configRoutes: IRouter[] = [
         icons: React.createElement(IconUserManagement),
         roles: ['Super Admin', 'Administrator'],
       },
+      {
+        path: routePath.SystemConfiguration,
+        element: lazy(() => import('modules/SystemConfiguration/index')),
+        name: 'System Configuration',
+        icons: React.createElement(IconCaseManagement),
+        haveChild: true,
+        roles: ['Super Admin', 'DPO', 'Authorized User', 'Administrator'],
+        children: [
+          {
+            path: routePath.ConnectionConfiguration,
+            element: lazy(
+              () => import('modules/SystemConfiguration/ConnectionConfiguration/index'),
+            ),
+            name: 'Connection Configuration',
+            roles: ['Super Admin', 'DPO', 'Authorized User', 'Administrator'],
+          },
+          {
+            path: routePath.GeneralConfiguration,
+            element: lazy(() => import('modules/SystemConfiguration/GeneralConfiguration/index')),
+            name: 'GeneralConfiguration',
+            roles: ['Super Admin', 'DPO', 'Authorized User', 'Administrator'],
+          },
+        ],
+      },
+      {
+        path: routePath.ConnectionConfiguration,
+        element: lazy(() => import('modules/SystemConfiguration/ConnectionConfiguration/index')),
+        name: 'Connection Configuration',
+        hiddenMenu: true,
+        roles: ['Super Admin', 'DPO', 'Authorized User', 'Administrator'],
+      },
+      {
+        path: routePath.GeneralConfiguration,
+        element: lazy(() => import('modules/SystemConfiguration/GeneralConfiguration/index')),
+        name: 'General Configuration',
+        hiddenMenu: true,
+        roles: ['Super Admin', 'DPO', 'Authorized User', 'Administrator'],
+      },
       // {
       //   path: routePath.ConsentManagement,
       //   element: lazy(() => import('modules/consentManagement/index')),

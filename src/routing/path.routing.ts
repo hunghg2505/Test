@@ -12,6 +12,9 @@ export const routePath = {
   ConsentManagement: '/consent',
   ConsentDetail: '/consent/:id',
   UserManagement: '/user-management',
+  SystemConfiguration: '/system-configuration',
+  GeneralConfiguration: 'system-configuration/general-configuration',
+  ConnectionConfiguration: 'system-configuration/connection-configuration',
 
   // Auth Path
   Auth: '/auth',
