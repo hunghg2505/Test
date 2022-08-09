@@ -146,7 +146,7 @@ const configRoutes: IRouter[] = [
           {
             path: routePath.GeneralConfiguration,
             element: lazy(() => import('modules/SystemConfiguration/GeneralConfiguration/index')),
-            name: 'GeneralConfiguration',
+            name: 'General Configuration',
             roles: ['Super Admin', 'DPO', 'Authorized User', 'Administrator'],
           },
         ],

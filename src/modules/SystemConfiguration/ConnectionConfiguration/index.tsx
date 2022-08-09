@@ -8,10 +8,14 @@ import { useTranslation } from 'react-i18next';
 import styles from './index.module.scss';
 import AdvancedSearch from './components/AdvanceSearch';
 import InputForm from 'libraries/form/input/input-form';
+import { useCompanies } from './services';
+import TableCompany from './components/TableCompany';
 
 const ConnectionConfiguration = () => {
   const { t } = useTranslation();
   const refFormSearch: any = useRef();
+
+  const { companies, loading } = useCompanies();
 
   const onFinish = (values: any) => {
     console.log(values);
@@ -28,7 +32,7 @@ const ConnectionConfiguration = () => {
 
                 <InputForm
                   name='searchString'
-                  placeholder='Search Case ID, Assign to'
+                  placeholder='Search'
                   className={styles.inputSearch}
                   classNameFormInput={styles.inputSearchForm}
                   maxLength={55}
@@ -63,6 +67,8 @@ const ConnectionConfiguration = () => {
           </Button>
         </Row>
       </div>
+
+      <TableCompany companies={companies} />
     </ContainerLayout>
   );
 };
