@@ -1,0 +1,190 @@
+
+
+.container {
+  padding: 0 40px 40px;
+
+  > div:first-child {
+    background-color: #FFFFFF;
+    border: 1px solid #f6f6f6;
+    box-shadow: 0px 5px 40px #092c4c05;
+    border-radius: 8px;
+  }
+}
+
+.header {
+  flex-flow: nowrap;
+  text-align: center;
+  div {
+    font-weight: 700;
+    font-size: 12px;
+    color: #202225;
+    border-bottom: 1px solid #f6f6f6;
+  }
+}
+
+.companyName {
+  flex: 1;
+  padding: 16px;
+}
+
+.companyCreatedDate {
+  flex: 206px 0 0;
+  padding: 16px;
+}
+
+.companyAction {
+  flex: 206px 0 0;
+  padding: 16px;
+}
+
+.body {
+  text-align: center;
+  > div {
+    padding: 16px;
+  }
+  .companyName {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    span {
+      font-weight: 400;
+      font-size: 14px;
+      color: #828282;
+    }
+  }
+
+  .companyCreatedDate {
+    font-weight: 400;
+    font-size: 14px;
+    color: #828282;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+.arrow svg {
+  cursor: pointer;
+  width: 12px;
+  path {
+    fill: #828282 !important;
+  }
+}
+
+.btnDelete, .btnEdit {
+  background: rgba(207, 42, 43, 0.1);
+  border-radius: 4px;
+  padding: 5.5px 16px;
+  font-weight: 700;
+  font-size: 14px;
+  color: #cf2a2b;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.btnEdit {
+  margin-left: 10px;
+}
+
+.applicationWrap {
+  padding: 16px 32px;
+
+  .table {
+    border: 1px solid #828282;
+    > div {
+      padding: 16px;
+    }
+    > div:not(:last-child) {
+      border-bottom: 1px solid #828282;
+    }
+
+    .arrow {
+      margin-left: 10px;
+    }
+
+    .appName {
+      font-size: 14px;
+      color: #202225;
+      cursor: pointer;
+    }
+  }
+
+  .appInfo {
+    padding: 16px 0;
+    margin-bottom: 3px;
+
+    .appInfoName {
+      font-size: 12px;
+      color: #202225;
+      cursor: pointer;
+      margin-bottom: 10px;
+    }
+  }
+
+  h4 {
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 150%;
+    color: #cf2a2b;
+    margin-bottom: 10px;
+  }
+}
+
+.btnLoadMore {
+  text-align: center;
+  font-weight: 700;
+  font-size: 14px;
+  color: #202225;
+  cursor: pointer;
+  margin-top: 18px;
+}
+
+.formAddNew {
+  margin-top: 32px;
+
+  .divRow {
+    gap: 15px;
+    flex-flow: nowrap;
+  }
+
+  :global {
+    .ant-form-item {
+      flex: 1;
+    }
+
+    input {
+      border-color: #202225 !important;
+    }
+  }
+}
+
+.infoWrap {
+  padding-left: 10px;
+
+  > div {
+    margin-bottom: 10px;
+  }
+  > div:not(:first-child) {
+    margin-bottom: 10px;
+  }
+
+  .label {
+    font-weight: 700;
+    font-size: 12px;
+    color: #202225;
+    margin-bottom: 5px;
+  }
+
+  .content {
+    border: 1px solid #828282;
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 12px;
+    color: #202225;
+  }
+}
+
+.pagination {
+  margin-top: 24px;
+}

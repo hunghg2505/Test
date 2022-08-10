@@ -10,11 +10,16 @@ import AdvancedSearch from './components/AdvanceSearch';
 import InputForm from 'libraries/form/input/input-form';
 import CreateCompanyForm from './components/CreateCompanyForm';
 
+import { useCompanies } from './services';
+import TableCompany from './components/TableCompany';
+
 const ConnectionConfiguration = () => {
   const { t } = useTranslation();
   const refFormSearch: any = useRef();
 
   const [isOpenCreateCompanyForm, setIsOpenCreateCompanyForm] = useState(false);
+
+  const { companies, loading } = useCompanies();
 
   const onFinish = (values: any) => {
     console.log(values);
@@ -75,6 +80,8 @@ const ConnectionConfiguration = () => {
         visible={isOpenCreateCompanyForm}
         onClose={() => setIsOpenCreateCompanyForm(false)}
       />
+
+      <TableCompany companies={companies} />
     </ContainerLayout>
   );
 };
