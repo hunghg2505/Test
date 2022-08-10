@@ -8,6 +8,7 @@ import { useTranslation } from 'react-i18next';
 import { useDeleteCompany, useEditCompany } from '../../utils/services';
 
 import styles from './index.module.scss';
+import { useApplications } from './services';
 
 const AppItem = ({ item }: any) => {
   const [showInfo, setShowInfo] = useState(false);
@@ -109,14 +110,19 @@ const AddNewApplications = () => {
   );
 };
 
-const Applications = ({ applications }: any) => {
+const Applications = ({ companyId }: any) => {
+  const { data, loading } = useApplications(companyId);
+  console.log({
+    data,
+  });
+
   return (
     <div className={styles.applicationWrap}>
       <h4>Applications</h4>
 
-      {applications?.map((application: any) => {
+      {/* {applications?.map((application: any) => {
         return <ApplicationItem key={application?.id} application={application} />;
-      })}
+      })} */}
 
       <AddNewApplications />
     </div>
@@ -154,6 +160,9 @@ const CompanyItem = ({ company, refresh }: any) => {
       id: Number(company.id),
     });
   };
+  console.log({
+    company,
+  });
 
   return (
     <div>
@@ -211,7 +220,7 @@ const CompanyItem = ({ company, refresh }: any) => {
         </Col>
       </Row>
 
-      {visible && <Applications applications={company?.applications} />}
+      {visible && <Applications companyId={company?.id} />}
     </div>
   );
 };

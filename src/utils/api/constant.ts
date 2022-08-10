@@ -60,4 +60,5 @@ export const API_PATH = {
 
   // System Configuration
   GET_LIST_COMPANY: `${COMPANY_SERVICE_BASE_URL}/list-company`,
+  GET_LIST_APPLICATIONS: `/application/list-applications`,
 };
