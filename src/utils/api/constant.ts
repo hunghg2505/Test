@@ -4,6 +4,7 @@ export const CASE_MANAGEMENT_BASE_URL = '/case-management';
 export const USER_MANAGEMENT_BASE_URL = '/user-management';
 export const CONSENT_MANAGEMENT_BASE_URL = '/consent-management';
 export const COMPANY_SERVICE_BASE_URL = '/company';
+export const APPLICATION_SERVICE_BASE_URL = '/application';
 
 export const API_PATH = {
   // Account
@@ -60,4 +61,5 @@ export const API_PATH = {
 
   // System Configuration
   GET_LIST_COMPANY: `${COMPANY_SERVICE_BASE_URL}/list-company`,
+  CREATE_APPLICATION: `${APPLICATION_SERVICE_BASE_URL}/create-application`,
 };
