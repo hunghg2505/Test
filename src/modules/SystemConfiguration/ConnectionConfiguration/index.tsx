@@ -78,7 +78,7 @@ const ConnectionConfiguration = () => {
         refresh={refresh}
       />
 
-      <TableCompany data={data} onChangePage={onChangePage} />
+      <TableCompany data={data} onChangePage={onChangePage} refresh={refresh} />
     </ContainerLayout>
   );
 };

@@ -1,10 +1,8 @@
-
-
 .container {
   padding: 0 40px 40px;
 
   > div:first-child {
-    background-color: #FFFFFF;
+    background-color: #ffffff;
     border: 1px solid #f6f6f6;
     box-shadow: 0px 5px 40px #092c4c05;
     border-radius: 8px;
@@ -72,7 +70,9 @@
   }
 }
 
-.btnDelete, .btnEdit {
+.btnDelete,
+.btnEdit,
+.btnSave {
   background: rgba(207, 42, 43, 0.1);
   border-radius: 4px;
   padding: 5.5px 16px;
@@ -187,4 +187,10 @@
 
 .pagination {
   margin-top: 24px;
+}
+
+.editForm {
+  display: flex;
+  align-items: center;
+  gap: 16px;
 }
