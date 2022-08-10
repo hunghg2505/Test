@@ -5,7 +5,7 @@ import Button from 'libraries/UI/Button';
 import { paginationItemRender } from 'libraries/UI/Pagination';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useDeleteCompany, useEditCompany } from '../../utils/services';
+import { useCreateApplication, useDeleteCompany, useEditCompany } from '../../utils/services';
 
 import styles from './index.module.scss';
 import { useApplications } from './services';
@@ -96,14 +96,28 @@ const ApplicationItem = ({ application }: any) => {
   );
 };
 
-const AddNewApplications = () => {
+const AddNewApplications = ({ companyId }: { companyId: string }) => {
+  const [createApplicationForm] = Form.useForm();
+
+  const onFinishCreateApplication = () => {
+    createApplicationForm.resetFields();
+  };
+
+  const createApplicationReq = useCreateApplication(onFinishCreateApplication);
+
+  const onFinish = (values: any) => {
+    createApplicationReq.run({ ...values, company_id: Number(companyId) });
+  };
+
   return (
     <div className={styles.formAddNew}>
-      <Form>
+      <Form form={createApplicationForm} onFinish={onFinish}>
         <h4>Add new Application</h4>
         <Row align='middle' justify='space-between' className={styles.divRow}>
-          <InputForm className={styles.input} name='search' />
-          <Button>Add</Button>
+          <InputForm className={styles.input} name='name' />
+          <Button htmlType='submit' className={styles.addBtn}>
+            Add
+          </Button>
         </Row>
       </Form>
     </div>
@@ -124,7 +138,7 @@ const Applications = ({ companyId }: any) => {
         return <ApplicationItem key={application?.id} application={application} />;
       })} */}
 
-      <AddNewApplications />
+      <AddNewApplications companyId={`${companyId}`} />
     </div>
   );
 };

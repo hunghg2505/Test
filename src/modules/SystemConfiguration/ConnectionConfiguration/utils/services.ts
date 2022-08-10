@@ -2,8 +2,9 @@ import { useRequest } from 'ahooks';
 import { message } from 'antd';
 import { ResponseBase } from 'utils/api/api.types';
 import ApiUtils from 'utils/api/api.utils';
-import { COMPANY_SERVICE_BASE_URL } from 'utils/api/constant';
+import { API_PATH, COMPANY_SERVICE_BASE_URL } from 'utils/api/constant';
 
+// Create, Update, Delete Company
 interface ICreateCompany {
   name: string;
 }
@@ -79,6 +80,40 @@ export const useDeleteCompany = (onFinishSubmitForm: any) => {
       },
       onError: () => {
         message.error('Delete Company Error');
+        onFinishSubmitForm();
+      },
+    },
+  );
+};
+
+// Create, Update, Delete Application
+
+interface ICreateApplication {
+  company_id: number;
+  name: string;
+}
+
+const createApplicationService = async (body: ICreateApplication) => {
+  return ApiUtils.post<ICreateApplication, ResponseBase<any>>(API_PATH.CREATE_APPLICATION, body);
+};
+
+export const useCreateApplication = (onFinishSubmitForm: any) => {
+  return useRequest(
+    async (data: ICreateApplication) => {
+      return createApplicationService(data);
+    },
+    {
+      manual: true,
+      onSuccess: () => {
+        message.success('Create Application Success');
+        onFinishSubmitForm();
+      },
+      onError: (error: any) => {
+        message.error(
+          error?.content?.messageContent
+            ? `${error?.content?.messageContent}`
+            : 'Create Application Error',
+        );
         onFinishSubmitForm();
       },
     },
