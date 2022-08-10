@@ -56,4 +56,7 @@ export const API_PATH = {
   GET_LIST_APPLICATION: `${CONSENT_MANAGEMENT_BASE_URL}/list-application`,
   GET_LIST_SERVICE: `${CONSENT_MANAGEMENT_BASE_URL}/list-service`,
   GET_LIST_CONSENTS: `${CONSENT_MANAGEMENT_BASE_URL}/list-consents`,
+
+  // System Configuration
+  CREATE_COMPANY: '/company',
 };

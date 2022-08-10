@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { Form, Row } from 'antd';
 import IconSearch from 'assets/icons/icon-search';
 import ContainerLayout from 'libraries/layouts/container.layout';
@@ -8,10 +8,13 @@ import { useTranslation } from 'react-i18next';
 import styles from './index.module.scss';
 import AdvancedSearch from './components/AdvanceSearch';
 import InputForm from 'libraries/form/input/input-form';
+import CreateCompanyForm from './components/CreateCompanyForm';
 
 const ConnectionConfiguration = () => {
   const { t } = useTranslation();
   const refFormSearch: any = useRef();
+
+  const [isOpenCreateCompanyForm, setIsOpenCreateCompanyForm] = useState(false);
 
   const onFinish = (values: any) => {
     console.log(values);
@@ -58,11 +61,20 @@ const ConnectionConfiguration = () => {
 
           <AdvancedSearch />
 
-          <Button typeDisplay='ghost' className={styles.btnCreate}>
+          <Button
+            onClick={() => setIsOpenCreateCompanyForm(true)}
+            typeDisplay='ghost'
+            className={styles.btnCreate}
+          >
             Create Company
           </Button>
         </Row>
       </div>
+
+      <CreateCompanyForm
+        visible={isOpenCreateCompanyForm}
+        onClose={() => setIsOpenCreateCompanyForm(false)}
+      />
     </ContainerLayout>
   );
 };
