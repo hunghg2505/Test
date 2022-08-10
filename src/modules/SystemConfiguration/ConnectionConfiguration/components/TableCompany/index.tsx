@@ -132,7 +132,7 @@ const CompanyItem = ({ company }: any) => {
     <div>
       <Row className={styles.body}>
         <Col className={styles.companyName}>
-          <span>{company?.companyName}</span>
+          <span>{company?.name}</span>
           <span onClick={onVisible} className={styles.arrow}>
             <IconArrowDown />
           </span>
@@ -149,7 +149,7 @@ const CompanyItem = ({ company }: any) => {
   );
 };
 
-const TableCompany = ({ companies }: any) => {
+const TableCompany = ({ data }: any) => {
   return (
     <div className={styles.container}>
       <div>
@@ -160,7 +160,7 @@ const TableCompany = ({ companies }: any) => {
         </Row>
 
         <div>
-          {companies?.map((company: any) => {
+          {data?.data?.map((company: any) => {
             return <CompanyItem key={company?.id} company={company} />;
           })}
         </div>
@@ -168,8 +168,10 @@ const TableCompany = ({ companies }: any) => {
 
       <Row justify='end' className={styles.pagination}>
         <Pagination
-          current={1}
-          total={100}
+          current={data?.current}
+          // onChange={onChange}
+          total={data?.total}
+          defaultPageSize={data?.pageSize}
           itemRender={paginationItemRender}
           showSizeChanger={false}
         />

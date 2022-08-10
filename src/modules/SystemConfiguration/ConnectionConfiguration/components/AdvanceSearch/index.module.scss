@@ -52,3 +52,11 @@
     stroke: $color-white !important;
   }
 }
+
+.datePickerLabel {
+  font-style: normal;
+  font-weight: 700;
+  font-size: 14px;
+  color: $black_color;
+  margin-bottom: 8px;
+}

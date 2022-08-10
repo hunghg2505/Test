@@ -19,10 +19,10 @@ const ConnectionConfiguration = () => {
 
   const [isOpenCreateCompanyForm, setIsOpenCreateCompanyForm] = useState(false);
 
-  const { companies, loading } = useCompanies();
+  const { data, loading, run, onChangePage, onSearchCompany, refresh } = useCompanies();
 
   const onFinish = (values: any) => {
-    console.log(values);
+    onSearchCompany({ ...values });
   };
 
   return (
@@ -35,16 +35,12 @@ const ConnectionConfiguration = () => {
                 <IconSearch />
 
                 <InputForm
-                  name='searchString'
-                  placeholder='Search'
+                  name='name'
+                  placeholder='Search name'
                   className={styles.inputSearch}
                   classNameFormInput={styles.inputSearchForm}
                   maxLength={55}
                   rules={[
-                    {
-                      required: true,
-                      message: t('messages.errors.min', { min: 3 }),
-                    },
                     {
                       min: 3,
                       message: t('messages.errors.min', { min: 3 }),
@@ -64,7 +60,7 @@ const ConnectionConfiguration = () => {
             </div>
           </Form>
 
-          <AdvancedSearch />
+          <AdvancedSearch onSearchCompany={onSearchCompany} />
 
           <Button
             onClick={() => setIsOpenCreateCompanyForm(true)}
@@ -81,7 +77,7 @@ const ConnectionConfiguration = () => {
         onClose={() => setIsOpenCreateCompanyForm(false)}
       />
 
-      <TableCompany companies={companies} />
+      <TableCompany data={data} />
     </ContainerLayout>
   );
 };

@@ -5,7 +5,7 @@ import InputForm from 'libraries/form/input/input-form';
 import styles from './index.module.scss';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import { useTranslation } from 'react-i18next';
-import { useCreateCompany } from '../../utils/service';
+import { useCreateCompany } from '../../utils/services';
 
 interface IProps {
   visible: boolean;

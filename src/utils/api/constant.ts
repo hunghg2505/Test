@@ -3,6 +3,7 @@ export const BACKEND_URL = process.env.REACT_APP_API_DOMAIN;
 export const CASE_MANAGEMENT_BASE_URL = '/case-management';
 export const USER_MANAGEMENT_BASE_URL = '/user-management';
 export const CONSENT_MANAGEMENT_BASE_URL = '/consent-management';
+export const COMPANY_SERVICE_BASE_URL = '/company';
 
 export const API_PATH = {
   // Account
@@ -58,5 +59,5 @@ export const API_PATH = {
   GET_LIST_CONSENTS: `${CONSENT_MANAGEMENT_BASE_URL}/list-consents`,
 
   // System Configuration
-  CREATE_COMPANY: '/company',
+  GET_LIST_COMPANY: `${COMPANY_SERVICE_BASE_URL}/list-company`,
 };
