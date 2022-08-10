@@ -75,9 +75,10 @@ const ConnectionConfiguration = () => {
       <CreateCompanyForm
         visible={isOpenCreateCompanyForm}
         onClose={() => setIsOpenCreateCompanyForm(false)}
+        refresh={refresh}
       />
 
-      <TableCompany data={data} />
+      <TableCompany data={data} onChangePage={onChangePage} />
     </ContainerLayout>
   );
 };

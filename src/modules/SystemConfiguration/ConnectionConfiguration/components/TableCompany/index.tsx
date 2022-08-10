@@ -149,7 +149,7 @@ const CompanyItem = ({ company }: any) => {
   );
 };
 
-const TableCompany = ({ data }: any) => {
+const TableCompany = ({ data, onChangePage }: any) => {
   return (
     <div className={styles.container}>
       <div>
@@ -169,7 +169,7 @@ const TableCompany = ({ data }: any) => {
       <Row justify='end' className={styles.pagination}>
         <Pagination
           current={data?.current}
-          // onChange={onChange}
+          onChange={onChangePage}
           total={data?.total}
           defaultPageSize={data?.pageSize}
           itemRender={paginationItemRender}

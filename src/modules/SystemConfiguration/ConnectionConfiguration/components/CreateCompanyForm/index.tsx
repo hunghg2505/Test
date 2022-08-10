@@ -10,17 +10,19 @@ import { useCreateCompany } from '../../utils/services';
 interface IProps {
   visible: boolean;
   onClose: () => void;
+  refresh: any;
 }
 
 const { confirm } = Modal;
 
-const CreateCompanyForm = ({ visible, onClose }: IProps) => {
+const CreateCompanyForm = ({ visible, onClose, refresh }: IProps) => {
   const { t } = useTranslation();
   const [createCompanyForm] = Form.useForm();
 
   const onFinishSubmitForm = () => {
     onClose();
     createCompanyForm.resetFields();
+    refresh();
   };
 
   const createCompanyFormRequest = useCreateCompany(onFinishSubmitForm);
