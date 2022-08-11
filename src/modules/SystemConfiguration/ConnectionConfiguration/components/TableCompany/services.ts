@@ -72,7 +72,7 @@ export const useApplications = (companyId: any) => {
 
   const requestUpdateEndpoint = useRequest(
     async (values, endpointId: any) => {
-      return ApiUtils.remove(API_PATH.APP_ENDPOINT(endpointId), values);
+      return ApiUtils.put(API_PATH.APP_ENDPOINT(endpointId), values);
     },
     {
       manual: true,
