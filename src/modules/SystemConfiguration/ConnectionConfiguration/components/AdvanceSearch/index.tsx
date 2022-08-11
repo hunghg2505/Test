@@ -36,7 +36,7 @@ const AdvancedSearch = ({ onSearchCompany }: any) => {
           }
         : undefined;
     onSearchCompany({
-      advanceSearch: { createdAt },
+      advanceSearch: { appName: values?.appName || undefined, createdAt },
     });
     setIsShowSearch(false);
   };
@@ -104,6 +104,15 @@ const AdvancedSearch = ({ onSearchCompany }: any) => {
                     value={createdEndDate}
                     placeholder='dd/mm/yyyy'
                     disabledDate={(current) => disabledEndedDate(current)(createdStartDate)}
+                  />
+                </Col>
+
+                <Col xs={11}>
+                  <InputForm
+                    label='Application name'
+                    name='appName'
+                    placeholder='Application name'
+                    maxLength={55}
                   />
                 </Col>
               </Row>
