@@ -41,7 +41,7 @@ export const useApplications = (companyId: any) => {
 
   const requestDeleteApp = useRequest(
     async (appId: any) => {
-      return ApiUtils.remove(`${APPLICATION_SERVICE_BASE_URL}/${appId}`, { applicationId: +appId });
+      return ApiUtils.remove(APPLICATION_SERVICE_BASE_URL, { id: +appId });
     },
     {
       manual: true,
