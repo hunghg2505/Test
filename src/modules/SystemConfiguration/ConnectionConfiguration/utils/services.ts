@@ -114,7 +114,7 @@ export const useCreateApplication = (onFinishSubmitForm: any) => {
             ? `${error?.content?.messageContent}`
             : 'Create Application Error',
         );
-        onFinishSubmitForm();
+        // onFinishSubmitForm();
       },
     },
   );

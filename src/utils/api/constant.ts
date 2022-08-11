@@ -61,5 +61,7 @@ export const API_PATH = {
 
   // System Configuration
   GET_LIST_COMPANY: `${COMPANY_SERVICE_BASE_URL}/list-company`,
-  CREATE_APPLICATION: `${APPLICATION_SERVICE_BASE_URL}/create-application`,
+  GET_LIST_APPLICATIONS: `/application/list-applications`,
+  CREATE_APPLICATION: `${APPLICATION_SERVICE_BASE_URL}`,
+  APP_ENDPOINT: (endpointId: any) => `/api-endpoint/${endpointId}`,
 };
