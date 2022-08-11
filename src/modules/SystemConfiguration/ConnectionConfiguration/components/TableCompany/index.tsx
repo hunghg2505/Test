@@ -5,6 +5,8 @@ import { CompanyItem } from './CompanyItem';
 import styles from './index.module.scss';
 
 const TableCompany = ({ data, onChangePage, refresh }: any) => {
+  if (!data?.data?.length) return null;
+
   return (
     <div className={styles.container}>
       <div>
