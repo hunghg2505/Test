@@ -2,6 +2,7 @@ import { Form, Row } from 'antd';
 import InputForm from 'libraries/form/input/input-form';
 import Button from 'libraries/UI/Button';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { useCreateApplication } from '../../utils/services';
 import { ApplicationItem } from './ApplicationItem';
 
@@ -16,6 +17,7 @@ const AddNewApplications = ({
   refreshApplication: () => void;
 }) => {
   const [createApplicationForm] = Form.useForm();
+  const { t } = useTranslation();
 
   const onFinishCreateApplication = () => {
     createApplicationForm.resetFields();
@@ -25,7 +27,7 @@ const AddNewApplications = ({
   const createApplicationReq = useCreateApplication(onFinishCreateApplication);
 
   const onFinish = (values: any) => {
-    createApplicationReq.run({ ...values, company_id: Number(companyId) });
+    createApplicationReq.run({ ...values, companyId: Number(companyId) });
   };
 
   return (
@@ -33,7 +35,16 @@ const AddNewApplications = ({
       <Form form={createApplicationForm} onFinish={onFinish}>
         <h4>Add new Application</h4>
         <Row align='middle' justify='space-between' className={styles.divRow}>
-          <InputForm className={styles.input} name='name' />
+          <InputForm
+            className={styles.input}
+            name='name'
+            rules={[
+              {
+                required: true,
+                message: t('messages.errors.require', { field: 'Application name' }),
+              },
+            ]}
+          />
           <Button htmlType='submit' className={styles.addBtn}>
             Add
           </Button>

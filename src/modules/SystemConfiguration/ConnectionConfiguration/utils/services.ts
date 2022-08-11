@@ -89,7 +89,7 @@ export const useDeleteCompany = (onFinishSubmitForm: any) => {
 // Create, Update, Delete Application
 
 interface ICreateApplication {
-  company_id: number;
+  companyId: number;
   name: string;
 }
 
