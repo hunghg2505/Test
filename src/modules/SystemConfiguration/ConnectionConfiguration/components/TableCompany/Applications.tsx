@@ -25,7 +25,7 @@ const AddNewApplications = ({
   const createApplicationReq = useCreateApplication(onFinishCreateApplication);
 
   const onFinish = (values: any) => {
-    createApplicationReq.run({ ...values, company_id: Number(companyId) });
+    createApplicationReq.run({ ...values, companyId: Number(companyId) });
   };
 
   return (

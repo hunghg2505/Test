@@ -41,7 +41,7 @@ export const useApplications = (companyId: any) => {
 
   const requestDeleteApp = useRequest(
     async (appId: any) => {
-      return ApiUtils.remove(APPLICATION_SERVICE_BASE_URL, { id: +appId });
+      return ApiUtils.remove(`${APPLICATION_SERVICE_BASE_URL}/${appId}`, { applicationId: +appId });
     },
     {
       manual: true,
@@ -50,7 +50,11 @@ export const useApplications = (companyId: any) => {
 
   const requestUpdateApp = useRequest(
     async (appId: any, name: string) => {
-      return ApiUtils.put(APPLICATION_SERVICE_BASE_URL, { id: +appId, companyId, name });
+      return ApiUtils.put(APPLICATION_SERVICE_BASE_URL, {
+        id: +appId,
+        companyId: +companyId,
+        name,
+      });
     },
     {
       manual: true,
