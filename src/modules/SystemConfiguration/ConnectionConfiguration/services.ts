@@ -140,7 +140,7 @@ const getListCompanyService = async (values: any): Promise<any> => {
   return {
     total: response?.content?.metadata?.total || 0,
     current: +response?.content?.metadata?.currentPage || 1,
-    pageSize: +response?.content?.metadata?.itemPage || 10,
+    pageSize: 10,
     data:
       response?.content?.data?.map((item: any) => ({
         ...item,
@@ -182,6 +182,12 @@ export const useCompanies = () => {
     if (callback) callback();
   };
 
+  const onReloadCompanyData = () => {
+    run({
+      page: data?.current || 1,
+    });
+  };
+
   useMount(() => {
     run({
       page: data?.current || 1,
@@ -197,5 +203,6 @@ export const useCompanies = () => {
     onChangePage,
     onSearchCompany,
     refresh,
+    onReloadCompanyData,
   };
 };

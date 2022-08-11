@@ -19,7 +19,8 @@ const ConnectionConfiguration = () => {
 
   const [isOpenCreateCompanyForm, setIsOpenCreateCompanyForm] = useState(false);
 
-  const { data, loading, run, onChangePage, onSearchCompany, refresh } = useCompanies();
+  const { data, loading, run, onChangePage, onSearchCompany, refresh, onReloadCompanyData } =
+    useCompanies();
 
   const onFinish = (values: any) => {
     onSearchCompany({ ...values });
@@ -75,10 +76,15 @@ const ConnectionConfiguration = () => {
       <CreateCompanyForm
         visible={isOpenCreateCompanyForm}
         onClose={() => setIsOpenCreateCompanyForm(false)}
-        refresh={refresh}
+        onReloadCompanyData={onReloadCompanyData}
       />
 
-      <TableCompany data={data} onChangePage={onChangePage} refresh={refresh} />
+      <TableCompany
+        data={data}
+        onChangePage={onChangePage}
+        refresh={refresh}
+        ononReloadCompanyData={onReloadCompanyData}
+      />
     </ContainerLayout>
   );
 };
