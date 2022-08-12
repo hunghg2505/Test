@@ -40,8 +40,12 @@ export const useCreateCompany = (onFinishSubmitForm: any) => {
         message.success('Create Company Success');
         onFinishSubmitForm();
       },
-      onError: () => {
-        message.error('Create Company Error');
+      onError: (error: any) => {
+        message.error(
+          error?.content?.messageContent
+            ? `${error?.content?.messageContent}`
+            : 'Create Company Error',
+        );
         onFinishSubmitForm();
       },
     },
