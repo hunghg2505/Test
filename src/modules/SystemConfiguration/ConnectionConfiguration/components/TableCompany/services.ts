@@ -81,7 +81,7 @@ export const useApplications = (companyId: any) => {
 
   const requestAddEndpoint = useRequest(
     async (values, applicationId: number | string) => {
-      return ApiUtils.post(API_PATH.ADD_ENDPOINT(applicationId), values);
+      return ApiUtils.post(API_PATH.APP_ENDPOINT(applicationId), values);
     },
     {
       manual: true,

@@ -65,5 +65,5 @@ test('Test value constant', () => {
   expect(API_PATH.GET_LIST_APPLICATIONS).toBe(`/application/list-applications`);
   expect(API_PATH.CREATE_APPLICATION).toBe(APPLICATION_SERVICE_BASE_URL);
   expect(API_PATH.APP_ENDPOINT(1)).toBe(`/api-endpoint/1`);
-  expect(API_PATH.GET_LIST_CONSENTS).toBe(`${CONSENT_MANAGEMENT_BASE_URL}/list-consents`);
+  expect(API_PATH.GET_COMPANY_SUGGESTION).toBe(`${COMPANY_SERVICE_BASE_URL}/data-autocomplete`);
 });

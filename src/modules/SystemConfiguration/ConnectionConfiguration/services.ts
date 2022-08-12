@@ -1,131 +1,10 @@
 import { useMount, useRequest } from 'ahooks';
 import dayjs from 'dayjs';
+import debounce from 'lodash/debounce';
 import get from 'lodash/get';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import ApiUtils from 'utils/api/api.utils';
 import { API_PATH } from 'utils/api/constant';
-
-// const getCompanies = async () => {
-//   return {
-//     list: [
-//       {
-//         id: 'c1',
-//         companyName: 'ABC',
-//         createdDate: '24/5/2022',
-//         applications: [
-//           {
-//             id: 'a1',
-//             applicationName: 'Application Name',
-//             applicationList: [
-//               {
-//                 id: 'l1',
-//                 name: 'API Endpoints',
-//                 info: {
-//                   linkUrl: 'https://',
-//                   method: '',
-//                   parameters: 'AA',
-//                   response: 'Response',
-//                   key: 'KEY',
-//                 },
-//               },
-//               {
-//                 id: 'l2',
-//                 name: 'User profile detail',
-//                 info: {
-//                   linkUrl: 'https://',
-//                   method: '',
-//                   parameters: 'AA',
-//                   response: 'Response',
-//                   key: 'KEY',
-//                 },
-//               },
-//               {
-//                 id: 'l3',
-//                 name: 'search user profile',
-//                 info: {
-//                   linkUrl: 'https://',
-//                   method: '',
-//                   parameters: 'AA',
-//                   response: 'Response',
-//                   key: 'KEY',
-//                 },
-//               },
-//               {
-//                 id: 'l4',
-//                 name: 'handle opt-in/opt-out',
-//                 info: {
-//                   linkUrl: 'https://',
-//                   method: '',
-//                   parameters: 'AA',
-//                   response: 'Response',
-//                   key: 'KEY',
-//                 },
-//               },
-//             ],
-//           },
-//         ],
-//       },
-
-//       {
-//         id: 'c2',
-//         companyName: 'XYZ',
-//         createdDate: '24/5/2022',
-//         applications: [
-//           {
-//             id: 'a2',
-//             applicationName: 'Application Name',
-//             applicationList: [
-//               {
-//                 id: 'l11',
-//                 name: 'API Endpoints',
-//                 info: {
-//                   linkUrl: 'https://',
-//                   method: '',
-//                   parameters: 'AA',
-//                   response: 'Response',
-//                   key: 'KEY',
-//                 },
-//               },
-//               {
-//                 id: 'l22',
-//                 name: 'User profile detail',
-//                 info: {
-//                   linkUrl: 'https://',
-//                   method: '',
-//                   parameters: 'AA',
-//                   response: 'Response',
-//                   key: 'KEY',
-//                 },
-//               },
-//               {
-//                 id: 'l33',
-//                 name: 'search user profile',
-//                 info: {
-//                   linkUrl: 'https://',
-//                   method: '',
-//                   parameters: 'AA',
-//                   response: 'Response',
-//                   key: 'KEY',
-//                 },
-//               },
-//               {
-//                 id: 'l44',
-//                 name: 'handle opt-in/opt-out',
-//                 info: {
-//                   linkUrl: 'https://',
-//                   method: '',
-//                   parameters: 'AA',
-//                   response: 'Response',
-//                   key: 'KEY',
-//                 },
-//               },
-//             ],
-//           },
-//         ],
-//       },
-//     ],
-//   };
-// };
 
 const getListCompanyService = async (values: any): Promise<any> => {
   const params: any = {
@@ -152,8 +31,38 @@ const getListCompanyService = async (values: any): Promise<any> => {
   };
 };
 
+const getCompaniesSuggestion = async (value: any, page = 1, column: string) => {
+  const params = {
+    column,
+    searchString: value || '',
+    limit: 10,
+    page,
+  };
+
+  const res: any = await ApiUtils.fetch(API_PATH.GET_COMPANY_SUGGESTION, params);
+
+  return {
+    data: res?.content?.data?.map((v: any, idx: number) => ({ id: idx, name: v })),
+    isLoadMore: +res?.content?.metadata?.currentPage < +res?.content?.metadata?.lastPage,
+    currentPage: +res?.content?.metadata?.currentPage,
+    value,
+  };
+};
+
 export const useCompanies = () => {
   const refCancelRequest = useRef(false);
+  const [companies, setCompanies] = useState<{
+    data: any[];
+    isLoadMore: boolean;
+    currentPage: number;
+    value: string;
+  }>({
+    data: [],
+    isLoadMore: false,
+    currentPage: 1,
+    value: '',
+  });
+
   const { data, loading, run, refresh } = useRequest(
     ({ value, page, advanceSearch }: any) =>
       getListCompanyService({ name: value, page, advanceSearch }),
@@ -161,6 +70,57 @@ export const useCompanies = () => {
       manual: true,
       cacheKey: 'company-management',
     },
+  );
+
+  const requestSearchCompaniesSuggestion = useRequest(
+    async (value: string, column, page = 1, isLoadMore = false) => {
+      if (refCancelRequest.current) throw Error('Block request');
+      return getCompaniesSuggestion(value, page, column);
+    },
+    {
+      manual: true,
+      refreshDeps: [refCancelRequest.current],
+      onError: (err: any) => {
+        refCancelRequest.current = false;
+      },
+      onSuccess: (r: any, params) => {
+        const isLoadMore = params[3];
+
+        setCompanies((prev) => {
+          const newData = isLoadMore ? [...prev.data, ...r.data] : r.data;
+
+          return {
+            data: newData,
+            isLoadMore: r.isLoadMore,
+            currentPage: r.currentPage,
+            value: r.value,
+          };
+        });
+      },
+    },
+  );
+
+  const onResetCompaniesSuggestion = () => {
+    setCompanies({
+      data: [],
+      isLoadMore: false,
+      currentPage: 1,
+      value: '',
+    });
+  };
+
+  const onLoadMoreCompanies = (column: string) => {
+    requestSearchCompaniesSuggestion.run(companies.value, column, companies.currentPage + 1, true);
+  };
+
+  const onSearchCompaniesDebounce = debounce(
+    async (value: string, callback: () => void, column: string) => {
+      if (value?.length < 3) return;
+
+      await requestSearchCompaniesSuggestion.runAsync(value, column, 1, false);
+      if (callback) callback();
+    },
+    350,
   );
 
   const onChangePage = (page: number) => {
@@ -179,6 +139,7 @@ export const useCompanies = () => {
       page: 1,
       advanceSearch: values?.advanceSearch,
     });
+
     if (callback) callback();
   };
 
@@ -204,5 +165,11 @@ export const useCompanies = () => {
     onSearchCompany,
     refresh,
     onReloadCompanyData,
+
+    companies,
+    requestSearchCompaniesSuggestion,
+    onResetCompaniesSuggestion,
+    onLoadMoreCompanies,
+    onSearchCompaniesDebounce,
   };
 };

@@ -64,4 +64,5 @@ export const API_PATH = {
   GET_LIST_APPLICATIONS: `/application/list-applications`,
   CREATE_APPLICATION: `${APPLICATION_SERVICE_BASE_URL}`,
   APP_ENDPOINT: (endpointId: any) => `/api-endpoint/${endpointId}`,
+  GET_COMPANY_SUGGESTION: `${COMPANY_SERVICE_BASE_URL}/data-autocomplete`,
 };
