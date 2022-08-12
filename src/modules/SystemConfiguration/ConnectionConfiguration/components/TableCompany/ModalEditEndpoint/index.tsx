@@ -33,7 +33,13 @@ const ModalEditEndpoint = ({ children, endpoint, updateEndpoint }: any) => {
   return (
     <>
       <span onClick={onVisible}>{children}</span>
-      <Modal visible={visible} footer={false} centered onCancel={onVisible}>
+      <Modal
+        visible={visible}
+        footer={false}
+        centered
+        onCancel={onVisible}
+        className={styles.modal}
+      >
         <Form
           form={form}
           onFinish={onFinish}
@@ -45,13 +51,24 @@ const ModalEditEndpoint = ({ children, endpoint, updateEndpoint }: any) => {
             response: endpoint?.response || '',
             key: endpoint?.key || '',
           }}
+          className={styles.form}
         >
           <div className='mb-16'>
-            <InputForm label='Name' name='name' rules={[{ required: true, message: 'Require' }]} />
+            <InputForm
+              label='Name'
+              name='name'
+              rules={[{ required: true, message: 'Require' }]}
+              classNameFormInput={styles.input}
+            />
           </div>
 
           <div className='mb-16'>
-            <InputForm label='URL' name='url' rules={[{ required: true, message: 'Require' }]} />
+            <InputForm
+              label='URL'
+              name='url'
+              rules={[{ required: true, message: 'Require' }]}
+              classNameFormInput={styles.input}
+            />
           </div>
 
           <div className='mb-16'>
@@ -59,6 +76,7 @@ const ModalEditEndpoint = ({ children, endpoint, updateEndpoint }: any) => {
               label='Method'
               name='method'
               rules={[{ required: true, message: 'Require' }]}
+              classNameFormInput={styles.input}
             />
           </div>
 
@@ -67,6 +85,7 @@ const ModalEditEndpoint = ({ children, endpoint, updateEndpoint }: any) => {
               label='Request'
               name='request'
               rules={[{ required: true, message: 'Require' }]}
+              classNameFormInput={styles.input}
             />
           </div>
 
@@ -75,10 +94,16 @@ const ModalEditEndpoint = ({ children, endpoint, updateEndpoint }: any) => {
               label='Response'
               name='response'
               rules={[{ required: true, message: 'Require' }]}
+              classNameFormInput={styles.input}
             />
           </div>
           <div className='mb-16'>
-            <InputForm label='Key' name='key' rules={[{ required: true, message: 'Require' }]} />
+            <InputForm
+              label='Key'
+              name='key'
+              rules={[{ required: true, message: 'Require' }]}
+              classNameFormInput={styles.input}
+            />
           </div>
 
           <Button htmlType='submit'>Submit</Button>
