@@ -3,6 +3,7 @@ import {
   FEATURE_NAME,
   PERMISSION_ID,
   DATA_SUBJECT_RIGHT_DROPDOWN_DATA,
+  METHOD_DROPDOWN_DATA,
 } from './common.constants';
 
 test('Test DateFormat', () => {
@@ -43,4 +44,16 @@ test('Test PERMISSION_ID', () => {
   expect(PERMISSION_ID.createLink).toBe('PDPA_DataSubjectManagement_Create');
   expect(PERMISSION_ID.viewSearchCase).toBe('PDPA_CaseManagement_ViewSearchCase');
   expect(PERMISSION_ID.viewAssignToCase).toBe('PDPA_CaseManagement_ViewAssignedTo');
+});
+
+test('Test METHOD_DROPDOWN_DATA', () => {
+  expect(METHOD_DROPDOWN_DATA).toEqual(
+    expect.arrayContaining([
+      expect.objectContaining({ value: 'get' }),
+      expect.objectContaining({ value: 'put' }),
+      expect.objectContaining({ value: 'post' }),
+      expect.objectContaining({ value: 'patch' }),
+      expect.objectContaining({ value: 'delete' }),
+    ]),
+  );
 });

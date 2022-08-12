@@ -18,4 +18,7 @@ test('Test routing', () => {
   expect(routePath.SignIn).toBe('/auth/sign-in');
   expect(routePath.SignUp).toBe('/auth/sign-up');
   expect(routePath.ForgotPassword).toBe('/auth/forgot-password');
+  expect(routePath.SystemConfiguration).toBe('/system-configuration');
+  expect(routePath.GeneralConfiguration).toBe('/system-configuration/general-configuration');
+  expect(routePath.ConnectionConfiguration).toBe('/system-configuration/connection-configuration');
 });

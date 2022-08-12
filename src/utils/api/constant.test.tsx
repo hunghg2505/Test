@@ -1,6 +1,8 @@
 import {
   API_PATH,
+  APPLICATION_SERVICE_BASE_URL,
   CASE_MANAGEMENT_BASE_URL,
+  COMPANY_SERVICE_BASE_URL,
   CONSENT_MANAGEMENT_BASE_URL,
   USER_MANAGEMENT_BASE_URL,
 } from './constant';
@@ -56,5 +58,12 @@ test('Test value constant', () => {
   expect(API_PATH.GET_DETAIL_CONSENT('1')).toBe(`${CONSENT_MANAGEMENT_BASE_URL}/1`);
   expect(API_PATH.GET_LIST_APPLICATION).toBe(`${CONSENT_MANAGEMENT_BASE_URL}/list-application`);
   expect(API_PATH.GET_LIST_SERVICE).toBe(`${CONSENT_MANAGEMENT_BASE_URL}/list-service`);
+  expect(API_PATH.GET_LIST_CONSENTS).toBe(`${CONSENT_MANAGEMENT_BASE_URL}/list-consents`);
+
+  // System Configuration
+  expect(API_PATH.GET_LIST_COMPANY).toBe(`${COMPANY_SERVICE_BASE_URL}/list-company`);
+  expect(API_PATH.GET_LIST_APPLICATIONS).toBe(`/application/list-applications`);
+  expect(API_PATH.CREATE_APPLICATION).toBe(APPLICATION_SERVICE_BASE_URL);
+  expect(API_PATH.APP_ENDPOINT(1)).toBe(`/api-endpoint/1`);
   expect(API_PATH.GET_LIST_CONSENTS).toBe(`${CONSENT_MANAGEMENT_BASE_URL}/list-consents`);
 });
