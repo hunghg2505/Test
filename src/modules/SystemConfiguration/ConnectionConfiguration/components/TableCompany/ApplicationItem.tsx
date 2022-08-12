@@ -3,6 +3,7 @@ import IconArrowDown from 'assets/icons/icon-arrow-down';
 import React, { useState } from 'react';
 
 import styles from './index.module.scss';
+import ModalAddEndpoint from './ModalAddEndPoint';
 import ModalEditApplication from './ModalEditApplication';
 import ModalEditEndpoint from './ModalEditEndpoint';
 
@@ -73,6 +74,7 @@ export const ApplicationItemMemo = ({
   updateApplication,
   deleteEndpoint,
   updateEndpoint,
+  addEndpoint,
 }: any) => {
   const [showApp, setShowApp] = useState(false);
 
@@ -97,6 +99,9 @@ export const ApplicationItemMemo = ({
             >
               <span className={styles.btnEdit}>Edit</span>
             </ModalEditApplication>
+            <ModalAddEndpoint appId={application?.id} addEndpoint={addEndpoint}>
+              <span className={styles.btnEdit}>Add Endpoint</span>
+            </ModalAddEndpoint>
             <span onClick={onShowApp} className={styles.arrow}>
               <IconArrowDown />
             </span>

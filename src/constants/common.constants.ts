@@ -80,3 +80,11 @@ export const STATUS_CONSENT_DROPDOWN_DATA = [
   { label: 'Draft', value: 'draft' },
   { label: 'Published', value: 'published' },
 ];
+
+export const METHOD_DROPDOWN_DATA = [
+  { label: 'GET', value: 'get' },
+  { label: 'PUT', value: 'put' },
+  { label: 'POST', value: 'post' },
+  { label: 'PATCH', value: 'patch' },
+  { label: 'DELETE', value: 'delete' },
+];

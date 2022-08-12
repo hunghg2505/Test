@@ -79,6 +79,15 @@ export const useApplications = (companyId: any) => {
     },
   );
 
+  const requestAddEndpoint = useRequest(
+    async (values, applicationId: number | string) => {
+      return ApiUtils.post(API_PATH.ADD_ENDPOINT(applicationId), values);
+    },
+    {
+      manual: true,
+    },
+  );
+
   const onLoadMore = () => {
     run((data?.current || 0) + 1, data?.data);
   };
@@ -124,6 +133,15 @@ export const useApplications = (companyId: any) => {
     }
   };
 
+  const addEndpoint = async ({ applicationId, ...rest }: any) => {
+    try {
+      await requestAddEndpoint.runAsync(rest, applicationId);
+      refreshApplication();
+    } catch (error) {
+      console.log('error', error);
+    }
+  };
+
   return {
     applications: data,
     loading,
@@ -133,5 +151,6 @@ export const useApplications = (companyId: any) => {
     updateApplication,
     deleteEndpoint,
     updateEndpoint,
+    addEndpoint,
   };
 };
