@@ -64,6 +64,7 @@ const ApplicationsMemo = ({ companyId }: any) => {
     updateApplication,
     deleteEndpoint,
     updateEndpoint,
+    addEndpoint,
   } = useApplications(companyId);
 
   return (
@@ -81,6 +82,7 @@ const ApplicationsMemo = ({ companyId }: any) => {
             updateApplication={updateApplication}
             deleteEndpoint={deleteEndpoint}
             updateEndpoint={updateEndpoint}
+            addEndpoint={addEndpoint}
           />
         );
       })}
