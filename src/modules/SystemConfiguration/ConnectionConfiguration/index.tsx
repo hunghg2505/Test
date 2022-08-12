@@ -1,19 +1,19 @@
-import React, { useRef, useState } from 'react';
 import { Form, Row } from 'antd';
 import IconSearch from 'assets/icons/icon-search';
 import ContainerLayout from 'libraries/layouts/container.layout';
 import Button from 'libraries/UI/Button';
+import { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import styles from './index.module.scss';
-import AdvancedSearch from './components/AdvanceSearch';
 import InputForm from 'libraries/form/input/input-form';
+import AdvancedSearch from './components/AdvanceSearch';
 import CreateCompanyForm from './components/CreateCompanyForm';
+import styles from './index.module.scss';
 
-import { useCompanies } from './services';
-import TableCompany from './components/TableCompany';
-import SuggestListUsers from 'modules/dataSubjectManagement/components/SuggestListUsers';
 import { useClickAway } from 'ahooks';
+import SuggestListUsers from 'modules/dataSubjectManagement/components/SuggestListUsers';
+import TableCompany from './components/TableCompany';
+import { useCompanies } from './services';
 
 const ConnectionConfiguration = () => {
   const { t } = useTranslation();
@@ -24,8 +24,6 @@ const ConnectionConfiguration = () => {
 
   const {
     data,
-    loading,
-    run,
     onChangePage,
     onSearchCompany,
     refresh,

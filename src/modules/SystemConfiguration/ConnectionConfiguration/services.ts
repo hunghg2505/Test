@@ -68,7 +68,7 @@ export const useCompanies = () => {
       getListCompanyService({ name: value, page, advanceSearch }),
     {
       manual: true,
-      cacheKey: 'company-management',
+      // cacheKey: 'company-management',
     },
   );
 
