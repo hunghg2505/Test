@@ -33,19 +33,27 @@ const ModalEditApplication = ({ children, appId, appName, updateApplication }: a
   return (
     <>
       <span onClick={onVisible}>{children}</span>
-      <Modal visible={visible} footer={false} centered onCancel={onVisible}>
+      <Modal
+        visible={visible}
+        footer={false}
+        centered
+        onCancel={onVisible}
+        className={styles.modal}
+      >
         <Form
           form={form}
           onFinish={onFinish}
           initialValues={{
             app_name: appName,
           }}
+          className={styles.form}
         >
           <div className='mb-16'>
             <InputForm
               label='Application Name'
               name='app_name'
               rules={[{ required: true, message: 'Require' }]}
+              classNameFormInput={styles.input}
             />
           </div>
 
