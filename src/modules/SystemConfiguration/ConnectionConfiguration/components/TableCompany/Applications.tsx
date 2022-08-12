@@ -38,6 +38,7 @@ const AddNewApplications = ({
           <InputForm
             className={styles.input}
             name='name'
+            maxLength={55}
             rules={[
               {
                 required: true,

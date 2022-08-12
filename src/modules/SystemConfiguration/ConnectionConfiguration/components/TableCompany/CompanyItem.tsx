@@ -1,12 +1,15 @@
-import { Col, Form, Row } from 'antd';
+import { ExclamationCircleOutlined } from '@ant-design/icons';
+import { Col, Form, Row, Modal } from 'antd';
 import IconArrowDown from 'assets/icons/icon-arrow-down';
 import InputForm from 'libraries/form/input/input-form';
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDeleteCompany, useEditCompany } from '../../utils/services';
 import { Applications } from './Applications';
 
 import styles from './index.module.scss';
+
+const { confirm } = Modal;
 
 const CompanyItemMemo = ({ company, refresh }: any) => {
   const { t } = useTranslation();
@@ -39,6 +42,26 @@ const CompanyItemMemo = ({ company, refresh }: any) => {
       id: Number(company.id),
     });
   };
+
+  const showConfirm = useCallback(() => {
+    confirm({
+      title: 'Confirm Delete',
+      icon: <ExclamationCircleOutlined style={{ color: 'red' }} />,
+      content: 'Are you sure you want to Delete Company',
+      okText: 'Yes',
+      cancelText: 'No',
+      okType: 'danger',
+      okButtonProps: {
+        className: styles.deleteBtn,
+      },
+      cancelButtonProps: {
+        className: styles.btnCancel,
+      },
+      onOk() {
+        deleteCompanyReq.run({ id: company.id });
+      },
+    });
+  }, []);
 
   return (
     <div>
@@ -78,10 +101,7 @@ const CompanyItemMemo = ({ company, refresh }: any) => {
         </Col>
         <Col className={styles.companyCreatedDate}>{company?.createdDate}</Col>
         <Col className={styles.companyAction}>
-          <span
-            className={styles.btnDelete}
-            onClick={() => deleteCompanyReq.run({ id: company.id })}
-          >
+          <span className={styles.btnDelete} onClick={() => showConfirm()}>
             Delete
           </span>
           <span

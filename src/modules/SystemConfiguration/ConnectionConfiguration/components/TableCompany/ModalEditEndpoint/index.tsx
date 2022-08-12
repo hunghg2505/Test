@@ -1,6 +1,8 @@
 import { Form, Modal } from 'antd';
+import { METHOD_DROPDOWN_DATA } from 'constants/common.constants';
 import InputForm from 'libraries/form/input/input-form';
 import Button from 'libraries/UI/Button';
+import Select from 'libraries/UI/Select';
 import React, { useEffect, useState } from 'react';
 
 import styles from './index.module.scss';
@@ -70,14 +72,16 @@ const ModalEditEndpoint = ({ children, endpoint, updateEndpoint }: any) => {
               classNameFormInput={styles.input}
             />
           </div>
-
           <div className='mb-16'>
-            <InputForm
-              label='Method'
-              name='method'
-              rules={[{ required: true, message: 'Require' }]}
-              classNameFormInput={styles.input}
-            />
+            <Form.Item label='Method' name='method' className={styles.input}>
+              <Select placeholder='Select Result' allowClear>
+                {METHOD_DROPDOWN_DATA.map((item, index) => (
+                  <Select.Option value={item.value} key={`${index}${item.value}`}>
+                    {item.label}
+                  </Select.Option>
+                ))}
+              </Select>
+            </Form.Item>
           </div>
 
           <div className='mb-16'>
@@ -98,12 +102,7 @@ const ModalEditEndpoint = ({ children, endpoint, updateEndpoint }: any) => {
             />
           </div>
           <div className='mb-16'>
-            <InputForm
-              label='Key'
-              name='key'
-              rules={[{ required: true, message: 'Require' }]}
-              classNameFormInput={styles.input}
-            />
+            <InputForm label='Key' name='key' classNameFormInput={styles.input} />
           </div>
 
           <Button htmlType='submit'>Submit</Button>
