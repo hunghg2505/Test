@@ -1,7 +1,8 @@
-import { Form, Modal, Select } from 'antd';
+import { Form, Modal } from 'antd';
 import { METHOD_DROPDOWN_DATA } from 'constants/common.constants';
 import InputForm from 'libraries/form/input/input-form';
 import Button from 'libraries/UI/Button';
+import Select from 'libraries/UI/Select';
 import React, { useEffect, useState } from 'react';
 
 import styles from './index.module.scss';

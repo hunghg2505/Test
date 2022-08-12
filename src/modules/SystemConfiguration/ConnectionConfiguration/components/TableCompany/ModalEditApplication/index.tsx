@@ -10,15 +10,9 @@ const ModalEditApplication = ({ children, appId, appName, updateApplication }: a
   const [form] = Form.useForm();
 
   useEffect(() => {
-    const t = setTimeout(() => {
-      if (!visible) {
-        form.resetFields();
-      }
-    }, 350);
-
-    return () => {
-      clearTimeout(t);
-    };
+    if (visible) {
+      form.setFieldValue('app_name', appName);
+    }
   }, [visible]);
 
   const onVisible = () => {

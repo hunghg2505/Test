@@ -1,6 +1,8 @@
 import { Form, Modal } from 'antd';
+import { METHOD_DROPDOWN_DATA } from 'constants/common.constants';
 import InputForm from 'libraries/form/input/input-form';
 import Button from 'libraries/UI/Button';
+import Select from 'libraries/UI/Select';
 import React, { useEffect, useState } from 'react';
 
 import styles from './index.module.scss';
@@ -9,16 +11,19 @@ const ModalEditEndpoint = ({ children, endpoint, updateEndpoint }: any) => {
   const [visible, setVisible] = useState(false);
   const [form] = Form.useForm();
 
-  useEffect(() => {
-    const t = setTimeout(() => {
-      if (!visible) {
-        form.resetFields();
-      }
-    }, 350);
+  const initial = {
+    name: endpoint?.name || '',
+    url: endpoint?.url || '',
+    method: endpoint?.method || '',
+    request: endpoint?.request || '',
+    response: endpoint?.response || '',
+    key: endpoint?.key || '',
+  };
 
-    return () => {
-      clearTimeout(t);
-    };
+  useEffect(() => {
+    if (visible) {
+      form.setFieldsValue(initial);
+    }
   }, [visible]);
 
   const onVisible = () => {
@@ -40,19 +45,7 @@ const ModalEditEndpoint = ({ children, endpoint, updateEndpoint }: any) => {
         onCancel={onVisible}
         className={styles.modal}
       >
-        <Form
-          form={form}
-          onFinish={onFinish}
-          initialValues={{
-            name: endpoint?.name || '',
-            url: endpoint?.url || '',
-            method: endpoint?.key || '',
-            request: endpoint?.request || '',
-            response: endpoint?.response || '',
-            key: endpoint?.key || '',
-          }}
-          className={styles.form}
-        >
+        <Form form={form} onFinish={onFinish} initialValues={initial} className={styles.form}>
           <div className='mb-16'>
             <InputForm
               label='Name'
@@ -72,12 +65,15 @@ const ModalEditEndpoint = ({ children, endpoint, updateEndpoint }: any) => {
           </div>
 
           <div className='mb-16'>
-            <InputForm
-              label='Method'
-              name='method'
-              rules={[{ required: true, message: 'Require' }]}
-              classNameFormInput={styles.input}
-            />
+            <Form.Item label='Method' name='method' className={styles.input}>
+              <Select placeholder='Select Result' allowClear>
+                {METHOD_DROPDOWN_DATA.map((item, index) => (
+                  <Select.Option value={item.value} key={`${index}${item.value}`}>
+                    {item.label}
+                  </Select.Option>
+                ))}
+              </Select>
+            </Form.Item>
           </div>
 
           <div className='mb-16'>

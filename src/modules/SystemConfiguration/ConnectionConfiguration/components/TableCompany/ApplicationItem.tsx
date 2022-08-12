@@ -43,7 +43,7 @@ const EndPointItem = ({ endpoint, deleteEndpoint, updateEndpoint }: any) => {
 
           <div>
             <div className={styles.label}>Method</div>
-            <div className={styles.content}>{endpoint?.method}</div>
+            <div className={styles.content}>{endpoint?.method?.toUpperCase()}</div>
           </div>
 
           <div>
