@@ -50,7 +50,11 @@ export const useApplications = (companyId: any) => {
 
   const requestUpdateApp = useRequest(
     async (appId: any, name: string) => {
-      return ApiUtils.put(APPLICATION_SERVICE_BASE_URL, { id: +appId, companyId, name });
+      return ApiUtils.put(APPLICATION_SERVICE_BASE_URL, {
+        id: +appId,
+        companyId: +companyId,
+        name,
+      });
     },
     {
       manual: true,
@@ -68,7 +72,7 @@ export const useApplications = (companyId: any) => {
 
   const requestUpdateEndpoint = useRequest(
     async (values, endpointId: any) => {
-      return ApiUtils.remove(API_PATH.APP_ENDPOINT(endpointId), values);
+      return ApiUtils.put(API_PATH.APP_ENDPOINT(endpointId), values);
     },
     {
       manual: true,
