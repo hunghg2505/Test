@@ -257,7 +257,11 @@ const CreateCaseForm = ({ visible, onClose, refDataHistory }: IProps) => {
         >
           Cancel
         </Button>{' '}
-        <Button htmlType='submit' onClick={() => createCaseForm.submit()}>
+        <Button
+          htmlType='submit'
+          onClick={() => createCaseForm.submit()}
+          className={styles.submitBtn}
+        >
           Submit
         </Button>
       </div>

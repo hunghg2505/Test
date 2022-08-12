@@ -1,3 +1,5 @@
+@import '../../../../../styles/variables.scss';
+
 .container {
   padding: 0 40px 40px;
 
@@ -197,4 +199,46 @@
 
 .addBtn:focus {
   background-color: #cf2a2b;
+}
+
+.noResultText {
+  text-align: center;
+  padding: 20px 0;
+  font-size: 20px;
+}
+
+.btnCancel {
+  background-color: $color-gray3;
+  border-radius: 100px;
+  color: $color-primary-light;
+
+  &:focus {
+    background-color: $color-gray3;
+    border-radius: 100px;
+    color: $color-primary-light;
+  }
+
+  &:hover {
+    background-color: $color-gray3;
+    border-radius: 100px;
+    color: $color-primary-light;
+    border-color: $color-gray3;
+  }
+}
+.deleteBtn {
+  background-color: $color-primary;
+  border-radius: 100px;
+  color: $color-primary-light;
+
+  &:focus {
+    background-color: $color-primary;
+    border-radius: 100px;
+    color: $color-primary-light;
+  }
+
+  &:hover {
+    background-color: $color-primary;
+    border-radius: 100px;
+    color: $color-primary-light;
+  }
 }

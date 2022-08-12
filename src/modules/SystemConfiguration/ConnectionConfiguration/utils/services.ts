@@ -54,7 +54,7 @@ export const useCreateCompany = (onFinishSubmitForm: any) => {
 
 export const useEditCompany = (onFinishSubmitForm: any) => {
   return useRequest(
-    async (data: IDeleteCompany) => {
+    async (data: IEditCompany) => {
       return editCompanyService(data);
     },
     {
@@ -63,8 +63,12 @@ export const useEditCompany = (onFinishSubmitForm: any) => {
         message.success('Edit Company Success');
         onFinishSubmitForm();
       },
-      onError: () => {
-        message.error('Edit Company Error');
+      onError: (error: any) => {
+        message.error(
+          error?.content?.messageContent
+            ? `${error?.content?.messageContent}`
+            : 'Edit Company Error',
+        );
         onFinishSubmitForm();
       },
     },
