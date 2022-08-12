@@ -37,7 +37,7 @@ const ConnectionConfiguration = () => {
 
                 <InputForm
                   name='name'
-                  placeholder='Search name'
+                  placeholder='Search company'
                   className={styles.inputSearch}
                   classNameFormInput={styles.inputSearchForm}
                   maxLength={55}

@@ -1,5 +1,15 @@
 @import '../../../../../styles/variables.scss';
 
+.form {
+  :global {
+    .ant-form-item-label > label {
+      display: flex;
+      flex-direction: row-reverse;
+      justify-content: flex-end;
+    }
+  }
+}
+
 .actions {
   margin-top: 20px;
   display: flex;
@@ -27,4 +37,8 @@
       color: $grey_900 !important;
     }
   }
+}
+
+.submitBtn:focus {
+  background-color: $color-primary !important;
 }

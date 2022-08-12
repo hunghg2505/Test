@@ -36,6 +36,7 @@ const AdvancedSearch = ({ onSearchCompany }: any) => {
           }
         : undefined;
     onSearchCompany({
+      name: values?.name || '',
       advanceSearch: { appName: values?.appName || undefined, createdAt },
     });
     setIsShowSearch(false);
@@ -78,6 +79,15 @@ const AdvancedSearch = ({ onSearchCompany }: any) => {
             <Form onFinish={onFinish} form={formSearch} layout='vertical'>
               <Row gutter={[0, 16]} justify='space-between'>
                 <Col xs={24}>
+                  <InputForm
+                    label='Company Name'
+                    name='name'
+                    placeholder='Company name'
+                    maxLength={55}
+                  />
+                </Col>
+
+                <Col xs={24}>
                   <p className={styles.datePickerLabel}>Created Date</p>
                 </Col>
                 <Col xs={11}>
@@ -107,9 +117,9 @@ const AdvancedSearch = ({ onSearchCompany }: any) => {
                   />
                 </Col>
 
-                <Col xs={11}>
+                <Col xs={24}>
                   <InputForm
-                    label='Application name'
+                    label='Application Name'
                     name='appName'
                     placeholder='Application name'
                     maxLength={55}

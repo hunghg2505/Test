@@ -65,7 +65,7 @@ const CreateCompanyForm = ({ visible, onClose, onReloadCompanyData }: IProps) =>
         createCompanyForm.resetFields();
       }}
     >
-      <Form layout='vertical' form={createCompanyForm} onFinish={onFinish}>
+      <Form layout='vertical' form={createCompanyForm} onFinish={onFinish} className={styles.form}>
         <Row gutter={[15, 24]}>
           <Col xs={24}>
             <InputForm
@@ -105,7 +105,11 @@ const CreateCompanyForm = ({ visible, onClose, onReloadCompanyData }: IProps) =>
         >
           Cancel
         </Button>{' '}
-        <Button htmlType='submit' onClick={() => createCompanyForm.submit()}>
+        <Button
+          htmlType='submit'
+          onClick={() => createCompanyForm.submit()}
+          className={styles.submitBtn}
+        >
           Submit
         </Button>
       </div>
