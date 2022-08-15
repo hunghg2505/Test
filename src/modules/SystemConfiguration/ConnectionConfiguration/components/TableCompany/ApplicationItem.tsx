@@ -1,7 +1,9 @@
 import { ExclamationCircleOutlined } from '@ant-design/icons';
-import { Modal, Row } from 'antd';
+import { Col, Form, Modal, Row } from 'antd';
 import IconArrowDown from 'assets/icons/icon-arrow-down';
+import InputForm from 'libraries/form/input/input-form';
 import React, { useCallback, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import styles from './index.module.scss';
 import ModalAddEndpoint from './ModalAddEndPoint';
@@ -100,9 +102,17 @@ export const ApplicationItemMemo = ({
   addEndpoint,
 }: any) => {
   const [showApp, setShowApp] = useState(false);
+  const [isEdit, setIsEdit] = useState(false);
+
+  const [editApplicationForm] = Form.useForm();
+  const { t } = useTranslation();
 
   const onShowApp = () => {
     setShowApp(!showApp);
+  };
+
+  const onFinish = (values: any) => {
+    updateApplication(application?.id, values?.app_name);
   };
 
   const showConfirm = useCallback(() => {
@@ -129,26 +139,81 @@ export const ApplicationItemMemo = ({
     <div>
       <div className={styles.table}>
         <Row align='middle' justify='space-between'>
-          <div className={styles.appName}>{application?.name}</div>
-          <div>
-            <span className={styles.btnDelete} onClick={showConfirm}>
-              Delete
-            </span>
+          <Col>
+            {!isEdit ? (
+              <span className={styles.appName}>{application?.name}</span>
+            ) : (
+              <Form
+                onFinish={onFinish}
+                layout='vertical'
+                // initialValues={{
+                //   name: company?.name,
+                // }}
+                form={editApplicationForm}
+                className={styles.editForm}
+              >
+                <InputForm
+                  name='app_name'
+                  maxLength={55}
+                  rules={[
+                    {
+                      required: true,
+                      message: t('messages.errors.require', { field: 'Application Name' }),
+                    },
+                  ]}
+                  initialValue={application?.name}
+                />
+              </Form>
+            )}
+          </Col>
+          {!isEdit ? (
+            <div>
+              <span className={styles.btnDelete} onClick={showConfirm}>
+                Delete
+              </span>
 
-            <ModalEditApplication
-              appId={application?.id}
-              updateApplication={updateApplication}
-              appName={application?.name}
-            >
-              <span className={styles.btnEdit}>Edit</span>
-            </ModalEditApplication>
-            <ModalAddEndpoint appId={application?.id} addEndpoint={addEndpoint}>
-              <span className={styles.btnEdit}>Add Endpoint</span>
-            </ModalAddEndpoint>
-            <span onClick={onShowApp} className={styles.arrow}>
-              <IconArrowDown />
-            </span>
-          </div>
+              <span
+                className={styles.btnEdit}
+                onClick={() => {
+                  setIsEdit(true);
+                }}
+              >
+                Edit
+              </span>
+
+              <ModalAddEndpoint appId={application?.id} addEndpoint={addEndpoint}>
+                <span className={styles.btnEdit}>Add Endpoint</span>
+              </ModalAddEndpoint>
+              <span onClick={onShowApp} className={styles.arrow}>
+                <IconArrowDown />
+              </span>
+            </div>
+          ) : (
+            <>
+              <span
+                className={styles.btnDelete}
+                onClick={() => {
+                  editApplicationForm.resetFields();
+                  setIsEdit(false);
+                }}
+                style={{
+                  display: 'block',
+                  marginLeft: 'auto',
+                }}
+              >
+                X
+              </span>
+              <span
+                className={styles.btnEdit}
+                onClick={() => {
+                  setIsEdit(false);
+                  editApplicationForm.submit();
+                }}
+              >
+                V
+              </span>
+            </>
+          )}
         </Row>
 
         {showApp && (

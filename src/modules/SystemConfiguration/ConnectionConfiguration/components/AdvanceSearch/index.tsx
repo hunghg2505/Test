@@ -129,6 +129,12 @@ const AdvancedSearch = ({ onSearchCompany }: any) => {
                     name='appName'
                     placeholder='Application name'
                     maxLength={55}
+                    rules={[
+                      {
+                        min: 3,
+                        message: t('messages.errors.min', { min: 3 }),
+                      },
+                    ]}
                   />
                 </Col>
               </Row>

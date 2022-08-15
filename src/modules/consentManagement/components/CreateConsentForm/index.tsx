@@ -31,6 +31,7 @@ export const CustomSelectDropdown = ({
   onSearchDebounce,
   isInModalAdvancedSearch,
   onClearValue,
+  placeholder,
 }: any) => {
   const { t } = useTranslation();
   const [visible, setVisible] = useState(false);
@@ -67,7 +68,7 @@ export const CustomSelectDropdown = ({
   return (
     <Select
       value={value}
-      placeholder='Select application'
+      placeholder={placeholder}
       showSearch
       onSearch={onSearchDebounce}
       onSelect={onChange}
@@ -116,6 +117,7 @@ export const FormItemApplication = (props: any) => {
       data={data}
       onLoadMore={onLoadMore}
       onSearchDebounce={onSearchDebounce}
+      placeholder='Select Application'
     />
   );
 };
@@ -129,6 +131,7 @@ export const FormItemService = (props: any) => {
       data={data}
       onLoadMore={onLoadMore}
       onSearchDebounce={onSearchDebounce}
+      placeholder='Select Service'
     />
   );
 };
@@ -388,7 +391,11 @@ const CreateConsentForm = ({ visible, onClose, onReloadConsentData }: IProps) =>
         >
           Cancel
         </Button>
-        <Button htmlType='submit' onClick={() => createConsentForm.submit()}>
+        <Button
+          htmlType='submit'
+          onClick={() => createConsentForm.submit()}
+          className={styles.submitBtn}
+        >
           Submit
         </Button>
       </div>

@@ -1,6 +1,7 @@
 import { API_PATH, APPLICATION_SERVICE_BASE_URL } from './../../../../../utils/api/constant';
 import { clearCache, useRequest } from 'ahooks';
 import ApiUtils from 'utils/api/api.utils';
+import { message } from 'antd';
 
 const getApplications = async (companyId: any, current = 1, prevList: any) => {
   const params = {
@@ -58,6 +59,16 @@ export const useApplications = (companyId: any) => {
     },
     {
       manual: true,
+      onSuccess: () => {
+        message.success('Edit Application Success');
+      },
+      onError: (error: any) => {
+        message.error(
+          error?.content?.messageContent
+            ? `${error?.content?.messageContent}`
+            : 'Edit Application Error',
+        );
+      },
     },
   );
 
@@ -76,6 +87,16 @@ export const useApplications = (companyId: any) => {
     },
     {
       manual: true,
+      onSuccess: () => {
+        message.success('Edit Endpoint Success');
+      },
+      onError: (error: any) => {
+        message.error(
+          error?.content?.messageContent
+            ? `${error?.content?.messageContent}`
+            : 'Edit Endpoint Error',
+        );
+      },
     },
   );
 
