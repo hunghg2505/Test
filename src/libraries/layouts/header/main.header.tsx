@@ -15,24 +15,13 @@ interface Props {
   isMobile: boolean;
 }
 
-export default function MainHeader({ isMobile, showSider, user, toggleSider }: Props) {
+export default function MainHeader({ user }: Props) {
   const { t } = useTranslation();
   const { keycloak } = useKeycloak();
   const { onLogout } = useAuth();
 
   return (
     <div className={styles.mainHeader}>
-      {/* <div className={styles.logoView}>
-        {!isMobile && (
-          <Button
-            className={styles.navbarIcon}
-            type="link"
-            icon={showSider ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-            onClick={() => toggleSider && toggleSider()}
-          />
-        )}
-        <Logo />
-      </div> */}
       <p className={styles.welcomeUser}>
         {t('welcome', { username: user?.email || keycloak?.tokenParsed?.preferred_username })}
       </p>
