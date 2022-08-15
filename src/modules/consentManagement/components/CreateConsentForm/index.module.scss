@@ -103,3 +103,7 @@
     background: $color-gray6;
   }
 }
+
+.submitBtn:focus {
+  background-color: $color-primary !important;
+}
