@@ -18,6 +18,7 @@ interface Props {
   className?: any;
   required?: boolean;
   normalize?: (value: any, prevValue: any, allValues: any) => any;
+  initialValue?: string;
 
   onBlur?: (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
 }
@@ -35,6 +36,7 @@ export default function InputForm({
   required,
   normalize,
   onBlur,
+  initialValue,
 }: Props) {
   return (
     <Form.Item
@@ -46,6 +48,7 @@ export default function InputForm({
       })}
       required={required}
       normalize={normalize}
+      initialValue={initialValue}
     >
       <Input
         className={clsx(styles.customInputForm, {

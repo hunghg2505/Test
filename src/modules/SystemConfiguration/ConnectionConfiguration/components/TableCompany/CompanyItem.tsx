@@ -73,9 +73,9 @@ const CompanyItemMemo = ({ company, refresh }: any) => {
             <Form
               onFinish={onFinish}
               layout='vertical'
-              initialValues={{
-                name: company?.name,
-              }}
+              // initialValues={{
+              //   name: company?.name,
+              // }}
               form={editCompanyForm}
               className={styles.editForm}
             >
@@ -88,6 +88,7 @@ const CompanyItemMemo = ({ company, refresh }: any) => {
                     message: t('messages.errors.require', { field: 'Company Name' }),
                   },
                 ]}
+                initialValue={company?.name}
               />
               <span className={styles.btnSave} onClick={() => editCompanyForm.submit()}>
                 Save

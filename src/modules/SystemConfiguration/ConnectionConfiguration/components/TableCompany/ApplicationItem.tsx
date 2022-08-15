@@ -1,11 +1,14 @@
-import { Row } from 'antd';
+import { ExclamationCircleOutlined } from '@ant-design/icons';
+import { Modal, Row } from 'antd';
 import IconArrowDown from 'assets/icons/icon-arrow-down';
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 
 import styles from './index.module.scss';
 import ModalAddEndpoint from './ModalAddEndPoint';
 import ModalEditApplication from './ModalEditApplication';
 import ModalEditEndpoint from './ModalEditEndpoint';
+
+const { confirm } = Modal;
 
 const EndPointItem = ({ endpoint, deleteEndpoint, updateEndpoint }: any) => {
   const [showInfo, setShowInfo] = useState(false);
@@ -14,6 +17,26 @@ const EndPointItem = ({ endpoint, deleteEndpoint, updateEndpoint }: any) => {
     setShowInfo(!showInfo);
   };
 
+  const showConfirm = useCallback(() => {
+    confirm({
+      title: 'Confirm Delete',
+      icon: <ExclamationCircleOutlined style={{ color: 'red' }} />,
+      content: 'Are you sure you want to Delete Endpoint',
+      okText: 'Yes',
+      cancelText: 'No',
+      okType: 'danger',
+      okButtonProps: {
+        className: styles.deleteBtn,
+      },
+      cancelButtonProps: {
+        className: styles.btnCancel,
+      },
+      onOk() {
+        deleteEndpoint(endpoint?.id)();
+      },
+    });
+  }, []);
+
   return (
     <div className={styles.appInfo}>
       <Row className={styles.appInfoName} align='middle' justify='space-between'>
@@ -21,7 +44,7 @@ const EndPointItem = ({ endpoint, deleteEndpoint, updateEndpoint }: any) => {
         <div>
           {showInfo && (
             <>
-              <span className={styles.btnDelete} onClick={deleteEndpoint(endpoint?.id)}>
+              <span className={styles.btnDelete} onClick={showConfirm}>
                 Delete
               </span>
               <ModalEditEndpoint endpoint={endpoint} updateEndpoint={updateEndpoint}>
@@ -82,13 +105,33 @@ export const ApplicationItemMemo = ({
     setShowApp(!showApp);
   };
 
+  const showConfirm = useCallback(() => {
+    confirm({
+      title: 'Confirm Delete',
+      icon: <ExclamationCircleOutlined style={{ color: 'red' }} />,
+      content: 'Are you sure you want to Delete Endpoint',
+      okText: 'Yes',
+      cancelText: 'No',
+      okType: 'danger',
+      okButtonProps: {
+        className: styles.deleteBtn,
+      },
+      cancelButtonProps: {
+        className: styles.btnCancel,
+      },
+      onOk() {
+        deleteApplication(application?.id)();
+      },
+    });
+  }, []);
+
   return (
     <div>
       <div className={styles.table}>
         <Row align='middle' justify='space-between'>
           <div className={styles.appName}>{application?.name}</div>
           <div>
-            <span className={styles.btnDelete} onClick={deleteApplication(application?.id)}>
+            <span className={styles.btnDelete} onClick={showConfirm}>
               Delete
             </span>
 
