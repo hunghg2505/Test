@@ -109,7 +109,7 @@ export const ApplicationItemMemo = ({
     confirm({
       title: 'Confirm Delete',
       icon: <ExclamationCircleOutlined style={{ color: 'red' }} />,
-      content: 'Are you sure you want to Delete Endpoint',
+      content: 'Are you sure you want to Delete Application',
       okText: 'Yes',
       cancelText: 'No',
       okType: 'danger',
