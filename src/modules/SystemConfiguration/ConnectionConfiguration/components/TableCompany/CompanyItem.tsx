@@ -90,9 +90,6 @@ const CompanyItemMemo = ({ company, refresh }: any) => {
                 ]}
                 initialValue={company?.name}
               />
-              <span className={styles.btnSave} onClick={() => editCompanyForm.submit()}>
-                Save
-              </span>
             </Form>
           )}
 
@@ -102,18 +99,42 @@ const CompanyItemMemo = ({ company, refresh }: any) => {
         </Col>
         <Col className={styles.companyCreatedDate}>{company?.createdDate}</Col>
         <Col className={styles.companyAction}>
-          <span className={styles.btnDelete} onClick={() => showConfirm()}>
-            Delete
-          </span>
-          <span
-            className={styles.btnEdit}
-            onClick={() => {
-              setIsEdit(!isEdit);
-              editCompanyForm.resetFields();
-            }}
-          >
-            {!isEdit ? 'Edit' : 'Cancel'}
-          </span>
+          {!isEdit ? (
+            <>
+              <span className={styles.btnDelete} onClick={() => showConfirm()}>
+                Delete
+              </span>
+              <span
+                className={styles.btnEdit}
+                onClick={() => {
+                  setIsEdit(true);
+                }}
+              >
+                {!isEdit ? 'Edit' : 'Cancel'}
+              </span>
+            </>
+          ) : (
+            <>
+              <span
+                className={styles.btnDelete}
+                onClick={() => {
+                  editCompanyForm.resetFields();
+                  setIsEdit(false);
+                }}
+              >
+                X
+              </span>
+              <span
+                className={styles.btnEdit}
+                onClick={() => {
+                  setIsEdit(false);
+                  editCompanyForm.submit();
+                }}
+              >
+                V
+              </span>
+            </>
+          )}
         </Col>
       </Row>
 
