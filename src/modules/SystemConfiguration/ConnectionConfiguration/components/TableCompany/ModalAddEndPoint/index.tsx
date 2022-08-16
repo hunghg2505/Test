@@ -62,7 +62,12 @@ const ModalAddEndpoint = ({ children, appId, addEndpoint }: any) => {
           </div>
 
           <div className='mb-16'>
-            <Form.Item label='Method' name='method' className={styles.input}>
+            <Form.Item
+              label='Method'
+              name='method'
+              className={styles.input}
+              rules={[{ required: true, message: 'Require' }]}
+            >
               <Select placeholder='Select Result' allowClear>
                 {METHOD_DROPDOWN_DATA.map((item, index) => (
                   <Select.Option value={item.value} key={`${index}${item.value}`}>

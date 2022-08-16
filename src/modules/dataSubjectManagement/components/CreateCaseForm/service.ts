@@ -1,9 +1,10 @@
 import { useMount, useRequest } from 'ahooks';
 import { message } from 'antd';
+import { GENERAL_CASE_MANAGEMENT_LIST } from 'constants/common.constants';
 import { useNavigate } from 'react-router-dom';
 import { ResponseBase } from 'utils/api/api.types';
 import ApiUtils from 'utils/api/api.utils';
-import { API_PATH } from 'utils/api/constant';
+import { API_PATH, GENERAL_CONFIG_BASE_URL } from 'utils/api/constant';
 
 interface ICreateCase {
   action: string;
@@ -50,9 +51,8 @@ const getListUserService = async () => {
 
   return {
     data: response?.content?.map(({ sid, name }: any) => ({
-      sid,
-      label: `${name}`,
-      value: `${name}`,
+      id: sid,
+      name,
     })),
   };
 };
@@ -83,31 +83,36 @@ export const useCreateCase = (onFinishSubmitForm: any) => {
 };
 
 export const useGetListDataDropDropdown = () => {
-  const { data: actionsData, run: runActionService } = useRequest(
-    async () => getListActionService(),
-    {
-      cacheKey: 'list-action',
-    },
-  );
-  const { data: departmentsData, run: runDepartmentService } = useRequest(
-    async () => getListRelateDepartmentService(),
-    {
-      cacheKey: 'list-department',
-    },
-  );
   const { data: usersData, run: runUserService } = useRequest(async () => getListUserService(), {
     cacheKey: 'list-user',
   });
 
   useMount(() => {
-    runActionService();
-    runDepartmentService();
     runUserService();
   });
 
   return {
-    actionsData,
-    departmentsData,
     usersData,
   };
+};
+
+const getDataDropDownService = async () => {
+  const response: any = await Promise.all(
+    GENERAL_CASE_MANAGEMENT_LIST.map((type: string) =>
+      ApiUtils.fetch(GENERAL_CONFIG_BASE_URL, { type }),
+    ),
+  );
+
+  return {
+    subjectRightData: response[0]?.content?.data,
+    relatedDepartmentData: response[1]?.content?.data,
+    statusData: response[2]?.content?.data,
+    resultData: response[3]?.content?.data,
+  };
+};
+
+export const useGetDataDropdown = () => {
+  const { data, run, loading, refresh } = useRequest(getDataDropDownService);
+
+  return { data, run, loading, refresh };
 };

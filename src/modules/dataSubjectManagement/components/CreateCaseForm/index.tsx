@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import { Col, Form, Row, Divider, Modal, DatePicker } from 'antd';
 import InputTextAreaForm from 'libraries/form/input/input-textarea-form';
 import Select from 'libraries/UI/Select';
@@ -12,15 +12,47 @@ import {
 import styles from './index.module.scss';
 import Button from 'libraries/UI/Button';
 import { useParams } from 'react-router-dom';
-import { useCreateCase, useGetListDataDropDropdown } from './service';
+import { useCreateCase, useGetDataDropdown, useGetListDataDropDropdown } from './service';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import moment from 'moment';
+import { useDebounceFn } from 'ahooks';
 
 interface IProps {
   visible: boolean;
   onClose: () => void;
   refDataHistory: any;
 }
+
+export const CustomSelectDropdown = ({ placeholder, data, allowClear, value, onChange }: any) => {
+  const [visible, setVisible] = useState(false);
+  const refHiddenDropdown: any = useRef(null);
+
+  const { run } = useDebounceFn(
+    () => {
+      setVisible(!visible);
+    },
+    {
+      wait: 300,
+    },
+  );
+
+  return (
+    <Select
+      value={value}
+      placeholder={placeholder}
+      showSearch
+      onSelect={onChange}
+      open={visible}
+      onMouseDown={run}
+    >
+      {data?.map((item: any) => (
+        <Select.Option value={item?.name} key={item?.id} allowClear={allowClear}>
+          {item?.name}
+        </Select.Option>
+      ))}
+    </Select>
+  );
+};
 
 const { confirm } = Modal;
 
@@ -43,7 +75,8 @@ const CreateCaseForm = ({ visible, onClose, refDataHistory }: IProps) => {
   {
     /** Use hardcode data for test purpose */
   }
-  const { actionsData, departmentsData, usersData } = useGetListDataDropDropdown();
+  const { usersData } = useGetListDataDropDropdown();
+  const { data } = useGetDataDropdown();
   const [createCaseForm] = Form.useForm();
 
   const onFinish = (values: any) => {
@@ -105,13 +138,7 @@ const CreateCaseForm = ({ visible, onClose, refDataHistory }: IProps) => {
                 },
               ]}
             >
-              <Select placeholder='Select a Right'>
-                {DATA_SUBJECT_RIGHT_DROPDOWN_DATA.map((item, index) => (
-                  <Select.Option value={item.value} key={`${index}${item.value}`}>
-                    {item.value}
-                  </Select.Option>
-                ))}
-              </Select>
+              <CustomSelectDropdown data={data?.subjectRightData} placeholder='Select a Right' />
             </Form.Item>
           </Col>
           <Col xs={12}>
@@ -126,10 +153,10 @@ const CreateCaseForm = ({ visible, onClose, refDataHistory }: IProps) => {
                 },
               ]}
             >
-              <Select placeholder='Select a Department'>
-                <Select.Option value={'Department 1'}>Department 1</Select.Option>
-                <Select.Option value={'Department 2'}>Department 2</Select.Option>
-              </Select>
+              <CustomSelectDropdown
+                data={data?.relatedDepartmentData}
+                placeholder='Select a Department'
+              />
             </Form.Item>
           </Col>
           <Col xs={12}>
@@ -141,13 +168,7 @@ const CreateCaseForm = ({ visible, onClose, refDataHistory }: IProps) => {
                 { required: true, message: t('messages.errors.require', { field: 'Assign' }) },
               ]}
             >
-              <Select placeholder='Assign to' showSearch>
-                {usersData?.data?.map((item: any) => (
-                  <Select.Option value={item.value} key={`${item.sid}`}>
-                    {item.value}
-                  </Select.Option>
-                ))}
-              </Select>
+              <CustomSelectDropdown data={usersData?.data} placeholder='Assign to' />
             </Form.Item>
           </Col>
           <Col xs={24}>
@@ -180,13 +201,7 @@ const CreateCaseForm = ({ visible, onClose, refDataHistory }: IProps) => {
                 },
               ]}
             >
-              <Select placeholder='List of Status'>
-                {STATUS_DROPDOWN_DATA.map((item, index) => (
-                  <Select.Option value={item.value} key={`${index}${item.value}`}>
-                    {item.value}
-                  </Select.Option>
-                ))}
-              </Select>
+              <CustomSelectDropdown data={data?.statusData} placeholder='List of Status' />
             </Form.Item>
           </Col>
           <Col xs={12}>
@@ -205,13 +220,11 @@ const CreateCaseForm = ({ visible, onClose, refDataHistory }: IProps) => {
           <Divider />
           <Col xs={12}>
             <Form.Item label='Result' name='responseStatus'>
-              <Select placeholder='Select Result' allowClear>
-                {RESULT_DROPDOWN_DATA.map((item, index) => (
-                  <Select.Option value={item.value} key={`${index}${item.value}`}>
-                    {item.value}
-                  </Select.Option>
-                ))}
-              </Select>
+              <CustomSelectDropdown
+                data={data?.resultData}
+                placeholder='Select Result'
+                allowClear={true}
+              />
             </Form.Item>
           </Col>
           <Col xs={24}>
