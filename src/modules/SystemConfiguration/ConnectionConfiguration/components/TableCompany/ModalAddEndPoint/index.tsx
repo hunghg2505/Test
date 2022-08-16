@@ -43,6 +43,7 @@ const ModalAddEndpoint = ({ children, appId, addEndpoint }: any) => {
         centered
         onCancel={onVisible}
         className={styles.modal}
+        width={550}
       >
         <Form form={form} onFinish={onFinish} className={styles.form}>
           <div className='mb-16'>
