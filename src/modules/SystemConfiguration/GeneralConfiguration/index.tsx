@@ -1,8 +1,9 @@
-import { Form, Row } from 'antd';
+import { ExclamationCircleOutlined } from '@ant-design/icons';
+import { Form, Modal, Row } from 'antd';
 import IconArrowDown from 'assets/icons/icon-arrow-down';
 import InputForm from 'libraries/form/input/input-form';
 import Button from 'libraries/UI/Button';
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import styles from './index.module.scss';
@@ -12,6 +13,7 @@ import {
   useGeneralConfig,
 } from './service';
 
+const { confirm } = Modal;
 const FormFeatureItem = ({ listItem, featureId, refresh }: any) => {
   const { t } = useTranslation();
 
@@ -28,6 +30,26 @@ const FormFeatureItem = ({ listItem, featureId, refresh }: any) => {
   const onAddNew = (values: any) => {
     createGeneralCaseManagementReq.run({ type: featureId, ...values });
   };
+
+  const showConfirm = useCallback((id: string | number) => {
+    confirm({
+      title: 'Confirm Delete',
+      icon: <ExclamationCircleOutlined style={{ color: 'red' }} />,
+      content: 'Are you sure you want to Delete?',
+      okText: 'Yes',
+      cancelText: 'No',
+      okType: 'danger',
+      okButtonProps: {
+        className: styles.deleteBtn,
+      },
+      cancelButtonProps: {
+        className: styles.btnCancel,
+      },
+      onOk() {
+        deleteGeneralCaseManagementReq.run(id, { type: featureId });
+      },
+    });
+  }, []);
   return (
     <div className={styles.content}>
       <Form onFinish={onAddNew} form={addNewForm}>
@@ -54,10 +76,7 @@ const FormFeatureItem = ({ listItem, featureId, refresh }: any) => {
           return (
             <span key={it?.name} className={styles.item}>
               {it?.name}
-              <span
-                className={styles.btnClose}
-                onClick={() => deleteGeneralCaseManagementReq.run(it?.id, { type: featureId })}
-              >
+              <span className={styles.btnClose} onClick={() => showConfirm(it?.id)}>
                 X
               </span>
             </span>

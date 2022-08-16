@@ -84,3 +84,39 @@
     background-color: $color-primary !important;
   }
 }
+
+.btnCancel {
+  background-color: $color-gray3;
+  border-radius: 100px;
+  color: $color-primary-light;
+
+  &:focus {
+    background-color: $color-gray3;
+    border-radius: 100px;
+    color: $color-primary-light;
+  }
+
+  &:hover {
+    background-color: $color-gray3;
+    border-radius: 100px;
+    color: $color-primary-light;
+    border-color: $color-gray3;
+  }
+}
+.deleteBtn {
+  background-color: $color-primary;
+  border-radius: 100px;
+  color: $color-primary-light;
+
+  &:focus {
+    background-color: $color-primary;
+    border-radius: 100px;
+    color: $color-primary-light;
+  }
+
+  &:hover {
+    background-color: $color-primary;
+    border-radius: 100px;
+    color: $color-primary-light;
+  }
+}
