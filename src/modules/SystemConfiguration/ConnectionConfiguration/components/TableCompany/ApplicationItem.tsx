@@ -100,6 +100,11 @@ export const ApplicationItemMemo = ({
 }: any) => {
   const [showApp, setShowApp] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
+  const [endpoints, setEndpoints] = useState({
+    current: 1,
+    data: application?.endpoints?.slice(0, 10),
+    isLoadMoreEndpoint: 1 < Math.ceil(application?.endpoints?.length / 10),
+  });
 
   const [editApplicationForm] = Form.useForm();
   const { t } = useTranslation();
@@ -131,6 +136,16 @@ export const ApplicationItemMemo = ({
       },
     });
   }, []);
+
+  const onLoadMoreEndpoint = () => {
+    const newEndpoint = {
+      current: endpoints.current + 1,
+      data: application?.endpoints?.slice(0, (endpoints.current + 1) * 10),
+      isLoadMoreEndpoint: endpoints.current + 1 < Math.ceil(application?.endpoints?.length / 10),
+    };
+
+    setEndpoints(newEndpoint);
+  };
 
   return (
     <div>
@@ -215,7 +230,7 @@ export const ApplicationItemMemo = ({
 
         {showApp && (
           <div>
-            {application?.endpoints?.map((endpoint: any) => {
+            {endpoints?.data?.map((endpoint: any) => {
               return (
                 <EndPointItem
                   key={`endpoint-${endpoint?.id}`}
@@ -225,11 +240,11 @@ export const ApplicationItemMemo = ({
                 />
               );
             })}
-            {/* {isLoadMore && (
-              <div className={styles.btnLoadMore} onClick={onLoadMore}>
+            {endpoints.isLoadMoreEndpoint && (
+              <div className={styles.btnLoadMore} onClick={onLoadMoreEndpoint}>
                 Load More
               </div>
-            )} */}
+            )}
           </div>
         )}
       </div>

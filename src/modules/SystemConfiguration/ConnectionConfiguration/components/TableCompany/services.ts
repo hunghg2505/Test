@@ -129,8 +129,9 @@ export const useApplications = (companyId: any) => {
     },
   );
 
-  const onLoadMore = () => {
-    run((data?.current || 0) + 1, data?.data);
+  const onChange = (page: number) => {
+    clearCache(`data-application-${companyId}`);
+    run(page);
   };
 
   const refreshApplication = () => {
@@ -187,7 +188,7 @@ export const useApplications = (companyId: any) => {
     applications: data,
     loading,
     refreshApplication,
-    onLoadMore,
+    onChange,
     deleteApplication,
     updateApplication,
     deleteEndpoint,
