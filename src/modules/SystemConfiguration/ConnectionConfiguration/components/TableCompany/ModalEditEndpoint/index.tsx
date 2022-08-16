@@ -4,12 +4,15 @@ import InputForm from 'libraries/form/input/input-form';
 import Button from 'libraries/UI/Button';
 import Select from 'libraries/UI/Select';
 import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import styles from './index.module.scss';
 
 const ModalEditEndpoint = ({ children, endpoint, updateEndpoint }: any) => {
   const [visible, setVisible] = useState(false);
   const [form] = Form.useForm();
+
+  const { t } = useTranslation();
 
   const initial = {
     name: endpoint?.name || '',
@@ -44,14 +47,21 @@ const ModalEditEndpoint = ({ children, endpoint, updateEndpoint }: any) => {
         centered
         onCancel={onVisible}
         className={styles.modal}
+        width={550}
       >
         <Form form={form} onFinish={onFinish} initialValues={initial} className={styles.form}>
           <div className='mb-16'>
             <InputForm
               label='Name'
               name='name'
-              rules={[{ required: true, message: 'Require' }]}
+              rules={[
+                {
+                  required: true,
+                  message: t('messages.errors.require', { field: 'Name' }),
+                },
+              ]}
               classNameFormInput={styles.input}
+              required
             />
           </div>
 
@@ -59,12 +69,30 @@ const ModalEditEndpoint = ({ children, endpoint, updateEndpoint }: any) => {
             <InputForm
               label='URL'
               name='url'
-              rules={[{ required: true, message: 'Require' }]}
+              rules={[
+                {
+                  required: true,
+                  message: t('messages.errors.require', { field: 'URL' }),
+                },
+              ]}
               classNameFormInput={styles.input}
+              required
             />
           </div>
+
           <div className='mb-16'>
-            <Form.Item label='Method' name='method' className={styles.input}>
+            <Form.Item
+              label='Method'
+              name='method'
+              className={styles.input}
+              rules={[
+                {
+                  required: true,
+                  message: t('messages.errors.require', { field: 'Method' }),
+                },
+              ]}
+              required
+            >
               <Select placeholder='Select Result' allowClear>
                 {METHOD_DROPDOWN_DATA.map((item, index) => (
                   <Select.Option value={item.value} key={`${index}${item.value}`}>
@@ -77,10 +105,16 @@ const ModalEditEndpoint = ({ children, endpoint, updateEndpoint }: any) => {
 
           <div className='mb-16'>
             <InputForm
-              label='Request'
+              label='Parammeter'
               name='request'
-              rules={[{ required: true, message: 'Require' }]}
+              rules={[
+                {
+                  required: true,
+                  message: t('messages.errors.require', { field: 'Parammeter' }),
+                },
+              ]}
               classNameFormInput={styles.input}
+              required
             />
           </div>
 
@@ -88,8 +122,14 @@ const ModalEditEndpoint = ({ children, endpoint, updateEndpoint }: any) => {
             <InputForm
               label='Response'
               name='response'
-              rules={[{ required: true, message: 'Require' }]}
+              rules={[
+                {
+                  required: true,
+                  message: t('messages.errors.require', { field: 'Response' }),
+                },
+              ]}
               classNameFormInput={styles.input}
+              required
             />
           </div>
           <div className='mb-16'>

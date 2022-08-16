@@ -68,7 +68,7 @@ const ModalAddEndpoint = ({ children, appId, addEndpoint }: any) => {
               rules={[
                 {
                   required: true,
-                  message: t('messages.errors.require', { field: 'Url' }),
+                  message: t('messages.errors.require', { field: 'URL' }),
                 },
               ]}
               classNameFormInput={styles.input}

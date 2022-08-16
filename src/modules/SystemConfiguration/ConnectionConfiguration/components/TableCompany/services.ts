@@ -40,6 +40,11 @@ export const useApplications = (companyId: any) => {
     },
   );
 
+  const refreshApplication = () => {
+    clearCache(`data-application-${companyId}`);
+    run(1, []);
+  };
+
   const requestDeleteApp = useRequest(
     async (appId: any) => {
       return ApiUtils.remove(APPLICATION_SERVICE_BASE_URL, { id: +appId });
@@ -61,6 +66,7 @@ export const useApplications = (companyId: any) => {
       manual: true,
       onSuccess: () => {
         message.success('Edit Application Success');
+        refreshApplication();
       },
       onError: (error: any) => {
         message.error(
@@ -80,6 +86,7 @@ export const useApplications = (companyId: any) => {
       manual: true,
       onSuccess: () => {
         message.success('Delete Endpoint Success');
+        refreshApplication();
       },
       onError: (error: any) => {
         message.error(
@@ -99,6 +106,7 @@ export const useApplications = (companyId: any) => {
       manual: true,
       onSuccess: () => {
         message.success('Edit Endpoint Success');
+        refreshApplication();
       },
       onError: (error: any) => {
         message.error(
@@ -118,6 +126,7 @@ export const useApplications = (companyId: any) => {
       manual: true,
       onSuccess: () => {
         message.success('Add Endpoint Success');
+        refreshApplication();
       },
       onError: (error: any) => {
         message.error(
@@ -132,11 +141,6 @@ export const useApplications = (companyId: any) => {
   const onChange = (page: number) => {
     clearCache(`data-application-${companyId}`);
     run(page);
-  };
-
-  const refreshApplication = () => {
-    clearCache(`data-application-${companyId}`);
-    run(1, []);
   };
 
   const deleteApplication = (idApp: any) => async () => {
