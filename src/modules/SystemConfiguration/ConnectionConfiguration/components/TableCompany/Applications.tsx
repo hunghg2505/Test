@@ -1,6 +1,7 @@
-import { Form, Row } from 'antd';
+import { Form, Pagination, Row } from 'antd';
 import InputForm from 'libraries/form/input/input-form';
 import Button from 'libraries/UI/Button';
+import { paginationItemRender } from 'libraries/UI/Pagination';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useCreateApplication } from '../../utils/services';
@@ -59,12 +60,12 @@ const ApplicationsMemo = ({ companyId }: any) => {
   const {
     applications,
     refreshApplication,
-    onLoadMore,
     deleteApplication,
     updateApplication,
     deleteEndpoint,
     updateEndpoint,
     addEndpoint,
+    onChange,
   } = useApplications(companyId);
 
   return (
@@ -76,8 +77,6 @@ const ApplicationsMemo = ({ companyId }: any) => {
           <ApplicationItem
             key={`app-${application?.id}`}
             application={application}
-            onLoadMore={onLoadMore}
-            isLoadMore={applications?.isLoadMore}
             deleteApplication={deleteApplication}
             updateApplication={updateApplication}
             deleteEndpoint={deleteEndpoint}
@@ -86,6 +85,17 @@ const ApplicationsMemo = ({ companyId }: any) => {
           />
         );
       })}
+
+      <Row justify='end' className={styles.paginationApp}>
+        <Pagination
+          current={applications?.current}
+          onChange={onChange}
+          total={applications?.total}
+          defaultPageSize={applications?.pageSize}
+          itemRender={paginationItemRender}
+          showSizeChanger={false}
+        />
+      </Row>
 
       <AddNewApplications companyId={`${companyId}`} refreshApplication={refreshApplication} />
     </div>
