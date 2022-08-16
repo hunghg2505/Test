@@ -3,11 +3,6 @@ import { Col, Form, Row, Divider, Modal, DatePicker } from 'antd';
 import InputTextAreaForm from 'libraries/form/input/input-textarea-form';
 import Select from 'libraries/UI/Select';
 import { useTranslation } from 'react-i18next';
-import {
-  DATA_SUBJECT_RIGHT_DROPDOWN_DATA,
-  STATUS_DROPDOWN_DATA,
-  RESULT_DROPDOWN_DATA,
-} from 'constants/common.constants';
 
 import styles from './index.module.scss';
 import Button from 'libraries/UI/Button';
@@ -25,7 +20,6 @@ interface IProps {
 
 export const CustomSelectDropdown = ({ placeholder, data, allowClear, value, onChange }: any) => {
   const [visible, setVisible] = useState(false);
-  const refHiddenDropdown: any = useRef(null);
 
   const { run } = useDebounceFn(
     () => {

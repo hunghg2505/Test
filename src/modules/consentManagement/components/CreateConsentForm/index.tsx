@@ -12,8 +12,14 @@ import moment from 'moment';
 import { useTranslation } from 'react-i18next';
 import { RegexUtils } from 'utils/regex-helper';
 import styles from './index.module.scss';
-import { useCreateConsent, useGetListApplication, useGetListService } from './service';
+import {
+  useCreateConsent,
+  useGetListApplication,
+  useGetListProduct,
+  useGetListService,
+} from './service';
 import { CloseOutlined } from '@ant-design/icons';
+import { NormalSelectDropdown } from './components';
 
 interface IProps {
   visible: boolean;
@@ -140,15 +146,22 @@ const CreateConsentForm = ({ visible, onClose, onReloadConsentData }: IProps) =>
   const { t } = useTranslation();
   const [createConsentForm] = Form.useForm();
   const [expireOn, setExpireOn] = useState(null);
+  const [productId, setProductId] = useState('');
 
   const onFinishSubmitForm = () => {
     onClose();
     createConsentForm.resetFields();
     setExpireOn(null);
     onReloadConsentData();
+    setProductId('');
+  };
+
+  const onSelectChange = (value: string) => {
+    setProductId(value);
   };
 
   const createConsentRequest = useCreateConsent(onFinishSubmitForm);
+  const { data } = useGetListProduct();
 
   const onFinish = (values: any) => {
     createConsentRequest.run({
@@ -228,35 +241,30 @@ const CreateConsentForm = ({ visible, onClose, onReloadConsentData }: IProps) =>
               <FormItemApplication />
             </Form.Item>
           </Col>
-          <Col xs={12}>
-            <InputForm
-              label='Product ID'
-              name='productId'
-              placeholder='Product ID'
-              maxLength={55}
-              required
-              rules={[
-                {
-                  required: true,
-                  message: t('messages.errors.require', { field: 'Product ID' }),
-                },
-              ]}
-            />
+          <Col xs={12} className={styles.info}>
+            <p className={styles.label}>
+              Product ID<span className={styles.asterisk}>*</span>
+            </p>
+            <p className={styles.value}>{productId}</p>
           </Col>
           <Col xs={12}>
-            <InputForm
+            <Form.Item
               label='Product Name'
-              name='productName'
+              name='idProduct'
               required
-              placeholder='Product name'
-              maxLength={55}
               rules={[
                 {
                   required: true,
                   message: t('messages.errors.require', { field: 'Product Name' }),
                 },
               ]}
-            />
+            >
+              <NormalSelectDropdown
+                data={data}
+                placeholder='Select Product'
+                onChange={onSelectChange}
+              />
+            </Form.Item>
           </Col>
           <Col xs={24}>
             <Form.Item

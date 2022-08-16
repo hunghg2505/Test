@@ -35,6 +35,8 @@ const getListGeneralCaseManagementService = async () => {
     ),
   );
 
+  const productRes: any = await ApiUtils.fetch(API_PATH.GET_PRODUCT_LIST);
+
   return {
     featureList: [
       {
@@ -53,6 +55,17 @@ const getListGeneralCaseManagementService = async () => {
           },
           { id: 'CASE_STATUS', name: 'Create Case - Status', listItem: response[2]?.content?.data },
           { id: 'CASE_RESULT', name: 'Create Case - Result', listItem: response[3]?.content?.data },
+        ],
+      },
+      {
+        id: 2,
+        name: 'Consent Management',
+        list: [
+          {
+            id: 'PRODUCT',
+            name: 'Create Consent - Product',
+            listItem: productRes?.content?.data,
+          },
         ],
       },
     ],
@@ -115,6 +128,35 @@ export const useDeleteGeneralCaseManagement = (onFinishSubmitForm: any) => {
       },
       onError: () => {
         message.error('Delete Error');
+        onFinishSubmitForm();
+      },
+    },
+  );
+};
+
+interface ICreateProduct {
+  name: string;
+}
+
+const createProduct = async (body: ICreateProduct) => {
+  return ApiUtils.post<ICreateProduct, ResponseBase<any>>(API_PATH.CREATE_PRODUCT, body);
+};
+
+export const useCreateProduct = (onFinishSubmitForm: any) => {
+  return useRequest(
+    async (data: ICreateProduct) => {
+      return createProduct(data);
+    },
+    {
+      manual: true,
+      onSuccess: () => {
+        message.success('Create Success');
+        onFinishSubmitForm();
+      },
+      onError: (error: any) => {
+        message.error(
+          error?.content?.messageContent ? `${error?.content?.messageContent}` : 'Create  Error',
+        );
         onFinishSubmitForm();
       },
     },

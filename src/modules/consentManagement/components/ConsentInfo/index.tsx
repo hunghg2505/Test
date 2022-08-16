@@ -30,6 +30,8 @@ const ICON_EDIT = (
 const ConsentInfo = ({ data, onClickEdit }: any) => {
   const { isHavePermissionEditConsent } = useConsentManagementPermission();
 
+  console.log(data);
+
   return (
     <div className={styles.consentInfo}>
       <Row>
@@ -59,7 +61,7 @@ const ConsentInfo = ({ data, onClickEdit }: any) => {
           <p className={styles.label}>
             Application<span className={styles.asterisk}>*</span>
           </p>
-          <p className={styles.value}>{data?.application?.appName}</p>
+          <p className={styles.value}>{data?.application?.name}</p>
         </Col>
       </Row>
       <Row>

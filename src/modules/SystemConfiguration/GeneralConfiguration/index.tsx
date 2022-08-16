@@ -9,6 +9,7 @@ import { useTranslation } from 'react-i18next';
 import styles from './index.module.scss';
 import {
   useCreateGeneralCaseManagement,
+  useCreateProduct,
   useDeleteGeneralCaseManagement,
   useGeneralConfig,
 } from './service';
@@ -26,8 +27,13 @@ const FormFeatureItem = ({ listItem, featureId, refresh }: any) => {
 
   const createGeneralCaseManagementReq = useCreateGeneralCaseManagement(onFinishSubmitForm);
   const deleteGeneralCaseManagementReq = useDeleteGeneralCaseManagement(onFinishSubmitForm);
+  const createProductReq = useCreateProduct(onFinishSubmitForm);
 
   const onAddNew = (values: any) => {
+    if (featureId === 'PRODUCT') {
+      createProductReq.run({ ...values });
+      return;
+    }
     createGeneralCaseManagementReq.run({ type: featureId, ...values });
   };
 
