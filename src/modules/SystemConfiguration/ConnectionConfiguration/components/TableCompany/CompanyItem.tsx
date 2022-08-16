@@ -37,6 +37,9 @@ const CompanyItemMemo = ({ company, refresh }: any) => {
   };
 
   const onFinish = (values: any) => {
+    if (values?.name?.trim() === company?.name) {
+      return;
+    }
     editCompanyReq.run({
       ...values,
       id: Number(company.id),

@@ -114,6 +114,9 @@ export const ApplicationItemMemo = ({
   };
 
   const onFinish = (values: any) => {
+    if (values?.app_name?.trim() === application?.name) {
+      return;
+    }
     updateApplication(application?.id, values?.app_name);
   };
 
