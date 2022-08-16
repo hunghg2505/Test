@@ -1,4 +1,4 @@
-import { ExclamationCircleOutlined } from '@ant-design/icons';
+import { CheckOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
 import { Col, Form, Row, Modal } from 'antd';
 import IconArrowDown from 'assets/icons/icon-arrow-down';
 import InputForm from 'libraries/form/input/input-form';
@@ -131,7 +131,7 @@ const CompanyItemMemo = ({ company, refresh }: any) => {
                   editCompanyForm.submit();
                 }}
               >
-                V
+                <CheckOutlined />
               </span>
             </>
           )}

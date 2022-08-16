@@ -1,4 +1,4 @@
-import { ExclamationCircleOutlined } from '@ant-design/icons';
+import { CheckOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
 import { Col, Form, Modal, Row } from 'antd';
 import IconArrowDown from 'assets/icons/icon-arrow-down';
 import InputForm from 'libraries/form/input/input-form';
@@ -207,7 +207,7 @@ export const ApplicationItemMemo = ({
                   editApplicationForm.submit();
                 }}
               >
-                V
+                <CheckOutlined />
               </span>
             </>
           )}
