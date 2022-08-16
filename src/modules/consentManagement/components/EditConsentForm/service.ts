@@ -9,27 +9,26 @@ interface IDetailConsent {
   name: string;
   consentId: string;
   application: any;
-  productId: string;
-  productName: string;
+
   service: any;
   status: string;
   version: string;
   content: string;
   title: string;
   expireOn?: string;
+  product: any;
 }
 
 interface IEditConsent {
   name?: string;
   application?: any;
-  productId?: string;
-  productName?: string;
   service?: any;
   status?: string;
   version?: string;
   content?: string;
   title?: string;
   expireOn?: string;
+  idProduct?: number;
 }
 
 const getConsentDetailService = async (id: string): Promise<IDetailConsent> => {
@@ -39,8 +38,7 @@ const getConsentDetailService = async (id: string): Promise<IDetailConsent> => {
     name: response?.content?.data?.name,
     consentId: response?.content?.data?.consentId,
     application: response?.content?.data?.__application__,
-    productId: response?.content?.data?.productId,
-    productName: response?.content?.data?.productName,
+    product: response?.content?.data?.__product__,
     service: response?.content?.data?.__service__,
     status: response?.content?.data?.status,
     version: response?.content?.data?.version,

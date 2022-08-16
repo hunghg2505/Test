@@ -54,7 +54,7 @@ const ConsentInfo = ({ data, onClickEdit }: any) => {
           <p className={styles.label}>
             Product ID<span className={styles.asterisk}>*</span>
           </p>
-          <p className={styles.value}>{data?.productId}</p>
+          <p className={styles.value}>{data?.product?.id}</p>
         </Col>
         <Col xs={2}></Col>
         <Col xs={11} className={styles.info}>
@@ -76,7 +76,7 @@ const ConsentInfo = ({ data, onClickEdit }: any) => {
           <p className={styles.label}>
             Product Name<span className={styles.asterisk}>*</span>
           </p>
-          <p className={clsx(styles.value, styles.leftSpace)}>{data?.productName}</p>
+          <p className={clsx(styles.value, styles.leftSpace)}>{data?.product?.name}</p>
         </Col>
       </Row>
       <Divider />
