@@ -5,6 +5,7 @@ export const USER_MANAGEMENT_BASE_URL = '/user-management';
 export const CONSENT_MANAGEMENT_BASE_URL = '/consent-management';
 export const COMPANY_SERVICE_BASE_URL = '/company';
 export const APPLICATION_SERVICE_BASE_URL = '/application';
+export const GENERAL_CONFIG_BASE_URL = '/general-case-management';
 
 export const API_PATH = {
   // Account
@@ -65,4 +66,5 @@ export const API_PATH = {
   CREATE_APPLICATION: `${APPLICATION_SERVICE_BASE_URL}`,
   APP_ENDPOINT: (endpointId: any) => `/api-endpoint/${endpointId}`,
   GET_COMPANY_SUGGESTION: `${COMPANY_SERVICE_BASE_URL}/data-autocomplete`,
+  DELETE_GENERAL_CASE_MANAGEMENT: (id: string | number) => `${GENERAL_CONFIG_BASE_URL}/${id}`,
 };

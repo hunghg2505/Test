@@ -1,6 +1,5 @@
 @import '../../../styles/variables.scss';
 
-
 .wrap {
   padding: 40px;
   h1 {
@@ -32,7 +31,6 @@
   border: 1px solid $color-black3;
 
   .featureAppName {
-
   }
 }
 
@@ -43,8 +41,8 @@
 
 .content {
   padding: 20px;
-  border-left:1px solid $color-black4;
-  border-right:1px solid $color-black4;
+  border-left: 1px solid $color-black4;
+  border-right: 1px solid $color-black4;
 
   .formInput {
     margin-bottom: 10px;
@@ -66,7 +64,7 @@
 
   .item {
     padding: 8px;
-    background: #C4C4C4;
+    background: #c4c4c4;
     border-radius: 5px;
     display: inline-flex;
     align-items: center;
@@ -77,5 +75,12 @@
 
   .btnClose {
     cursor: pointer;
+  }
+}
+
+.addBtn {
+  height: 40px;
+  &:focus {
+    background-color: $color-primary !important;
   }
 }

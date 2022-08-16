@@ -88,3 +88,17 @@ export const METHOD_DROPDOWN_DATA = [
   { label: 'PATCH', value: 'patch' },
   { label: 'DELETE', value: 'delete' },
 ];
+
+export const GENERAL_CONFIG_TYPE = {
+  SUBJECT_RIGHT: 'SUBJECT_RIGHT',
+  RELATED_DEPARTMENT: 'RELATED_DEPARTMENT',
+  CASE_STATUS: 'CASE_STATUS',
+  CASE_RESULT: 'CASE_RESULT',
+};
+
+export const GENERAL_CASE_MANAGEMENT_LIST = [
+  'SUBJECT_RIGHT',
+  'RELATED_DEPARTMENT',
+  'CASE_STATUS',
+  'CASE_RESULT',
+];
