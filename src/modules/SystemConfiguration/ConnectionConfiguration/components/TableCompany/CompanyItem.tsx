@@ -130,8 +130,14 @@ const CompanyItemMemo = ({ company, refresh }: any) => {
               <span
                 className={styles.btnEdit}
                 onClick={() => {
-                  setIsEdit(false);
-                  editCompanyForm.submit();
+                  if (
+                    editCompanyForm
+                      .getFieldsError()
+                      .filter((item: any) => item?.errors?.length !== 0).length === 0
+                  ) {
+                    setIsEdit(false);
+                    editCompanyForm.submit();
+                  }
                 }}
               >
                 <CheckOutlined />

@@ -221,8 +221,14 @@ export const ApplicationItemMemo = ({
               <span
                 className={styles.btnEdit}
                 onClick={() => {
-                  setIsEdit(false);
-                  editApplicationForm.submit();
+                  if (
+                    editApplicationForm
+                      .getFieldsError()
+                      .filter((item: any) => item?.errors?.length !== 0).length === 0
+                  ) {
+                    setIsEdit(false);
+                    editApplicationForm.submit();
+                  }
                 }}
               >
                 <CheckOutlined />
