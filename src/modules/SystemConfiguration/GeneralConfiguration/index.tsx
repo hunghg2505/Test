@@ -91,6 +91,7 @@ const FormFeatureItem = ({ listItem, featureId, refresh }: any) => {
           <InputForm
             name='name'
             label={'Add new'}
+            maxLength={55}
             rules={[
               {
                 required: true,

@@ -195,6 +195,11 @@
   display: flex;
   align-items: center;
   gap: 16px;
+  :global {
+    .ant-form-item {
+      width: 500px;
+    }
+  }
 }
 
 .addBtn:focus {
