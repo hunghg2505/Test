@@ -13,6 +13,7 @@ interface Props {
   maxLength?: number;
   defaultValue?: string;
   disabled?: boolean;
+  value?: string;
   // custom
   classNameFormInput?: any;
   className?: any;
@@ -37,6 +38,7 @@ export default function InputForm({
   normalize,
   onBlur,
   initialValue,
+  value,
 }: Props) {
   return (
     <Form.Item
@@ -60,6 +62,7 @@ export default function InputForm({
         defaultValue={defaultValue}
         onBlur={onBlur}
         disabled={disabled}
+        value={value}
       />
     </Form.Item>
   );

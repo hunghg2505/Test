@@ -1,21 +1,17 @@
 import { Col, DatePicker, Divider, Form, Row } from 'antd';
-import {
-  DATA_SUBJECT_RIGHT_DROPDOWN_DATA,
-  RESULT_DROPDOWN_DATA,
-  STATUS_DROPDOWN_DATA,
-} from 'constants/common.constants';
 import { useEditCase, useGetListDataDropDropdown } from 'modules/caseManagement/services';
 import { useEffect, useRef, useState } from 'react';
 
 import Loading from 'libraries/components/loading';
 import InputTextAreaForm from 'libraries/form/input/input-textarea-form';
 import Button from 'libraries/UI/Button';
-import Select from 'libraries/UI/Select';
 import moment from 'moment';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import CaseInfo from '../CaseInfo';
 import styles from './index.module.scss';
+import { useGetDataDropdown } from 'modules/dataSubjectManagement/components/CreateCaseForm/service';
+import { CustomSelectDropdown } from 'modules/dataSubjectManagement/components/CreateCaseForm';
 
 const CreateCaseForm = ({
   data,
@@ -29,6 +25,7 @@ const CreateCaseForm = ({
   const [editCaseForm] = Form.useForm();
   const refFiles: any = useRef();
   const { usersData } = useGetListDataDropDropdown();
+  const { data: dataDropdown } = useGetDataDropdown();
 
   const [isEdit, setIsEdit] = useState<boolean>(true);
   const [acceptedDate, setAcceptedDate] = useState<null | moment.Moment>(null);
@@ -111,13 +108,10 @@ const CreateCaseForm = ({
                       },
                     ]}
                   >
-                    <Select placeholder='Select a Right'>
-                      {DATA_SUBJECT_RIGHT_DROPDOWN_DATA.map((item, index) => (
-                        <Select.Option value={item.value} key={`${index}${item.value}`}>
-                          {item.value}
-                        </Select.Option>
-                      ))}
-                    </Select>
+                    <CustomSelectDropdown
+                      data={dataDropdown?.subjectRightData}
+                      placeholder='Select a Right'
+                    />
                   </Form.Item>
                 </Col>
                 <Col xs={12}>
@@ -132,10 +126,10 @@ const CreateCaseForm = ({
                       },
                     ]}
                   >
-                    <Select placeholder='Select a Department'>
-                      <Select.Option value={'Department 1'}>Department 1</Select.Option>
-                      <Select.Option value={'Department 2'}>Department 2</Select.Option>
-                    </Select>
+                    <CustomSelectDropdown
+                      data={dataDropdown?.relatedDepartmentData}
+                      placeholder='Select a Department'
+                    />
                   </Form.Item>
                 </Col>
                 <Col xs={12}>
@@ -150,13 +144,7 @@ const CreateCaseForm = ({
                       },
                     ]}
                   >
-                    <Select placeholder='Assign to'>
-                      {usersData?.data?.map((item: any) => (
-                        <Select.Option value={item.value} key={`${item.sid}`}>
-                          {item.value}
-                        </Select.Option>
-                      ))}
-                    </Select>
+                    <CustomSelectDropdown data={usersData?.data} placeholder='Assign to' />
                   </Form.Item>
                 </Col>
                 <Col xs={24}>
@@ -189,13 +177,10 @@ const CreateCaseForm = ({
                       },
                     ]}
                   >
-                    <Select placeholder='List of Status'>
-                      {STATUS_DROPDOWN_DATA.map((item, index) => (
-                        <Select.Option value={item.value} key={`${index}${item.value}`}>
-                          {item.value}
-                        </Select.Option>
-                      ))}
-                    </Select>
+                    <CustomSelectDropdown
+                      data={dataDropdown?.statusData}
+                      placeholder='List of Status'
+                    />
                   </Form.Item>
                 </Col>
                 <Col xs={12}>
@@ -213,13 +198,11 @@ const CreateCaseForm = ({
                 <Divider />
                 <Col xs={12}>
                   <Form.Item label='Result' name='responseStatus'>
-                    <Select placeholder='Select Result' allowClear>
-                      {RESULT_DROPDOWN_DATA.map((item, index) => (
-                        <Select.Option value={item.value} key={`${index}${item.value}`}>
-                          {item.value}
-                        </Select.Option>
-                      ))}
-                    </Select>
+                    <CustomSelectDropdown
+                      data={dataDropdown?.resultData}
+                      placeholder='Select Result'
+                      allowClear={true}
+                    />
                   </Form.Item>
                 </Col>
                 <Col xs={24}>

@@ -15,14 +15,18 @@ import ConsentInfo from '../ConsentInfo';
 import { FormItemApplication, FormItemService } from '../CreateConsentForm';
 import styles from './index.module.scss';
 import { useConsentDetail, useUpdateConsent } from './service';
+import { useGetListProduct } from '../CreateConsentForm/service';
+import { NormalSelectDropdown } from '../CreateConsentForm/components';
 
 export default function EditConsentForm() {
   const { t } = useTranslation();
   const { id } = useParams();
+  const { data: dataDropdownProduct } = useGetListProduct();
 
   const [isEdit, setIsEdit] = useState(true);
 
   const [expireOn, setExpireOn] = useState<null | moment.Moment>(null);
+  const [productId, setProductId] = useState('');
   const [editConsentForm] = Form.useForm();
 
   const onFinishSubmitForm = () => {
@@ -38,6 +42,7 @@ export default function EditConsentForm() {
       if (data?.expireOn) {
         setExpireOn(moment(data?.expireOn));
       }
+      setProductId(data?.product.id);
     }
   }, [data]);
 
@@ -48,6 +53,10 @@ export default function EditConsentForm() {
   const disabledDate = (current: any) => {
     const customDate = moment().format('YYYY-MM-DD');
     return current && current < moment(customDate, 'YYYY-MM-DD');
+  };
+
+  const onSelectChange = (value: string) => {
+    setProductId(value);
   };
 
   return (
@@ -65,8 +74,7 @@ export default function EditConsentForm() {
               initialValues={{
                 name: data?.name,
                 applicationId: Number(data?.application?.id),
-                productId: data?.productId,
-                productName: data?.productName,
+                idProduct: Number(data?.product.id),
                 serviceId: Number(data?.service?.id),
                 status: data?.status,
                 version: data?.version,
@@ -110,20 +118,11 @@ export default function EditConsentForm() {
                     <FormItemApplication />
                   </Form.Item>
                 </Col>
-                <Col xs={12}>
-                  <InputForm
-                    label='Product ID'
-                    placeholder='Product ID'
-                    name='productId'
-                    maxLength={55}
-                    required
-                    rules={[
-                      {
-                        required: true,
-                        message: t('messages.errors.require', { field: 'Product ID' }),
-                      },
-                    ]}
-                  />
+                <Col xs={12} className={styles.info}>
+                  <p className={styles.label}>
+                    Product ID<span className={styles.asterisk}>*</span>
+                  </p>
+                  <p className={styles.value}>{productId}</p>
                 </Col>
 
                 <Col xs={12}>
@@ -142,19 +141,23 @@ export default function EditConsentForm() {
                   </Form.Item>
                 </Col>
                 <Col xs={12}>
-                  <InputForm
+                  <Form.Item
                     label='Product Name'
-                    name='productName'
-                    placeholder='Product name'
+                    name='idProduct'
                     required
-                    maxLength={55}
                     rules={[
                       {
                         required: true,
                         message: t('messages.errors.require', { field: 'Product Name' }),
                       },
                     ]}
-                  />
+                  >
+                    <NormalSelectDropdown
+                      data={dataDropdownProduct}
+                      placeholder='Select Product'
+                      onChange={onSelectChange}
+                    />
+                  </Form.Item>
                 </Col>
                 <Col xs={12}>
                   <Form.Item

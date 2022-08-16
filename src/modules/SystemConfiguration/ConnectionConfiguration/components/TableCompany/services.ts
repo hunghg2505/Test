@@ -78,6 +78,16 @@ export const useApplications = (companyId: any) => {
     },
     {
       manual: true,
+      onSuccess: () => {
+        message.success('Delete Endpoint Success');
+      },
+      onError: (error: any) => {
+        message.error(
+          error?.content?.messageContent
+            ? `${error?.content?.messageContent}`
+            : 'Delete Endpoint Error',
+        );
+      },
     },
   );
 
@@ -106,6 +116,16 @@ export const useApplications = (companyId: any) => {
     },
     {
       manual: true,
+      onSuccess: () => {
+        message.success('Add Endpoint Success');
+      },
+      onError: (error: any) => {
+        message.error(
+          error?.content?.messageContent
+            ? `${error?.content?.messageContent}`
+            : 'Add Endpoint Error',
+        );
+      },
     },
   );
 

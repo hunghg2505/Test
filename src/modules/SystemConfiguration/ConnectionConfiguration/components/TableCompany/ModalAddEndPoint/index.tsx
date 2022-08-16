@@ -4,12 +4,14 @@ import InputForm from 'libraries/form/input/input-form';
 import Button from 'libraries/UI/Button';
 import Select from 'libraries/UI/Select';
 import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import styles from './index.module.scss';
 
 const ModalAddEndpoint = ({ children, appId, addEndpoint }: any) => {
   const [visible, setVisible] = useState(false);
   const [form] = Form.useForm();
+  const { t } = useTranslation();
 
   useEffect(() => {
     const t = setTimeout(() => {
@@ -47,8 +49,14 @@ const ModalAddEndpoint = ({ children, appId, addEndpoint }: any) => {
             <InputForm
               label='Name'
               name='name'
-              rules={[{ required: true, message: 'Require' }]}
+              rules={[
+                {
+                  required: true,
+                  message: t('messages.errors.require', { field: 'Name' }),
+                },
+              ]}
               classNameFormInput={styles.input}
+              required
             />
           </div>
 
@@ -56,8 +64,14 @@ const ModalAddEndpoint = ({ children, appId, addEndpoint }: any) => {
             <InputForm
               label='URL'
               name='url'
-              rules={[{ required: true, message: 'Require' }]}
+              rules={[
+                {
+                  required: true,
+                  message: t('messages.errors.require', { field: 'Url' }),
+                },
+              ]}
               classNameFormInput={styles.input}
+              required
             />
           </div>
 
@@ -66,7 +80,13 @@ const ModalAddEndpoint = ({ children, appId, addEndpoint }: any) => {
               label='Method'
               name='method'
               className={styles.input}
-              rules={[{ required: true, message: 'Require' }]}
+              rules={[
+                {
+                  required: true,
+                  message: t('messages.errors.require', { field: 'Method' }),
+                },
+              ]}
+              required
             >
               <Select placeholder='Select Result' allowClear>
                 {METHOD_DROPDOWN_DATA.map((item, index) => (
@@ -80,10 +100,16 @@ const ModalAddEndpoint = ({ children, appId, addEndpoint }: any) => {
 
           <div className='mb-16'>
             <InputForm
-              label='Request'
+              label='Parammeter'
               name='request'
-              rules={[{ required: true, message: 'Require' }]}
+              rules={[
+                {
+                  required: true,
+                  message: t('messages.errors.require', { field: 'Parammeter' }),
+                },
+              ]}
               classNameFormInput={styles.input}
+              required
             />
           </div>
 
@@ -91,15 +117,23 @@ const ModalAddEndpoint = ({ children, appId, addEndpoint }: any) => {
             <InputForm
               label='Response'
               name='response'
-              rules={[{ required: true, message: 'Require' }]}
+              rules={[
+                {
+                  required: true,
+                  message: t('messages.errors.require', { field: 'Response' }),
+                },
+              ]}
               classNameFormInput={styles.input}
+              required
             />
           </div>
           <div className='mb-16'>
             <InputForm label='Key' name='key' classNameFormInput={styles.input} />
           </div>
 
-          <Button htmlType='submit'>Submit</Button>
+          <Button htmlType='submit' className={styles.submitBtn}>
+            Submit
+          </Button>
         </Form>
       </Modal>
     </>

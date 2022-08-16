@@ -30,8 +30,18 @@
       color: #000000;
     }
 
+    .ant-form-item-label > label {
+      &:before {
+        order: 1;
+      }
+    }
+
     .ant-form-item-control {
       max-width: 350px;
     }
   }
+}
+
+.submitBtn:focus {
+  background-color: #cf2a2b !important;
 }

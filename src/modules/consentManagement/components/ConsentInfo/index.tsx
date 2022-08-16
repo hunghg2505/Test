@@ -30,6 +30,8 @@ const ICON_EDIT = (
 const ConsentInfo = ({ data, onClickEdit }: any) => {
   const { isHavePermissionEditConsent } = useConsentManagementPermission();
 
+  console.log(data);
+
   return (
     <div className={styles.consentInfo}>
       <Row>
@@ -52,14 +54,14 @@ const ConsentInfo = ({ data, onClickEdit }: any) => {
           <p className={styles.label}>
             Product ID<span className={styles.asterisk}>*</span>
           </p>
-          <p className={styles.value}>{data?.productId}</p>
+          <p className={styles.value}>{data?.product?.id}</p>
         </Col>
         <Col xs={2}></Col>
         <Col xs={11} className={styles.info}>
           <p className={styles.label}>
             Application<span className={styles.asterisk}>*</span>
           </p>
-          <p className={styles.value}>{data?.application?.appName}</p>
+          <p className={styles.value}>{data?.application?.name}</p>
         </Col>
       </Row>
       <Row>
@@ -74,7 +76,7 @@ const ConsentInfo = ({ data, onClickEdit }: any) => {
           <p className={styles.label}>
             Product Name<span className={styles.asterisk}>*</span>
           </p>
-          <p className={clsx(styles.value, styles.leftSpace)}>{data?.productName}</p>
+          <p className={clsx(styles.value, styles.leftSpace)}>{data?.product?.name}</p>
         </Col>
       </Row>
       <Divider />

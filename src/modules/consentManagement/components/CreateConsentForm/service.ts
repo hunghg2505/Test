@@ -180,3 +180,15 @@ export const useGetListService = () => {
     isLoadMore: data?.isLoadMore,
   };
 };
+
+const getListProductService = async () => {
+  const productRes: any = await ApiUtils.fetch(API_PATH.GET_PRODUCT_LIST);
+
+  return productRes?.content?.data;
+};
+
+export const useGetListProduct = () => {
+  const { data } = useRequest(getListProductService);
+
+  return { data };
+};
