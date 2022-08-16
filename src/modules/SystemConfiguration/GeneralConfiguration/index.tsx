@@ -1,6 +1,7 @@
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import { Form, Modal, Row } from 'antd';
 import IconArrowDown from 'assets/icons/icon-arrow-down';
+import { GENERAL_CONFIG_TYPE } from 'constants/common.constants';
 import InputForm from 'libraries/form/input/input-form';
 import Button from 'libraries/UI/Button';
 import React, { useCallback, useState } from 'react';
@@ -15,6 +16,33 @@ import {
 } from './service';
 
 const { confirm } = Modal;
+
+const getFieldName = (type: string) => {
+  let fieldName;
+  switch (type) {
+    case GENERAL_CONFIG_TYPE.RELATED_DEPARTMENT:
+      fieldName = 'Related Department';
+      break;
+    case GENERAL_CONFIG_TYPE.CASE_RESULT:
+      fieldName = 'Result';
+      break;
+    case GENERAL_CONFIG_TYPE.CASE_STATUS:
+      fieldName = 'Status';
+      break;
+    case GENERAL_CONFIG_TYPE.SUBJECT_RIGHT:
+      fieldName = 'Subject Right';
+      break;
+    case 'PRODUCT':
+      fieldName = 'Product';
+      break;
+    default:
+      fieldName = '';
+      break;
+  }
+
+  return fieldName;
+};
+
 const FormFeatureItem = ({ listItem, featureId, refresh }: any) => {
   const { t } = useTranslation();
 
@@ -66,7 +94,7 @@ const FormFeatureItem = ({ listItem, featureId, refresh }: any) => {
             rules={[
               {
                 required: true,
-                message: t('messages.errors.require', { field: 'Name' }),
+                message: t('messages.errors.require', { field: `${getFieldName(featureId)}` }),
               },
             ]}
           />
