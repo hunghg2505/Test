@@ -1,16 +1,16 @@
-import { useCallback, useRef, useState } from 'react';
-import { Col, Form, Row, Divider, Modal, DatePicker } from 'antd';
+import { Col, DatePicker, Divider, Form, Modal, Row } from 'antd';
 import InputTextAreaForm from 'libraries/form/input/input-textarea-form';
 import Select from 'libraries/UI/Select';
+import { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import styles from './index.module.scss';
-import Button from 'libraries/UI/Button';
-import { useParams } from 'react-router-dom';
-import { useCreateCase, useGetDataDropdown, useGetListDataDropDropdown } from './service';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
-import moment from 'moment';
 import { useDebounceFn } from 'ahooks';
+import Button from 'libraries/UI/Button';
+import moment from 'moment';
+import { useParams } from 'react-router-dom';
+import styles from './index.module.scss';
+import { useCreateCase, useGetDataDropdown, useGetListDataDropDropdown } from './service';
 
 interface IProps {
   visible: boolean;

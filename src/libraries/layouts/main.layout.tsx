@@ -3,7 +3,6 @@ import { Content } from 'antd/lib/layout/layout';
 import Sider from 'antd/lib/layout/Sider';
 import { ItemType } from 'antd/lib/menu/hooks/useItems';
 import IconInfo from 'assets/icons/icon-info';
-import IconLogout from 'assets/icons/icon-logout';
 import Logo from 'assets/icons/logo';
 import useAuth from 'hooks/redux/auth/useAuth';
 import cloneDeep from 'lodash/cloneDeep';

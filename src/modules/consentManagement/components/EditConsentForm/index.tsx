@@ -1,34 +1,27 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
-import styles from './index.module.scss';
-import { Col, DatePicker, Divider, Form, Pagination, Row } from 'antd';
-import Select from 'libraries/UI/Select';
-import { useTranslation } from 'react-i18next';
-import InputTextAreaForm from 'libraries/form/input/input-textarea-form';
-import InputForm from 'libraries/form/input/input-form';
-import Button from 'libraries/UI/Button';
-import ConsentInfo from '../ConsentInfo';
-import { useParams } from 'react-router-dom';
-import {
-  useConsentDetail,
-  useGetListApplication,
-  useGetListService,
-  useUpdateConsent,
-} from './service';
-import moment from 'moment';
-import Loading from 'libraries/components/loading';
+import { Col, DatePicker, Form, Row } from 'antd';
 import { STATUS_CONSENT_DROPDOWN_DATA } from 'constants/common.constants';
+import Loading from 'libraries/components/loading';
+import InputForm from 'libraries/form/input/input-form';
+import InputTextAreaForm from 'libraries/form/input/input-textarea-form';
+import Button from 'libraries/UI/Button';
+import Select from 'libraries/UI/Select';
+import moment from 'moment';
+import { useTranslation } from 'react-i18next';
+import { useParams } from 'react-router-dom';
 import { RegexUtils } from 'utils/regex-helper';
-import { paginationItemRender } from 'libraries/UI/Pagination';
+import ConsentInfo from '../ConsentInfo';
 import { FormItemApplication, FormItemService } from '../CreateConsentForm';
+import styles from './index.module.scss';
+import { useConsentDetail, useUpdateConsent } from './service';
 
 export default function EditConsentForm() {
   const { t } = useTranslation();
   const { id } = useParams();
 
   const [isEdit, setIsEdit] = useState(true);
-  const [valueApplication, setValueApplication] = useState<string>();
-  const [valueService, setValueService] = useState<string>();
+
   const [expireOn, setExpireOn] = useState<null | moment.Moment>(null);
   const [editConsentForm] = Form.useForm();
 
@@ -39,19 +32,6 @@ export default function EditConsentForm() {
 
   const { data, loading, refresh } = useConsentDetail(`${id}`);
   const updateConsentRequest = useUpdateConsent(`${id}`, onFinishSubmitForm);
-  const {
-    data: dataListApplication,
-    loading: loadingListAppication,
-    onChangePage,
-    onSearchApplicationDebounce,
-    run,
-  } = useGetListApplication();
-  const {
-    data: dataService,
-    onChangePage: onChangePageService,
-    onSearchServiceDebounce,
-    run: runService,
-  } = useGetListService();
 
   useEffect(() => {
     if (!loading) {
@@ -63,26 +43,6 @@ export default function EditConsentForm() {
 
   const onFinish = (values: any) => {
     updateConsentRequest.run({ ...values, expireOn });
-  };
-
-  const onSearchApplication = (value: string) => {
-    if (value && value?.length > 0) {
-      onSearchApplicationDebounce({ name: value });
-    } else {
-      setTimeout(() => {
-        run({ page: 1 });
-      }, 351);
-    }
-  };
-
-  const onSearchService = (value: string) => {
-    if (value && value?.length > 0) {
-      onSearchServiceDebounce({ name: value });
-    } else {
-      setTimeout(() => {
-        runService({ page: 1 });
-      }, 351);
-    }
   };
 
   const disabledDate = (current: any) => {

@@ -1,6 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useMount, useRequest } from 'ahooks';
 import dayjs from 'dayjs';
-import isEmpty from 'lodash/isEmpty';
 import debounce from 'lodash/debounce';
 import get from 'lodash/get';
 import { useRef, useState } from 'react';
@@ -101,7 +101,7 @@ const useSearchCase = () => {
     {
       manual: true,
       refreshDeps: [refCancelRequest.current],
-      onError: (err: any) => {
+      onError: () => {
         refCancelRequest.current = false;
       },
       onSuccess: (r: any, params) => {

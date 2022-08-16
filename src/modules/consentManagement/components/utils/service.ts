@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useMount, useRequest } from 'ahooks';
 import dayjs from 'dayjs';
 import debounce from 'lodash/debounce';
@@ -23,7 +24,7 @@ export const getConsentManagementService = async (values: any): Promise<any> => 
     current: +response?.content?.metadata?.currentPage || 1,
     pageSize: +response?.content?.metadata?.itemPage || 10,
     data:
-      response?.content?.data?.map((item: any, idx: number) => ({
+      response?.content?.data?.map((item: any) => ({
         ...item,
         key: `${item?.id}`,
         updatedDate: dayjs(item?.updatedAt).format('DD/MM/YYYY'),
@@ -100,7 +101,7 @@ export const useConsentManagement = () => {
     {
       manual: true,
       refreshDeps: [refCancelRequest.current],
-      onError: (err: any) => {
+      onError: () => {
         refCancelRequest.current = false;
       },
       onSuccess: (r: any, params) => {

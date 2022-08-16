@@ -229,14 +229,6 @@ export const ConsentsList = ({
     if (onSaveConsent) onSaveConsent(value);
   };
 
-  const onFieldsChange = (values: any, allValues: any) => {
-    const val = allValues?.reduce((acc: any, v: any) => {
-      const name = get(v, 'name[0]');
-      acc[`${name}`] = get(v, 'value');
-      return acc;
-    }, {});
-  };
-
   const onCopyLink = () => {
     try {
       copy(requestGenerateLink?.data || '');
@@ -257,7 +249,6 @@ export const ConsentsList = ({
         onFinish={onUpdateConsent}
         form={formConsent}
         initialValues={initialValues}
-        onFieldsChange={onFieldsChange}
       >
         {data?.data?.length === 0 ? (
           <p className={styles.noResultText}>{t('no_result_found')}</p>

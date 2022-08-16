@@ -84,7 +84,7 @@ const errorHandler = (error: AxiosError) => {
         if (newToken) onRefreshed(newToken);
       });
     }
-    const retryOrigReq = new Promise((resolve, reject) => {
+    const retryOrigReq = new Promise((resolve) => {
       subscribeTokenRefresh(async (token: string) => {
         originalRequest.headers['Authorization'] = 'Bearer ' + token;
         resolve(instance.request(originalRequest));

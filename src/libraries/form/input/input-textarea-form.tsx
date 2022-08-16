@@ -67,7 +67,7 @@ const InputTextAreaForm = ({
     };
   });
 
-  const selectFileDebounce = funcDebounce((values: any, fileData: any) => {
+  const selectFileDebounce = funcDebounce((values: any) => {
     const newData = [...values];
     setFileData(newData);
   }, 500);

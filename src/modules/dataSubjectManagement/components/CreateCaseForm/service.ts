@@ -1,7 +1,6 @@
 import { useMount, useRequest } from 'ahooks';
 import { message } from 'antd';
 import { GENERAL_CASE_MANAGEMENT_LIST } from 'constants/common.constants';
-import { useNavigate } from 'react-router-dom';
 import { ResponseBase } from 'utils/api/api.types';
 import ApiUtils from 'utils/api/api.utils';
 import { API_PATH, GENERAL_CONFIG_BASE_URL } from 'utils/api/constant';
@@ -22,30 +21,6 @@ const createCaseService = async (body: ICreateCase) => {
   return ApiUtils.post<any, ResponseBase<any>>(API_PATH.CASE_MANAGEMENT_BASE_URL, body);
 };
 
-const getListActionService = async () => {
-  const response: any = await ApiUtils.fetch(API_PATH.GET_LIST_ACTION);
-
-  return {
-    data: response?.content?.data?.map(({ id, name }: any) => ({
-      value: name,
-      label: name,
-      id,
-    })),
-  };
-};
-
-const getListRelateDepartmentService = async () => {
-  const response: any = await ApiUtils.fetch(API_PATH.GET_LIST_DEPARTMENT);
-
-  return {
-    data: response?.content?.data?.map(({ id, name }: any) => ({
-      value: name,
-      label: name,
-      id,
-    })),
-  };
-};
-
 const getListUserService = async () => {
   const response: any = await ApiUtils.fetch(API_PATH.GET_LIST_USER);
 
@@ -58,8 +33,6 @@ const getListUserService = async () => {
 };
 
 export const useCreateCase = (onFinishSubmitForm: any) => {
-  const navigate = useNavigate();
-
   return useRequest(
     async (data: ICreateCase) => {
       return createCaseService(data);

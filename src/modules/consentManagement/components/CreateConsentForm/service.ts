@@ -106,9 +106,9 @@ export const useGetListApplication = () => {
     run({ name: data?.name, page: (data?.current || 1) + 1, prevList: data?.data });
   };
 
-  const onReset = () => {
-    console.log('reset data');
-  };
+  // const onReset = () => {
+  //   console.log('reset data');
+  // };
 
   return {
     data,
@@ -168,9 +168,9 @@ export const useGetListService = () => {
     run({ name: data?.name, page: (data?.current || 1) + 1, prevList: data?.data });
   };
 
-  const onReset = () => {
-    console.log('reset data');
-  };
+  // const onReset = () => {
+  //   console.log('reset data');
+  // };
 
   return {
     data,

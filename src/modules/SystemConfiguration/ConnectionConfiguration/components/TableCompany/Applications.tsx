@@ -58,7 +58,6 @@ const AddNewApplications = ({
 const ApplicationsMemo = ({ companyId }: any) => {
   const {
     applications,
-    loading,
     refreshApplication,
     onLoadMore,
     deleteApplication,

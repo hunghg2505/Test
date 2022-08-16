@@ -1,32 +1,9 @@
 import { useRequest } from 'ahooks';
 import { message } from 'antd';
-import { GENERAL_CASE_MANAGEMENT_LIST, GENERAL_CONFIG_TYPE } from 'constants/common.constants';
+import { GENERAL_CASE_MANAGEMENT_LIST } from 'constants/common.constants';
 import { ResponseBase } from 'utils/api/api.types';
 import ApiUtils from 'utils/api/api.utils';
 import { GENERAL_CONFIG_BASE_URL, API_PATH } from 'utils/api/constant';
-
-// const getTitleGeneralCaseManagement = (type: string) => {
-//   let title;
-//   switch (type) {
-//     case GENERAL_CONFIG_TYPE.SUBJECT_RIGHT:
-//       title = 'Create Case - Data Subject Rights';
-//       break;
-//     case GENERAL_CONFIG_TYPE.CASE_STATUS:
-//       title = 'Create Case - Status';
-//       break;
-//     case GENERAL_CONFIG_TYPE.RELATED_DEPARTMENT:
-//       title = 'Create Case - Related Department';
-//       break;
-//     case GENERAL_CONFIG_TYPE.CASE_RESULT:
-//       title = 'Create Case - Result';
-//       break;
-//     default:
-//       title = '';
-//       break;
-//   }
-
-//   return title;
-// };
 
 const getListGeneralCaseManagementService = async () => {
   const response: any = await Promise.all(

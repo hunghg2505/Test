@@ -1,6 +1,5 @@
 import ContainerLayout from 'libraries/layouts/container.layout';
 import { useTranslation } from 'react-i18next';
-import styles from './styles.module.scss';
 
 export default function SignInPage() {
   const { t } = useTranslation();

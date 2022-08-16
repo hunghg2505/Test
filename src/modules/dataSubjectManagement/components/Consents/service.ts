@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useMount, useRequest } from 'ahooks';
 import { message } from 'antd';
 import dayjs from 'dayjs';
@@ -113,7 +114,7 @@ export const updateConsent = async ({ userId, content, ConsentList }: any) => {
   return ApiUtils.post(API_PATH.OPT_OUT_IN, body);
 };
 
-const getSuggestionConsents = async (userId: any, search: string, page = 1, prevValue = []) => {
+const getSuggestionConsents = async (userId: any, search: string, page = 1) => {
   const params = {
     keyword: search,
     userId: userId,
@@ -166,7 +167,7 @@ export const useConsent = ({
 
   const reqUpdateConsent = useRequest(updateConsent, {
     manual: true,
-    onSuccess: (r) => {
+    onSuccess: () => {
       message.success('Update Consent Success');
     },
     onError: () => {
@@ -188,7 +189,7 @@ export const useConsent = ({
     {
       manual: true,
       refreshDeps: [refCancelRequest.current],
-      onError: (err: any) => {
+      onError: () => {
         refCancelRequest.current = false;
       },
       onSuccess: (r: any, params) => {
