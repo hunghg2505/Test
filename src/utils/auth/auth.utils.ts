@@ -41,12 +41,13 @@ export const refreshTokenApi = async (): Promise<any> => {
   }
 };
 
-export const getTokenInfo = async () => {
+export const getTokenInfo = () => {
   try {
     const tokenInfo: any = localStorageUtils.getObject(KeyStorage.AUTH, null);
     if (tokenInfo && tokenInfo?.accessToken) {
       return tokenInfo as any;
     }
+    return {};
   } catch (error) {
     setTokenInfo(null);
     return null;

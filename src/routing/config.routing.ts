@@ -199,16 +199,6 @@ const configRoutes: IRouter[] = [
         element: lazy(() => import('modules/auth/sign-in')),
         roles: ['@'],
       },
-      {
-        path: routePath.SignUp,
-        element: lazy(() => import('modules/auth/sign-up')),
-        roles: ['@'],
-      },
-      {
-        path: routePath.ForgotPassword,
-        element: lazy(() => import('modules/auth/forgot-password')),
-        roles: ['@'],
-      },
     ],
   },
 

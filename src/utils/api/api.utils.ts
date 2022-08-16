@@ -21,7 +21,7 @@ instance.interceptors.request.use((_config: any) => requestHandler(_config));
 const initHeader: CustomHeaders = { isAuth: true };
 
 export const getAccessToken = async () => {
-  const tokenInfo = await getTokenInfo();
+  const tokenInfo = getTokenInfo();
   if (tokenInfo) {
     return tokenInfo?.accessToken;
   }

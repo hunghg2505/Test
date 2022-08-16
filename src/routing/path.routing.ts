@@ -19,6 +19,4 @@ export const routePath = {
   // Auth Path
   Auth: '/auth',
   SignIn: '/auth/sign-in',
-  SignUp: '/auth/sign-up',
-  ForgotPassword: '/auth/forgot-password',
 };
