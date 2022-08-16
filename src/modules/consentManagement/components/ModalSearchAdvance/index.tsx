@@ -1,9 +1,8 @@
-import { useClickAway, useDebounceFn } from 'ahooks';
-import { Col, DatePicker, Divider, Form, Row } from 'antd';
+import { useClickAway } from 'ahooks';
+import { Col, DatePicker, Form, Row } from 'antd';
 import IconCross from 'assets/icons/icon-cross';
 import IconSearch from 'assets/icons/icon-search';
 import { STATUS_CONSENT_DROPDOWN_DATA } from 'constants/common.constants';
-import dayjs from 'dayjs';
 import { useFadeEffect, _popoverStyles, _popoverVisibleStyles } from 'hooks/useFadeEffect';
 import InputForm from 'libraries/form/input/input-form';
 import Button from 'libraries/UI/Button';
@@ -11,7 +10,6 @@ import Select from 'libraries/UI/Select';
 import moment from 'moment';
 import { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { RegexUtils } from 'utils/regex-helper';
 import { FormItemApplication } from '../CreateConsentForm';
 
 import styles from './index.module.scss';

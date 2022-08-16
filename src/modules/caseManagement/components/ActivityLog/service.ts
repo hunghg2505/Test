@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useMount, useRequest } from 'ahooks';
 import dayjs from 'dayjs';
 import ApiUtils from 'utils/api/api.utils';

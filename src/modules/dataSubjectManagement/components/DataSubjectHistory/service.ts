@@ -36,7 +36,6 @@ const forgotMeService = (id: any) => {
 
 export const useDataSubjectHistory = ({
   userId,
-  subjectId,
   onlyView = false,
 }: {
   userId: string;
@@ -66,11 +65,11 @@ export const useDataSubjectHistory = ({
 
   const reqForgotMe = useRequest(async () => forgotMeService(userId), {
     manual: true,
-    onSuccess: (r) => {
+    onSuccess: () => {
       message.success('Delete profile successfully');
       navigate(-1);
     },
-    onError: (e) => {
+    onError: () => {
       message.error('Fail to delete profile');
     },
   });

@@ -1,4 +1,4 @@
-import { Modal, Row, Table, Tooltip } from 'antd';
+import { Row, Table, Tooltip } from 'antd';
 import { ColumnsType } from 'antd/lib/table';
 import clsx from 'clsx';
 import { paginationItemRender } from 'libraries/UI/Pagination';

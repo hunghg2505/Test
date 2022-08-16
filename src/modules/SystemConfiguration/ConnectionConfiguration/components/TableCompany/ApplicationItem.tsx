@@ -7,7 +7,6 @@ import { useTranslation } from 'react-i18next';
 
 import styles from './index.module.scss';
 import ModalAddEndpoint from './ModalAddEndPoint';
-import ModalEditApplication from './ModalEditApplication';
 import ModalEditEndpoint from './ModalEditEndpoint';
 
 const { confirm } = Modal;
@@ -93,8 +92,6 @@ const EndPointItem = ({ endpoint, deleteEndpoint, updateEndpoint }: any) => {
 
 export const ApplicationItemMemo = ({
   application,
-  onLoadMore,
-  isLoadMore,
   deleteApplication,
   updateApplication,
   deleteEndpoint,

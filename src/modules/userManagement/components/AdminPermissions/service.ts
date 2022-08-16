@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useRequest, useMount } from 'ahooks';
 import { message } from 'antd';
 import { CheckboxChangeEvent } from 'antd/lib/checkbox';
@@ -183,7 +184,7 @@ const useAdminPermissions = () => {
     {
       manual: true,
       refreshDeps: [refCancelRequest.current],
-      onError: (err: any) => {
+      onError: () => {
         refCancelRequest.current = false;
       },
       onSuccess: (r: any, params) => {

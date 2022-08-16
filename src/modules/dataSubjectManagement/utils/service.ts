@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useRequest } from 'ahooks';
 import get from 'lodash/get';
 import debounce from 'lodash/debounce';
@@ -143,7 +144,7 @@ export const useDataSubjectManagement = () => {
     {
       manual: true,
       refreshDeps: [refCancelRequest.current],
-      onError: (err: any) => {
+      onError: () => {
         refCancelRequest.current = false;
       },
       onSuccess: (r: any, params) => {

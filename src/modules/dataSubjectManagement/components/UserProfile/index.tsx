@@ -1,10 +1,6 @@
 import { Button, Col, Form, Modal, Row, Upload } from 'antd';
 import IconCamera from 'assets/icons/icon-camera';
-import {
-  IUserInfo,
-  TKeyUserInfo,
-  useDataSubjectDetail,
-} from 'modules/dataSubjectManagement/utils/service';
+import { IUserInfo, useDataSubjectDetail } from 'modules/dataSubjectManagement/utils/service';
 import { useTranslation } from 'react-i18next';
 
 import useDataSubjectManagementPermission from 'hooks/useDataSubjectManagementPermission';

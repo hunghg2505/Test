@@ -1,4 +1,4 @@
-import { Form, InputProps } from 'antd';
+import { Form } from 'antd';
 import { Rule } from 'antd/lib/form';
 import clsx from 'clsx';
 import Input from 'libraries/UI/Input';

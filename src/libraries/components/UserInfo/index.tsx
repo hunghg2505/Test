@@ -1,18 +1,11 @@
-import { Button, Col, Row, Upload } from 'antd';
-import IconCamera from 'assets/icons/icon-camera';
-import { IUserInfo } from 'modules/dataSubjectManagement/utils/service';
+import { Col, Row } from 'antd';
 import dayjs from 'dayjs';
+import { IUserInfo } from 'modules/dataSubjectManagement/utils/service';
 import { useTranslation } from 'react-i18next';
 
 import styles from './index.module.scss';
 
-function UserInfo({
-  userInfo,
-  isChangeProfile = true,
-}: {
-  userInfo?: IUserInfo;
-  isChangeProfile?: boolean;
-}) {
+function UserInfo({ userInfo }: { userInfo?: IUserInfo; isChangeProfile?: boolean }) {
   const { t } = useTranslation();
 
   if (!userInfo) return null;
