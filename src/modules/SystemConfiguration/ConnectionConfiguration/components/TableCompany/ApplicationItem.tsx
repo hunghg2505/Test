@@ -1,4 +1,5 @@
 import { CheckOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
+import { useUpdateEffect } from 'ahooks';
 import { Col, Form, Modal, Row } from 'antd';
 import IconArrowDown from 'assets/icons/icon-arrow-down';
 import InputForm from 'libraries/form/input/input-form';
@@ -105,6 +106,14 @@ export const ApplicationItemMemo = ({
     data: application?.endpoints?.slice(0, 10),
     isLoadMoreEndpoint: 1 < Math.ceil(application?.endpoints?.length / 10),
   });
+
+  useUpdateEffect(() => {
+    setEndpoints({
+      current: 1,
+      data: application?.endpoints?.slice(0, 10),
+      isLoadMoreEndpoint: 1 < Math.ceil(application?.endpoints?.length / 10),
+    });
+  }, [application?.endpoints]);
 
   const [editApplicationForm] = Form.useForm();
   const { t } = useTranslation();

@@ -36,7 +36,6 @@ export const useApplications = (companyId: any) => {
     {
       cacheKey: `data-application-${companyId}`,
       staleTime: -1,
-      debounceMaxWait: 350,
     },
   );
 
@@ -86,7 +85,6 @@ export const useApplications = (companyId: any) => {
       manual: true,
       onSuccess: () => {
         message.success('Delete Endpoint Success');
-        refreshApplication();
       },
       onError: (error: any) => {
         message.error(
@@ -106,7 +104,6 @@ export const useApplications = (companyId: any) => {
       manual: true,
       onSuccess: () => {
         message.success('Edit Endpoint Success');
-        refreshApplication();
       },
       onError: (error: any) => {
         message.error(
@@ -126,7 +123,6 @@ export const useApplications = (companyId: any) => {
       manual: true,
       onSuccess: () => {
         message.success('Add Endpoint Success');
-        refreshApplication();
       },
       onError: (error: any) => {
         message.error(
