@@ -1,6 +1,7 @@
 import { CheckOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
 import { Col, Form, Row, Modal } from 'antd';
 import IconArrowDown from 'assets/icons/icon-arrow-down';
+import useSystemConfigPermission from 'hooks/useSystemConfigPermission';
 import InputForm from 'libraries/form/input/input-form';
 import React, { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -14,6 +15,7 @@ const { confirm } = Modal;
 const CompanyItemMemo = ({ company, refresh }: any) => {
   const { t } = useTranslation();
   const [editCompanyForm] = Form.useForm();
+  const { isHavePermissionEditSystem, isHavePermissionDeleteSystem } = useSystemConfigPermission();
 
   const [visible, setVisible] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
@@ -104,17 +106,21 @@ const CompanyItemMemo = ({ company, refresh }: any) => {
         <Col className={styles.companyAction}>
           {!isEdit ? (
             <>
-              <span className={styles.btnDelete} onClick={() => showConfirm()}>
-                Delete
-              </span>
-              <span
-                className={styles.btnEdit}
-                onClick={() => {
-                  setIsEdit(true);
-                }}
-              >
-                {!isEdit ? 'Edit' : 'Cancel'}
-              </span>
+              {isHavePermissionDeleteSystem && (
+                <span className={styles.btnDelete} onClick={() => showConfirm()}>
+                  Delete
+                </span>
+              )}
+              {isHavePermissionEditSystem && (
+                <span
+                  className={styles.btnEdit}
+                  onClick={() => {
+                    setIsEdit(true);
+                  }}
+                >
+                  {!isEdit ? 'Edit' : 'Cancel'}
+                </span>
+              )}
             </>
           ) : (
             <>

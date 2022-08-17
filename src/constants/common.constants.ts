@@ -58,6 +58,7 @@ export const FEATURE_NAME = {
   caseManagement: 'Case Management',
   consentManagement: 'Consent Management',
   dataSubjectManagement: 'Data Subject Management',
+  systemConfig: 'System Configuration',
 };
 
 export const PERMISSION_ID = {
@@ -74,6 +75,10 @@ export const PERMISSION_ID = {
   viewAssignToCase: 'PDPA_CaseManagement_ViewAssignedTo',
   viewUserProfile: 'PDPA_UserProfile_View',
   viewDSM: 'PDPA_DataSubjectManagement_View',
+  viewSystem: 'PDPA_SystemConfig_View',
+  deleteSystem: 'PDPA_SystemConfig_Delete',
+  editSystem: 'PDPA_SystemConfig_Edit',
+  createSystem: 'PDPA_SystemConfig_Create',
 };
 
 export const STATUS_CONSENT_DROPDOWN_DATA = [

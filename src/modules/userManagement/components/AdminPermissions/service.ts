@@ -26,6 +26,10 @@ const TEXT_PERMISSIONS: any = {
   PDPA_UserManagement_View: 'View',
   PDPA_UserProfile_View: 'View',
   PDPA_DataSubjectManagement_Create: 'Create',
+  PDPA_SystemConfig_Delete: 'Delete',
+  PDPA_SystemConfig_View: 'View',
+  PDPA_SystemConfig_Edit: 'Edit',
+  PDPA_SystemConfig_Create: 'Create',
 };
 
 const SORT_PERMISSIONS: any = {
@@ -44,6 +48,10 @@ const SORT_PERMISSIONS: any = {
   PDPA_UserProfile_Edit: 3,
   PDPA_UserManagement_View: 1,
   PDPA_UserProfile_View: 1,
+  PDPA_SystemConfig_Create: 2,
+  PDPA_SystemConfig_Edit: 3,
+  PDPA_SystemConfig_View: 1,
+  PDPA_SystemConfig_Delete: 4,
 };
 
 const SORT_IDX: any = {
@@ -52,6 +60,7 @@ const SORT_IDX: any = {
   'Case Management': 3,
   'Consent Management': 4,
   'User Management': 5,
+  'System Configuration': 6,
 };
 
 const getUserPermissions = async (

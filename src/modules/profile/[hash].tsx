@@ -9,6 +9,10 @@ import { API_PATH } from 'utils/api/constant';
 
 import styles from './index.module.scss';
 
+const getDataById = (value: any, defaultVal = '') => {
+  return value || defaultVal;
+};
+
 const Consents = ({ userId }: any) => {
   const { data, loading, onChange } = useConsent({ userId, onlyView: true });
 
@@ -45,18 +49,18 @@ const ProfileHash = () => {
     return {
       id: r?.content?.id,
       imageUrl: '',
-      firstNameEn: r?.content?.firstNameEn || '',
-      lastNameEn: r?.content?.lastNameEn || '',
-      firstNameTh: r?.content?.firstNameTh || '',
-      lastNameTh: r?.content?.lastNameTh || '',
-      email: r?.content?.email || '',
+      firstNameEn: getDataById(r?.content?.firstNameEn),
+      lastNameEn: getDataById(r?.content?.lastNameEn),
+      firstNameTh: getDataById(r?.content?.firstNameTh),
+      lastNameTh: getDataById(r?.content?.lastNameTh),
+      email: getDataById(r?.content?.email),
       address: 'Test Address',
-      dateOfBirth: r?.content?.dateOfBirth || '',
-      nationality: r?.content?.nationality || '',
-      cardId: r?.content?.cardId || '',
-      passportNo: r?.content?.passportNo || '',
-      laserCode: r?.content?.laserCode || '',
-      mobile: r?.content?.mobile || '',
+      dateOfBirth: getDataById(r?.content?.dateOfBirth),
+      nationality: getDataById(r?.content?.nationality),
+      cardId: getDataById(r?.content?.cardId),
+      passportNo: getDataById(r?.content?.passportNo),
+      laserCode: getDataById(r?.content?.laserCode),
+      mobile: getDataById(r?.content?.mobile),
     };
   });
 

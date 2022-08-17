@@ -2,6 +2,7 @@ import { CheckOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
 import { useUpdateEffect } from 'ahooks';
 import { Col, Form, Modal, Row } from 'antd';
 import IconArrowDown from 'assets/icons/icon-arrow-down';
+import useSystemConfigPermission from 'hooks/useSystemConfigPermission';
 import InputForm from 'libraries/form/input/input-form';
 import React, { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -13,6 +14,7 @@ import ModalEditEndpoint from './ModalEditEndpoint';
 const { confirm } = Modal;
 
 const EndPointItem = ({ endpoint, deleteEndpoint, updateEndpoint }: any) => {
+  const { isHavePermissionEditSystem, isHavePermissionDeleteSystem } = useSystemConfigPermission();
   const [showInfo, setShowInfo] = useState(false);
 
   const onShowInfo = () => {
@@ -46,12 +48,16 @@ const EndPointItem = ({ endpoint, deleteEndpoint, updateEndpoint }: any) => {
         <div>
           {showInfo && (
             <>
-              <span className={styles.btnDelete} onClick={showConfirm}>
-                Delete
-              </span>
-              <ModalEditEndpoint endpoint={endpoint} updateEndpoint={updateEndpoint}>
-                <span className={styles.btnEdit}>Edit</span>
-              </ModalEditEndpoint>
+              {isHavePermissionDeleteSystem && (
+                <span className={styles.btnDelete} onClick={showConfirm}>
+                  Delete
+                </span>
+              )}
+              {isHavePermissionEditSystem && (
+                <ModalEditEndpoint endpoint={endpoint} updateEndpoint={updateEndpoint}>
+                  <span className={styles.btnEdit}>Edit</span>
+                </ModalEditEndpoint>
+              )}
             </>
           )}
           <span className={styles.arrow} onClick={onShowInfo}>
@@ -106,6 +112,8 @@ export const ApplicationItemMemo = ({
     data: application?.endpoints?.slice(0, 10),
     isLoadMoreEndpoint: 1 < Math.ceil(application?.endpoints?.length / 10),
   });
+  const { isHavePermissionCreateSystem, isHavePermissionEditSystem, isHavePermissionDeleteSystem } =
+    useSystemConfigPermission();
 
   useUpdateEffect(() => {
     setEndpoints({
@@ -192,22 +200,28 @@ export const ApplicationItemMemo = ({
           </Col>
           {!isEdit ? (
             <div>
-              <span className={styles.btnDelete} onClick={showConfirm}>
-                Delete
-              </span>
+              {isHavePermissionDeleteSystem && (
+                <span className={styles.btnDelete} onClick={showConfirm}>
+                  Delete
+                </span>
+              )}
 
-              <span
-                className={styles.btnEdit}
-                onClick={() => {
-                  setIsEdit(true);
-                }}
-              >
-                Edit
-              </span>
+              {isHavePermissionEditSystem && (
+                <span
+                  className={styles.btnEdit}
+                  onClick={() => {
+                    setIsEdit(true);
+                  }}
+                >
+                  Edit
+                </span>
+              )}
 
-              <ModalAddEndpoint appId={application?.id} addEndpoint={addEndpoint}>
-                <span className={styles.btnEdit}>Add Endpoint</span>
-              </ModalAddEndpoint>
+              {isHavePermissionCreateSystem && (
+                <ModalAddEndpoint appId={application?.id} addEndpoint={addEndpoint}>
+                  <span className={styles.btnEdit}>Add Endpoint</span>
+                </ModalAddEndpoint>
+              )}
               <span onClick={onShowApp} className={styles.arrow}>
                 <IconArrowDown />
               </span>

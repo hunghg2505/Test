@@ -97,6 +97,14 @@ export const getPermissionView = ({ path, exitsRoles }: any) => {
       if (!hasPermissionsUserViews) return false;
     }
 
+    if (path.includes(routePath.SystemConfiguration)) {
+      const hasPermissionsUserViewSystemConfig = hasPermissionViewPage(
+        exitsRoles,
+        PERMISSIONS.PDPA_SystemConfig_View,
+      );
+      if (!hasPermissionsUserViewSystemConfig) return false;
+    }
+
     return true;
   } catch (error) {
     return false;

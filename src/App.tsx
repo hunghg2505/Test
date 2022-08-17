@@ -8,6 +8,24 @@ import { KeyStorage } from 'utils/local-storage.utils';
 import { clearCache, useUpdateEffect } from 'ahooks';
 import useAuth from 'hooks/redux/auth/useAuth';
 
+const clearCacheData = (condition: boolean, key: any) => {
+  return condition && clearCache(key);
+};
+
+const onSaveUsers = async ({ isLogin, saveUser }: any) => {
+  if (!isLogin) {
+    localStorage.setItem('save_login', 'true');
+    return await saveUser();
+  }
+};
+
+const onGetProfile = async ({ isGetProfile, getProfile }: any) => {
+  if (!isGetProfile) {
+    localStorage.setItem('get_profile', 'true');
+    return getProfile();
+  }
+};
+
 function App() {
   useInitBase();
   const { keycloak, initialized } = useKeycloak();
@@ -16,38 +34,29 @@ function App() {
 
   useUpdateEffect(() => {
     (async () => {
+      if (!(initialized && keycloak?.token)) return;
+
       const isLogin = localStorage.getItem('save_login');
       const isGetProfile = localStorage.getItem('get_profile');
 
-      if (initialized && keycloak?.token && !isLogin) {
-        localStorage.setItem('save_login', 'true');
-        await saveUser();
-      }
-
-      if (initialized && keycloak?.token && !isGetProfile) {
-        localStorage.setItem('get_profile', 'true');
-        getProfile();
-      }
+      await onSaveUsers({ isLogin, saveUser });
+      await onGetProfile({ isGetProfile, getProfile });
     })();
   }, [initialized, keycloak?.token]);
 
   useLayoutEffect(() => {
-    if (!location.pathname?.includes('data-subject')) {
-      clearCache(['data-management']);
-    }
-
-    if (!location.pathname?.includes('case-management')) {
-      clearCache(['search-case-management', 'case-assign-management']);
-    }
-
-    if (location.pathname === '/case-management/assign-to-you')
-      clearCache(['search-case-management']);
-    if (location.pathname === '/case-management/search-case')
-      clearCache(['case-assign-management']);
-
-    if (!location.pathname?.includes('consent')) {
-      clearCache(['consent-management']);
-    }
+    clearCacheData(!location.pathname?.includes('data-subject'), ['data-management']);
+    clearCacheData(!location.pathname?.includes('case-management'), [
+      'search-case-management',
+      'case-assign-management',
+    ]);
+    clearCacheData(location.pathname === '/case-management/assign-to-you', [
+      'search-case-management',
+    ]);
+    clearCacheData(location.pathname === '/case-management/search-case', [
+      'case-assign-management',
+    ]);
+    clearCacheData(!location.pathname?.includes('consent'), ['consent-management']);
   }, [location.pathname]);
 
   useLayoutEffect(() => {
