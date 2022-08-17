@@ -32,7 +32,7 @@ const Consents = ({ userId }: any) => {
   );
 };
 
-const ProfileHash = () => {
+const ProfileDetailPage = () => {
   const { hash } = useParams();
   const navigate = useNavigate();
 
@@ -84,4 +84,4 @@ const ProfileHash = () => {
   );
 };
 
-export default ProfileHash;
+export default ProfileDetailPage;

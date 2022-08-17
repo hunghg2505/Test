@@ -15,7 +15,7 @@ const clearCacheData = (condition: boolean, key: any) => {
 const onSaveUsers = async ({ isLogin, saveUser }: any) => {
   if (!isLogin) {
     localStorage.setItem('save_login', 'true');
-    return await saveUser();
+    return saveUser();
   }
 };
 
