@@ -178,9 +178,9 @@ export const ApplicationItemMemo = ({
               <Form
                 onFinish={onFinish}
                 layout='vertical'
-                // initialValues={{
-                //   name: company?.name,
-                // }}
+                initialValues={{
+                  app_name: application?.name,
+                }}
                 form={editApplicationForm}
                 className={styles.editForm}
               >
@@ -193,7 +193,6 @@ export const ApplicationItemMemo = ({
                       message: t('messages.errors.require', { field: 'Application Name' }),
                     },
                   ]}
-                  initialValue={application?.name}
                 />
               </Form>
             )}

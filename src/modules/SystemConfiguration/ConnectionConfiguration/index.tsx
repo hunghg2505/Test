@@ -42,13 +42,13 @@ const ConnectionConfiguration = () => {
     }
   }, refFormSearch);
 
+  const callbackSearch = () => {
+    refListCompanies.current.closeListUser();
+    onResetCompaniesSuggestion();
+  };
+
   const onFinish = (values: any) => {
-    onSearchCompany({ ...values, type: 'enter' }, () => {
-      if (refListCompanies.current?.closeListUser) {
-        refListCompanies.current.closeListUser();
-        onResetCompaniesSuggestion();
-      }
-    });
+    onSearchCompany({ ...values, type: 'enter' }, callbackSearch);
   };
 
   const onFieldsChange = (values: any) => {
@@ -100,12 +100,7 @@ const ConnectionConfiguration = () => {
                 data={requestSearchCompaniesSuggestion.data}
                 loading={requestSearchCompaniesSuggestion.loading}
                 onSearchDataSubject={(value: any) => {
-                  onSearchCompany({ name: value?.firstname, type: 'enter' }, () => {
-                    if (refListCompanies.current?.closeListUser) {
-                      refListCompanies.current.closeListUser();
-                      onResetCompaniesSuggestion();
-                    }
-                  });
+                  onSearchCompany({ name: value?.firstname, type: 'enter' }, callbackSearch);
                 }}
                 ref={refListCompanies}
                 users={companies}

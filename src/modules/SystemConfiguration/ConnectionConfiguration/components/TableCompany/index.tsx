@@ -1,10 +1,13 @@
 import { Col, Pagination, Row } from 'antd';
+import useSystemConfigPermission from 'hooks/useSystemConfigPermission';
 import { paginationItemRender } from 'libraries/UI/Pagination';
 import { CompanyItem } from './CompanyItem';
 
 import styles from './index.module.scss';
 
 const TableCompany = ({ data, onChangePage, refresh }: any) => {
+  const { isHavePermissionEditSystem, isHavePermissionDeleteSystem } = useSystemConfigPermission();
+
   return (
     <div className={styles.container}>
       {data?.data?.length === 0 ? (
@@ -15,7 +18,9 @@ const TableCompany = ({ data, onChangePage, refresh }: any) => {
             <Row className={styles.header}>
               <Col className={styles.companyName}>Company Name</Col>
               <Col className={styles.companyCreatedDate}>Created Date</Col>
-              <Col className={styles.companyAction}>Action</Col>
+              {(isHavePermissionEditSystem || isHavePermissionDeleteSystem) && (
+                <Col className={styles.companyAction}>Action</Col>
+              )}
             </Row>
 
             <div>

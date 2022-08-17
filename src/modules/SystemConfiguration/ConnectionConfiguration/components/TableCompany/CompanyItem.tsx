@@ -68,6 +68,8 @@ const CompanyItemMemo = ({ company, refresh }: any) => {
     });
   }, []);
 
+  const btnText = !isEdit ? 'Edit' : 'Cancel';
+
   return (
     <div>
       <Row className={styles.body}>
@@ -103,54 +105,56 @@ const CompanyItemMemo = ({ company, refresh }: any) => {
           </span>
         </Col>
         <Col className={styles.companyCreatedDate}>{company?.createdDate}</Col>
-        <Col className={styles.companyAction}>
-          {!isEdit ? (
-            <>
-              {isHavePermissionDeleteSystem && (
-                <span className={styles.btnDelete} onClick={() => showConfirm()}>
-                  Delete
+        {(isHavePermissionEditSystem || isHavePermissionDeleteSystem) && (
+          <Col className={styles.companyAction}>
+            {!isEdit ? (
+              <>
+                {isHavePermissionDeleteSystem && (
+                  <span className={styles.btnDelete} onClick={() => showConfirm()}>
+                    Delete
+                  </span>
+                )}
+                {isHavePermissionEditSystem && (
+                  <span
+                    className={styles.btnEdit}
+                    onClick={() => {
+                      setIsEdit(true);
+                    }}
+                  >
+                    {btnText}
+                  </span>
+                )}
+              </>
+            ) : (
+              <>
+                <span
+                  className={styles.btnDelete}
+                  onClick={() => {
+                    editCompanyForm.resetFields();
+                    setIsEdit(false);
+                  }}
+                >
+                  X
                 </span>
-              )}
-              {isHavePermissionEditSystem && (
                 <span
                   className={styles.btnEdit}
                   onClick={() => {
-                    setIsEdit(true);
+                    if (
+                      editCompanyForm
+                        .getFieldsError()
+                        .filter((item: any) => item?.errors?.length !== 0).length === 0
+                    ) {
+                      setIsEdit(false);
+                      editCompanyForm.submit();
+                    }
                   }}
                 >
-                  {!isEdit ? 'Edit' : 'Cancel'}
+                  <CheckOutlined />
                 </span>
-              )}
-            </>
-          ) : (
-            <>
-              <span
-                className={styles.btnDelete}
-                onClick={() => {
-                  editCompanyForm.resetFields();
-                  setIsEdit(false);
-                }}
-              >
-                X
-              </span>
-              <span
-                className={styles.btnEdit}
-                onClick={() => {
-                  if (
-                    editCompanyForm
-                      .getFieldsError()
-                      .filter((item: any) => item?.errors?.length !== 0).length === 0
-                  ) {
-                    setIsEdit(false);
-                    editCompanyForm.submit();
-                  }
-                }}
-              >
-                <CheckOutlined />
-              </span>
-            </>
-          )}
-        </Col>
+              </>
+            )}
+          </Col>
+        )}
       </Row>
 
       {visible && <Applications companyId={company?.id} />}
