@@ -2,17 +2,17 @@ import { useClickAway } from 'ahooks';
 import { Col, DatePicker, Form, Row } from 'antd';
 import IconCross from 'assets/icons/icon-cross';
 import IconSearch from 'assets/icons/icon-search';
-import { STATUS_CONSENT_DROPDOWN_DATA } from 'constants/common.constants';
 import { useFadeEffect, _popoverStyles, _popoverVisibleStyles } from 'hooks/useFadeEffect';
 import InputForm from 'libraries/form/input/input-form';
 import Button from 'libraries/UI/Button';
-import Select from 'libraries/UI/Select';
+import { CustomSelectDropdown } from 'modules/dataSubjectManagement/components/CreateCaseForm';
 import moment from 'moment';
 import { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FormItemApplication } from '../CreateConsentForm';
 
 import styles from './index.module.scss';
+import { useGetListStatusConsent } from './service';
 
 const ModalSearchAdvance = ({ onSearchConsent }: any) => {
   const { t } = useTranslation();
@@ -24,6 +24,7 @@ const ModalSearchAdvance = ({ onSearchConsent }: any) => {
   const [updatedEndDate, setUpdatedEndDate] = useState<any>(null);
   const [_isTransitioning, shouldBeVisible, refFormModal] = useFadeEffect(isShowSearch);
   const refSearch: any = useRef();
+  const { data } = useGetListStatusConsent();
 
   useClickAway((e: any) => {
     if (e?.target?.className === 'ant-select-item-option-content') return;
@@ -75,6 +76,10 @@ const ModalSearchAdvance = ({ onSearchConsent }: any) => {
 
   const onClearValue = () => {
     formSearch.resetFields(['application_name']);
+  };
+
+  const onClearSearch = () => {
+    formSearch.resetFields(['status']);
   };
 
   return (
@@ -147,13 +152,12 @@ const ModalSearchAdvance = ({ onSearchConsent }: any) => {
 
                 <Col xs={11}>
                   <Form.Item label='Status' name='status'>
-                    <Select placeholder='Select status' allowClear={true}>
-                      {STATUS_CONSENT_DROPDOWN_DATA.map((item, index) => (
-                        <Select.Option value={item.value} key={`${index}${item.value}`}>
-                          {item.label}
-                        </Select.Option>
-                      ))}
-                    </Select>
+                    <CustomSelectDropdown
+                      data={data}
+                      allowClear
+                      onClearValue={onClearSearch}
+                      isOnConsentForm
+                    />
                   </Form.Item>
                 </Col>
 

@@ -1,10 +1,10 @@
 import { Col, DatePicker, Divider, Form, Modal, Row } from 'antd';
 import InputTextAreaForm from 'libraries/form/input/input-textarea-form';
 import Select from 'libraries/UI/Select';
-import { useCallback, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { ExclamationCircleOutlined } from '@ant-design/icons';
+import { CloseOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
 import { useDebounceFn } from 'ahooks';
 import Button from 'libraries/UI/Button';
 import moment from 'moment';
@@ -25,17 +25,30 @@ export const CustomSelectDropdown = ({
   value,
   onChange,
   isOnConsentForm,
+  onClearValue,
 }: any) => {
   const [visible, setVisible] = useState(false);
+  const refHiddenDropdown: any = useRef(null);
 
   const { run } = useDebounceFn(
     () => {
+      if (refHiddenDropdown.current) {
+        return;
+      }
       setVisible(!visible);
     },
     {
       wait: 300,
     },
   );
+
+  const clearValue = () => {
+    refHiddenDropdown.current = true;
+    onClearValue();
+    setTimeout(() => {
+      refHiddenDropdown.current = false;
+    }, 400);
+  };
 
   return (
     <Select
@@ -45,13 +58,11 @@ export const CustomSelectDropdown = ({
       onSelect={onChange}
       open={visible}
       onMouseDown={run}
+      allowClear={allowClear}
+      clearIcon={<CloseOutlined onMouseDown={clearValue} />}
     >
       {data?.map((item: any) => (
-        <Select.Option
-          value={isOnConsentForm ? Number(item?.id) : item?.name}
-          key={item?.id}
-          allowClear={allowClear}
-        >
+        <Select.Option value={isOnConsentForm ? Number(item?.id) : item?.name} key={item?.id}>
           {item?.name}
         </Select.Option>
       ))}
