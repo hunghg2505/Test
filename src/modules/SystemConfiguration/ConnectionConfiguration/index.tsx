@@ -14,6 +14,7 @@ import { useClickAway } from 'ahooks';
 import SuggestListUsers from 'modules/dataSubjectManagement/components/SuggestListUsers';
 import TableCompany from './components/TableCompany';
 import { useCompanies } from './services';
+import useSystemConfigPermission from 'hooks/useSystemConfigPermission';
 
 const ConnectionConfiguration = () => {
   const { t } = useTranslation();
@@ -34,6 +35,8 @@ const ConnectionConfiguration = () => {
     onSearchCompaniesDebounce,
     requestSearchCompaniesSuggestion,
   } = useCompanies();
+
+  const { isHavePermissionCreateSystem } = useSystemConfigPermission();
 
   useClickAway(() => {
     if (refListCompanies.current?.closeListUser) {
@@ -112,13 +115,15 @@ const ConnectionConfiguration = () => {
 
           <AdvancedSearch onSearchCompany={onSearchCompany} />
 
-          <Button
-            onClick={() => setIsOpenCreateCompanyForm(true)}
-            typeDisplay='ghost'
-            className={styles.btnCreate}
-          >
-            Create Company
-          </Button>
+          {isHavePermissionCreateSystem && (
+            <Button
+              onClick={() => setIsOpenCreateCompanyForm(true)}
+              typeDisplay='ghost'
+              className={styles.btnCreate}
+            >
+              Create Company
+            </Button>
+          )}
         </Row>
       </div>
 
