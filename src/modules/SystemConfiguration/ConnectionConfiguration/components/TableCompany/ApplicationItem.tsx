@@ -134,7 +134,7 @@ export const ApplicationItemMemo = ({
     if (values?.app_name?.trim() === application?.name) {
       return;
     }
-    updateApplication(application?.id, values?.app_name);
+    updateApplication(application?.id, values?.app_name, editApplicationForm.resetFields);
   };
 
   const showConfirm = useCallback(() => {
@@ -253,6 +253,7 @@ export const ApplicationItemMemo = ({
                   }
                 }}
               >
+                AAA
                 <CheckOutlined />
               </span>
             </>
