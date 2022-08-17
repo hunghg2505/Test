@@ -2,19 +2,20 @@ import { useClickAway } from 'ahooks';
 import { Col, Form, Row } from 'antd';
 import IconCross from 'assets/icons/icon-cross';
 import IconSearch from 'assets/icons/icon-search';
-import { STATUS_DROPDOWN_DATA } from 'constants/common.constants';
 import { useFadeEffect, _popoverStyles, _popoverVisibleStyles } from 'hooks/useFadeEffect';
 import InputForm from 'libraries/form/input/input-form';
 import Button from 'libraries/UI/Button';
-import Select from 'libraries/UI/Select';
+import { CustomSelectDropdown } from 'modules/dataSubjectManagement/components/CreateCaseForm';
 import React, { useRef } from 'react';
 import styles from './index.module.scss';
+import { useGetListStatus } from './service';
 
 const SearchCaseAdvance = ({ onSearchDataSubject, t }: any) => {
   const [formSearch] = Form.useForm();
   const [isShowSearch, setIsShowSearch] = React.useState(false);
   const [_isTransitioning, shouldBeVisible, refFormModal] = useFadeEffect(isShowSearch);
   const refSearch: any = useRef();
+  const { data } = useGetListStatus();
 
   useClickAway(() => {
     setIsShowSearch(false);
@@ -22,6 +23,10 @@ const SearchCaseAdvance = ({ onSearchDataSubject, t }: any) => {
 
   const onVisibleSearch = () => {
     setIsShowSearch(!isShowSearch);
+  };
+
+  const onClearSearch = () => {
+    formSearch.resetFields(['status']);
   };
 
   return (
@@ -100,13 +105,7 @@ const SearchCaseAdvance = ({ onSearchDataSubject, t }: any) => {
               <Row gutter={[0, 16]}>
                 <Col xs={24}>
                   <Form.Item label='Case Status' name='status'>
-                    <Select placeholder='Search Case Status' allowClear={true}>
-                      {STATUS_DROPDOWN_DATA.map((item, index) => (
-                        <Select.Option value={item.value} key={`${index}${item.value}`}>
-                          {item.label}
-                        </Select.Option>
-                      ))}
-                    </Select>
+                    <CustomSelectDropdown data={data} allowClear onClearValue={onClearSearch} />
                   </Form.Item>
                 </Col>
                 <Col xs={24}>

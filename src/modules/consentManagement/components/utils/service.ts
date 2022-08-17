@@ -31,7 +31,7 @@ export const getConsentManagementService = async (values: any): Promise<any> => 
         createdDate: dayjs(item?.createdAt).format('DD/MM/YYYY'),
         appName: item?.__application__?.name,
         appId: item?.__application__?.id,
-        status: capitalizeFirstLetter(item?.status),
+        status: capitalizeFirstLetter(item?.__status__?.name),
       })) || [],
     appName: params?.appName || '',
     isEqualSearch: params?.isEqualSearch || '',
