@@ -1,8 +1,11 @@
 import moment from 'moment';
+import { routePath } from 'routing/path.routing';
 import {
   capitalizeFirstLetter,
   disabledFutureDate,
   formatIdSubjectHistory,
+  getPermissionView,
+  hasPermissionViewPage,
 } from 'utils/common.utils';
 
 test('Test FormatIdSubjectHistory', () => {
@@ -52,4 +55,92 @@ test('Test CapitalizeFirstLetter', () => {
 
 test('Test DisabledFutureDate', () => {
   expect(disabledFutureDate(moment())).toBe(false);
+});
+
+test('Test hasPermissionViewPage', () => {
+  expect(hasPermissionViewPage([{ permissions: [{ permissionId: 'A' }] }], 'A')).toEqual({
+    permissions: [{ permissionId: 'A' }],
+  });
+  expect(hasPermissionViewPage([{ permissions: [{ permissionId: 'A' }] }], 'B')).toBe(undefined);
+});
+
+test('Test getPermissionView', () => {
+  expect(getPermissionView({ path: '', exitsRoles: {} })).toEqual(true);
+
+  expect(
+    getPermissionView({
+      path: routePath.Profile,
+      exitsRoles: [{ permissions: [{ permissionId: 'PERMISSIONS.PDPA_UserProfile_View' }] }],
+    }),
+  ).toEqual(false);
+
+  expect(
+    getPermissionView({
+      path: routePath.DataSubjectDetail,
+      exitsRoles: [{ permissions: [{ permissionId: 'PERMISSIONS.PDPA_UserProfile_View' }] }],
+    }),
+  ).toEqual(false);
+
+  expect(
+    getPermissionView({
+      path: routePath.DataSubjectManagement,
+      exitsRoles: [{ permissions: [{ permissionId: 'PERMISSIONS.PDPA_UserProfile_View' }] }],
+    }),
+  ).toEqual(false);
+
+  expect(
+    getPermissionView({
+      path: routePath.AssignToYou,
+      exitsRoles: [{ permissions: [{ permissionId: 'PERMISSIONS.PDPA_UserProfile_View' }] }],
+    }),
+  ).toEqual(false);
+
+  expect(
+    getPermissionView({
+      path: routePath.SearchCase,
+      exitsRoles: [{ permissions: [{ permissionId: 'PERMISSIONS.PDPA_UserProfile_View' }] }],
+    }),
+  ).toEqual(false);
+
+  expect(
+    getPermissionView({
+      path: routePath.CaseManagement,
+      exitsRoles: [{ permissions: [{ permissionId: 'PERMISSIONS.PDPA_UserProfile_View' }] }],
+    }),
+  ).toEqual(false);
+
+  expect(
+    getPermissionView({
+      path: routePath.ConsentDetail,
+      exitsRoles: [{ permissions: [{ permissionId: 'PERMISSIONS.PDPA_UserProfile_View' }] }],
+    }),
+  ).toEqual(false);
+
+  expect(
+    getPermissionView({
+      path: routePath.ConsentManagement,
+      exitsRoles: [{ permissions: [{ permissionId: 'PERMISSIONS.PDPA_UserProfile_View' }] }],
+    }),
+  ).toEqual(false);
+
+  expect(
+    getPermissionView({
+      path: routePath.UserManagement,
+      exitsRoles: [{ permissions: [{ permissionId: 'PERMISSIONS.PDPA_UserProfile_View' }] }],
+    }),
+  ).toEqual(false);
+
+  expect(
+    getPermissionView({
+      path: routePath.Reports,
+      exitsRoles: [{ permissions: [{ permissionId: 'PERMISSIONS.PDPA_UserProfile_View' }] }],
+    }),
+  ).toEqual(false);
+
+  expect(
+    getPermissionView({
+      path: routePath.SystemConfiguration,
+      exitsRoles: [{ permissions: [{ permissionId: 'PERMISSIONS.PDPA_UserProfile_View' }] }],
+    }),
+  ).toEqual(false);
 });

@@ -1,4 +1,6 @@
 import moment from 'moment';
+import { routePath } from 'routing/path.routing';
+import { PERMISSIONS } from 'types/common.types';
 
 export const formatIdSubjectHistory = (
   current: number,
@@ -53,4 +55,105 @@ export function capitalizeFirstLetter(string: string) {
 export const disabledFutureDate = (current: any) => {
   const customDate = moment().format('YYYY-MM-DD');
   return current && current > moment(customDate, 'YYYY-MM-DD').add(1, 'day');
+};
+
+export const hasPermissionViewPage = (exitsRoles: any, permissionConst: string) => {
+  return exitsRoles?.find((item: any) => {
+    const isHasPermission = item?.permissions?.find(
+      (v: any) => v?.permissionId === permissionConst,
+    );
+    if (isHasPermission) return true;
+    return false;
+  });
+};
+
+export const getPermissionView = ({ path, exitsRoles }: any) => {
+  if (path === routePath.Profile) {
+    const hasPermissionsUserViews = hasPermissionViewPage(
+      exitsRoles,
+      PERMISSIONS.PDPA_UserProfile_View,
+    );
+
+    if (!hasPermissionsUserViews) return false;
+  }
+
+  if (path === routePath.DataSubjectDetail || path === routePath.DataSubjectManagement) {
+    const hasPermissionsUserViews = hasPermissionViewPage(
+      exitsRoles,
+      PERMISSIONS.PDPA_DataSubjectManagement_View,
+    );
+
+    if (!hasPermissionsUserViews) return false;
+  }
+
+  if (path === routePath.AssignToYou) {
+    const hasPermissionsUserViews = hasPermissionViewPage(
+      exitsRoles,
+      PERMISSIONS.PDPA_CaseManagement_ViewAssignedTo,
+    );
+
+    if (!hasPermissionsUserViews) return false;
+  }
+
+  if (path === routePath.SearchCase) {
+    const hasPermissionsUserViews = hasPermissionViewPage(
+      exitsRoles,
+      PERMISSIONS.PDPA_CaseManagement_ViewSearchCase,
+    );
+
+    if (!hasPermissionsUserViews) return false;
+  }
+
+  if (path === routePath.CaseManagement) {
+    const hasPermissionsUserViewSearchCase = hasPermissionViewPage(
+      exitsRoles,
+      PERMISSIONS.PDPA_CaseManagement_ViewSearchCase,
+    );
+    const hasPermissionsUserViewAssignTo = hasPermissionViewPage(
+      exitsRoles,
+      PERMISSIONS.PDPA_CaseManagement_ViewAssignedTo,
+    );
+
+    if (hasPermissionsUserViewAssignTo && hasPermissionsUserViewSearchCase) return true;
+    if (hasPermissionsUserViewAssignTo && !hasPermissionsUserViewSearchCase) return true;
+    if (!hasPermissionsUserViewAssignTo && hasPermissionsUserViewSearchCase) return true;
+    if (!hasPermissionsUserViewAssignTo && !hasPermissionsUserViewSearchCase) return false;
+  }
+
+  if (path === routePath.ConsentDetail || path === routePath.ConsentManagement) {
+    const hasPermissionsUserViews = hasPermissionViewPage(
+      exitsRoles,
+      PERMISSIONS.PDPA_ConsentManagement_View,
+    );
+
+    if (!hasPermissionsUserViews) return false;
+  }
+
+  if (path === routePath.UserManagement) {
+    const hasPermissionsUserViews = hasPermissionViewPage(
+      exitsRoles,
+      PERMISSIONS.PDPA_UserManagement_View,
+    );
+
+    if (!hasPermissionsUserViews) return false;
+  }
+
+  if (path === routePath.Reports) {
+    const hasPermissionsUserViews = hasPermissionViewPage(
+      exitsRoles,
+      PERMISSIONS.PDPA_Reports_View,
+    );
+
+    if (!hasPermissionsUserViews) return false;
+  }
+
+  if (path.includes(routePath.SystemConfiguration)) {
+    const hasPermissionsUserViewSystemConfig = hasPermissionViewPage(
+      exitsRoles,
+      PERMISSIONS.PDPA_SystemConfig_View,
+    );
+    if (!hasPermissionsUserViewSystemConfig) return false;
+  }
+
+  return true;
 };
