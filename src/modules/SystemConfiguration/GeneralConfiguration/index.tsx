@@ -1,7 +1,7 @@
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import { Form, Modal, Row } from 'antd';
 import IconArrowDown from 'assets/icons/icon-arrow-down';
-import { GENERAL_CONFIG_TYPE } from 'constants/common.constants';
+import { GENERAL_CASE_CONFIG_TYPE, GENERAL_CONSENT_CONFIG_TYPE } from 'constants/common.constants';
 import InputForm from 'libraries/form/input/input-form';
 import Button from 'libraries/UI/Button';
 import React, { useCallback, useState } from 'react';
@@ -21,20 +21,26 @@ const { confirm } = Modal;
 const getFieldName = (type: string) => {
   let fieldName;
   switch (type) {
-    case GENERAL_CONFIG_TYPE.RELATED_DEPARTMENT:
+    case GENERAL_CASE_CONFIG_TYPE.RELATED_DEPARTMENT:
       fieldName = 'Related Department';
       break;
-    case GENERAL_CONFIG_TYPE.CASE_RESULT:
+    case GENERAL_CASE_CONFIG_TYPE.CASE_RESULT:
       fieldName = 'Result';
       break;
-    case GENERAL_CONFIG_TYPE.CASE_STATUS:
+    case GENERAL_CASE_CONFIG_TYPE.CASE_STATUS:
       fieldName = 'Status';
       break;
-    case GENERAL_CONFIG_TYPE.SUBJECT_RIGHT:
+    case GENERAL_CASE_CONFIG_TYPE.SUBJECT_RIGHT:
       fieldName = 'Subject Right';
       break;
-    case 'PRODUCT':
+    case GENERAL_CONSENT_CONFIG_TYPE.CONSENT_PRODUCT:
       fieldName = 'Product';
+      break;
+    case GENERAL_CONSENT_CONFIG_TYPE.CONSENT_STATUS:
+      fieldName = 'Status';
+      break;
+    case GENERAL_CONSENT_CONFIG_TYPE.CONSENT_SERVICE:
+      fieldName = 'Service';
       break;
     default:
       fieldName = '';
