@@ -104,8 +104,8 @@ const getExpandRowRender = (record: any, reqUpdatePermissions: any) => {
             </Row>
             <Row className={styles.checkbox}>
               <Col span={4}></Col>
-              {role.listAction.map((item: any, index: number) => (
-                <Col span={4} key={`${item?.id}${index}`}>
+              {role.listAction.map((item: any, i: number) => (
+                <Col span={4} key={`${item?.id}${i}`}>
                   <Checkbox
                     defaultChecked={item.permission}
                     onChange={(evt) => onChange(evt, item)}
@@ -171,13 +171,6 @@ const AdminPermissions = ({
           />
         )}
       </div>
-      {/* {!!data?.data?.length && (
-        <Row justify='start' align='middle' gutter={[16, 0]}>
-          <Col>
-            <Button>Save</Button>
-          </Col>
-        </Row>
-      )} */}
     </>
   );
 };

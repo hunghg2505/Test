@@ -68,7 +68,7 @@ const getUserPermissions = async (
     keyword,
     page,
   }: {
-    keyword?: string | undefined;
+    keyword?: string;
     page: number;
   },
   roles: any,
@@ -181,11 +181,11 @@ const useAdminPermissions = () => {
     async ({
       value,
       page = 1,
-      isLoadMore = false,
+      _isLoadMore = false,
     }: {
       value: string;
       page: number;
-      isLoadMore: boolean;
+      _isLoadMore: boolean;
     }) => {
       if (refCancelRequest.current) throw Error('Block request');
       return getSuggestionUser(value, page);
@@ -197,7 +197,7 @@ const useAdminPermissions = () => {
         refCancelRequest.current = false;
       },
       onSuccess: (r: any, params) => {
-        const isLoadMore = params[0].isLoadMore;
+        const isLoadMore = params[0]._isLoadMore;
 
         setUsers((prev) => {
           const newData = isLoadMore ? [...prev.data, ...r.data] : r.data;
@@ -217,7 +217,7 @@ const useAdminPermissions = () => {
     const value = get(values, '[0].value', '');
     if (value?.length < 1) return;
 
-    await reqSearchUserSuggestion.runAsync({ value, page: 1, isLoadMore: false });
+    await reqSearchUserSuggestion.runAsync({ value, page: 1, _isLoadMore: false });
     if (callback) callback();
   }, 350);
 
@@ -234,7 +234,7 @@ const useAdminPermissions = () => {
     reqSearchUserSuggestion.run({
       value: users.value,
       page: users.currentPage + 1,
-      isLoadMore: false,
+      _isLoadMore: false,
     });
   };
 
@@ -246,7 +246,7 @@ const useAdminPermissions = () => {
     run({ keyword: data.keyword, page });
   };
 
-  const onSearchUserPermissions = (values = {}, callback: () => void) => {
+  const onSearchUserPermissions = (values: any, callback: () => void) => {
     if (!Object.values(values)?.filter((v) => v).length) return;
     if (get(values, 'type') === 'enter') refCancelRequest.current = true;
     run({ ...values, page: 1 });
@@ -297,10 +297,10 @@ const useUpdatePermissions = () => {
     }) => serviceUpdatePermissions(permissionId, value, record),
     {
       manual: true,
-      onSuccess: (r) => {
+      onSuccess: () => {
         message.success('Update permission is succeeded');
       },
-      onError: (e, params) => {
+      onError: (_, params) => {
         const value = params[0]?.value;
         const evt = params[0]?.evt;
         message.error('Update permission is failed');

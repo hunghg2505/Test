@@ -98,7 +98,7 @@ const getDataSubjectDetail = async (id: string): Promise<IDataSubjectDetail> => 
   };
 };
 
-const getUsers = async (value: any, page = 1, column: string) => {
+const getUsers = async (value: any, column: string, page = 1) => {
   const params = {
     column,
     searchString: value || '',
@@ -137,9 +137,9 @@ export const useDataSubjectManagement = () => {
   });
 
   const requestSearchUsers = useRequest(
-    async (value: string, column, page = 1, isLoadMore = false) => {
+    async (value: string, column, page = 1, _isLoadMore = false) => {
       if (refCancelRequest.current) throw Error('Block request');
-      return getUsers(value, page, column);
+      return getUsers(value, column, page);
     },
     {
       manual: true,
@@ -195,7 +195,7 @@ export const useDataSubjectManagement = () => {
     });
   };
 
-  const onSearchDataSubject = (values = {}, callback: () => void) => {
+  const onSearchDataSubject = (values: any, callback: () => void) => {
     if (!Object.values(values)?.filter((v) => v).length) return;
     if (get(values, 'type') === 'enter') refCancelRequest.current = true;
 

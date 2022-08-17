@@ -190,11 +190,6 @@ export const FormEditUser = ({ form, userInfo, t }: any) => {
                       t('messages.errors.require', { field: t('mobile_number') }),
                     );
 
-                  // const isMatch = RegexUtils.isNumber(phone);
-
-                  // if (!isMatch)
-                  //   return Promise.reject('Mobile number should be in the format: 66 8123456789');
-
                   return Promise.resolve();
                 },
               },

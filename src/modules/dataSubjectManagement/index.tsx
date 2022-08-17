@@ -107,20 +107,19 @@ function DataSubjectManagement() {
   const refForm: any = useRef();
   const refListUsers: any = useRef();
 
-  useClickAway(() => {
+  const onFinishSubmitForm = () => {
     if (refListUsers.current?.closeListUser) {
       refListUsers.current.closeListUser();
       onResetUsers();
     }
+  };
+
+  useClickAway(() => {
+    onFinishSubmitForm();
   }, refForm);
 
   const onFinish = (values: any) => {
-    onSearchDataSubject({ ...values, type: 'enter' }, () => {
-      if (refListUsers.current?.closeListUser) {
-        refListUsers.current.closeListUser();
-        onResetUsers();
-      }
-    });
+    onSearchDataSubject({ ...values, type: 'enter' }, onFinishSubmitForm);
   };
 
   const onFieldsChange = (values: any) => {

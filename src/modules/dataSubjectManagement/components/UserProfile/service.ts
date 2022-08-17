@@ -45,7 +45,7 @@ export const useCheckParams = () => {
 };
 
 const updateUserProfileService = async (body: IEditUserProfile) => {
-  return await ApiUtils.post<IEditUserProfile, ResponseBase<any>>(API_PATH.EDIT_USER_PROFILE, body);
+  return ApiUtils.post<IEditUserProfile, ResponseBase<any>>(API_PATH.EDIT_USER_PROFILE, body);
 };
 
 export const useUpdateConsent = (onFinishSubmitForm: () => void) => {

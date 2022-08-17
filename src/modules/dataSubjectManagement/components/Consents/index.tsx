@@ -66,22 +66,20 @@ const SearchBox = ({
       if (refListConsents.current?.openListUser) refListConsents.current.openListUser();
     });
   };
-
-  const onFinish = (values: any) => {
-    const value = get(values, 'search', '');
-    onSearchConsent(value, () => {
-      if (refListConsents.current?.closeListUser) {
-        refListConsents.current.closeListUser();
-        onResetSuggestionConsents();
-      }
-    });
-  };
-
-  useClickAway(() => {
+  const onFinishSubmitForm = () => {
     if (refListConsents.current?.closeListUser) {
       refListConsents.current.closeListUser();
       onResetSuggestionConsents();
     }
+  };
+
+  const onFinish = (values: any) => {
+    const value = get(values, 'search', '');
+    onSearchConsent(value, onFinishSubmitForm);
+  };
+
+  useClickAway(() => {
+    onFinishSubmitForm();
   }, refForm);
 
   return (
@@ -229,9 +227,9 @@ export const ConsentsList = ({
     if (onSaveConsent) onSaveConsent(value);
   };
 
-  const onCopyLink = () => {
+  const onCopyLink = async () => {
     try {
-      copy(requestGenerateLink?.data || '');
+      await copy(requestGenerateLink?.data || '');
       message.success('Public Link Copied');
     } catch (err) {
       console.log('err', err);
@@ -261,7 +259,7 @@ export const ConsentsList = ({
               }}
             >
               {data?.data?.map((it: DataType) => {
-                const content = (
+                return (
                   <Panel
                     key={it?.key}
                     header={
@@ -280,7 +278,6 @@ export const ConsentsList = ({
                     </Form.Item>
                   </Panel>
                 );
-                return content;
               })}
             </Collapse>
             <Row justify='space-between'>

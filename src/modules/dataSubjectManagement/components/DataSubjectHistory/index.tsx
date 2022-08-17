@@ -6,8 +6,6 @@ import { forwardRef, useImperativeHandle } from 'react';
 import styles from './index.module.scss';
 import { useDataSubjectHistory } from './service';
 
-// const { confirm } = Modal;
-
 export interface DataType {
   key: string;
   noId: string;
@@ -116,26 +114,6 @@ function DataSubjectHistory(
       refreshDataHistory: refresh,
     };
   });
-
-  // const showConfirm = useCallback(() => {
-  //   confirm({
-  //     title: 'Confirm Delete',
-  //     icon: <ExclamationCircleOutlined style={{ color: 'red' }} />,
-  //     content: ' Are you sure want to delete this profile?',
-  //     okText: 'Delete',
-  //     okType: 'danger',
-  //     okButtonProps: {
-  //       className: styles.btnDelete,
-  //       loading: reqForgotMe.loading,
-  //     },
-  //     cancelButtonProps: {
-  //       className: styles.btnCancel,
-  //     },
-  //     onOk() {
-  //       reqForgotMe.run();
-  //     },
-  //   });
-  // }, []);
 
   return (
     <div className={styles.dsHistoryWrap}>

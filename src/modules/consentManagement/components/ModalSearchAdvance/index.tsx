@@ -31,7 +31,7 @@ const ModalSearchAdvance = ({ onSearchConsent }: any) => {
     setIsShowSearch(false);
   }, refSearch);
 
-  const onFinish = (values: any) => {
+  const formatDateParam = () => {
     const createdAt =
       createdStartDate || createdEndDate
         ? {
@@ -46,6 +46,12 @@ const ModalSearchAdvance = ({ onSearchConsent }: any) => {
             endDate: updatedEndDate ? moment(updatedEndDate).toISOString() : null,
           }
         : undefined;
+
+    return { createdAt, updatedAt };
+  };
+
+  const onFinish = (values: any) => {
+    const { createdAt, updatedAt } = formatDateParam();
     onSearchConsent({
       appName: values?.application_name || '',
       advanceSearch: {

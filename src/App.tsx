@@ -3,7 +3,7 @@ import useInitBase from 'hooks/useInitBase';
 import Loading from 'libraries/components/loading';
 import { Suspense, useLayoutEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import MasterRoute from 'routing/master-routes.routing';
+import MasterRoute from 'routing/MasterRoute';
 import { KeyStorage } from 'utils/local-storage.utils';
 import { clearCache, useUpdateEffect } from 'ahooks';
 import useAuth from 'hooks/redux/auth/useAuth';
@@ -15,7 +15,7 @@ const clearCacheData = (condition: boolean, key: any) => {
 const onSaveUsers = async ({ isLogin, saveUser }: any) => {
   if (!isLogin) {
     localStorage.setItem('save_login', 'true');
-    return await saveUser();
+    return saveUser();
   }
 };
 

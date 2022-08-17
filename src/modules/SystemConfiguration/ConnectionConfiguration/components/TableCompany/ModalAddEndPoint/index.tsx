@@ -14,14 +14,14 @@ const ModalAddEndpoint = ({ children, appId, addEndpoint }: any) => {
   const { t } = useTranslation();
 
   useEffect(() => {
-    const t = setTimeout(() => {
+    const timeout = setTimeout(() => {
       if (!visible) {
         form.resetFields();
       }
     }, 350);
 
     return () => {
-      clearTimeout(t);
+      clearTimeout(timeout);
     };
   }, [visible]);
 

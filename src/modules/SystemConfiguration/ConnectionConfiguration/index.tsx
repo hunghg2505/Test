@@ -35,20 +35,19 @@ const ConnectionConfiguration = () => {
     requestSearchCompaniesSuggestion,
   } = useCompanies();
 
-  useClickAway(() => {
+  const onFinishSubmitForm = () => {
     if (refListCompanies.current?.closeListUser) {
       refListCompanies.current.closeListUser();
       onResetCompaniesSuggestion();
     }
+  };
+
+  useClickAway(() => {
+    onFinishSubmitForm();
   }, refFormSearch);
 
   const onFinish = (values: any) => {
-    onSearchCompany({ ...values, type: 'enter' }, () => {
-      if (refListCompanies.current?.closeListUser) {
-        refListCompanies.current.closeListUser();
-        onResetCompaniesSuggestion();
-      }
-    });
+    onSearchCompany({ ...values, type: 'enter' }, onFinishSubmitForm);
   };
 
   const onFieldsChange = (values: any) => {
@@ -100,12 +99,7 @@ const ConnectionConfiguration = () => {
                 data={requestSearchCompaniesSuggestion.data}
                 loading={requestSearchCompaniesSuggestion.loading}
                 onSearchDataSubject={(value: any) => {
-                  onSearchCompany({ name: value?.firstname, type: 'enter' }, () => {
-                    if (refListCompanies.current?.closeListUser) {
-                      refListCompanies.current.closeListUser();
-                      onResetCompaniesSuggestion();
-                    }
-                  });
+                  onSearchCompany({ name: value?.firstname, type: 'enter' }, onFinishSubmitForm);
                 }}
                 ref={refListCompanies}
                 users={companies}

@@ -86,15 +86,7 @@ export const useConsentManagement = () => {
   );
 
   const reqSearchApplicationSuggestion = useRequest(
-    async ({
-      value,
-      page = 1,
-      isLoadMore = false,
-    }: {
-      value: string;
-      page: number;
-      isLoadMore: boolean;
-    }) => {
+    async ({ value, page = 1 }: { value: string; page: number; isLoadMore: boolean }) => {
       if (refCancelRequest.current) throw Error('Block request');
       return getListSuggestionApp(value, page);
     },

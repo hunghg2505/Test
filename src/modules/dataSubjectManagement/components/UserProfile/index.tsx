@@ -7,13 +7,12 @@ import useDataSubjectManagementPermission from 'hooks/useDataSubjectManagementPe
 import styles from './index.module.scss';
 
 import CustomButton from 'libraries/UI/Button';
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import ImgUserProfile from '../../../../assets/images/user-profile.png';
 import { FromDisplayUser } from './FromDisplayUser';
 import { FormEditUser } from './FormEditUser';
 import { useUpdateConsent } from './service';
 import Loading from 'libraries/components/loading';
-import { useCallback } from 'react';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import moment from 'moment';
 

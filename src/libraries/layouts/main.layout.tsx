@@ -99,7 +99,7 @@ function MainLayout() {
   const getMenu = (routes: IRouter[]) => {
     const newRouterConfig = cloneDeep(routes);
     const routerNotAuth = newRouterConfig.find((x) => x.isAuth === true);
-    const menus: any[] = [];
+    const menuItem: any[] = [];
 
     if (!routerNotAuth) return [];
 
@@ -109,11 +109,11 @@ function MainLayout() {
       const childMenu: any[] = getMenuChild({ item, auth });
 
       if (menu) {
-        menus.push({ ...menu, children: childMenu.length > 0 ? childMenu : undefined });
+        menuItem.push({ ...menu, children: childMenu.length > 0 ? childMenu : undefined });
       }
     });
 
-    return menus;
+    return menuItem;
   };
 
   const onClickMenu = (event: any) => {
@@ -144,6 +144,9 @@ function MainLayout() {
     );
   };
 
+  const isCollapsedWidth = screens.md ? collapsedWidth : 0;
+  const isCollapsed = !showSider !== undefined ? !showSider : false;
+
   return (
     <Layout className='min-height'>
       <SEO />
@@ -155,8 +158,8 @@ function MainLayout() {
           <Sider
             width={285}
             className={styles.siderView}
-            collapsedWidth={screens.md ? collapsedWidth : 0}
-            collapsed={!showSider !== undefined ? !showSider : false}
+            collapsedWidth={isCollapsedWidth}
+            collapsed={isCollapsed}
             onCollapse={() => {
               toggleSider && toggleSider();
             }}

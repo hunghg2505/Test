@@ -146,20 +146,19 @@ function ConsentManagement() {
 
   const [isOpenCreateConsentForm, setIsOpenCreateConsentForm] = useState(false);
 
-  useClickAway(() => {
+  const onFinishSubmitForm = () => {
     if (refListUsers.current?.closeListUser) {
       refListUsers.current.closeListUser();
       onResetApplication();
     }
+  };
+
+  useClickAway(() => {
+    onFinishSubmitForm();
   }, refForm);
 
   const onFinish = (values: any) => {
-    onSearchConsent({ ...values, isEqualSearch: false, type: 'enter' }, () => {
-      if (refListUsers.current?.closeListUser) {
-        refListUsers.current.closeListUser();
-        onResetApplication();
-      }
-    });
+    onSearchConsent({ ...values, isEqualSearch: false, type: 'enter' }, onFinishSubmitForm);
   };
 
   const onFieldsChange = (values: any) => {

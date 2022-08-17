@@ -22,20 +22,19 @@ const SearchUsers = ({
   const refListUsers: any = useRef();
   const refForm: any = useRef();
 
-  useClickAway(() => {
+  const onFinishSubmitForm = () => {
     if (refListUsers.current?.closeListUser) {
       refListUsers.current.closeListUser();
       onResetUsers();
     }
+  };
+
+  useClickAway(() => {
+    onFinishSubmitForm();
   }, refForm);
 
   const onFinish = (values: any) => {
-    onSearchUserPermissions({ ...values, type: 'enter' }, () => {
-      if (refListUsers.current?.closeListUser) {
-        refListUsers.current.closeListUser();
-        onResetUsers();
-      }
-    });
+    onSearchUserPermissions({ ...values, type: 'enter' }, onFinishSubmitForm);
   };
 
   const onFieldsChange = (values: any) => {
