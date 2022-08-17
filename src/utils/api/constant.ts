@@ -68,6 +68,6 @@ export const API_PATH = {
   APP_ENDPOINT: (endpointId: any) => `/api-endpoint/${endpointId}`,
   GET_COMPANY_SUGGESTION: `${COMPANY_SERVICE_BASE_URL}/data-autocomplete`,
   DELETE_GENERAL_CASE_MANAGEMENT: (id: string | number) => `${GENERAL_CONFIG_BASE_URL}/${id}`,
-  CREATE_PRODUCT: `${GENERAL_CONFIG_CONSENT_BASE_URL}/product-name`,
-  GET_PRODUCT_LIST: `${GENERAL_CONFIG_CONSENT_BASE_URL}/product-list`,
+  DELETE_GENERAL_CONSENT_MANAGEMENT: (id: string | number) =>
+    `${GENERAL_CONFIG_CONSENT_BASE_URL}/${id}`,
 };

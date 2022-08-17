@@ -1,18 +1,19 @@
 import { useMount, useRequest } from 'ahooks';
 import { message } from 'antd';
+import { GENERAL_CONSENT_MANAGEMENT_LIST } from 'constants/common.constants';
 import debounce from 'lodash/debounce';
 import { ResponseBase } from 'utils/api/api.types';
 import ApiUtils from 'utils/api/api.utils';
-import { API_PATH } from 'utils/api/constant';
+import { API_PATH, GENERAL_CONFIG_CONSENT_BASE_URL } from 'utils/api/constant';
 
 interface ICreateConsent {
   name: string;
   consentId: string;
   applicationId: string;
-  productId: string;
+  idProduct: number;
   productName: string;
   serviceId: string;
-  status: 'draft' | 'published';
+  idStatus: number;
   title: string;
   version: string;
   content: string;
@@ -42,11 +43,11 @@ export const useCreateConsent = (onFinishSubmitForm: () => void) => {
     {
       manual: true,
       onSuccess: () => {
-        message.success('Create Case Success');
+        message.success('Create Consent Success');
         onFinishSubmitForm();
       },
       onError: () => {
-        message.error('Create Case Error');
+        message.error('Create Consent Error');
         onFinishSubmitForm();
       },
     },
@@ -181,14 +182,22 @@ export const useGetListService = () => {
   };
 };
 
-const getListProductService = async () => {
-  const productRes: any = await ApiUtils.fetch(API_PATH.GET_PRODUCT_LIST);
+const getDataDropDownService = async () => {
+  const responseConsent: any = await Promise.all(
+    GENERAL_CONSENT_MANAGEMENT_LIST.map((type: string) =>
+      ApiUtils.fetch(GENERAL_CONFIG_CONSENT_BASE_URL, { type }),
+    ),
+  );
 
-  return productRes?.content?.data;
+  return {
+    productData: responseConsent[0]?.content?.data,
+    serviceData: responseConsent[1]?.content?.data,
+    statusData: responseConsent[2]?.content?.data,
+  };
 };
 
-export const useGetListProduct = () => {
-  const { data } = useRequest(getListProductService);
+export const useGetDataDropdownConsent = () => {
+  const { data } = useRequest(getDataDropDownService);
 
   return { data };
 };

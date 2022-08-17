@@ -18,7 +18,14 @@ interface IProps {
   refDataHistory: any;
 }
 
-export const CustomSelectDropdown = ({ placeholder, data, allowClear, value, onChange }: any) => {
+export const CustomSelectDropdown = ({
+  placeholder,
+  data,
+  allowClear,
+  value,
+  onChange,
+  isOnConsentForm,
+}: any) => {
   const [visible, setVisible] = useState(false);
 
   const { run } = useDebounceFn(
@@ -40,7 +47,11 @@ export const CustomSelectDropdown = ({ placeholder, data, allowClear, value, onC
       onMouseDown={run}
     >
       {data?.map((item: any) => (
-        <Select.Option value={item?.name} key={item?.id} allowClear={allowClear}>
+        <Select.Option
+          value={isOnConsentForm ? Number(item?.id) : item?.name}
+          key={item?.id}
+          allowClear={allowClear}
+        >
           {item?.name}
         </Select.Option>
       ))}
