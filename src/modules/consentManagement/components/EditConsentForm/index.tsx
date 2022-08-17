@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 
 import { Col, DatePicker, Form, Row } from 'antd';
-import { STATUS_CONSENT_DROPDOWN_DATA } from 'constants/common.constants';
+
 import Loading from 'libraries/components/loading';
 import InputForm from 'libraries/form/input/input-form';
 import InputTextAreaForm from 'libraries/form/input/input-textarea-form';
 import Button from 'libraries/UI/Button';
-import Select from 'libraries/UI/Select';
+
 import moment from 'moment';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
@@ -15,13 +15,14 @@ import ConsentInfo from '../ConsentInfo';
 import { FormItemApplication, FormItemService } from '../CreateConsentForm';
 import styles from './index.module.scss';
 import { useConsentDetail, useUpdateConsent } from './service';
-import { useGetListProduct } from '../CreateConsentForm/service';
-import { NormalSelectDropdown } from '../CreateConsentForm/components';
+import { useGetDataDropdownConsent } from '../CreateConsentForm/service';
+
+import { CustomSelectDropdown } from 'modules/dataSubjectManagement/components/CreateCaseForm';
 
 export default function EditConsentForm() {
   const { t } = useTranslation();
   const { id } = useParams();
-  const { data: dataDropdownProduct } = useGetListProduct();
+  const { data: dataDropdownConsent } = useGetDataDropdownConsent();
 
   const [isEdit, setIsEdit] = useState(true);
 
@@ -76,7 +77,7 @@ export default function EditConsentForm() {
                 applicationId: Number(data?.application?.id),
                 idProduct: Number(data?.product.id),
                 serviceId: Number(data?.service?.id),
-                status: data?.status,
+                idStatus: Number(data?.status?.id),
                 version: data?.version,
                 content: data?.content,
                 title: data?.title,
@@ -152,9 +153,10 @@ export default function EditConsentForm() {
                       },
                     ]}
                   >
-                    <NormalSelectDropdown
-                      data={dataDropdownProduct}
+                    <CustomSelectDropdown
+                      data={dataDropdownConsent?.productData}
                       placeholder='Select Product'
+                      isOnConsentForm
                       onChange={onSelectChange}
                     />
                   </Form.Item>
@@ -162,7 +164,7 @@ export default function EditConsentForm() {
                 <Col xs={12}>
                   <Form.Item
                     label='Status'
-                    name='status'
+                    name='idStatus'
                     required
                     rules={[
                       {
@@ -171,13 +173,11 @@ export default function EditConsentForm() {
                       },
                     ]}
                   >
-                    <Select placeholder='Select status'>
-                      {STATUS_CONSENT_DROPDOWN_DATA.map((item, index) => (
-                        <Select.Option value={item.value} key={`${index}${item.value}`}>
-                          {item.label}
-                        </Select.Option>
-                      ))}
-                    </Select>
+                    <CustomSelectDropdown
+                      data={dataDropdownConsent?.statusData}
+                      placeholder='Select Status'
+                      isOnConsentForm
+                    />
                   </Form.Item>
                 </Col>
                 <Col xs={12}>

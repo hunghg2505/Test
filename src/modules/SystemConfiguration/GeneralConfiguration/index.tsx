@@ -10,8 +10,9 @@ import { useTranslation } from 'react-i18next';
 import styles from './index.module.scss';
 import {
   useCreateGeneralCaseManagement,
-  useCreateProduct,
+  useCreateGeneralConsentManagement,
   useDeleteGeneralCaseManagement,
+  useDeleteGeneralConsentManagement,
   useGeneralConfig,
 } from './service';
 
@@ -43,7 +44,7 @@ const getFieldName = (type: string) => {
   return fieldName;
 };
 
-const FormFeatureItem = ({ listItem, featureId, refresh }: any) => {
+const FormFeatureItem = ({ listItem, featureId, refresh, type }: any) => {
   const { t } = useTranslation();
 
   const [addNewForm] = Form.useForm();
@@ -55,11 +56,12 @@ const FormFeatureItem = ({ listItem, featureId, refresh }: any) => {
 
   const createGeneralCaseManagementReq = useCreateGeneralCaseManagement(onFinishSubmitForm);
   const deleteGeneralCaseManagementReq = useDeleteGeneralCaseManagement(onFinishSubmitForm);
-  const createProductReq = useCreateProduct(onFinishSubmitForm);
+  const createGeneralConsentManagementReq = useCreateGeneralConsentManagement(onFinishSubmitForm);
+  const deleteGeneralConsentManagementReq = useDeleteGeneralConsentManagement(onFinishSubmitForm);
 
   const onAddNew = (values: any) => {
-    if (featureId === 'PRODUCT') {
-      createProductReq.run({ ...values });
+    if (type === 'Consent-Management') {
+      createGeneralConsentManagementReq.run({ ...values, type: featureId });
       return;
     }
     createGeneralCaseManagementReq.run({ type: featureId, ...values });
@@ -80,7 +82,12 @@ const FormFeatureItem = ({ listItem, featureId, refresh }: any) => {
         className: styles.btnCancel,
       },
       onOk() {
-        deleteGeneralCaseManagementReq.run(id, { type: featureId });
+        if (type === 'Case-Management') {
+          deleteGeneralCaseManagementReq.run(id, { type: featureId });
+        }
+        if (type === 'Consent-Management') {
+          deleteGeneralConsentManagementReq.run(id, { type: featureId });
+        }
       },
     });
   }, []);
@@ -139,7 +146,12 @@ const FeatureItemContent = ({ feature, refresh }: any) => {
 
       {show && (
         <>
-          <FormFeatureItem listItem={feature?.listItem} featureId={feature?.id} refresh={refresh} />
+          <FormFeatureItem
+            listItem={feature?.listItem}
+            type={feature?.type}
+            featureId={feature?.id}
+            refresh={refresh}
+          />
         </>
       )}
     </>

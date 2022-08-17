@@ -3,7 +3,6 @@ import { useCallback, useRef, useState } from 'react';
 import ExclamationCircleOutlined from '@ant-design/icons/lib/icons/ExclamationCircleOutlined';
 import { useDebounceFn } from 'ahooks';
 import { Col, DatePicker, Divider, Form, Modal, Row } from 'antd';
-import { STATUS_CONSENT_DROPDOWN_DATA } from 'constants/common.constants';
 import InputForm from 'libraries/form/input/input-form';
 import InputTextAreaForm from 'libraries/form/input/input-textarea-form';
 import Button from 'libraries/UI/Button';
@@ -14,12 +13,12 @@ import { RegexUtils } from 'utils/regex-helper';
 import styles from './index.module.scss';
 import {
   useCreateConsent,
+  useGetDataDropdownConsent,
   useGetListApplication,
-  useGetListProduct,
   useGetListService,
 } from './service';
 import { CloseOutlined } from '@ant-design/icons';
-import { NormalSelectDropdown } from './components';
+import { CustomSelectDropdown as DynamicSelectDropdown } from 'modules/dataSubjectManagement/components/CreateCaseForm';
 
 interface IProps {
   visible: boolean;
@@ -147,6 +146,9 @@ const CreateConsentForm = ({ visible, onClose, onReloadConsentData }: IProps) =>
   const [createConsentForm] = Form.useForm();
   const [expireOn, setExpireOn] = useState(null);
   const [productId, setProductId] = useState('');
+  const { data } = useGetDataDropdownConsent();
+
+  console.log(data);
 
   const onFinishSubmitForm = () => {
     onClose();
@@ -161,7 +163,6 @@ const CreateConsentForm = ({ visible, onClose, onReloadConsentData }: IProps) =>
   };
 
   const createConsentRequest = useCreateConsent(onFinishSubmitForm);
-  const { data } = useGetListProduct();
 
   const onFinish = (values: any) => {
     createConsentRequest.run({
@@ -259,9 +260,10 @@ const CreateConsentForm = ({ visible, onClose, onReloadConsentData }: IProps) =>
                 },
               ]}
             >
-              <NormalSelectDropdown
-                data={data}
+              <DynamicSelectDropdown
+                data={data?.productData}
                 placeholder='Select Product'
+                isOnConsentForm
                 onChange={onSelectChange}
               />
             </Form.Item>
@@ -284,7 +286,7 @@ const CreateConsentForm = ({ visible, onClose, onReloadConsentData }: IProps) =>
           <Col xs={12}>
             <Form.Item
               label='Status'
-              name='status'
+              name='idStatus'
               required
               rules={[
                 {
@@ -293,13 +295,11 @@ const CreateConsentForm = ({ visible, onClose, onReloadConsentData }: IProps) =>
                 },
               ]}
             >
-              <Select placeholder='Select status'>
-                {STATUS_CONSENT_DROPDOWN_DATA.map((item, index) => (
-                  <Select.Option value={item.value} key={`${index}${item.value}`}>
-                    {item.label}
-                  </Select.Option>
-                ))}
-              </Select>
+              <DynamicSelectDropdown
+                data={data?.statusData}
+                placeholder='Select Status'
+                isOnConsentForm
+              />
             </Form.Item>
           </Col>
           <Col xs={12}>

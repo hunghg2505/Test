@@ -85,7 +85,7 @@ const ConsentInfo = ({ data, onClickEdit }: any) => {
           <p className={styles.label}>
             Status<span className={styles.asterisk}>*</span>
           </p>
-          <p className={styles.value}>{capitalizeFirstLetter(data?.status)}</p>
+          <p className={styles.value}>{capitalizeFirstLetter(data?.status?.name)}</p>
         </Col>
         <Col xs={2}></Col>
         <Col xs={11} className={styles.info}>

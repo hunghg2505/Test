@@ -1,9 +1,16 @@
 import { useRequest } from 'ahooks';
 import { message } from 'antd';
-import { GENERAL_CASE_MANAGEMENT_LIST } from 'constants/common.constants';
+import {
+  GENERAL_CASE_MANAGEMENT_LIST,
+  GENERAL_CONSENT_MANAGEMENT_LIST,
+} from 'constants/common.constants';
 import { ResponseBase } from 'utils/api/api.types';
 import ApiUtils from 'utils/api/api.utils';
-import { GENERAL_CONFIG_BASE_URL, API_PATH } from 'utils/api/constant';
+import {
+  GENERAL_CONFIG_BASE_URL,
+  API_PATH,
+  GENERAL_CONFIG_CONSENT_BASE_URL,
+} from 'utils/api/constant';
 
 const getListGeneralCaseManagementService = async () => {
   const response: any = await Promise.all(
@@ -12,7 +19,11 @@ const getListGeneralCaseManagementService = async () => {
     ),
   );
 
-  const productRes: any = await ApiUtils.fetch(API_PATH.GET_PRODUCT_LIST);
+  const responseConsent: any = await Promise.all(
+    GENERAL_CONSENT_MANAGEMENT_LIST.map((type: string) =>
+      ApiUtils.fetch(GENERAL_CONFIG_CONSENT_BASE_URL, { type }),
+    ),
+  );
 
   return {
     featureList: [
@@ -24,14 +35,26 @@ const getListGeneralCaseManagementService = async () => {
             id: 'SUBJECT_RIGHT',
             name: 'Create Case - Data Subject Rights',
             listItem: response[0]?.content?.data,
+            type: 'Case-Management',
           },
           {
             id: 'RELATED_DEPARTMENT',
             name: 'Create Case - Related Department',
             listItem: response[1]?.content?.data,
+            type: 'Case-Management',
           },
-          { id: 'CASE_STATUS', name: 'Create Case - Status', listItem: response[2]?.content?.data },
-          { id: 'CASE_RESULT', name: 'Create Case - Result', listItem: response[3]?.content?.data },
+          {
+            id: 'CASE_STATUS',
+            name: 'Create Case - Status',
+            listItem: response[2]?.content?.data,
+            type: 'Case-Management',
+          },
+          {
+            id: 'CASE_RESULT',
+            name: 'Create Case - Result',
+            listItem: response[3]?.content?.data,
+            type: 'Case-Management',
+          },
         ],
       },
       {
@@ -39,9 +62,22 @@ const getListGeneralCaseManagementService = async () => {
         name: 'Consent Management',
         list: [
           {
-            id: 'PRODUCT',
+            id: 'CONSENT_PRODUCT',
             name: 'Create Consent - Product',
-            listItem: productRes?.content?.data,
+            listItem: responseConsent[0]?.content?.data,
+            type: 'Consent-Management',
+          },
+          {
+            id: 'CONSENT_SERVICE',
+            name: 'Create Consent - Service',
+            listItem: responseConsent[1]?.content?.data,
+            type: 'Consent-Management',
+          },
+          {
+            id: 'CONSENT_STATUS',
+            name: 'Create Consent - Status',
+            listItem: responseConsent[2]?.content?.data,
+            type: 'Consent-Management',
           },
         ],
       },
@@ -111,18 +147,23 @@ export const useDeleteGeneralCaseManagement = (onFinishSubmitForm: any) => {
   );
 };
 
-interface ICreateProduct {
+// Consent
+interface ICreateGeneralConsentManagement {
   name: string;
+  type: string;
 }
 
-const createProduct = async (body: ICreateProduct) => {
-  return ApiUtils.post<ICreateProduct, ResponseBase<any>>(API_PATH.CREATE_PRODUCT, body);
+const createGeneralConsentManagement = async (body: ICreateGeneralConsentManagement) => {
+  return ApiUtils.post<ICreateGeneralConsentManagement, ResponseBase<any>>(
+    GENERAL_CONFIG_CONSENT_BASE_URL,
+    body,
+  );
 };
 
-export const useCreateProduct = (onFinishSubmitForm: any) => {
+export const useCreateGeneralConsentManagement = (onFinishSubmitForm: any) => {
   return useRequest(
-    async (data: ICreateProduct) => {
-      return createProduct(data);
+    async (data: ICreateGeneralConsentManagement) => {
+      return createGeneralConsentManagement(data);
     },
     {
       manual: true,
@@ -134,6 +175,35 @@ export const useCreateProduct = (onFinishSubmitForm: any) => {
         message.error(
           error?.content?.messageContent ? `${error?.content?.messageContent}` : 'Create  Error',
         );
+        onFinishSubmitForm();
+      },
+    },
+  );
+};
+
+const deleteGeneralConsentManagementService = async (
+  id: string | number,
+  body: { type: string },
+) => {
+  return ApiUtils.remove<any, ResponseBase<any>>(
+    API_PATH.DELETE_GENERAL_CONSENT_MANAGEMENT(id),
+    body,
+  );
+};
+
+export const useDeleteGeneralConsentManagement = (onFinishSubmitForm: any) => {
+  return useRequest(
+    async (id: string | number, body: any) => {
+      return deleteGeneralConsentManagementService(id, body);
+    },
+    {
+      manual: true,
+      onSuccess: () => {
+        message.success('Delete Success');
+        onFinishSubmitForm();
+      },
+      onError: () => {
+        message.error('Delete Error');
         onFinishSubmitForm();
       },
     },

@@ -85,7 +85,7 @@ const getDataDropDownService = async () => {
 };
 
 export const useGetDataDropdown = () => {
-  const { data, run, loading, refresh } = useRequest(getDataDropDownService);
+  const { data } = useRequest(getDataDropDownService);
 
-  return { data, run, loading, refresh };
+  return { data };
 };
