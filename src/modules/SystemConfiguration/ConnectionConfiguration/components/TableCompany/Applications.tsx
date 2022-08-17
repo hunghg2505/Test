@@ -1,4 +1,5 @@
 import { Form, Pagination, Row } from 'antd';
+import useSystemConfigPermission from 'hooks/useSystemConfigPermission';
 import InputForm from 'libraries/form/input/input-form';
 import Button from 'libraries/UI/Button';
 import { paginationItemRender } from 'libraries/UI/Pagination';
@@ -67,6 +68,7 @@ const ApplicationsMemo = ({ companyId }: any) => {
     addEndpoint,
     onChange,
   } = useApplications(companyId);
+  const { isHavePermissionCreateSystem } = useSystemConfigPermission();
 
   return (
     <div className={styles.applicationWrap}>
@@ -97,7 +99,9 @@ const ApplicationsMemo = ({ companyId }: any) => {
         />
       </Row>
 
-      <AddNewApplications companyId={`${companyId}`} refreshApplication={refreshApplication} />
+      {isHavePermissionCreateSystem && (
+        <AddNewApplications companyId={`${companyId}`} refreshApplication={refreshApplication} />
+      )}
     </div>
   );
 };
