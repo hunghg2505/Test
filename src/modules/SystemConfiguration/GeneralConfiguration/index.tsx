@@ -1,6 +1,9 @@
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import { Form, Modal, Row } from 'antd';
 import IconArrowDown from 'assets/icons/icon-arrow-down';
+
+import useSystemConfigPermission from 'hooks/useSystemConfigPermission';
+
 import InputForm from 'libraries/form/input/input-form';
 import Button from 'libraries/UI/Button';
 import { useCallback, useState } from 'react';
@@ -17,6 +20,9 @@ import {
 const { confirm } = Modal;
 
 const FormFeatureItem = ({ listItem, featureId, refresh, type }: any) => {
+  const { isHavePermissionCreateSystem, isHavePermissionDeleteSystem } =
+    useSystemConfigPermission();
+
   const [addNewForm] = Form.useForm();
 
   const onFinishSubmitForm = () => {
@@ -63,24 +69,26 @@ const FormFeatureItem = ({ listItem, featureId, refresh, type }: any) => {
   }, []);
   return (
     <div className={styles.content}>
-      <Form onFinish={onAddNew} form={addNewForm}>
-        <Row className={styles.formInput}>
-          <InputForm
-            name='name'
-            label={'Add new'}
-            maxLength={55}
-            rules={[
-              {
-                required: true,
-                message: 'Field name must be required.',
-              },
-            ]}
-          />
-          <Button htmlType='submit' className={styles.addBtn}>
-            Add
-          </Button>
-        </Row>
-      </Form>
+      {isHavePermissionCreateSystem && (
+        <Form onFinish={onAddNew} form={addNewForm}>
+          <Row className={styles.formInput}>
+            <InputForm
+              name='name'
+              label={'Add new'}
+              maxLength={55}
+              rules={[
+                {
+                  required: true,
+                  message: 'Field name must be required.',
+                },
+              ]}
+            />
+            <Button htmlType='submit' className={styles.addBtn}>
+              Add
+            </Button>
+          </Row>
+        </Form>
+      )}
 
       <div className={styles.list}>
         <h4>List</h4>
@@ -88,9 +96,11 @@ const FormFeatureItem = ({ listItem, featureId, refresh, type }: any) => {
           return (
             <span key={it?.name} className={styles.item}>
               {it?.name}
-              <span className={styles.btnClose} onClick={() => showConfirm(it?.id)}>
-                X
-              </span>
+              {isHavePermissionDeleteSystem && (
+                <span className={styles.btnClose} onClick={() => showConfirm(it?.id)}>
+                  X
+                </span>
+              )}
             </span>
           );
         })}

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { API_PATH, APPLICATION_SERVICE_BASE_URL } from './../../../../../utils/api/constant';
 import { clearCache, useRequest } from 'ahooks';
 import ApiUtils from 'utils/api/api.utils';
@@ -54,7 +55,7 @@ export const useApplications = (companyId: any, onEditAppError: any) => {
   );
 
   const requestUpdateApp = useRequest(
-    async (appId: any, name: string) => {
+    async (appId: any, name: string, _callback?: any) => {
       return ApiUtils.put(APPLICATION_SERVICE_BASE_URL, {
         id: +appId,
         companyId: +companyId,
@@ -67,7 +68,9 @@ export const useApplications = (companyId: any, onEditAppError: any) => {
         message.success('Edit Application Success');
         refreshApplication();
       },
-      onError: (error: any) => {
+      onError: (error: any, params: any) => {
+        const callback = params?.[2];
+        if (callback) callback();
         message.error(
           error?.content?.messageContent
             ? `${error?.content?.messageContent}`
@@ -149,9 +152,9 @@ export const useApplications = (companyId: any, onEditAppError: any) => {
     }
   };
 
-  const updateApplication = async (idApp: any, name: string) => {
+  const updateApplication = async (idApp: any, name: string, callback?: any) => {
     try {
-      await requestUpdateApp.runAsync(idApp, name);
+      await requestUpdateApp.runAsync(idApp, name, callback);
       refreshApplication();
     } catch (error) {
       console.log('error', error);

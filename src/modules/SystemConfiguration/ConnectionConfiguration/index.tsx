@@ -10,10 +10,11 @@ import AdvancedSearch from './components/AdvanceSearch';
 import CreateCompanyForm from './components/CreateCompanyForm';
 import styles from './index.module.scss';
 
-import { useClickAway } from 'ahooks';
 import SuggestListUsers from 'modules/dataSubjectManagement/components/SuggestListUsers';
 import TableCompany from './components/TableCompany';
 import { useCompanies } from './services';
+import useSystemConfigPermission from 'hooks/useSystemConfigPermission';
+import { useClickAway } from 'ahooks';
 
 const ConnectionConfiguration = () => {
   const { t } = useTranslation();
@@ -35,19 +36,21 @@ const ConnectionConfiguration = () => {
     requestSearchCompaniesSuggestion,
   } = useCompanies();
 
-  const onFinishSubmitForm = () => {
+  const { isHavePermissionCreateSystem } = useSystemConfigPermission();
+  useClickAway(() => {
     if (refListCompanies.current?.closeListUser) {
       refListCompanies.current.closeListUser();
       onResetCompaniesSuggestion();
     }
-  };
-
-  useClickAway(() => {
-    onFinishSubmitForm();
   }, refFormSearch);
 
+  const callbackSearch = () => {
+    refListCompanies.current.closeListUser();
+    onResetCompaniesSuggestion();
+  };
+
   const onFinish = (values: any) => {
-    onSearchCompany({ ...values, type: 'enter' }, onFinishSubmitForm);
+    onSearchCompany({ ...values, type: 'enter' }, callbackSearch);
   };
 
   const onFieldsChange = (values: any) => {
@@ -99,7 +102,7 @@ const ConnectionConfiguration = () => {
                 data={requestSearchCompaniesSuggestion.data}
                 loading={requestSearchCompaniesSuggestion.loading}
                 onSearchDataSubject={(value: any) => {
-                  onSearchCompany({ name: value?.firstname, type: 'enter' }, onFinishSubmitForm);
+                  onSearchCompany({ name: value?.firstname, type: 'enter' }, callbackSearch);
                 }}
                 ref={refListCompanies}
                 users={companies}
@@ -111,13 +114,15 @@ const ConnectionConfiguration = () => {
 
           <AdvancedSearch onSearchCompany={onSearchCompany} />
 
-          <Button
-            onClick={() => setIsOpenCreateCompanyForm(true)}
-            typeDisplay='ghost'
-            className={styles.btnCreate}
-          >
-            Create Company
-          </Button>
+          {isHavePermissionCreateSystem && (
+            <Button
+              onClick={() => setIsOpenCreateCompanyForm(true)}
+              typeDisplay='ghost'
+              className={styles.btnCreate}
+            >
+              Create Company
+            </Button>
+          )}
         </Row>
       </div>
 

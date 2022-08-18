@@ -96,16 +96,18 @@ const ApplicationsMemo = ({ companyId }: any) => {
         );
       })}
 
-      <Row justify='end' className={styles.paginationApp}>
-        <Pagination
-          current={applications?.current}
-          onChange={onChange}
-          total={applications?.total}
-          defaultPageSize={applications?.pageSize}
-          itemRender={paginationItemRender}
-          showSizeChanger={false}
-        />
-      </Row>
+      {!!applications?.data?.length && (
+        <Row justify='end' className={styles.paginationApp}>
+          <Pagination
+            current={applications?.current}
+            onChange={onChange}
+            total={applications?.total}
+            defaultPageSize={applications?.pageSize}
+            itemRender={paginationItemRender}
+            showSizeChanger={false}
+          />
+        </Row>
+      )}
 
       {isHavePermissionCreateSystem && (
         <AddNewApplications companyId={`${companyId}`} refreshApplication={refreshApplication} />
