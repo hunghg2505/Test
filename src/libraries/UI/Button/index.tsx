@@ -8,14 +8,14 @@ interface Props {
   children: React.ReactNode;
   onClick?: (event: React.MouseEvent<HTMLButtonElement | HTMLAnchorElement, MouseEvent>) => void;
   type?: 'primary' | 'secondary';
-  typeDisplay?: 'ghost' | 'dashed' | undefined;
+  typeDisplay?: 'ghost' | 'dashed';
   disabled?: boolean;
   className?: string;
   loading?: boolean;
   icon?: React.ReactNode;
   suffixIcon?: React.ReactNode;
   align?: 'left' | 'center' | 'right';
-  htmlType?: 'button' | 'submit' | 'reset' | undefined;
+  htmlType?: 'button' | 'submit' | 'reset';
   size?: 'large' | 'middle' | 'small' | 'default';
   style?: React.CSSProperties;
 }

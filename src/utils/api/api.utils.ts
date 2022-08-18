@@ -66,7 +66,7 @@ function subscribeTokenRefresh(cb: any) {
 }
 
 function onRefreshed(token: any) {
-  refreshSubscribers.map((cb) => cb(token));
+  refreshSubscribers.forEach((cb) => cb(token));
 }
 
 const errorHandler = (error: AxiosError) => {
@@ -84,13 +84,12 @@ const errorHandler = (error: AxiosError) => {
         if (newToken) onRefreshed(newToken);
       });
     }
-    const retryOrigReq = new Promise((resolve) => {
+    return new Promise((resolve) => {
       subscribeTokenRefresh(async (token: string) => {
         originalRequest.headers['Authorization'] = 'Bearer ' + token;
         resolve(instance.request(originalRequest));
       });
     });
-    return retryOrigReq;
   }
 
   if (__DEV__) {

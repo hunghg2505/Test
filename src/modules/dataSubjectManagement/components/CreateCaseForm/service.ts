@@ -42,10 +42,6 @@ export const useCreateCase = (onFinishSubmitForm: any) => {
       onSuccess: () => {
         message.success('Create Case Success');
         onFinishSubmitForm();
-        {
-          /** No need now  */
-        }
-        // navigate(routePath.CaseManagement);
       },
       onError: () => {
         message.error('Create Case Error');
