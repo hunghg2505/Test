@@ -161,6 +161,13 @@ const createGeneralConsentManagement = async (body: ICreateGeneralConsentManagem
 };
 
 export const useCreateGeneralConsentManagement = (onFinishSubmitForm: any) => {
+  const handleError = (err: any) => {
+    message.error(
+      err?.content?.messageContent ? `${err?.content?.messageContent}` : 'Create  Error',
+    );
+    onFinishSubmitForm();
+  };
+
   return useRequest(
     async (data: ICreateGeneralConsentManagement) => {
       return createGeneralConsentManagement(data);
@@ -172,10 +179,7 @@ export const useCreateGeneralConsentManagement = (onFinishSubmitForm: any) => {
         onFinishSubmitForm();
       },
       onError: (error: any) => {
-        message.error(
-          error?.content?.messageContent ? `${error?.content?.messageContent}` : 'Create  Error',
-        );
-        onFinishSubmitForm();
+        handleError(error);
       },
     },
   );

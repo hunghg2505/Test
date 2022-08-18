@@ -1,8 +1,7 @@
 // Layout
-import { lazy } from 'react';
+import React, { lazy } from 'react';
 import { routePath } from './path.routing';
 import { HomeOutlined } from '@ant-design/icons';
-import React from 'react';
 import IconProfile from 'assets/icons/icon-profile';
 import IconReports from 'assets/icons/icon-reports';
 import IconDataSubject from 'assets/icons/icon-data-subject';

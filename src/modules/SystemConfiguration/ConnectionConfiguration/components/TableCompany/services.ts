@@ -4,7 +4,7 @@ import { clearCache, useRequest } from 'ahooks';
 import ApiUtils from 'utils/api/api.utils';
 import { message } from 'antd';
 
-const getApplications = async (companyId: any, current = 1, prevList: any) => {
+const getApplications = async (companyId: any, prevList: any, current = 1) => {
   const params = {
     companyId: +companyId,
     limit: 10,
@@ -32,7 +32,7 @@ const getApplications = async (companyId: any, current = 1, prevList: any) => {
 export const useApplications = (companyId: any, onEditAppError: any) => {
   const { data, loading, run } = useRequest(
     async (current, prevList = []) => {
-      return getApplications(companyId, current, prevList);
+      return getApplications(companyId, prevList, current);
     },
     {
       cacheKey: `data-application-${companyId}`,

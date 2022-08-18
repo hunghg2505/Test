@@ -32,7 +32,7 @@ const getListCompanyService = async (values: any): Promise<any> => {
   };
 };
 
-const getCompaniesSuggestion = async (value: any, page = 1, column: string) => {
+const getCompaniesSuggestion = async (value: any, column: string, page = 1) => {
   const params = {
     column,
     searchString: value || '',
@@ -76,7 +76,7 @@ export const useCompanies = () => {
   const requestSearchCompaniesSuggestion = useRequest(
     async (value: string, column, page = 1, _isLoadMore = false) => {
       if (refCancelRequest.current) throw Error('Block request');
-      return getCompaniesSuggestion(value, page, column);
+      return getCompaniesSuggestion(value, column, page);
     },
     {
       manual: true,
