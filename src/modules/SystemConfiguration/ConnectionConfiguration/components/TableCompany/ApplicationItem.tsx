@@ -2,10 +2,14 @@ import { CheckOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
 import { useUpdateEffect } from 'ahooks';
 import { Col, Form, Modal, Row } from 'antd';
 import IconArrowDown from 'assets/icons/icon-arrow-down';
+import IconDelete from 'assets/icons/icon-delete';
+import IconEdit from 'assets/icons/icon-edit';
+import clsx from 'clsx';
 import useSystemConfigPermission from 'hooks/useSystemConfigPermission';
 import InputForm from 'libraries/form/input/input-form';
 import React, { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { capitalizeFirstLetter } from 'utils/common.utils';
 
 import styles from './index.module.scss';
 import ModalAddEndpoint from './ModalAddEndPoint';
@@ -42,57 +46,68 @@ const EndPointItem = ({ endpoint, deleteEndpoint, updateEndpoint }: any) => {
   }, []);
 
   return (
-    <div className={styles.appInfo}>
-      <Row className={styles.appInfoName} align='middle' justify='space-between'>
-        <div>{endpoint?.name}</div>
-        <div>
-          {showInfo && (
-            <>
-              {isHavePermissionDeleteSystem && (
-                <span className={styles.btnDelete} onClick={showConfirm}>
-                  Delete
-                </span>
-              )}
-              {isHavePermissionEditSystem && (
-                <ModalEditEndpoint endpoint={endpoint} updateEndpoint={updateEndpoint}>
-                  <span className={styles.btnEdit}>Edit</span>
-                </ModalEditEndpoint>
-              )}
-            </>
-          )}
-          <span className={styles.arrow} onClick={onShowInfo}>
-            <IconArrowDown />
-          </span>
-        </div>
-      </Row>
-      {showInfo && (
-        <div className={styles.infoWrap}>
-          <div>
-            <div className={styles.label}>Link URL</div>
-            <div className={styles.content}>{endpoint?.url}</div>
+    <div className={styles.table}>
+      <div className={styles.appInfo}>
+        <Row className={styles.appInfoName} align='middle' justify='space-between'>
+          <div className={styles.apiOverview}>
+            <div
+              className={clsx(styles.method, {
+                [styles[endpoint?.method]]: true,
+              })}
+            >
+              {capitalizeFirstLetter(endpoint?.method)}
+            </div>
+            {endpoint?.name}
           </div>
+          <div>
+            {showInfo && (
+              <>
+                {isHavePermissionDeleteSystem && (
+                  <span className={styles.btnDelete} onClick={showConfirm}>
+                    <IconDelete />
+                  </span>
+                )}
+                {isHavePermissionEditSystem && (
+                  <ModalEditEndpoint endpoint={endpoint} updateEndpoint={updateEndpoint}>
+                    <IconEdit colorStroke='#828282' colorFill='white' />
+                  </ModalEditEndpoint>
+                )}
+              </>
+            )}
+            <span className={styles.arrow} onClick={onShowInfo} style={{ marginLeft: 30 }}>
+              <IconArrowDown />
+            </span>
+          </div>
+        </Row>
+        {showInfo && (
+          <div className={styles.infoWrap}>
+            <div>
+              <div className={styles.label}>Link URL</div>
+              <div className={styles.content}>{endpoint?.url}</div>
+            </div>
 
-          <div>
-            <div className={styles.label}>Method</div>
-            <div className={styles.content}>{endpoint?.method?.toUpperCase()}</div>
-          </div>
+            <div>
+              <div className={styles.label}>Method</div>
+              <div className={styles.content}>{endpoint?.method?.toUpperCase()}</div>
+            </div>
 
-          <div>
-            <div className={styles.label}>Parameters</div>
-            <div className={styles.content}>{endpoint?.request}</div>
-          </div>
+            <div>
+              <div className={styles.label}>Parameters</div>
+              <div className={styles.content}>{endpoint?.request}</div>
+            </div>
 
-          <div>
-            <div className={styles.label}>Response</div>
-            <div className={styles.content}>{endpoint?.response}</div>
-          </div>
+            <div>
+              <div className={styles.label}>Response</div>
+              <div className={styles.content}>{endpoint?.response}</div>
+            </div>
 
-          <div>
-            <div className={styles.label}>Key</div>
-            <div className={styles.content}>{endpoint?.key}</div>
+            <div>
+              <div className={styles.label}>Key</div>
+              <div className={styles.content}>{endpoint?.key}</div>
+            </div>
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 };
@@ -198,10 +213,10 @@ export const ApplicationItemMemo = ({
             )}
           </Col>
           {!isEdit ? (
-            <div>
+            <div className={styles.applicationAction}>
               {isHavePermissionDeleteSystem && (
                 <span className={styles.btnDelete} onClick={showConfirm}>
-                  Delete
+                  <IconDelete />
                 </span>
               )}
 
@@ -212,13 +227,13 @@ export const ApplicationItemMemo = ({
                     setIsEdit(true);
                   }}
                 >
-                  Edit
+                  <IconEdit colorStroke='#828282' colorFill='white' />
                 </span>
               )}
 
               {isHavePermissionCreateSystem && (
                 <ModalAddEndpoint appId={application?.id} addEndpoint={addEndpoint}>
-                  <span className={styles.btnEdit}>Add Endpoint</span>
+                  <span className={styles.btnAddApi}>Add API</span>
                 </ModalAddEndpoint>
               )}
               <span onClick={onShowApp} className={styles.arrow}>
@@ -261,7 +276,9 @@ export const ApplicationItemMemo = ({
         </Row>
 
         {showApp && (
-          <div>
+          <div className={styles.applicationWrap}>
+            <h4>API Endpoints</h4>
+
             {endpoints?.data?.map((endpoint: any) => {
               return (
                 <EndPointItem

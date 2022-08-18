@@ -1,6 +1,8 @@
 import { CheckOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
 import { Col, Form, Row, Modal } from 'antd';
 import IconArrowDown from 'assets/icons/icon-arrow-down';
+import IconDelete from 'assets/icons/icon-delete';
+import IconEdit from 'assets/icons/icon-edit';
 import useSystemConfigPermission from 'hooks/useSystemConfigPermission';
 import InputForm from 'libraries/form/input/input-form';
 import React, { useCallback, useState } from 'react';
@@ -71,8 +73,6 @@ const CompanyItemMemo = ({ company, refresh }: any) => {
     });
   }, []);
 
-  const btnText = !isEdit ? 'Edit' : 'Cancel';
-
   return (
     <div>
       <Row className={styles.body}>
@@ -114,7 +114,7 @@ const CompanyItemMemo = ({ company, refresh }: any) => {
               <>
                 {isHavePermissionDeleteSystem && (
                   <span className={styles.btnDelete} onClick={() => showConfirm()}>
-                    Delete
+                    <IconDelete />
                   </span>
                 )}
                 {isHavePermissionEditSystem && (
@@ -124,7 +124,7 @@ const CompanyItemMemo = ({ company, refresh }: any) => {
                       setIsEdit(true);
                     }}
                   >
-                    {btnText}
+                    <IconEdit colorStroke='#828282' colorFill='white' />
                   </span>
                 )}
               </>

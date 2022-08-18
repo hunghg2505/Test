@@ -75,9 +75,8 @@
 .btnDelete,
 .btnEdit,
 .btnSave {
-  background: rgba(207, 42, 43, 0.1);
   border-radius: 4px;
-  padding: 5.5px 16px;
+  padding: 0 10px;
   font-weight: 700;
   font-size: 14px;
   color: #cf2a2b;
@@ -85,20 +84,17 @@
   cursor: pointer;
 }
 
-.btnEdit {
-  margin-left: 10px;
-}
-
 .applicationWrap {
   padding: 16px 32px;
 
   .table {
-    border: 1px solid #828282;
+    border: 1px solid #f6f6f6;
+    border-radius: 10px;
     > div {
       padding: 16px;
     }
     > div:not(:last-child) {
-      border-bottom: 1px solid #828282;
+      border-bottom: 1px solid #f6f6f6;
     }
 
     .arrow {
@@ -128,7 +124,7 @@
     font-weight: 700;
     font-size: 16px;
     line-height: 150%;
-    color: #cf2a2b;
+    color: #202225;
     margin-bottom: 10px;
   }
 }
@@ -179,11 +175,11 @@
   }
 
   .content {
-    border: 1px solid #828282;
+    border: 1px solid #f6f6f6;
     border-radius: 5px;
     padding: 10px;
     font-size: 12px;
-    color: #202225;
+    color: #e0e0e0;
   }
 }
 
@@ -250,4 +246,51 @@
 
 .paginationApp {
   margin-top: 10px;
+}
+
+.btnAddApi {
+  color: black;
+  border: 1px solid black;
+  border-radius: 100px;
+  padding: 8px 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.applicationAction {
+  display: flex;
+  align-items: center;
+}
+
+.apiOverview {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  color: #828282;
+  font-size: 16px;
+  .method {
+    color: white;
+    font-weight: bold;
+    padding: 6px 16px;
+    width: 77px;
+    border-radius: 100px;
+    text-align: center;
+  }
+
+  .delete {
+    background-color: #eb5757;
+  }
+
+  .put,
+  .patch {
+    background-color: #e2b93b;
+  }
+
+  .post {
+    background-color: #27ae60;
+  }
+
+  .get {
+    background-color: #2f80ed;
+  }
 }

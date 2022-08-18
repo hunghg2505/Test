@@ -47,7 +47,7 @@ const FormFeatureItem = ({ listItem, featureId, refresh, type }: any) => {
     confirm({
       title: 'Confirm Delete',
       icon: <ExclamationCircleOutlined style={{ color: 'red' }} />,
-      content: 'Are you sure you want to Delete?',
+      content: 'Are you sure you want to delete this option?',
       okText: 'Yes',
       cancelText: 'No',
       okType: 'danger',
