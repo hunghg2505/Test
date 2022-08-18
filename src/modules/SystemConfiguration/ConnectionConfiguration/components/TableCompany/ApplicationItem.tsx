@@ -268,7 +268,6 @@ export const ApplicationItemMemo = ({
                   }
                 }}
               >
-                AAA
                 <CheckOutlined />
               </span>
             </>
