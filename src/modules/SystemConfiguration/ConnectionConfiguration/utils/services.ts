@@ -69,7 +69,7 @@ export const useEditCompany = (onFinishSubmitForm: any) => {
             ? `${error?.content?.messageContent}`
             : 'Edit Company Error',
         );
-        onFinishSubmitForm();
+        onFinishSubmitForm(true);
       },
     },
   );

@@ -25,10 +25,13 @@ const CompanyItemMemo = ({ company, refresh }: any) => {
     refresh();
   };
 
-  const onFinishEditCompany = () => {
+  const onFinishEditCompany = (error = false) => {
     setVisible(false);
     refresh();
     setIsEdit(false);
+    if (error) {
+      editCompanyForm.resetFields();
+    }
   };
 
   const deleteCompanyReq = useDeleteCompany(onFinishDeleteCompany);

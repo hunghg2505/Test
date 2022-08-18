@@ -28,7 +28,7 @@ const getApplications = async (companyId: any, current = 1, prevList: any) => {
   };
 };
 
-export const useApplications = (companyId: any) => {
+export const useApplications = (companyId: any, onEditAppError: any) => {
   const { data, loading, run } = useRequest(
     async (current, prevList = []) => {
       return getApplications(companyId, current, prevList);
@@ -73,6 +73,7 @@ export const useApplications = (companyId: any) => {
             ? `${error?.content?.messageContent}`
             : 'Edit Application Error',
         );
+        onEditAppError();
       },
     },
   );

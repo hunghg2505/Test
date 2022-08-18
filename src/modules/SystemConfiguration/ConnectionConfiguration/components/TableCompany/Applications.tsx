@@ -19,6 +19,7 @@ const AddNewApplications = ({
   refreshApplication: () => void;
 }) => {
   const [createApplicationForm] = Form.useForm();
+
   const { t } = useTranslation();
 
   const onFinishCreateApplication = () => {
@@ -58,6 +59,12 @@ const AddNewApplications = ({
 };
 
 const ApplicationsMemo = ({ companyId }: any) => {
+  const [editApplicationForm] = Form.useForm();
+
+  const onEditAppError = () => {
+    editApplicationForm.resetFields();
+  };
+
   const {
     applications,
     refreshApplication,
@@ -67,7 +74,7 @@ const ApplicationsMemo = ({ companyId }: any) => {
     updateEndpoint,
     addEndpoint,
     onChange,
-  } = useApplications(companyId);
+  } = useApplications(companyId, onEditAppError);
   const { isHavePermissionCreateSystem } = useSystemConfigPermission();
 
   return (
@@ -84,6 +91,7 @@ const ApplicationsMemo = ({ companyId }: any) => {
             deleteEndpoint={deleteEndpoint}
             updateEndpoint={updateEndpoint}
             addEndpoint={addEndpoint}
+            editApplicationForm={editApplicationForm}
           />
         );
       })}

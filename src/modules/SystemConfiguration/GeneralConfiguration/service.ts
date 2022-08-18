@@ -33,25 +33,25 @@ const getListGeneralCaseManagementService = async () => {
         list: [
           {
             id: 'SUBJECT_RIGHT',
-            name: 'Create Case - Data Subject Rights',
+            name: 'Case Management - Data Subject Rights',
             listItem: response[0]?.content?.data,
             type: 'Case-Management',
           },
           {
             id: 'RELATED_DEPARTMENT',
-            name: 'Create Case - Related Department',
+            name: 'Case Management - Related Department',
             listItem: response[1]?.content?.data,
             type: 'Case-Management',
           },
           {
             id: 'CASE_STATUS',
-            name: 'Create Case - Status',
+            name: 'Case Management - Status',
             listItem: response[2]?.content?.data,
             type: 'Case-Management',
           },
           {
             id: 'CASE_RESULT',
-            name: 'Create Case - Result',
+            name: 'Case Management - Result',
             listItem: response[3]?.content?.data,
             type: 'Case-Management',
           },
@@ -63,19 +63,19 @@ const getListGeneralCaseManagementService = async () => {
         list: [
           {
             id: 'CONSENT_PRODUCT',
-            name: 'Create Consent - Product',
+            name: 'Consent Management - Product Name',
             listItem: responseConsent[0]?.content?.data,
             type: 'Consent-Management',
           },
           {
             id: 'CONSENT_SERVICE',
-            name: 'Create Consent - Service',
+            name: 'Consent Management - Service',
             listItem: responseConsent[1]?.content?.data,
             type: 'Consent-Management',
           },
           {
             id: 'CONSENT_STATUS',
-            name: 'Create Consent - Status',
+            name: 'Consent Management - Status',
             listItem: responseConsent[2]?.content?.data,
             type: 'Consent-Management',
           },

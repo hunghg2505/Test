@@ -104,6 +104,7 @@ export const ApplicationItemMemo = ({
   deleteEndpoint,
   updateEndpoint,
   addEndpoint,
+  editApplicationForm,
 }: any) => {
   const [showApp, setShowApp] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
@@ -123,7 +124,6 @@ export const ApplicationItemMemo = ({
     });
   }, [application?.endpoints]);
 
-  const [editApplicationForm] = Form.useForm();
   const { t } = useTranslation();
 
   const onShowApp = () => {

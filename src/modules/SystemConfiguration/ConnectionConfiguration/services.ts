@@ -74,7 +74,7 @@ export const useCompanies = () => {
   );
 
   const requestSearchCompaniesSuggestion = useRequest(
-    async (value: string, column, page = 1, isLoadMore = false) => {
+    async (value: string, column, page = 1, _isLoadMore = false) => {
       if (refCancelRequest.current) throw Error('Block request');
       return getCompaniesSuggestion(value, page, column);
     },
