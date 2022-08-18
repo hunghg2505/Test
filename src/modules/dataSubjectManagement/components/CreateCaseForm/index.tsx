@@ -5,7 +5,7 @@ import { useCallback, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { CloseOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
-import { useDebounceFn } from 'ahooks';
+import { useClickAway, useDebounceFn } from 'ahooks';
 import Button from 'libraries/UI/Button';
 import moment from 'moment';
 import { useParams } from 'react-router-dom';
@@ -29,6 +29,7 @@ export const CustomSelectDropdown = ({
 }: any) => {
   const [visible, setVisible] = useState(false);
   const refHiddenDropdown: any = useRef(null);
+  const refSelect: any = useRef();
 
   const { run } = useDebounceFn(
     () => {
@@ -42,6 +43,12 @@ export const CustomSelectDropdown = ({
     },
   );
 
+  const onClose = () => {
+    setVisible(false);
+  };
+
+  useClickAway(onClose, refSelect);
+
   const clearValue = () => {
     refHiddenDropdown.current = true;
     onClearValue();
@@ -51,22 +58,24 @@ export const CustomSelectDropdown = ({
   };
 
   return (
-    <Select
-      value={value}
-      placeholder={placeholder}
-      showSearch
-      onSelect={onChange}
-      open={visible}
-      onMouseDown={run}
-      allowClear={allowClear}
-      clearIcon={<CloseOutlined onMouseDown={clearValue} />}
-    >
-      {data?.map((item: any) => (
-        <Select.Option value={isOnConsentForm ? Number(item?.id) : item?.name} key={item?.id}>
-          {item?.name}
-        </Select.Option>
-      ))}
-    </Select>
+    <div ref={refSelect}>
+      <Select
+        value={value}
+        placeholder={placeholder}
+        showSearch
+        onSelect={onChange}
+        open={visible}
+        onMouseDown={run}
+        allowClear={allowClear}
+        clearIcon={<CloseOutlined onMouseDown={clearValue} />}
+      >
+        {data?.map((item: any) => (
+          <Select.Option value={isOnConsentForm ? Number(item?.id) : item?.name} key={item?.id}>
+            {item?.name}
+          </Select.Option>
+        ))}
+      </Select>
+    </div>
   );
 };
 

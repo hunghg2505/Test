@@ -30,8 +30,6 @@ const ICON_EDIT = (
 const ConsentInfo = ({ data, onClickEdit }: any) => {
   const { isHavePermissionEditConsent } = useConsentManagementPermission();
 
-  console.log(data);
-
   return (
     <div className={styles.consentInfo}>
       <Row>

@@ -1,7 +1,7 @@
 import { useCallback, useRef, useState } from 'react';
 
 import ExclamationCircleOutlined from '@ant-design/icons/lib/icons/ExclamationCircleOutlined';
-import { useDebounceFn } from 'ahooks';
+import { useClickAway, useDebounceFn } from 'ahooks';
 import { Col, DatePicker, Divider, Form, Modal, Row } from 'antd';
 import InputForm from 'libraries/form/input/input-form';
 import InputTextAreaForm from 'libraries/form/input/input-textarea-form';
@@ -41,6 +41,7 @@ export const CustomSelectDropdown = ({
   const { t } = useTranslation();
   const [visible, setVisible] = useState(false);
   const refHiddenDropdown: any = useRef(null);
+  const refSelect: any = useRef();
 
   const { run } = useDebounceFn(
     () => {
@@ -53,6 +54,12 @@ export const CustomSelectDropdown = ({
       wait: 300,
     },
   );
+
+  const onClose = () => {
+    setVisible(false);
+  };
+
+  useClickAway(onClose, refSelect);
 
   const LoadMore = () => {
     refHiddenDropdown.current = true;
@@ -71,41 +78,43 @@ export const CustomSelectDropdown = ({
   };
 
   return (
-    <Select
-      value={value}
-      placeholder={placeholder}
-      showSearch
-      onSearch={onSearchDebounce}
-      onSelect={onChange}
-      open={visible}
-      onMouseDown={run}
-      filterOption={false}
-      allowClear={isInModalAdvancedSearch ? true : false}
-      clearIcon={<CloseOutlined onMouseDown={clearValue} />}
-      dropdownRender={(menu: any) => (
-        <>
-          {menu}
+    <div ref={refSelect}>
+      <Select
+        value={value}
+        placeholder={placeholder}
+        showSearch
+        onSearch={onSearchDebounce}
+        onSelect={onChange}
+        open={visible}
+        onMouseDown={run}
+        filterOption={false}
+        allowClear={isInModalAdvancedSearch ? true : false}
+        clearIcon={<CloseOutlined onMouseDown={clearValue} />}
+        dropdownRender={(menu: any) => (
+          <>
+            {menu}
 
-          {data?.isLoadMore && (
-            <>
-              <Divider style={{ margin: '8px 0' }} />
-              <div onMouseDown={LoadMore} className={styles.btnLoadmore}>
-                {t('load_more')}
-              </div>
-            </>
-          )}
-        </>
-      )}
-    >
-      {data?.data?.map((item: any, index: number) => (
-        <Select.Option
-          value={isInModalAdvancedSearch ? item?.appName : Number(item?.id)}
-          key={`${index}${item.id}`}
-        >
-          {item?.appName}
-        </Select.Option>
-      ))}
-    </Select>
+            {data?.isLoadMore && (
+              <>
+                <Divider style={{ margin: '8px 0' }} />
+                <div onMouseDown={LoadMore} className={styles.btnLoadmore}>
+                  {t('load_more')}
+                </div>
+              </>
+            )}
+          </>
+        )}
+      >
+        {data?.data?.map((item: any, index: number) => (
+          <Select.Option
+            value={isInModalAdvancedSearch ? item?.appName : Number(item?.id)}
+            key={`${index}${item.id}`}
+          >
+            {item?.appName}
+          </Select.Option>
+        ))}
+      </Select>
+    </div>
   );
 };
 
@@ -147,8 +156,6 @@ const CreateConsentForm = ({ visible, onClose, onReloadConsentData }: IProps) =>
   const [expireOn, setExpireOn] = useState(null);
   const [productId, setProductId] = useState('');
   const { data } = useGetDataDropdownConsent();
-
-  console.log(data);
 
   const onFinishSubmitForm = () => {
     onClose();
