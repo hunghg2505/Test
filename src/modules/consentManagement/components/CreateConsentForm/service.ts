@@ -59,7 +59,7 @@ const getListApplicationService = async ({
   page,
   prevList = [],
 }: {
-  name?: string | undefined;
+  name?: string;
   page: number;
   prevList: any[];
 }) => {
@@ -107,10 +107,6 @@ export const useGetListApplication = () => {
     run({ name: data?.name, page: (data?.current || 1) + 1, prevList: data?.data });
   };
 
-  // const onReset = () => {
-  //   console.log('reset data');
-  // };
-
   return {
     data,
     loading,
@@ -125,7 +121,7 @@ const getListService = async ({
   page,
   prevList = [],
 }: {
-  name?: string | undefined;
+  name?: string;
   page: number;
   prevList: any[];
 }) => {
@@ -168,10 +164,6 @@ export const useGetListService = () => {
   const onLoadMore = () => {
     run({ name: data?.name, page: (data?.current || 1) + 1, prevList: data?.data });
   };
-
-  // const onReset = () => {
-  //   console.log('reset data');
-  // };
 
   return {
     data,

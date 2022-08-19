@@ -142,18 +142,6 @@ const getListActionService = async () => {
   };
 };
 
-const getListRelateDepartmentService = async () => {
-  const response: any = await ApiUtils.fetch(API_PATH.GET_LIST_DEPARTMENT);
-
-  return {
-    data: response?.content?.data?.map(({ id, name }: any) => ({
-      value: name,
-      label: name,
-      id,
-    })),
-  };
-};
-
 const getListUserService = async () => {
   const response: any = await ApiUtils.fetch(API_PATH.GET_LIST_USER);
 
@@ -173,25 +161,19 @@ export const useGetListDataDropDropdown = () => {
       cacheKey: 'list-action',
     },
   );
-  const { data: departmentsData, run: runDepartmentService } = useRequest(
-    async () => getListRelateDepartmentService(),
-    {
-      cacheKey: 'list-department',
-    },
-  );
+
   const { data: usersData, run: runUserService } = useRequest(async () => getListUserService(), {
     cacheKey: 'list-user',
   });
 
   useMount(() => {
     runActionService();
-    runDepartmentService();
+
     runUserService();
   });
 
   return {
     actionsData,
-    departmentsData,
     usersData,
   };
 };
@@ -235,11 +217,6 @@ export const useEditCase = (onFinishSubmitForm: any) => {
       onSuccess: () => {
         message.success('Edit Case Success');
         onFinishSubmitForm();
-
-        {
-          /** No need now  */
-        }
-        // navigate(routePath.CaseManagement);
       },
       onError: () => {
         message.error('Edit Case Error');

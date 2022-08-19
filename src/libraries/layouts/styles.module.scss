@@ -3,12 +3,7 @@
 .container {
   display: flex;
   flex-direction: row;
-
-  .mainLayout {
-
-  }
 }
-
 
 .siderView {
   padding: 50px 0 60px;
@@ -48,7 +43,9 @@
         .icon-reports path {
           fill: $color-white !important;
         }
-        .icon-profile path, .icon-data-subject path, .icon-case-management path {
+        .icon-profile path,
+        .icon-data-subject path,
+        .icon-case-management path {
           stroke: $color-white !important;
         }
 
@@ -64,7 +61,9 @@
       .icon-reports path {
         fill: $color-white !important;
       }
-      .icon-profile path, .icon-data-subject path, .icon-case-management path {
+      .icon-profile path,
+      .icon-data-subject path,
+      .icon-case-management path {
         stroke: $color-white !important;
       }
 
@@ -76,16 +75,15 @@
       &::after {
         display: none !important;
       }
-
-
     }
     li.ant-menu-submenu.ant-menu-submenu-inline {
       margin: 0;
       padding: 10px 20px 10px 42px !important;
-      &:hover, &:focus {
+      &:hover,
+      &:focus {
         > .ant-menu-submenu-title {
           svg path {
-          stroke: $color-white;
+            stroke: $color-white;
           }
           .ant-menu-title-content {
             color: $color-white;
@@ -101,7 +99,7 @@
       &.ant-menu-submenu-open.ant-menu-submenu-selected {
         > .ant-menu-submenu-title {
           svg path {
-          stroke: $color-white;
+            stroke: $color-white;
           }
           .ant-menu-title-content {
             color: $color-white;
@@ -129,7 +127,7 @@
           padding: 0 !important;
           margin: 0;
           background-color: transparent !important;
-          .ant-menu-title-content  {
+          .ant-menu-title-content {
             font-weight: 700;
             font-size: 12px;
             line-height: 16px;
@@ -186,4 +184,3 @@
 .layoutAuthContent {
   background-color: $color-primary-light;
 }
-
