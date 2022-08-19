@@ -45,7 +45,7 @@ export const getTokenInfo = () => {
   try {
     const tokenInfo: any = localStorageUtils.getObject(KeyStorage.AUTH, null);
     if (tokenInfo && tokenInfo?.accessToken) {
-      return tokenInfo as any;
+      return tokenInfo;
     }
     return {};
   } catch (error) {

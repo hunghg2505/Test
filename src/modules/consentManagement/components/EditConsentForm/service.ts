@@ -73,13 +73,7 @@ export const useUpdateConsent = (id: string, onFinishSubmitForm: () => void) => 
   });
 };
 
-const getListApplicationService = async ({
-  name,
-  page,
-}: {
-  name?: string | undefined;
-  page: number;
-}) => {
+const getListApplicationService = async ({ name, page }: { name?: string; page: number }) => {
   const response: any = await ApiUtils.fetch(API_PATH.GET_LIST_APPLICATION, {
     name,
     limit: 10,
@@ -109,10 +103,10 @@ export const useGetListApplication = () => {
     },
   );
 
-  const onSearchApplicationDebounce = debounce(async (values = {}) => {
-    if (!Object.values(values)?.filter((v) => v).length) return;
+  const onSearchApplicationDebounce = debounce(async (conditions = {}) => {
+    if (!Object.values(conditions)?.filter((v) => v).length) return;
 
-    await runAsync({ ...values, page: 1 });
+    await runAsync({ ...conditions, page: 1 });
   }, 350);
 
   useMount(() => {
@@ -132,7 +126,7 @@ export const useGetListApplication = () => {
   };
 };
 
-const getListService = async ({ name, page }: { name?: string | undefined; page: number }) => {
+const getListService = async ({ name, page }: { name?: string; page: number }) => {
   const response: any = await ApiUtils.fetch(API_PATH.GET_LIST_SERVICE, {
     name,
     limit: 10,

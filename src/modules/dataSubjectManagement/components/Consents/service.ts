@@ -11,7 +11,7 @@ import { API_PATH } from 'utils/api/constant';
 const PAGE_SIZE = 10;
 
 type TConsentService = {
-  search?: string | undefined;
+  search?: string;
   userId: number;
   page: number;
 };
@@ -181,7 +181,7 @@ export const useConsent = ({
 
   // suggestion consent
   const requestSuggestionConsents = useRequest(
-    async (value: string, page = 1, isLoadMore = false) => {
+    async (value: string, page = 1, _isLoadMore = false) => {
       if (refCancelRequest.current) throw new Error('Cancel Request');
 
       return getSuggestionConsents(userId, value, page);

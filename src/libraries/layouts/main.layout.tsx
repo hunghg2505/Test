@@ -16,7 +16,6 @@ import SEO from './SEO';
 import styles from './styles.module.scss';
 
 const { useBreakpoint } = Grid;
-const collapsedWidth = '50px';
 
 function MainLayout() {
   const navigate = useNavigate();
@@ -60,10 +59,6 @@ function MainLayout() {
     navigate(event.key);
   };
 
-  const toggleSider = (status?: boolean) => {
-    setShowSider(status !== undefined ? status : !showSider);
-  };
-
   const MenuFooter = () => {
     return (
       <Menu
@@ -83,23 +78,12 @@ function MainLayout() {
     );
   };
 
-  const isCollapsedWidth = screens.md ? collapsedWidth : 0;
-  const isCollapsed = !showSider !== undefined ? !showSider : false;
-
   return (
     <Layout className='min-height'>
       <SEO />
 
       <Layout className={styles.container}>
-        <Sider
-          width={285}
-          className={styles.siderView}
-          collapsedWidth={isCollapsedWidth}
-          collapsed={isCollapsed}
-          onCollapse={() => {
-            toggleSider && toggleSider();
-          }}
-        >
+        <Sider width={285} className={styles.siderView}>
           <div className={styles.logo}>
             <Logo />
           </div>
@@ -121,12 +105,7 @@ function MainLayout() {
               overflow: 'overlay',
             }}
           >
-            <MainHeader
-              toggleSider={toggleSider}
-              showSider={showSider}
-              user={auth?.user}
-              isMobile={!!screens.md}
-            />
+            <MainHeader showSider={showSider} user={auth?.user} isMobile={!!screens.md} />
             <Outlet />
           </Content>
         </Layout>

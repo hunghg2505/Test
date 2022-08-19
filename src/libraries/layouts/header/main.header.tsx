@@ -11,7 +11,6 @@ import styles from './styles.module.scss';
 interface Props {
   user?: User;
   showSider: boolean;
-  toggleSider: () => void;
   isMobile: boolean;
 }
 
