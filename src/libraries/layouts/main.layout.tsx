@@ -27,10 +27,8 @@ function MainLayout() {
 
   const [menus, setMenus] = useState<ItemType[]>([]);
 
-  // menu status
   const [defaultSelected, setDefaultSelected] = useState<string[]>([]);
 
-  // sider
   const [showSider, setShowSider] = useState(true);
 
   useEffect(() => {
@@ -62,7 +60,6 @@ function MainLayout() {
     navigate(event.key);
   };
 
-  // click toggle sider
   const toggleSider = (status?: boolean) => {
     setShowSider(status !== undefined ? status : !showSider);
   };
@@ -93,10 +90,7 @@ function MainLayout() {
     <Layout className='min-height'>
       <SEO />
 
-      {/** Main Content */}
       <Layout className={styles.container}>
-        {/** screen is desktop */}
-
         <Sider
           width={285}
           className={styles.siderView}
@@ -120,7 +114,6 @@ function MainLayout() {
           <MenuFooter />
         </Sider>
 
-        {/** Main layout content */}
         <Layout className={styles.mainLayout}>
           <Content
             className='site-layout-background'
@@ -128,7 +121,6 @@ function MainLayout() {
               overflow: 'overlay',
             }}
           >
-            {/** Header */}
             <MainHeader
               toggleSider={toggleSider}
               showSider={showSider}
@@ -139,9 +131,6 @@ function MainLayout() {
           </Content>
         </Layout>
       </Layout>
-
-      {/** Footer */}
-      {/* <MainFooter /> */}
     </Layout>
   );
 }
