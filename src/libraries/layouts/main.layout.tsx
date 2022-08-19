@@ -1,4 +1,4 @@
-import { Drawer, Grid, Layout, Menu } from 'antd';
+import { Grid, Layout, Menu } from 'antd';
 import { Content } from 'antd/lib/layout/layout';
 import Sider from 'antd/lib/layout/Sider';
 import { ItemType } from 'antd/lib/menu/hooks/useItems';
@@ -96,50 +96,29 @@ function MainLayout() {
       {/** Main Content */}
       <Layout className={styles.container}>
         {/** screen is desktop */}
-        {screens.md ? (
-          <Sider
-            width={285}
-            className={styles.siderView}
-            collapsedWidth={isCollapsedWidth}
-            collapsed={isCollapsed}
-            onCollapse={() => {
-              toggleSider && toggleSider();
-            }}
-          >
-            <div className={styles.logo}>
-              <Logo />
-            </div>
-            <Menu
-              onClick={onClickMenu}
-              mode='inline'
-              selectedKeys={defaultSelected}
-              style={{ borderRight: 0 }}
-              inlineCollapsed={!showSider}
-              items={menus}
-            />
-            <MenuFooter />
-          </Sider>
-        ) : (
-          <Drawer
-            className='sider-bar-drawer'
-            placement='left'
-            closable={false}
-            bodyStyle={{ padding: 0 }}
-            visible={showSider}
-            onClose={() => {
-              toggleSider && toggleSider();
-            }}
-          >
-            <Menu
-              onClick={onClickMenu}
-              mode='inline'
-              selectedKeys={defaultSelected}
-              style={{ borderRight: 0 }}
-              items={menus}
-            />
-            <MenuFooter />
-          </Drawer>
-        )}
+
+        <Sider
+          width={285}
+          className={styles.siderView}
+          collapsedWidth={isCollapsedWidth}
+          collapsed={isCollapsed}
+          onCollapse={() => {
+            toggleSider && toggleSider();
+          }}
+        >
+          <div className={styles.logo}>
+            <Logo />
+          </div>
+          <Menu
+            onClick={onClickMenu}
+            mode='inline'
+            selectedKeys={defaultSelected}
+            style={{ borderRight: 0 }}
+            inlineCollapsed={!showSider}
+            items={menus}
+          />
+          <MenuFooter />
+        </Sider>
 
         {/** Main layout content */}
         <Layout className={styles.mainLayout}>
