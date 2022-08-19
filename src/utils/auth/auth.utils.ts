@@ -12,7 +12,7 @@ export const refreshTokenApi = async (): Promise<any> => {
     };
 
     const data = Object.keys(params)
-      .map((key: any) => `${key}=${encodeURIComponent(params[`${key}`])}`)
+      .map((key: any) => `${key}=${encodeURIComponent(params[key])}`)
       .join('&');
 
     const options = {
