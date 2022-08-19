@@ -5,56 +5,18 @@ import { ItemType } from 'antd/lib/menu/hooks/useItems';
 import IconInfo from 'assets/icons/icon-info';
 import Logo from 'assets/icons/logo';
 import useAuth from 'hooks/redux/auth/useAuth';
-import cloneDeep from 'lodash/cloneDeep';
 import withAuthClient from 'middlewares/withAuthClient';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
-import configRoutes, { IRouter } from 'routing/config.routing';
-import { getPermissionView } from 'utils/common.utils';
+import configRoutes from 'routing/config.routing';
+import { getMenu } from 'utils/get-menu.utils';
 import MainHeader from './header/main.header';
 import SEO from './SEO';
 import styles from './styles.module.scss';
 
 const { useBreakpoint } = Grid;
 const collapsedWidth = '50px';
-
-const getMenuItem = ({ item, haveIcon = true, auth }: any) => {
-  let isPermissionView = true;
-  if (!item.roles?.includes('@')) {
-    isPermissionView = getPermissionView({ path: item?.path, exitsRoles: auth?.user?.roles });
-  }
-
-  if (!isPermissionView) item.hiddenMenu = true;
-
-  if (item.hiddenMenu) return null;
-  if (!haveIcon) {
-    return {
-      key: item.path,
-      label: item.name,
-    };
-  }
-  return {
-    key: item.path,
-    icon: item.icons,
-    label: item.name,
-    children: [],
-  };
-};
-
-const getMenuChild = ({ item, auth }: any) => {
-  const childMenu: any = [];
-  if (!item.haveChild) return childMenu;
-
-  const childItem = item.children || [];
-  childItem.forEach((it: any) => {
-    const menu = getMenuItem({ item: it, haveIcon: false, auth });
-
-    childMenu.push(menu);
-  });
-
-  return childMenu;
-};
 
 function MainLayout() {
   const navigate = useNavigate();
@@ -80,7 +42,7 @@ function MainLayout() {
   }, [screens]);
 
   useEffect(() => {
-    const newMenu: any = getMenu(configRoutes);
+    const newMenu: any = getMenu(configRoutes, auth);
     setMenus(newMenu);
   }, []);
 
@@ -95,26 +57,6 @@ function MainLayout() {
       setDefaultSelected(newDefaultSelected);
     }
   }, [location.pathname, menus]);
-
-  const getMenu = (routes: IRouter[]) => {
-    const newRouterConfig = cloneDeep(routes);
-    const routerNotAuth = newRouterConfig.find((x) => x.isAuth === true);
-    const menuItem: any[] = [];
-
-    if (!routerNotAuth) return [];
-
-    const listChild = routerNotAuth.children || [];
-    listChild.forEach((item) => {
-      const menu: ItemType = getMenuItem({ item, auth });
-      const childMenu: any[] = getMenuChild({ item, auth });
-
-      if (menu) {
-        menuItem.push({ ...menu, children: childMenu.length > 0 ? childMenu : undefined });
-      }
-    });
-
-    return menuItem;
-  };
 
   const onClickMenu = (event: any) => {
     navigate(event.key);
