@@ -1,6 +1,7 @@
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import { Form, Modal, Row } from 'antd';
 import IconArrowDown from 'assets/icons/icon-arrow-down';
+import clsx from 'clsx';
 
 import useSystemConfigPermission from 'hooks/useSystemConfigPermission';
 
@@ -71,10 +72,10 @@ const FormFeatureItem = ({ listItem, featureId, refresh, type }: any) => {
     <div className={styles.content}>
       {isHavePermissionCreateSystem && (
         <Form onFinish={onAddNew} form={addNewForm}>
+          <p className={styles.textAddNew}>Add new Data Subject Rights</p>
           <Row className={styles.formInput}>
             <InputForm
               name='name'
-              label={'Add new'}
               maxLength={55}
               rules={[
                 {
@@ -83,22 +84,70 @@ const FormFeatureItem = ({ listItem, featureId, refresh, type }: any) => {
                 },
               ]}
             />
-            <Button htmlType='submit' className={styles.addBtn}>
-              Add
+            <Button htmlType='submit' type='secondary' className={styles.addBtn}>
+              <svg
+                width={27}
+                height={26}
+                viewBox='0 0 27 26'
+                fill='none'
+                xmlns='http://www.w3.org/2000/svg'
+              >
+                <path
+                  d='M13.8 23.8327C19.7831 23.8327 24.6333 18.9824 24.6333 12.9993C24.6333 7.01626 19.7831 2.16602 13.8 2.16602C7.81692 2.16602 2.96667 7.01626 2.96667 12.9993C2.96667 18.9824 7.81692 23.8327 13.8 23.8327Z'
+                  stroke='white'
+                  strokeWidth={2}
+                  strokeLinejoin='round'
+                />
+                <path
+                  d='M13.8 8.66602V17.3327'
+                  stroke='white'
+                  strokeWidth={2}
+                  strokeLinecap='round'
+                  strokeLinejoin='round'
+                />
+                <path
+                  d='M9.46667 13H18.1333'
+                  stroke='white'
+                  strokeWidth={2}
+                  strokeLinecap='round'
+                  strokeLinejoin='round'
+                />
+              </svg>
             </Button>
           </Row>
         </Form>
       )}
 
+      <h4>Data Subject Rights List</h4>
       <div className={styles.list}>
-        <h4>List</h4>
         {listItem?.map((it: any) => {
           return (
             <span key={it?.name} className={styles.item}>
               {it?.name}
               {isHavePermissionDeleteSystem && (
                 <span className={styles.btnClose} onClick={() => showConfirm(it?.id)}>
-                  X
+                  <svg
+                    width={12}
+                    height={12}
+                    viewBox='0 0 12 12'
+                    fill='none'
+                    xmlns='http://www.w3.org/2000/svg'
+                  >
+                    <path
+                      d='M2 2L10 10'
+                      stroke='#BDBDBD'
+                      strokeWidth='1.3'
+                      strokeLinecap='round'
+                      strokeLinejoin='round'
+                    />
+                    <path
+                      d='M2 10L10 2'
+                      stroke='#BDBDBD'
+                      strokeWidth='1.3'
+                      strokeLinecap='round'
+                      strokeLinejoin='round'
+                    />
+                  </svg>
                 </span>
               )}
             </span>
@@ -116,7 +165,7 @@ const FeatureItemContent = ({ feature, refresh }: any) => {
   };
 
   return (
-    <>
+    <div className={clsx(styles.featureWrap, { [styles.featureWrapActive]: show })}>
       <Row justify='space-between' align='middle' className={styles.FeatureItemContent}>
         <span className={styles.featureName}>{feature?.name}</span>
         <span onClick={onVisible} className={styles.arrow}>
@@ -134,33 +183,19 @@ const FeatureItemContent = ({ feature, refresh }: any) => {
           />
         </>
       )}
-    </>
+    </div>
   );
 };
 
 const FeatureItem = ({ featureItem, refresh }: any) => {
-  const [show, setShow] = useState(false);
-  const onVisible = () => {
-    setShow(!show);
-  };
-
   return (
-    <>
-      <Row justify='space-between' align='middle' className={styles.FeatureItem}>
-        <span className={styles.featureAppName}>{featureItem?.name}</span>
-        <span onClick={onVisible} className={styles.arrow}>
-          <IconArrowDown />
-        </span>
-      </Row>
+    <div className={styles.FeatureItem}>
+      <p className={styles.featureAppName}>{featureItem?.name}</p>
 
-      {show && (
-        <>
-          {featureItem?.list?.map((val: any) => {
-            return <FeatureItemContent key={val?.id} feature={val} refresh={refresh} />;
-          })}
-        </>
-      )}
-    </>
+      {featureItem?.list?.map((val: any) => {
+        return <FeatureItemContent key={val?.id} feature={val} refresh={refresh} />;
+      })}
+    </div>
   );
 };
 

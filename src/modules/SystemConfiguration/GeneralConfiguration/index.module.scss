@@ -4,20 +4,18 @@
   padding: 40px;
   h1 {
     font-weight: 700;
-    font-size: 36px;
-    line-height: 42px;
-    color: #000000;
-    padding: 0;
-    margin: 0 0 32px;
+    font-size: 24px;
+    line-height: 36px;
+    color: #202225;
+    margin: 0 0 30px;
   }
 
   h3 {
     font-weight: 700;
-    font-size: 28px;
-    line-height: 42px;
-    color: #000000;
-    padding: 0;
-    margin: 0 0 10px;
+    font-size: 20px;
+    line-height: 30px;
+    color: #828282;
+    margin: 0 0 12px;
   }
 }
 
@@ -27,50 +25,108 @@
 }
 
 .FeatureItem {
-  padding: 18px 12px;
-  border: 1px solid $color-black3;
+  padding: 30px 20px;
+  margin: 0 0 35px;
+  background: #FFFFFF;
+  border: 1px solid #F6F6F6;
+  box-shadow: 0px 5px 40px rgba(9, 44, 76, 0.02);
+  border-radius: 8px;
 
   .featureAppName {
+    margin-bottom: 30px;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 36px;
+    color: #202225;
+  }
+
+  .featureWrap:not(:last-child) {
+    margin-bottom: 15px;
+  }
+
+  .featureWrapActive {
+    margin-bottom: 30px;
+  }
+}
+
+.featureWrap {
+  background: #FFFFFF;
+  .featureName {
+    font-weight: 700;
+    font-size: 16px;
+    color: #333333;
+  }
+}
+.featureWrapActive {
+  background: rgba(9, 44, 76, 0.03);
+  border-radius: 8px 8px 0px 0px;
+  border: 1px solid #E0E0E0;
+  border-radius: 8px;
+  overflow: hidden;
+  .FeatureItemContent {
+    border-radius: 0;
   }
 }
 
 .FeatureItemContent {
-  padding: 12px 20px;
-  border: 1px solid $color-black4;
+  padding: 12px 32px;
+  background: rgba(9, 44, 76, 0.03);
+  border-radius: 8px;
 }
 
 .content {
-  padding: 20px;
-  border-left: 1px solid $color-black4;
-  border-right: 1px solid $color-black4;
+  background: #FFFFFF;
+  padding: 20px 32px;
+
+  .textAddNew {
+    margin-bottom: 10px;
+    font-weight: 700;
+    font-size: 16px;
+    color: #333333;
+  }
 
   .formInput {
-    margin-bottom: 10px;
-    gap: 10px;
+    margin-bottom: 30px;
+    gap: 15px;
     > div:first-child {
       flex: 1;
     }
+
+    input {
+      padding: 5px 10px;
+      height: 44px;
+      background: #FCFCFC;
+      border: 1px solid #E0E0E0;
+      border-radius: 4px;
+    }
+  }
+
+   h4 {
+    margin-bottom: 10px;
+    font-weight: 700;
+    font-size: 16px;
+    color: #333333;
   }
 }
 
 .list {
-  border: 1px solid $color-black3;
-  padding: 10px;
-  border-radius: 5px;
-
-  h4 {
-    margin-bottom: 10px;
-  }
+  padding: 20px;
+  border: 1px solid #E0E0E0;
+  border-radius: 8px;
 
   .item {
-    padding: 8px;
-    background: #c4c4c4;
-    border-radius: 5px;
+    padding: 4px 10px;
+    background: #F6F6F6;
+    border: 1px solid #E0E0E0;
+    border-radius: 4px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 10px;
-    margin-right: 10px;
+    gap: 12px;
+    margin-right: 15px;
+    font-weight: 400;
+    font-size: 14px;
+    color: #828282;
   }
 
   .btnClose {
@@ -79,9 +135,18 @@
 }
 
 .addBtn {
-  height: 40px;
-  &:focus {
-    background-color: $color-primary !important;
+  height: 44px;
+  padding: 9px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  span {
+    line-height: 10px;
+  }
+
+  &:focus, &:focus-visible {
+    background: #202225;
   }
 }
 
