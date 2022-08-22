@@ -127,3 +127,30 @@ export const getPermissionView = ({ path, exitsRoles }: any) => {
 
   return isPermissions;
 };
+
+export const getColorStroke = (type: string) => {
+  let color;
+
+  switch (type) {
+    case 'get':
+      color = '#2f80ed';
+      break;
+    case 'patch':
+      color = '#e2b93b';
+      break;
+    case 'put':
+      color = '#e2b93b';
+      break;
+    case 'delete':
+      color = '#cf2a2b';
+      break;
+    case 'post':
+      color = '#27ae60';
+      break;
+    default:
+      color = '';
+      break;
+  }
+
+  return color;
+};
