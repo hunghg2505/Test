@@ -81,6 +81,70 @@ export const useApplications = (companyId: any, onEditAppError: any) => {
     },
   );
 
+  const onChange = (page: number) => {
+    clearCache(`data-application-${companyId}`);
+    run(page);
+  };
+
+  const deleteApplication = (idApp: any) => async () => {
+    try {
+      await requestDeleteApp.runAsync(idApp);
+      refreshApplication();
+    } catch (error) {
+      console.log('error', error);
+    }
+  };
+
+  const updateApplication = async (idApp: any, name: string, callback?: any) => {
+    try {
+      await requestUpdateApp.runAsync(idApp, name, callback);
+      refreshApplication();
+    } catch (error) {
+      console.log('error', error);
+    }
+  };
+
+  return {
+    applications: data,
+    loading,
+    refreshApplication,
+    onChange,
+    deleteApplication,
+    updateApplication,
+  };
+};
+
+const serviceGetEndpointByApplicationId = async (appId: any, prevList = [], page = 1) => {
+  const params = {
+    limit: 5,
+    page: page || 1,
+  };
+
+  const res: any = await ApiUtils.fetch(API_PATH.APP_ENDPOINT_DETAIL(appId), params);
+  const currentEndpoints = res?.content?.data || [];
+
+  return {
+    endpoints: [...prevList, ...currentEndpoints],
+    isLoadMore: +res?.content?.metadata?.currentPage < +res?.content?.metadata?.lastPage,
+    currentPage: +res?.content?.metadata?.currentPage,
+  };
+};
+
+export const useEndpoint = (appId: any) => {
+  const { data, run } = useRequest(
+    async (prevEndpoints, page) => {
+      return serviceGetEndpointByApplicationId(appId, prevEndpoints, page);
+    },
+    {
+      cacheKey: `data-endpoint-${appId}`,
+      manual: true,
+    },
+  );
+
+  const onLoadMore = () => {
+    run(data?.endpoints, (data?.currentPage || 0) + 1);
+  };
+
   const requestDeleteEndpoint = useRequest(
     async (endpointId: any) => {
       return ApiUtils.remove(API_PATH.APP_ENDPOINT(endpointId));
@@ -138,33 +202,11 @@ export const useApplications = (companyId: any, onEditAppError: any) => {
     },
   );
 
-  const onChange = (page: number) => {
-    clearCache(`data-application-${companyId}`);
-    run(page);
-  };
-
-  const deleteApplication = (idApp: any) => async () => {
-    try {
-      await requestDeleteApp.runAsync(idApp);
-      refreshApplication();
-    } catch (error) {
-      console.log('error', error);
-    }
-  };
-
-  const updateApplication = async (idApp: any, name: string, callback?: any) => {
-    try {
-      await requestUpdateApp.runAsync(idApp, name, callback);
-      refreshApplication();
-    } catch (error) {
-      console.log('error', error);
-    }
-  };
-
   const deleteEndpoint = (endpointId: any) => async () => {
     try {
+      clearCache(`data-endpoint-${appId}`);
       await requestDeleteEndpoint.runAsync(endpointId);
-      refreshApplication();
+      run([], 1);
     } catch (error) {
       console.log('error', error);
     }
@@ -172,31 +214,31 @@ export const useApplications = (companyId: any, onEditAppError: any) => {
 
   const updateEndpoint = async ({ endpointId, ...rest }: any) => {
     try {
+      clearCache(`data-endpoint-${appId}`);
       await requestUpdateEndpoint.runAsync(rest, endpointId);
-      refreshApplication();
     } catch (error) {
       console.log('error', error);
+      run([], 1);
     }
   };
 
   const addEndpoint = async ({ applicationId, ...rest }: any) => {
     try {
+      clearCache(`data-endpoint-${appId}`);
       await requestAddEndpoint.runAsync(rest, applicationId);
-      refreshApplication();
+      run([], 1);
     } catch (error) {
       console.log('error', error);
     }
   };
 
   return {
-    applications: data,
-    loading,
-    refreshApplication,
-    onChange,
-    deleteApplication,
-    updateApplication,
+    endpoints: data?.endpoints,
+    isLoadMore: data?.isLoadMore,
+    onLoadMore,
     deleteEndpoint,
     updateEndpoint,
     addEndpoint,
+    onFirstLoad: run,
   };
 };
