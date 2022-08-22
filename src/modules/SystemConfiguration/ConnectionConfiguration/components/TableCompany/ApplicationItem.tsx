@@ -46,73 +46,75 @@ const EndPointItem = ({ endpoint, deleteEndpoint, updateEndpoint }: any) => {
   }, []);
 
   return (
-    <div
-      className={clsx(styles.endpointItem, { [styles[`${endpoint?.method}EndpointItem`]]: true })}
-    >
-      <div className={styles.appInfo}>
-        <Row className={styles.appInfoName} align='middle' justify='space-between'>
-          <div
-            className={styles.apiOverview}
-            style={{
-              color: getColorStroke(endpoint?.method),
-            }}
-          >
+    <>
+      <div
+        className={clsx(styles.endpointItem, { [styles[`${endpoint?.method}EndpointItem`]]: true })}
+      >
+        <div className={styles.appInfo}>
+          <Row className={styles.appInfoName} align='middle' justify='space-between'>
             <div
-              className={clsx(styles.method, {
-                [styles[endpoint?.method]]: true,
-              })}
+              className={styles.apiOverview}
+              style={{
+                color: getColorStroke(endpoint?.method),
+              }}
             >
-              {capitalizeFirstLetter(endpoint?.method)}
+              <div
+                className={clsx(styles.method, {
+                  [styles[endpoint?.method]]: true,
+                })}
+              >
+                {capitalizeFirstLetter(endpoint?.method)}
+              </div>
+              {endpoint?.name}
             </div>
-            {endpoint?.name}
-          </div>
-          <div className={styles.endpointActions}>
-            {isHavePermissionDeleteSystem && (
-              <span className={styles.btnDelete} onClick={showConfirm}>
-                <IconDelete colorStroke={getColorStroke(endpoint?.method)} />
+            <div className={styles.endpointActions}>
+              {isHavePermissionDeleteSystem && (
+                <span className={styles.btnDelete} onClick={showConfirm}>
+                  <IconDelete colorStroke={getColorStroke(endpoint?.method)} />
+                </span>
+              )}
+              {isHavePermissionEditSystem && (
+                <ModalEditEndpoint endpoint={endpoint} updateEndpoint={updateEndpoint}>
+                  <IconEdit colorStroke='#828282' colorFill='white' />
+                </ModalEditEndpoint>
+              )}
+
+              <span className={styles.arrow} onClick={onShowInfo} style={{ marginLeft: 30 }}>
+                <IconArrowDown />
               </span>
-            )}
-            {isHavePermissionEditSystem && (
-              <ModalEditEndpoint endpoint={endpoint} updateEndpoint={updateEndpoint}>
-                <IconEdit colorStroke='#828282' colorFill='white' />
-              </ModalEditEndpoint>
-            )}
-
-            <span className={styles.arrow} onClick={onShowInfo} style={{ marginLeft: 30 }}>
-              <IconArrowDown />
-            </span>
-          </div>
-        </Row>
-        {showInfo && (
-          <div className={styles.infoWrap}>
-            <div>
-              <div className={styles.label}>Link URL</div>
-              <div className={styles.content}>{endpoint?.url}</div>
             </div>
-
-            <div>
-              <div className={styles.label}>Method</div>
-              <div className={styles.content}>{endpoint?.method?.toUpperCase()}</div>
-            </div>
-
-            <div>
-              <div className={styles.label}>Parameters</div>
-              <div className={styles.content}>{endpoint?.request}</div>
-            </div>
-
-            <div>
-              <div className={styles.label}>Response</div>
-              <div className={styles.content}>{endpoint?.response}</div>
-            </div>
-
-            <div>
-              <div className={styles.label}>Key</div>
-              <div className={styles.content}>{endpoint?.key}</div>
-            </div>
-          </div>
-        )}
+          </Row>
+        </div>
       </div>
-    </div>
+      {showInfo && (
+        <div className={styles.infoWrap}>
+          <div>
+            <div className={styles.label}>Link URL</div>
+            <div className={styles.content}>{endpoint?.url}</div>
+          </div>
+
+          <div>
+            <div className={styles.label}>Method</div>
+            <div className={styles.content}>{endpoint?.method?.toUpperCase()}</div>
+          </div>
+
+          <div>
+            <div className={styles.label}>Parameters</div>
+            <div className={styles.content}>{endpoint?.request}</div>
+          </div>
+
+          <div>
+            <div className={styles.label}>Response</div>
+            <div className={styles.content}>{endpoint?.response}</div>
+          </div>
+
+          <div>
+            <div className={styles.label}>Key</div>
+            <div className={styles.content}>{endpoint?.key}</div>
+          </div>
+        </div>
+      )}
+    </>
   );
 };
 
