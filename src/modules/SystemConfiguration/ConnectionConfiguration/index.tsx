@@ -1,6 +1,6 @@
 import { Form, Row } from 'antd';
 import IconSearch from 'assets/icons/icon-search';
-import ContainerLayout from 'libraries/layouts/container.layout';
+import ContainerLayout from 'libraries/layouts/ContainerLayout';
 import Button from 'libraries/UI/Button';
 import { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';

@@ -1,6 +1,6 @@
 import useConsentManagementPermission from 'hooks/useConsentManagementPermission';
 import userProfilePermission from 'hooks/userProfilePermission';
-import ContainerLayout from 'libraries/layouts/container.layout';
+import ContainerLayout from 'libraries/layouts/ContainerLayout';
 import { useRef } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import Consents from './components/Consents';

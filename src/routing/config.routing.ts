@@ -57,7 +57,7 @@ const configRoutes: IRouter[] = [
       },
       {
         path: routePath.DataSubjectDetail,
-        element: lazy(() => import('modules/dataSubjectManagement/[id]')),
+        element: lazy(() => import('modules/dataSubjectManagement/DataSubjectDetail')),
         name: 'Data Subject Management',
         hiddenMenu: true,
         roles: ['Super Admin', 'DPO', 'Authorized User'],
@@ -93,7 +93,7 @@ const configRoutes: IRouter[] = [
       },
       {
         path: routePath.CaseManagementDetail,
-        element: lazy(() => import('modules/caseManagement/[id]')),
+        element: lazy(() => import('modules/caseManagement/CaseManagementDetail')),
         name: 'Assigned To You',
         hiddenMenu: true,
         roles: ['Super Admin', 'DPO', 'Authorized User', 'Administrator'],
@@ -114,7 +114,7 @@ const configRoutes: IRouter[] = [
       },
       {
         path: routePath.ConsentDetail,
-        element: lazy(() => import('modules/consentManagement/[id]')),
+        element: lazy(() => import('modules/consentManagement/ConsentNewPage')),
         name: 'Consent Management Detail',
         hiddenMenu: true,
         roles: ['Super Admin', 'Administrator', 'DPO', 'Authorized User'],
@@ -204,7 +204,7 @@ const configRoutes: IRouter[] = [
   // Profile hash
   {
     path: routePath.ProfileHash,
-    element: lazy(() => import('modules/profile/[hash]')),
+    element: lazy(() => import('modules/profile/ProfileDetailPage')),
     isAuth: false,
     roles: ['@'],
   },

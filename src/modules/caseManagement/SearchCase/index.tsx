@@ -3,7 +3,7 @@ import { Form, Row } from 'antd';
 import IconSearch from 'assets/icons/icon-search';
 import clsx from 'clsx';
 import InputForm from 'libraries/form/input/input-form';
-import ContainerLayout from 'libraries/layouts/container.layout';
+import ContainerLayout from 'libraries/layouts/ContainerLayout';
 import Button from 'libraries/UI/Button';
 import SuggestListUsers from 'modules/dataSubjectManagement/components/SuggestListUsers';
 import { useRef } from 'react';

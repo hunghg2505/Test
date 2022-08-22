@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import ContainerLayout from 'libraries/layouts/container.layout';
+import ContainerLayout from 'libraries/layouts/ContainerLayout';
 import CaseManagementTable from '../components/CaseManagementTable';
 
 import styles from './index.module.scss';

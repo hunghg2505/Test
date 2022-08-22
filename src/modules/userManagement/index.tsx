@@ -1,4 +1,4 @@
-import ContainerLayout from 'libraries/layouts/container.layout';
+import ContainerLayout from 'libraries/layouts/ContainerLayout';
 import React from 'react';
 import AdminPermissions from './components/AdminPermissions';
 import { useAdminPermissions } from './components/AdminPermissions/service';

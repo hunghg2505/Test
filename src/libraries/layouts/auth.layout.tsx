@@ -1,7 +1,7 @@
 import { Layout } from 'antd';
 import withUnAuthClient from 'middlewares/withUnAuthClient';
 import { Outlet } from 'react-router-dom';
-import AuthHeader from './header/auth.header';
+import AuthHeader from './header/AuthHeader';
 import SEO from './SEO';
 import styles from './styles.module.scss';
 

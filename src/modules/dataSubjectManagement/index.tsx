@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 
 import IconSearch from 'assets/icons/icon-search';
 import InputForm from 'libraries/form/input/input-form';
-import ContainerLayout from 'libraries/layouts/container.layout';
+import ContainerLayout from 'libraries/layouts/ContainerLayout';
 
 import { useDataSubjectManagement } from './utils/service';
 

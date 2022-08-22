@@ -11,7 +11,7 @@ import { useTranslation } from 'react-i18next';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import configRoutes from 'routing/config.routing';
 import { getMenu } from 'utils/get-menu.utils';
-import MainHeader from './header/main.header';
+import MainHeader from './header/MainHeader';
 import SEO from './SEO';
 import styles from './styles.module.scss';
 

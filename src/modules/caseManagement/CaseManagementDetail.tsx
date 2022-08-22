@@ -1,4 +1,4 @@
-import ContainerLayout from 'libraries/layouts/container.layout';
+import ContainerLayout from 'libraries/layouts/ContainerLayout';
 import ConsentList from './components/ConsentList';
 import UserInfo from './components/UserInfo';
 import ActivityLog from './components/ActivityLog';

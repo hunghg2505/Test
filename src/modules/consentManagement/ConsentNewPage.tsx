@@ -1,4 +1,4 @@
-import ContainerLayout from 'libraries/layouts/container.layout';
+import ContainerLayout from 'libraries/layouts/ContainerLayout';
 import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import EditConsentForm from './components/EditConsentForm';
