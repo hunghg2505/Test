@@ -80,7 +80,7 @@ const FormFeatureItem = ({ listItem, featureId, refresh, type }: any) => {
               rules={[
                 {
                   required: true,
-                  message: 'Field name must be required.',
+                  message: 'Field can not be blank.',
                 },
               ]}
             />
