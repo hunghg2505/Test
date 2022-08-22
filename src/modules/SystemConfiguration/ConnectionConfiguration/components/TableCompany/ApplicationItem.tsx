@@ -9,13 +9,40 @@ import useSystemConfigPermission from 'hooks/useSystemConfigPermission';
 import InputForm from 'libraries/form/input/input-form';
 import React, { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { capitalizeFirstLetter, getColorStroke } from 'utils/common.utils';
+import { capitalizeFirstLetter } from 'utils/common.utils';
 
 import styles from './index.module.scss';
 import ModalAddEndpoint from './ModalAddEndPoint';
 import ModalEditEndpoint from './ModalEditEndpoint';
 
 const { confirm } = Modal;
+
+const getColorStroke = (type: string) => {
+  let color;
+
+  switch (type) {
+    case 'get':
+      color = '#2f80ed';
+      break;
+    case 'patch':
+      color = '#e2b93b';
+      break;
+    case 'put':
+      color = '#e2b93b';
+      break;
+    case 'delete':
+      color = '#cf2a2b';
+      break;
+    case 'post':
+      color = '#27ae60';
+      break;
+    default:
+      color = '';
+      break;
+  }
+
+  return color;
+};
 
 const EndPointItem = ({ endpoint, deleteEndpoint, updateEndpoint }: any) => {
   const { isHavePermissionEditSystem, isHavePermissionDeleteSystem } = useSystemConfigPermission();
