@@ -27,8 +27,8 @@
 .FeatureItem {
   padding: 30px 20px;
   margin: 0 0 35px;
-  background: #FFFFFF;
-  border: 1px solid #F6F6F6;
+  background: #ffffff;
+  border: 1px solid #f6f6f6;
   box-shadow: 0px 5px 40px rgba(9, 44, 76, 0.02);
   border-radius: 8px;
 
@@ -50,7 +50,7 @@
 }
 
 .featureWrap {
-  background: #FFFFFF;
+  background: #ffffff;
   .featureName {
     font-weight: 700;
     font-size: 16px;
@@ -60,7 +60,7 @@
 .featureWrapActive {
   background: rgba(9, 44, 76, 0.03);
   border-radius: 8px 8px 0px 0px;
-  border: 1px solid #E0E0E0;
+  border: 1px solid #e0e0e0;
   border-radius: 8px;
   overflow: hidden;
   .FeatureItemContent {
@@ -75,7 +75,7 @@
 }
 
 .content {
-  background: #FFFFFF;
+  background: #ffffff;
   padding: 20px 32px;
 
   .textAddNew {
@@ -95,13 +95,13 @@
     input {
       padding: 5px 10px;
       height: 44px;
-      background: #FCFCFC;
-      border: 1px solid #E0E0E0;
+      background: #fcfcfc;
+      border: 1px solid #e0e0e0;
       border-radius: 4px;
     }
   }
 
-   h4 {
+  h4 {
     margin-bottom: 10px;
     font-weight: 700;
     font-size: 16px;
@@ -111,13 +111,13 @@
 
 .list {
   padding: 20px;
-  border: 1px solid #E0E0E0;
+  border: 1px solid #e0e0e0;
   border-radius: 8px;
 
   .item {
     padding: 4px 10px;
-    background: #F6F6F6;
-    border: 1px solid #E0E0E0;
+    background: #f6f6f6;
+    border: 1px solid #e0e0e0;
     border-radius: 4px;
     display: inline-flex;
     align-items: center;
@@ -127,6 +127,7 @@
     font-weight: 400;
     font-size: 14px;
     color: #828282;
+    margin-bottom: 8px;
   }
 
   .btnClose {
@@ -145,7 +146,8 @@
     line-height: 10px;
   }
 
-  &:focus, &:focus-visible {
+  &:focus,
+  &:focus-visible {
     background: #202225;
   }
 }
