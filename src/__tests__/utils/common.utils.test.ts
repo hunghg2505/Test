@@ -4,6 +4,7 @@ import {
   capitalizeFirstLetter,
   disabledFutureDate,
   formatIdSubjectHistory,
+  getColorStroke,
   getPermissionView,
   hasPermissionViewPage,
 } from 'utils/common.utils';
@@ -143,4 +144,13 @@ test('Test getPermissionView', () => {
       exitsRoles: [{ permissions: [{ permissionId: 'PERMISSIONS.PDPA_UserProfile_View' }] }],
     }),
   ).toEqual(false);
+});
+
+test('Test GetColorStroke', () => {
+  expect(getColorStroke('')).toBe('');
+  expect(getColorStroke('get')).toBe('#2f80ed');
+  expect(getColorStroke('patch')).toBe('#e2b93b');
+  expect(getColorStroke('put')).toBe('#e2b93b');
+  expect(getColorStroke('delete')).toBe('#cf2a2b');
+  expect(getColorStroke('post')).toBe('#27ae60');
 });
