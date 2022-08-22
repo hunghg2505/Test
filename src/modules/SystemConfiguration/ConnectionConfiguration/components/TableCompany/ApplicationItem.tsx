@@ -17,6 +17,33 @@ import ModalEditEndpoint from './ModalEditEndpoint';
 
 const { confirm } = Modal;
 
+const getColorStroke = (type: string) => {
+  let color;
+
+  switch (type) {
+    case 'get':
+      color = '#2f80ed';
+      break;
+    case 'patch':
+      color = '#e2b93b';
+      break;
+    case 'put':
+      color = '#e2b93b';
+      break;
+    case 'delete':
+      color = '#cf2a2b';
+      break;
+    case 'post':
+      color = '#27ae60';
+      break;
+    default:
+      color = '';
+      break;
+  }
+
+  return color;
+};
+
 const EndPointItem = ({ endpoint, deleteEndpoint, updateEndpoint }: any) => {
   const { isHavePermissionEditSystem, isHavePermissionDeleteSystem } = useSystemConfigPermission();
   const [showInfo, setShowInfo] = useState(false);
@@ -46,10 +73,17 @@ const EndPointItem = ({ endpoint, deleteEndpoint, updateEndpoint }: any) => {
   }, []);
 
   return (
-    <div className={styles.table}>
+    <div
+      className={clsx(styles.endpointItem, { [styles[`${endpoint?.method}EndpointItem`]]: true })}
+    >
       <div className={styles.appInfo}>
         <Row className={styles.appInfoName} align='middle' justify='space-between'>
-          <div className={styles.apiOverview}>
+          <div
+            className={styles.apiOverview}
+            style={{
+              color: getColorStroke(endpoint?.method),
+            }}
+          >
             <div
               className={clsx(styles.method, {
                 [styles[endpoint?.method]]: true,
@@ -59,21 +93,18 @@ const EndPointItem = ({ endpoint, deleteEndpoint, updateEndpoint }: any) => {
             </div>
             {endpoint?.name}
           </div>
-          <div>
-            {showInfo && (
-              <>
-                {isHavePermissionDeleteSystem && (
-                  <span className={styles.btnDelete} onClick={showConfirm}>
-                    <IconDelete />
-                  </span>
-                )}
-                {isHavePermissionEditSystem && (
-                  <ModalEditEndpoint endpoint={endpoint} updateEndpoint={updateEndpoint}>
-                    <IconEdit colorStroke='#828282' colorFill='white' />
-                  </ModalEditEndpoint>
-                )}
-              </>
+          <div className={styles.endpointActions}>
+            {isHavePermissionDeleteSystem && (
+              <span className={styles.btnDelete} onClick={showConfirm}>
+                <IconDelete colorStroke={getColorStroke(endpoint?.method)} />
+              </span>
             )}
+            {isHavePermissionEditSystem && (
+              <ModalEditEndpoint endpoint={endpoint} updateEndpoint={updateEndpoint}>
+                <IconEdit colorStroke='#828282' colorFill='white' />
+              </ModalEditEndpoint>
+            )}
+
             <span className={styles.arrow} onClick={onShowInfo} style={{ marginLeft: 30 }}>
               <IconArrowDown />
             </span>

@@ -1,7 +1,7 @@
-import { Form, Pagination, Row } from 'antd';
+import { PlusCircleOutlined } from '@ant-design/icons';
+import { Button, Form, Pagination, Row } from 'antd';
 import useSystemConfigPermission from 'hooks/useSystemConfigPermission';
 import InputForm from 'libraries/form/input/input-form';
-import Button from 'libraries/UI/Button';
 import { paginationItemRender } from 'libraries/UI/Pagination';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -37,7 +37,7 @@ const AddNewApplications = ({
     <div className={styles.formAddNew}>
       <Form form={createApplicationForm} onFinish={onFinish}>
         <h4>Add new Application</h4>
-        <Row align='middle' justify='space-between' className={styles.divRow}>
+        <Row justify='space-between' className={styles.divRow}>
           <InputForm
             className={styles.input}
             name='name'
@@ -49,9 +49,7 @@ const AddNewApplications = ({
               },
             ]}
           />
-          <Button htmlType='submit' className={styles.addBtn}>
-            Add
-          </Button>
+          <Button htmlType='submit' className={styles.addBtn} icon={<PlusCircleOutlined />} />
         </Row>
       </Form>
     </div>

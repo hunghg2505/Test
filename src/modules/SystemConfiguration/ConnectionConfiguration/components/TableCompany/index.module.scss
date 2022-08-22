@@ -198,8 +198,16 @@
   }
 }
 
-.addBtn:focus {
-  background-color: #cf2a2b;
+.addBtn {
+  background-color: #d6d6d6;
+  margin-top: 7px;
+
+  &:hover,
+  &:focus {
+    background-color: #d6d6d6 !important;
+    color: black;
+    border-color: black;
+  }
 }
 
 .noResultText {
@@ -279,7 +287,7 @@
   }
 
   .delete {
-    background-color: #eb5757;
+    background-color: #cf2a2b;
   }
 
   .put,
@@ -294,4 +302,44 @@
   .get {
     background-color: #2f80ed;
   }
+}
+
+.endpointActions {
+  display: flex;
+  align-items: center;
+}
+
+.endpointItem {
+  border: 1px solid #f6f6f6;
+  border-radius: 10px;
+  margin-bottom: 16px;
+  padding: 0 8px;
+
+  .appInfoName {
+    margin-bottom: 0 !important;
+  }
+}
+
+.deleteEndpointItem {
+  background-color: rgba(207, 42, 43, 0.07);
+  color: #cf2a2b;
+  border: 1px solid #cf2a2b;
+}
+
+.postEndpointItem {
+  background-color: rgba(#27ae60, 0.07);
+  color: #27ae60;
+  border: 1px solid #27ae60;
+}
+.putEndpointItem,
+patchEndpointItem {
+  background-color: rgba(#e2b93b, 0.07);
+  color: #e2b93b;
+  border: 1px solid #e2b93b;
+}
+
+.getEndpointItem {
+  background-color: rgba(#2f80ed, 0.07);
+  color: #2f80ed;
+  border: 1px solid #2f80ed;
 }
