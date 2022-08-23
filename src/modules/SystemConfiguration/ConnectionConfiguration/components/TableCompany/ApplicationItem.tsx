@@ -50,6 +50,8 @@ const EndPointItem = ({ endpoint, deleteEndpoint, updateEndpoint }: any) => {
     });
   }, []);
 
+  const isShowIcon = showInfo ? <UpOutlined /> : <DownOutlined />;
+
   return (
     <>
       <div
@@ -85,7 +87,7 @@ const EndPointItem = ({ endpoint, deleteEndpoint, updateEndpoint }: any) => {
               )}
 
               <span className={styles.arrow} onClick={onShowInfo} style={{ marginLeft: 30 }}>
-                {showInfo ? <UpOutlined /> : <DownOutlined />}
+                {isShowIcon}
               </span>
             </div>
           </Row>
@@ -235,6 +237,8 @@ export const ApplicationItemMemo = ({ application, deleteApplication, updateAppl
     });
   }, []);
 
+  const isShowIcon = showApp ? <UpOutlined /> : <DownOutlined />;
+
   return (
     <div>
       <div className={styles.table}>
@@ -276,7 +280,7 @@ export const ApplicationItemMemo = ({ application, deleteApplication, updateAppl
                 </ModalAddEndpoint>
               )}
               <span onClick={onShowApp} className={styles.arrow}>
-                {showApp ? <UpOutlined /> : <DownOutlined />}
+                {isShowIcon}
               </span>
             </div>
           ) : (
