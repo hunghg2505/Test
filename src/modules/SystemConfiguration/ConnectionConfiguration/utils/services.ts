@@ -36,8 +36,8 @@ export const useCreateCompany = (onFinishSubmitForm: any) => {
     },
     {
       manual: true,
-      onSuccess: () => {
-        message.success('Create Company Success');
+      onSuccess: (data) => {
+        message.success(`Create Company ${data?.content?.data?.name} Success`);
         onFinishSubmitForm();
       },
       onError: (error: any) => {
@@ -112,8 +112,8 @@ export const useCreateApplication = (onFinishSubmitForm: any) => {
     },
     {
       manual: true,
-      onSuccess: () => {
-        message.success('Create Application Success');
+      onSuccess: (data) => {
+        message.success(`Create Application ${data?.content?.data?.name} Success`);
         onFinishSubmitForm();
       },
       onError: (error: any) => {
