@@ -1,13 +1,17 @@
-import { CheckOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
+import {
+  CheckOutlined,
+  DownOutlined,
+  ExclamationCircleOutlined,
+  UpOutlined,
+} from '@ant-design/icons';
 import { useMount } from 'ahooks';
 import { Col, Form, Modal, Row } from 'antd';
-import IconArrowDown from 'assets/icons/icon-arrow-down';
 import IconDelete from 'assets/icons/icon-delete';
 import IconEdit from 'assets/icons/icon-edit';
 import clsx from 'clsx';
 import useSystemConfigPermission from 'hooks/useSystemConfigPermission';
 import InputForm from 'libraries/form/input/input-form';
-import React, { useCallback, useState } from 'react';
+import React, { forwardRef, useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { capitalizeFirstLetter, getColorStroke } from 'utils/common.utils';
 
@@ -30,7 +34,7 @@ const EndPointItem = ({ endpoint, deleteEndpoint, updateEndpoint }: any) => {
     confirm({
       title: 'Confirm Delete',
       icon: <ExclamationCircleOutlined style={{ color: 'red' }} />,
-      content: 'Are you sure you want to Delete Endpoint',
+      content: `Are you sure you want to delete endpoint ${endpoint?.name}?`,
       okText: 'Yes',
       cancelText: 'No',
       okType: 'danger',
@@ -81,7 +85,7 @@ const EndPointItem = ({ endpoint, deleteEndpoint, updateEndpoint }: any) => {
               )}
 
               <span className={styles.arrow} onClick={onShowInfo} style={{ marginLeft: 30 }}>
-                <IconArrowDown />
+                {showInfo ? <UpOutlined /> : <DownOutlined />}
               </span>
             </div>
           </Row>
@@ -185,6 +189,8 @@ export const ApplicationItemMemo = ({ application, deleteApplication, updateAppl
   const [isEdit, setIsEdit] = useState(false);
   const [editApplicationForm] = Form.useForm();
 
+  const { t } = useTranslation();
+
   const { isHavePermissionCreateSystem, isHavePermissionEditSystem, isHavePermissionDeleteSystem } =
     useSystemConfigPermission();
   const {
@@ -197,8 +203,6 @@ export const ApplicationItemMemo = ({ application, deleteApplication, updateAppl
     onFirstLoad,
   } = useEndpoint(application?.id);
 
-  const { t } = useTranslation();
-
   const onShowApp = () => {
     setShowApp(!showApp);
   };
@@ -207,6 +211,7 @@ export const ApplicationItemMemo = ({ application, deleteApplication, updateAppl
     if (values?.app_name?.trim() === application?.name) {
       return;
     }
+
     updateApplication(application?.id, values?.app_name, editApplicationForm.resetFields);
   };
 
@@ -214,7 +219,7 @@ export const ApplicationItemMemo = ({ application, deleteApplication, updateAppl
     confirm({
       title: 'Confirm Delete',
       icon: <ExclamationCircleOutlined style={{ color: 'red' }} />,
-      content: 'Are you sure you want to Delete Application',
+      content: `Are you sure you want to Delete Application ${application?.name}`,
       okText: 'Yes',
       cancelText: 'No',
       okType: 'danger',
@@ -271,7 +276,7 @@ export const ApplicationItemMemo = ({ application, deleteApplication, updateAppl
                 </ModalAddEndpoint>
               )}
               <span onClick={onShowApp} className={styles.arrow}>
-                <IconArrowDown />
+                {showApp ? <UpOutlined /> : <DownOutlined />}
               </span>
             </div>
           ) : (
@@ -323,4 +328,4 @@ export const ApplicationItemMemo = ({ application, deleteApplication, updateAppl
   );
 };
 
-export const ApplicationItem = React.memo(ApplicationItemMemo);
+export const ApplicationItem = React.memo(forwardRef(ApplicationItemMemo));

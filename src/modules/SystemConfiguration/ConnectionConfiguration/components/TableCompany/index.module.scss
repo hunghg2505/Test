@@ -50,9 +50,9 @@
     justify-content: space-between;
 
     span {
-      font-weight: 400;
-      font-size: 14px;
-      color: #828282;
+      font-size: 18px;
+      font-weight: 700;
+      color: black;
     }
   }
 
@@ -104,7 +104,7 @@
     }
 
     .appName {
-      font-size: 14px;
+      font-size: 15px;
       color: #202225;
       cursor: pointer;
     }
@@ -123,10 +123,10 @@
   }
 
   h4 {
-    font-weight: 700;
-    font-size: 16px;
+    font-weight: 400;
+    font-size: 13px;
     line-height: 150%;
-    color: #202225;
+    color: #737374;
     margin-bottom: 10px;
   }
 }
@@ -334,7 +334,7 @@
   border: 1px solid #27ae60;
 }
 .putEndpointItem,
-patchEndpointItem {
+.patchEndpointItem {
   background-color: rgba(#e2b93b, 0.07);
   color: #e2b93b;
   border: 1px solid #e2b93b;
