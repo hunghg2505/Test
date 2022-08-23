@@ -1,6 +1,10 @@
-import { CheckOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
-import { Col, Form, Row, Modal } from 'antd';
-import IconArrowDown from 'assets/icons/icon-arrow-down';
+import {
+  CheckOutlined,
+  DownOutlined,
+  ExclamationCircleOutlined,
+  UpOutlined,
+} from '@ant-design/icons';
+import { Col, Form, Modal, Row } from 'antd';
 import IconDelete from 'assets/icons/icon-delete';
 import IconEdit from 'assets/icons/icon-edit';
 import useSystemConfigPermission from 'hooks/useSystemConfigPermission';
@@ -57,7 +61,7 @@ const CompanyItemMemo = ({ company, refresh }: any) => {
     confirm({
       title: 'Confirm Delete',
       icon: <ExclamationCircleOutlined style={{ color: 'red' }} />,
-      content: 'Are you sure you want to Delete Company',
+      content: `Are you sure you want to delete company ${company?.name}?`,
       okText: 'Yes',
       cancelText: 'No',
       okType: 'danger',
@@ -101,7 +105,7 @@ const CompanyItemMemo = ({ company, refresh }: any) => {
           )}
 
           <span onClick={onVisible} className={styles.arrow}>
-            <IconArrowDown />
+            {visible ? <UpOutlined /> : <DownOutlined />}
           </span>
         </Col>
         <Col className={styles.companyCreatedDate}>{company?.createdDate}</Col>

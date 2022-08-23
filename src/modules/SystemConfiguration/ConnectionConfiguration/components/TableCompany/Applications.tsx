@@ -58,7 +58,6 @@ const AddNewApplications = ({
 
 const ApplicationsMemo = ({ companyId }: any) => {
   const [editApplicationForm] = Form.useForm();
-
   const onEditAppError = () => {
     editApplicationForm.resetFields();
   };
