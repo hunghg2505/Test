@@ -62,16 +62,8 @@ const ApplicationsMemo = ({ companyId }: any) => {
     editApplicationForm.resetFields();
   };
 
-  const {
-    applications,
-    refreshApplication,
-    deleteApplication,
-    updateApplication,
-    deleteEndpoint,
-    updateEndpoint,
-    addEndpoint,
-    onChange,
-  } = useApplications(companyId, onEditAppError);
+  const { applications, refreshApplication, deleteApplication, updateApplication, onChange } =
+    useApplications(companyId, onEditAppError);
   const { isHavePermissionCreateSystem } = useSystemConfigPermission();
 
   return (
@@ -85,9 +77,6 @@ const ApplicationsMemo = ({ companyId }: any) => {
             application={application}
             deleteApplication={deleteApplication}
             updateApplication={updateApplication}
-            deleteEndpoint={deleteEndpoint}
-            updateEndpoint={updateEndpoint}
-            addEndpoint={addEndpoint}
             editApplicationForm={editApplicationForm}
           />
         );

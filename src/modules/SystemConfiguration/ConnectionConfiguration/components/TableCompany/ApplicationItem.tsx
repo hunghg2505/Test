@@ -4,7 +4,7 @@ import {
   ExclamationCircleOutlined,
   UpOutlined,
 } from '@ant-design/icons';
-import { useUpdateEffect } from 'ahooks';
+import { useMount } from 'ahooks';
 import { Col, Form, Modal, Row } from 'antd';
 import IconDelete from 'assets/icons/icon-delete';
 import IconEdit from 'assets/icons/icon-edit';
@@ -18,6 +18,7 @@ import { capitalizeFirstLetter, getColorStroke } from 'utils/common.utils';
 import styles from './index.module.scss';
 import ModalAddEndpoint from './ModalAddEndPoint';
 import ModalEditEndpoint from './ModalEditEndpoint';
+import { useEndpoint } from './services';
 
 const { confirm } = Modal;
 
@@ -122,35 +123,63 @@ const EndPointItem = ({ endpoint, deleteEndpoint, updateEndpoint }: any) => {
   );
 };
 
+const EndpointList = ({
+  endpoints,
+  isLoadMore,
+  onLoadMore,
+  deleteEndpoint,
+  updateEndpoint,
+  onFirstLoad,
+}: any) => {
+  useMount(() => {
+    onFirstLoad();
+  });
+
+  return (
+    <div className={styles.applicationWrap}>
+      <h4>API Endpoints</h4>
+
+      {endpoints?.map((endpoint: any) => {
+        return (
+          <EndPointItem
+            key={`endpoint-${endpoint?.id}`}
+            endpoint={endpoint}
+            deleteEndpoint={deleteEndpoint}
+            updateEndpoint={updateEndpoint}
+          />
+        );
+      })}
+      {isLoadMore && (
+        <div className={styles.btnLoadMore} onClick={onLoadMore}>
+          Load More
+        </div>
+      )}
+    </div>
+  );
+};
+
 export const ApplicationItemMemo = ({
   application,
   deleteApplication,
   updateApplication,
-  deleteEndpoint,
-  updateEndpoint,
-  addEndpoint,
   editApplicationForm,
 }: any) => {
   const [showApp, setShowApp] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
-  const [endpoints, setEndpoints] = useState({
-    current: 1,
-    data: application?.endpoints?.slice(0, 10),
-    isLoadMoreEndpoint: 1 < Math.ceil(application?.endpoints?.length / 10),
-  });
 
   const { t } = useTranslation();
 
   const { isHavePermissionCreateSystem, isHavePermissionEditSystem, isHavePermissionDeleteSystem } =
     useSystemConfigPermission();
-
-  useUpdateEffect(() => {
-    setEndpoints({
-      current: 1,
-      data: application?.endpoints?.slice(0, 10),
-      isLoadMoreEndpoint: 1 < Math.ceil(application?.endpoints?.length / 10),
-    });
-  }, [application?.endpoints]);
+  const {
+    endpoints,
+    isLoadMore,
+    onLoadMore,
+    deleteEndpoint,
+    updateEndpoint,
+    addEndpoint,
+    onFirstLoad,
+  } = useEndpoint(application?.id);
 
   const onShowApp = () => {
     setShowApp(!showApp);
@@ -183,16 +212,6 @@ export const ApplicationItemMemo = ({
       },
     });
   }, []);
-
-  const onLoadMoreEndpoint = () => {
-    const newEndpoint = {
-      current: endpoints.current + 1,
-      data: application?.endpoints?.slice(0, (endpoints.current + 1) * 10),
-      isLoadMoreEndpoint: endpoints.current + 1 < Math.ceil(application?.endpoints?.length / 10),
-    };
-
-    setEndpoints(newEndpoint);
-  };
 
   return (
     <div>
@@ -290,25 +309,14 @@ export const ApplicationItemMemo = ({
         </Row>
 
         {showApp && (
-          <div className={styles.applicationWrap}>
-            <h4>API Endpoints</h4>
-
-            {endpoints?.data?.map((endpoint: any) => {
-              return (
-                <EndPointItem
-                  key={`endpoint-${endpoint?.id}`}
-                  endpoint={endpoint}
-                  deleteEndpoint={deleteEndpoint}
-                  updateEndpoint={updateEndpoint}
-                />
-              );
-            })}
-            {endpoints.isLoadMoreEndpoint && (
-              <div className={styles.btnLoadMore} onClick={onLoadMoreEndpoint}>
-                Load More
-              </div>
-            )}
-          </div>
+          <EndpointList
+            endpoints={endpoints}
+            isLoadMore={isLoadMore}
+            onLoadMore={onLoadMore}
+            deleteEndpoint={deleteEndpoint}
+            updateEndpoint={updateEndpoint}
+            onFirstLoad={onFirstLoad}
+          />
         )}
       </div>
     </div>

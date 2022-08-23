@@ -66,6 +66,7 @@ export const API_PATH = {
   GET_LIST_APPLICATIONS: `/application/list-applications`,
   CREATE_APPLICATION: `${APPLICATION_SERVICE_BASE_URL}`,
   APP_ENDPOINT: (endpointId: any) => `/api-endpoint/${endpointId}`,
+  APP_ENDPOINT_DETAIL: (appId: any) => `/api-endpoint/${appId}/list-endpoint`,
   GET_COMPANY_SUGGESTION: `${COMPANY_SERVICE_BASE_URL}/data-autocomplete`,
   DELETE_GENERAL_CASE_MANAGEMENT: (id: string | number) => `${GENERAL_CONFIG_BASE_URL}/${id}`,
   DELETE_GENERAL_CONSENT_MANAGEMENT: (id: string | number) =>
