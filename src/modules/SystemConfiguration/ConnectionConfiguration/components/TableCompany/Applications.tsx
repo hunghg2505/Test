@@ -57,14 +57,8 @@ const AddNewApplications = ({
 };
 
 const ApplicationsMemo = ({ companyId }: any) => {
-  const [editApplicationForm] = Form.useForm();
-
-  const onEditAppError = () => {
-    editApplicationForm.resetFields();
-  };
-
   const { applications, refreshApplication, deleteApplication, updateApplication, onChange } =
-    useApplications(companyId, onEditAppError);
+    useApplications(companyId);
   const { isHavePermissionCreateSystem } = useSystemConfigPermission();
 
   return (
@@ -78,7 +72,6 @@ const ApplicationsMemo = ({ companyId }: any) => {
             application={application}
             deleteApplication={deleteApplication}
             updateApplication={updateApplication}
-            editApplicationForm={editApplicationForm}
           />
         );
       })}

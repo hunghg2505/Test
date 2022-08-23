@@ -18,6 +18,7 @@ interface Props {
   autoComplete?: 'on' | 'off';
   maxLength?: number;
   disabled?: boolean;
+  autoFocus?: boolean;
   rows?: number;
   showCount?: boolean;
   onChange?: (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
@@ -31,6 +32,7 @@ function Input({
   status = 'default',
   type = 'input',
   maxLength,
+  autoFocus,
   ...props
 }: Props) {
   if (type === 'textarea') {
@@ -76,6 +78,7 @@ function Input({
       suffix={suffix}
       prefix={prefix}
       maxLength={maxLength}
+      autoFocus={autoFocus}
       {...props}
     />
   );

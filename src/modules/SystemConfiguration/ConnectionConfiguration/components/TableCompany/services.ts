@@ -29,7 +29,7 @@ const getApplications = async (companyId: any, prevList: any, current = 1) => {
   };
 };
 
-export const useApplications = (companyId: any, onEditAppError: any) => {
+export const useApplications = (companyId: any) => {
   const { data, loading, run } = useRequest(
     async (current, prevList = []) => {
       return getApplications(companyId, prevList, current);
@@ -76,7 +76,6 @@ export const useApplications = (companyId: any, onEditAppError: any) => {
             ? `${error?.content?.messageContent}`
             : 'Edit Application Error',
         );
-        onEditAppError();
       },
     },
   );

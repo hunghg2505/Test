@@ -154,14 +154,36 @@ const EndpointList = ({
   );
 };
 
-export const ApplicationItemMemo = ({
-  application,
-  deleteApplication,
-  updateApplication,
-  editApplicationForm,
-}: any) => {
+const FormEdit = ({ onFinish, application, editApplicationForm, t }: any) => {
+  return (
+    <Form
+      onFinish={onFinish}
+      layout='vertical'
+      initialValues={{
+        app_name: application?.name,
+      }}
+      form={editApplicationForm}
+      className={styles.editForm}
+    >
+      <InputForm
+        name='app_name'
+        maxLength={55}
+        rules={[
+          {
+            required: true,
+            message: t('messages.errors.require', { field: 'Application Name' }),
+          },
+        ]}
+        autoFocus={true}
+      />
+    </Form>
+  );
+};
+
+export const ApplicationItemMemo = ({ application, deleteApplication, updateApplication }: any) => {
   const [showApp, setShowApp] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
+  const [editApplicationForm] = Form.useForm();
 
   const { isHavePermissionCreateSystem, isHavePermissionEditSystem, isHavePermissionDeleteSystem } =
     useSystemConfigPermission();
@@ -216,26 +238,12 @@ export const ApplicationItemMemo = ({
             {!isEdit ? (
               <span className={styles.appName}>{application?.name}</span>
             ) : (
-              <Form
+              <FormEdit
                 onFinish={onFinish}
-                layout='vertical'
-                initialValues={{
-                  app_name: application?.name,
-                }}
-                form={editApplicationForm}
-                className={styles.editForm}
-              >
-                <InputForm
-                  name='app_name'
-                  maxLength={55}
-                  rules={[
-                    {
-                      required: true,
-                      message: t('messages.errors.require', { field: 'Application Name' }),
-                    },
-                  ]}
-                />
-              </Form>
+                application={application}
+                editApplicationForm={editApplicationForm}
+                t={t}
+              />
             )}
           </Col>
           {!isEdit ? (

@@ -96,6 +96,7 @@ const CompanyItemMemo = ({ company, refresh }: any) => {
                   },
                 ]}
                 initialValue={company?.name}
+                autoFocus={true}
               />
             </Form>
           )}

@@ -20,7 +20,7 @@ interface Props {
   required?: boolean;
   normalize?: (value: any, prevValue: any, allValues: any) => any;
   initialValue?: string;
-
+  autoFocus?: boolean;
   onBlur?: (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
 }
 export default function InputForm({
@@ -38,6 +38,7 @@ export default function InputForm({
   normalize,
   onBlur,
   initialValue,
+  autoFocus,
   value,
 }: Props) {
   return (
@@ -63,6 +64,7 @@ export default function InputForm({
         onBlur={onBlur}
         disabled={disabled}
         value={value}
+        autoFocus={autoFocus}
       />
     </Form.Item>
   );
