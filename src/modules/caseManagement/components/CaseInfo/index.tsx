@@ -8,6 +8,8 @@ import clsx from 'clsx';
 import dayjs from 'dayjs';
 import styles from './style.module.scss';
 import useCaseManagementPermission from 'hooks/useCaseManagementPermission';
+import { MyDocument } from '../CaseDetailPdf';
+import { PDFDownloadLink } from '@react-pdf/renderer';
 
 const { confirm } = Modal;
 
@@ -132,6 +134,23 @@ const CaseInfo = ({ data, onClickEdit, deleteCaseRequest }: any) => {
             Delete
           </Button>
         )}
+        <PDFDownloadLink
+          document={<MyDocument />}
+          fileName='CaseDetail.pdf'
+          style={{
+            backgroundColor: '#CF2A2B',
+            border: 'white',
+            display: 'flex',
+            color: 'white',
+            borderRadius: 100,
+            padding: '8px 16px',
+            alignItems: 'center',
+            justifyContent: 'center',
+            marginLeft: 16,
+          }}
+        >
+          {({ loading }) => (loading ? 'Loading document...' : 'Export Pdf')}
+        </PDFDownloadLink>
       </Row>
     </div>
   );

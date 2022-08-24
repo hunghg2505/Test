@@ -1,8 +1,6 @@
 const webpack = require('webpack');
 
-module.exports = function override(config, env) {
-  // New config, e.g. config.plugins.push...
-
+module.exports = function override(config) {
   config.resolve.fallback = {
     ...config?.resolve?.fallback,
     process: require.resolve('process/browser'),
