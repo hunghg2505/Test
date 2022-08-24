@@ -6,15 +6,23 @@ import { API_PATH, COMPANY_SERVICE_BASE_URL } from 'utils/api/constant';
 
 // Create, Update, Delete Company
 interface ICreateCompany {
-  name: string;
+  nameEN: string;
+  nameTH: string;
+  email: string;
+  addressEN: string;
+  addressTH: string;
 }
 
 interface IEditCompany {
   id: number;
-  name?: string;
+  nameEN: string;
+  nameTH: string;
+  email: string;
+  addressEN: string;
+  addressTH: string;
 }
 interface IDeleteCompany {
-  id: number;
+  id: any;
 }
 
 const createCompanyService = async (body: ICreateCompany) => {
@@ -52,7 +60,7 @@ export const useCreateCompany = (onFinishSubmitForm: any) => {
   );
 };
 
-export const useEditCompany = (onFinishSubmitForm: any) => {
+export const useEditCompany = () => {
   return useRequest(
     async (data: IEditCompany) => {
       return editCompanyService(data);
@@ -61,7 +69,6 @@ export const useEditCompany = (onFinishSubmitForm: any) => {
       manual: true,
       onSuccess: () => {
         message.success('Edit Company Success');
-        onFinishSubmitForm();
       },
       onError: (error: any) => {
         message.error(
@@ -69,7 +76,6 @@ export const useEditCompany = (onFinishSubmitForm: any) => {
             ? `${error?.content?.messageContent}`
             : 'Edit Company Error',
         );
-        onFinishSubmitForm(true);
       },
     },
   );
@@ -84,11 +90,12 @@ export const useDeleteCompany = (onFinishSubmitForm: any) => {
       manual: true,
       onSuccess: () => {
         message.success('Delete Company Success');
-        onFinishSubmitForm();
+        if (onFinishSubmitForm) onFinishSubmitForm();
       },
-      onError: () => {
+      onError: (e) => {
+        console.log({ e });
+
         message.error('Delete Company Error');
-        onFinishSubmitForm();
       },
     },
   );

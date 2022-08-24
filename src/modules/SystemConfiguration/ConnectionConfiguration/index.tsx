@@ -2,12 +2,11 @@ import { Form, Row } from 'antd';
 import IconSearch from 'assets/icons/icon-search';
 import ContainerLayout from 'libraries/layouts/ContainerLayout';
 import Button from 'libraries/UI/Button';
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import InputForm from 'libraries/form/input/input-form';
 import AdvancedSearch from './components/AdvanceSearch';
-import CreateCompanyForm from './components/CreateCompanyForm';
 import styles from './index.module.scss';
 
 import SuggestListUsers from 'modules/dataSubjectManagement/components/SuggestListUsers';
@@ -15,19 +14,17 @@ import TableCompany from './components/TableCompany';
 import { useCompanies } from './services';
 import useSystemConfigPermission from 'hooks/useSystemConfigPermission';
 import { useClickAway } from 'ahooks';
+import FormCompany from './components/FormCompany';
 
 const ConnectionConfiguration = () => {
   const { t } = useTranslation();
   const refFormSearch: any = useRef();
   const refListCompanies: any = useRef();
 
-  const [isOpenCreateCompanyForm, setIsOpenCreateCompanyForm] = useState(false);
-
   const {
     data,
     onChangePage,
     onSearchCompany,
-    refresh,
     onReloadCompanyData,
     companies,
     onResetCompaniesSuggestion,
@@ -115,28 +112,19 @@ const ConnectionConfiguration = () => {
           <AdvancedSearch onSearchCompany={onSearchCompany} />
 
           {isHavePermissionCreateSystem && (
-            <Button
-              onClick={() => setIsOpenCreateCompanyForm(true)}
-              typeDisplay='ghost'
-              className={styles.btnCreate}
-            >
-              Create Company
-            </Button>
+            <FormCompany onReloadCompanyData={onReloadCompanyData}>
+              <Button typeDisplay='ghost' className={styles.btnCreate}>
+                Create Company
+              </Button>
+            </FormCompany>
           )}
         </Row>
       </div>
 
-      <CreateCompanyForm
-        visible={isOpenCreateCompanyForm}
-        onClose={() => setIsOpenCreateCompanyForm(false)}
-        onReloadCompanyData={onReloadCompanyData}
-      />
-
       <TableCompany
         data={data}
         onChangePage={onChangePage}
-        refresh={refresh}
-        ononReloadCompanyData={onReloadCompanyData}
+        onReloadCompanyData={onReloadCompanyData}
       />
     </ContainerLayout>
   );

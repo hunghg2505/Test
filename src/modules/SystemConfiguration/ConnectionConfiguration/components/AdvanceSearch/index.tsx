@@ -36,8 +36,7 @@ const AdvancedSearch = ({ onSearchCompany }: any) => {
           }
         : undefined;
     onSearchCompany({
-      name: values?.name || '',
-      advanceSearch: { appName: values?.appName || undefined, createdAt },
+      advanceSearch: { ...values, createdAt },
     });
     setIsShowSearch(false);
   };
@@ -80,9 +79,54 @@ const AdvancedSearch = ({ onSearchCompany }: any) => {
               <Row gutter={[0, 16]} justify='space-between'>
                 <Col xs={24}>
                   <InputForm
-                    label='Company Name'
-                    name='name'
-                    placeholder='Company name'
+                    label='Company NameEN'
+                    name='nameEN'
+                    placeholder='Company Name EN'
+                    maxLength={55}
+                    rules={[
+                      {
+                        min: 3,
+                        message: t('messages.errors.min', { min: 3 }),
+                      },
+                    ]}
+                  />
+                </Col>
+
+                <Col xs={24}>
+                  <InputForm
+                    label='Company Name TH'
+                    name='nameTH'
+                    placeholder='Company Name TH'
+                    maxLength={55}
+                    rules={[
+                      {
+                        min: 3,
+                        message: t('messages.errors.min', { min: 3 }),
+                      },
+                    ]}
+                  />
+                </Col>
+
+                <Col xs={24}>
+                  <InputForm
+                    label='Company Address EN'
+                    name='addressEN'
+                    placeholder='Company Address EN'
+                    maxLength={55}
+                    rules={[
+                      {
+                        min: 3,
+                        message: t('messages.errors.min', { min: 3 }),
+                      },
+                    ]}
+                  />
+                </Col>
+
+                <Col xs={24}>
+                  <InputForm
+                    label='Company Address TH'
+                    name='addressTH'
+                    placeholder='Company Address TH'
                     maxLength={55}
                     rules={[
                       {
@@ -120,21 +164,6 @@ const AdvancedSearch = ({ onSearchCompany }: any) => {
                     value={createdEndDate}
                     placeholder='dd/mm/yyyy'
                     disabledDate={(current) => disabledEndedDate(current)(createdStartDate)}
-                  />
-                </Col>
-
-                <Col xs={24}>
-                  <InputForm
-                    label='Application Name'
-                    name='appName'
-                    placeholder='Application name'
-                    maxLength={55}
-                    rules={[
-                      {
-                        min: 3,
-                        message: t('messages.errors.min', { min: 3 }),
-                      },
-                    ]}
                   />
                 </Col>
               </Row>

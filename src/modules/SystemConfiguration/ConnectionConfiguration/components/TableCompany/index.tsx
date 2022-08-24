@@ -1,48 +1,153 @@
-import { Col, Pagination, Row } from 'antd';
+import { ExclamationCircleOutlined } from '@ant-design/icons';
+import { Modal, Row, Table } from 'antd';
+import { ColumnsType } from 'antd/lib/table';
+import IconDelete from 'assets/icons/icon-delete';
+import IconEdit from 'assets/icons/icon-edit';
+import clsx from 'clsx';
 import useSystemConfigPermission from 'hooks/useSystemConfigPermission';
 import { paginationItemRender } from 'libraries/UI/Pagination';
-import { CompanyItem } from './CompanyItem';
+import { useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
+import { useDeleteCompany } from '../../utils/services';
+import FormCompany from '../FormCompany';
 
 import styles from './index.module.scss';
 
-const TableCompany = ({ data, onChangePage, refresh }: any) => {
+const { confirm } = Modal;
+
+export interface DataType {
+  id: any;
+  addressEN: string;
+  addressTH: string;
+  nameEN: string;
+  nameTH: string;
+  email: string;
+  createdAt: string;
+}
+
+const TableCompany = ({ data, onChangePage, loading, onReloadCompanyData }: any) => {
+  const { t } = useTranslation();
   const { isHavePermissionEditSystem, isHavePermissionDeleteSystem } = useSystemConfigPermission();
+  const deleteCompanyReq = useDeleteCompany(onReloadCompanyData);
+
+  const showConfirm = useCallback((record: any) => {
+    confirm({
+      title: 'Confirm Delete',
+      icon: <ExclamationCircleOutlined style={{ color: 'red' }} />,
+      content: `Are you sure you want to delete company ${record?.nameEN}?`,
+      okText: 'Yes',
+      cancelText: 'No',
+      okType: 'danger',
+      okButtonProps: {
+        className: styles.deleteBtn,
+      },
+      cancelButtonProps: {
+        className: styles.btnCancel,
+      },
+      onOk() {
+        deleteCompanyReq.run({ id: record.id });
+      },
+    });
+  }, []);
+
+  const columns: ColumnsType<DataType> = [
+    {
+      title: 'Company Name EN',
+      dataIndex: 'nameEN',
+      key: 'nameEN',
+    },
+    {
+      title: 'Company Name TH',
+      dataIndex: 'nameTH',
+      key: 'nameTH',
+    },
+    {
+      title: 'Email',
+      dataIndex: 'email',
+      key: 'email',
+    },
+    {
+      title: 'Company Address EN',
+      dataIndex: 'addressEN',
+      key: 'addressEN',
+    },
+    {
+      title: 'Company Address TH',
+      dataIndex: 'addressTH',
+      key: 'addressTH',
+    },
+    {
+      title: 'Created Date',
+      dataIndex: 'createdAt',
+      key: 'createdAt',
+    },
+    {
+      title: 'Action',
+      key: 'action',
+      dataIndex: 'action',
+      render: (_, record) => (
+        <Row
+          justify='center'
+          align='middle'
+          style={{ flexFlow: 'nowrap' }}
+          className={styles.action}
+        >
+          {isHavePermissionDeleteSystem && (
+            <span className={styles.btnDelete} onClick={() => showConfirm(record)}>
+              <IconDelete />
+            </span>
+          )}
+          {isHavePermissionEditSystem && (
+            <FormCompany
+              onReloadCompanyData={onReloadCompanyData}
+              initialValues={{
+                id: record?.id,
+                nameEN: record?.nameEN || '',
+                nameTH: record?.nameTH || '',
+                email: record?.email || '',
+                addressEN: record?.addressEN || '',
+                addressTH: record?.addressTH || '',
+              }}
+            >
+              <span className={styles.btnEdit}>
+                <IconEdit colorStroke='#828282' colorFill='white' />
+              </span>
+            </FormCompany>
+          )}
+          <Link to={`/system-configuration/connection-configuration/${record?.id}`}>Detail</Link>
+        </Row>
+      ),
+      width: 105,
+    },
+  ];
 
   return (
     <div className={styles.container}>
-      {data?.data?.length === 0 ? (
-        <p className={styles.noResultText}>No result found</p>
-      ) : (
-        <>
-          <div>
-            <Row className={styles.header}>
-              <Col className={styles.companyName}>Company Name</Col>
-              <Col className={styles.companyCreatedDate}>Created Date</Col>
-              {(isHavePermissionEditSystem || isHavePermissionDeleteSystem) && (
-                <Col className={styles.companyAction}>Action</Col>
-              )}
-            </Row>
-
-            <div>
-              {data?.data?.map((company: any) => {
-                return (
-                  <CompanyItem key={`company-${company?.id}`} company={company} refresh={refresh} />
-                );
-              })}
-            </div>
-          </div>
-          <Row justify='end' className={styles.pagination}>
-            <Pagination
-              current={data?.current}
-              onChange={onChangePage}
-              total={data?.total}
-              defaultPageSize={data?.pageSize}
-              itemRender={paginationItemRender}
-              showSizeChanger={false}
-            />
-          </Row>
-        </>
-      )}
+      <div
+        className={clsx(styles.companyContent, {
+          [styles.companyContentEmpty]: !loading && !data?.data?.length,
+        })}
+      >
+        {data?.data?.length === 0 ? (
+          <p className={styles.noResultText}>{t('no_result_found')}</p>
+        ) : (
+          <Table
+            rowKey={'id'}
+            className={styles.table}
+            columns={columns}
+            dataSource={data?.data}
+            loading={loading}
+            pagination={{
+              current: data?.current,
+              total: data?.total,
+              showSizeChanger: false,
+              onChange: onChangePage,
+              itemRender: paginationItemRender,
+            }}
+          />
+        )}
+      </div>
     </div>
   );
 };
