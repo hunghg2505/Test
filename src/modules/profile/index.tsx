@@ -1,7 +1,15 @@
 import ContainerLayout from 'libraries/layouts/ContainerLayout';
 import React from 'react';
 
-import { PDFViewer, Document, Page, Text, View, StyleSheet } from '@react-pdf/renderer';
+import {
+  PDFDownloadLink,
+  PDFViewer,
+  Document,
+  Page,
+  Text,
+  View,
+  StyleSheet,
+} from '@react-pdf/renderer';
 
 // Create styles
 const styles = StyleSheet.create({
@@ -37,6 +45,20 @@ function Profile() {
       <PDFViewer>
         <MyDocument />
       </PDFViewer>
+
+      <PDFDownloadLink
+        document={<MyDocument />}
+        fileName='test.pdf'
+        style={{
+          textDecoration: 'none',
+          padding: '10px',
+          color: '#4a4a4a',
+          backgroundColor: '#f2f2f2',
+          border: '1px solid #4a4a4a',
+        }}
+      >
+        {({ loading }) => (loading ? 'Loading document...' : 'Download Pdf')}
+      </PDFDownloadLink>
     </ContainerLayout>
   );
 }
