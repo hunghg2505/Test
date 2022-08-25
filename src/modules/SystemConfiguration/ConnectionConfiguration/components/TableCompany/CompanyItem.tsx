@@ -31,17 +31,8 @@ const CompanyItemMemo = ({ company, refresh }: any) => {
     refresh();
   };
 
-  const onFinishEditCompany = (error = false) => {
-    setVisible(false);
-    refresh();
-    setIsEdit(false);
-    if (error) {
-      editCompanyForm.resetFields();
-    }
-  };
-
   const deleteCompanyReq = useDeleteCompany(onFinishDeleteCompany);
-  const editCompanyReq = useEditCompany(onFinishEditCompany);
+  const editCompanyReq = useEditCompany();
 
   const onVisible = () => {
     setVisible(!visible);
@@ -77,6 +68,8 @@ const CompanyItemMemo = ({ company, refresh }: any) => {
     });
   }, []);
 
+  const isShowIcon = visible ? <UpOutlined /> : <DownOutlined />;
+
   return (
     <div>
       <Row className={styles.body}>
@@ -106,7 +99,7 @@ const CompanyItemMemo = ({ company, refresh }: any) => {
           )}
 
           <span onClick={onVisible} className={styles.arrow}>
-            {visible ? <UpOutlined /> : <DownOutlined />}
+            {isShowIcon}
           </span>
         </Col>
         <Col className={styles.companyCreatedDate}>{company?.createdDate}</Col>

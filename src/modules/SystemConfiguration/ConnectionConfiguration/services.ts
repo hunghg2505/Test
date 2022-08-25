@@ -11,8 +11,10 @@ const getListCompanyService = async (values: any): Promise<any> => {
   const params: any = {
     limit: 10,
     page: values?.page || 1,
-    name: values.name || '',
-    advanceSearch: values?.advanceSearch,
+    advanceSearch: {
+      nameEN: '',
+      ...(values?.advanceSearch || {}),
+    },
   };
 
   const response: any = await ApiUtils.post(API_PATH.GET_LIST_COMPANY, params);
@@ -25,16 +27,15 @@ const getListCompanyService = async (values: any): Promise<any> => {
       response?.content?.data?.map((item: any) => ({
         ...item,
         key: `${item?.id}`,
-        createdDate: dayjs(item?.createdAt).format('DD/MM/YYYY'),
+        createdAt: dayjs(item?.createdAt).format('DD/MM/YYYY'),
       })) || [],
-    name: params?.name || '',
     advanceSearch: params['advanceSearch'],
   };
 };
 
 const getCompaniesSuggestion = async (value: any, column: string, page = 1) => {
   const params = {
-    column,
+    column: 'nameEN',
     searchString: value || '',
     limit: 10,
     page,
@@ -65,8 +66,7 @@ export const useCompanies = () => {
   });
 
   const { data, loading, run, refresh } = useRequest(
-    ({ value, page, advanceSearch }: any) =>
-      getListCompanyService({ name: value, page, advanceSearch }),
+    ({ page, advanceSearch }: any) => getListCompanyService({ page, advanceSearch }),
     {
       manual: true,
       // cacheKey: 'company-management',
@@ -111,7 +111,7 @@ export const useCompanies = () => {
   };
 
   const onLoadMoreCompanies = (column: string) => {
-    requestSearchCompaniesSuggestion.run(companies.value, column, companies.currentPage + 1, true);
+    requestSearchCompaniesSuggestion.run(column, companies.currentPage + 1, true);
   };
 
   const onSearchCompaniesDebounce = debounce(
@@ -127,7 +127,6 @@ export const useCompanies = () => {
   const onChangePage = (page: number) => {
     run({
       page,
-      value: data?.name,
       advanceSearch: data?.advanceSearch,
     });
   };
@@ -136,9 +135,10 @@ export const useCompanies = () => {
     if (get(values, 'type') === 'enter') refCancelRequest.current = true;
 
     run({
-      value: values.name,
       page: 1,
-      advanceSearch: values?.advanceSearch,
+      advanceSearch: {
+        nameEN: values?.name || '',
+      },
     });
 
     if (callback) callback();
@@ -153,7 +153,6 @@ export const useCompanies = () => {
   useMount(() => {
     run({
       page: data?.current || 1,
-      value: data?.name,
       advanceSearch: data?.advanceSearch,
     });
   });

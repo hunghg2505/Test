@@ -9,7 +9,7 @@ export interface ResponseBase<T> {
   code: ResponseCode;
   success: boolean;
   message?: string;
-
+  content?: T;
   data: T;
 }
 
