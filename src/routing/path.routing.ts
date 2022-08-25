@@ -15,6 +15,7 @@ export const routePath = {
   SystemConfiguration: '/system-configuration',
   GeneralConfiguration: '/system-configuration/general-configuration',
   ConnectionConfiguration: '/system-configuration/connection-configuration',
+  ConnectionConfigurationDetail: '/system-configuration/connection-configuration/:id',
 
   // Auth Path
   Auth: '/auth',

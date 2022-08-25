@@ -2,12 +2,51 @@
 
 .container {
   padding: 0 40px 40px;
+}
 
-  > div:first-child {
-    background-color: #ffffff;
-    border: 1px solid #f6f6f6;
-    box-shadow: 0px 5px 40px #092c4c05;
-    border-radius: 8px;
+.companyContent {
+  margin: 32px 0 0;
+  text-align: center;
+}
+
+.companyContentEmpty {
+  .table {
+    display: none;
+  }
+}
+.headerTable {
+  background: #D9D9D9;
+  text-align: center;
+  height: 100px;
+
+  p {
+    font-weight: 700;
+    font-size: 16px;
+    padding: 15px;
+  }
+  p:first-child {
+    flex: 1;
+  }
+  p:last-child {
+    flex: 200px 0 0;
+  }
+}
+.action {
+  a {
+    color: $color-primary;
+    border-radius: 5px;
+    font-weight: 700;
+    padding: 6px 16px;
+    font-size: 14px;
+    line-height: 16px;
+    background: rgba(207, 42, 43, 0.1);
+    border-radius: 4px;
+    transition: all 300ms;
+
+    &:hover {
+      color: $color-white;
+      background-color: $color-primary;
+    }
   }
 }
 
@@ -20,23 +59,6 @@
     color: #202225;
     border-bottom: 1px solid #f6f6f6;
   }
-}
-
-.companyName {
-  flex: 1;
-  padding: 16px;
-}
-
-.companyCreatedDate {
-  flex: 206px 0 0;
-  padding: 16px;
-}
-
-.companyAction {
-  flex: 206px 0 0;
-  padding: 16px;
-  display: flex;
-  align-items: center;
 }
 
 .body {
@@ -86,8 +108,19 @@
   cursor: pointer;
 }
 
+.header {
+  margin: 30px 0 15px;
+  p {
+    font-size: 26px;
+  }
+}
+
 .applicationWrap {
   padding: 16px 32px;
+  background: #fff;
+  max-width: 1150px;
+  margin: 40px auto;
+  border: 1px solid #f6f6f6;
 
   .table {
     border: 1px solid #f6f6f6;
