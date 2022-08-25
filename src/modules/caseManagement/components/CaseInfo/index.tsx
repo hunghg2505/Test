@@ -124,6 +124,35 @@ const CaseInfo = ({ data, onClickEdit, deleteCaseRequest }: any) => {
         <Col xs={2}></Col>
       </Row>
       <Row className={styles.flexend}>
+        {(data?.status === 'Rejected' || data?.status === 'Closed') && (
+          <PDFDownloadLink
+            document={
+              <MyDocument
+                caseData={{
+                  dataSubjectRight: data?.action,
+                  description: data?.description,
+                  status: data?.status,
+                  reason: data?.reason,
+                  result: data?.responseStatus,
+                }}
+              />
+            }
+            fileName='CaseDetail.pdf'
+            style={{
+              backgroundColor: '#CF2A2B',
+              border: 'white',
+              display: 'flex',
+              color: 'white',
+              borderRadius: 100,
+              padding: '8px 16px',
+              alignItems: 'center',
+              justifyContent: 'center',
+              marginRight: 16,
+            }}
+          >
+            {({ loading }) => (loading ? 'Loading document...' : 'Export Pdf')}
+          </PDFDownloadLink>
+        )}
         {isHavePermissionEditCase && (
           <Button onClick={onClickEdit} icon={ICON_EDIT} className={styles.editBtn}>
             Edit
@@ -134,23 +163,6 @@ const CaseInfo = ({ data, onClickEdit, deleteCaseRequest }: any) => {
             Delete
           </Button>
         )}
-        <PDFDownloadLink
-          document={<MyDocument />}
-          fileName='CaseDetail.pdf'
-          style={{
-            backgroundColor: '#CF2A2B',
-            border: 'white',
-            display: 'flex',
-            color: 'white',
-            borderRadius: 100,
-            padding: '8px 16px',
-            alignItems: 'center',
-            justifyContent: 'center',
-            marginLeft: 16,
-          }}
-        >
-          {({ loading }) => (loading ? 'Loading document...' : 'Export Pdf')}
-        </PDFDownloadLink>
       </Row>
     </div>
   );
