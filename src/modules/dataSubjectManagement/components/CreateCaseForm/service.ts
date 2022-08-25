@@ -15,6 +15,7 @@ interface ICreateCase {
   reason: string;
   status: string;
   userProfileId: string | number;
+  companyId: string;
   comment?: string;
 }
 
@@ -87,7 +88,7 @@ export const useGetDataDropdown = () => {
   return { data };
 };
 
-export const getDataCityDropdownService = async ({
+export const getDataCompanyDropdownService = async ({
   name,
   page,
   prevList = [],
@@ -97,7 +98,9 @@ export const getDataCityDropdownService = async ({
   prevList: any[];
 }) => {
   const response: any = await ApiUtils.post(API_PATH.GET_LIST_COMPANY, {
-    name: name || '',
+    advanceSearch: {
+      nameEN: name || '',
+    },
     limit: 10,
     page: page || 1,
   });
@@ -107,7 +110,7 @@ export const getDataCityDropdownService = async ({
   const currentData =
     response?.content?.data?.map((item: any) => ({
       id: item?.id,
-      appName: item?.name,
+      appName: item?.nameEN,
     })) || [];
 
   return {
@@ -120,15 +123,15 @@ export const getDataCityDropdownService = async ({
   };
 };
 
-export const useGetListCity = () => {
+export const useGetListCompany = () => {
   const { data, loading, run, runAsync } = useRequest(
-    (values) => getDataCityDropdownService(values),
+    (values) => getDataCompanyDropdownService(values),
     {
       manual: true,
     },
   );
 
-  const onSearchCityDebounce = debounce(async (values = {}) => {
+  const onSearchCompanyDebounce = debounce(async (values = {}) => {
     await runAsync({ name: values?.values || values, page: 1, prevList: [] });
   }, 350);
 
@@ -143,7 +146,7 @@ export const useGetListCity = () => {
   return {
     data,
     loading,
-    onSearchCityDebounce,
+    onSearchCompanyDebounce,
     onLoadMore,
     isLoadMore: data?.isLoadMore,
   };

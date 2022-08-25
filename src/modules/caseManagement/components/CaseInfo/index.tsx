@@ -82,6 +82,14 @@ const CaseInfo = ({ data, onClickEdit, deleteCaseRequest }: any) => {
         <Col xs={2}></Col>
         <Col xs={11} className={styles.info}>
           <p className={styles.label}>
+            Company name<span className={styles.asterisk}>*</span>
+          </p>
+          <p className={clsx(styles.value, styles.leftSpace)}>{data?.companyInfo?.nameEN}</p>
+        </Col>
+      </Row>
+      <Row>
+        <Col xs={24} className={styles.info}>
+          <p className={styles.label}>
             Description<span className={styles.asterisk}>*</span>
           </p>
           <p className={clsx(styles.value, styles.leftSpace)}>{data?.description}</p>
@@ -134,6 +142,10 @@ const CaseInfo = ({ data, onClickEdit, deleteCaseRequest }: any) => {
                   status: data?.status,
                   reason: data?.reason,
                   result: data?.responseStatus,
+                  companyInfo: data?.companyInfo,
+                  responseDate: data?.dateOfResponse
+                    ? dayjs(data?.dateOfResponse).format('DD/MM/YY')
+                    : 'N/A',
                 }}
               />
             }

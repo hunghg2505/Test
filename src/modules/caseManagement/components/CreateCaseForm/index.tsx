@@ -13,7 +13,7 @@ import styles from './index.module.scss';
 import { useGetDataDropdown } from 'modules/dataSubjectManagement/components/CreateCaseForm/service';
 import {
   CustomSelectDropdown,
-  FormItemCity,
+  FormItemCompany,
 } from 'modules/dataSubjectManagement/components/CreateCaseForm';
 
 const CreateCaseForm = ({
@@ -95,6 +95,7 @@ const CreateCaseForm = ({
                 responseStatus: data?.responseStatus,
                 reason: data?.reason,
                 comment: data?.comment,
+                companyId: data?.companyInfo?.id,
               }}
               onFinish={onFinish}
             >
@@ -162,7 +163,7 @@ const CreateCaseForm = ({
                       },
                     ]}
                   >
-                    <FormItemCity />
+                    <FormItemCompany />
                   </Form.Item>
                 </Col>
                 <Col xs={24}>

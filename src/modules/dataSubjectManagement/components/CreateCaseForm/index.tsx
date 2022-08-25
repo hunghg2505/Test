@@ -13,7 +13,7 @@ import styles from './index.module.scss';
 import {
   useCreateCase,
   useGetDataDropdown,
-  useGetListCity,
+  useGetListCompany,
   useGetListDataDropDropdown,
 } from './service';
 import { CustomSelectDropdown as LoadmoreCustomSelectDropdown } from 'modules/consentManagement/components/CreateConsentForm';
@@ -85,8 +85,8 @@ export const CustomSelectDropdown = ({
   );
 };
 
-export const FormItemCity = (props: any) => {
-  const { data, onLoadMore, onSearchCityDebounce: onSearchDebounce } = useGetListCity();
+export const FormItemCompany = (props: any) => {
+  const { data, onLoadMore, onSearchCompanyDebounce: onSearchDebounce } = useGetListCompany();
 
   return (
     <LoadmoreCustomSelectDropdown
@@ -94,7 +94,7 @@ export const FormItemCity = (props: any) => {
       data={data}
       onLoadMore={onLoadMore}
       onSearchDebounce={onSearchDebounce}
-      placeholder='Select city'
+      placeholder='Select company'
     />
   );
 };
@@ -228,7 +228,7 @@ const CreateCaseForm = ({ visible, onClose, refDataHistory }: IProps) => {
                 },
               ]}
             >
-              <FormItemCity />
+              <FormItemCompany />
             </Form.Item>
           </Col>
           <Col xs={24}>
