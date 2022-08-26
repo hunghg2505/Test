@@ -109,7 +109,7 @@ const FormCompany = ({ children, onReloadCompanyData, initialValues = {} }: IPro
                 rules={[
                   {
                     required: true,
-                    message: t('messages.errors.require', { field: 'Company Name EN' }),
+                    message: 'Company Name EN can not be blank.',
                   },
                 ]}
                 placeholder='Company Name EN'
@@ -125,7 +125,7 @@ const FormCompany = ({ children, onReloadCompanyData, initialValues = {} }: IPro
                 rules={[
                   {
                     required: true,
-                    message: t('messages.errors.require', { field: 'Company Name TH' }),
+                    message: 'Company Name TH can not be blank.',
                   },
                 ]}
                 placeholder='Company Name TH'
@@ -137,16 +137,13 @@ const FormCompany = ({ children, onReloadCompanyData, initialValues = {} }: IPro
                 label={t('email_address')}
                 name='email'
                 required
-                maxLength={30}
+                maxLength={55}
                 rules={[
                   {
                     validator: async (_, value) => {
                       try {
                         const email = `${value}`?.trim();
-                        if (!email)
-                          return Promise.reject(
-                            t('messages.errors.require', { field: t('email_address') }),
-                          );
+                        if (!email) return Promise.reject('Email can not be blank.');
 
                         const isEmail = RegexUtils.isEmail(email);
 
@@ -162,7 +159,7 @@ const FormCompany = ({ children, onReloadCompanyData, initialValues = {} }: IPro
                     },
                   },
                 ]}
-                placeholder='Email'
+                placeholder='example@domain.com'
               />
             </Col>
 
@@ -170,14 +167,7 @@ const FormCompany = ({ children, onReloadCompanyData, initialValues = {} }: IPro
               <InputForm
                 label='Company Address EN'
                 name='addressEN'
-                required
                 maxLength={255}
-                rules={[
-                  {
-                    required: true,
-                    message: t('messages.errors.require', { field: 'Company Address EN' }),
-                  },
-                ]}
                 placeholder='Company Address EN'
               />
             </Col>
@@ -186,14 +176,7 @@ const FormCompany = ({ children, onReloadCompanyData, initialValues = {} }: IPro
               <InputForm
                 label='Company Address TH'
                 name='addressTH'
-                required
                 maxLength={255}
-                rules={[
-                  {
-                    required: true,
-                    message: t('messages.errors.require', { field: 'Company Address TH' }),
-                  },
-                ]}
                 placeholder='Company Address TH'
               />
             </Col>

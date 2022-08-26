@@ -40,6 +40,7 @@ const getCompaniesSuggestion = async (value: any, column: string, page = 1) => {
     limit: 10,
     page,
   };
+  console.log(page);
 
   const res: any = await ApiUtils.fetch(API_PATH.GET_COMPANY_SUGGESTION, params);
 
@@ -111,7 +112,7 @@ export const useCompanies = () => {
   };
 
   const onLoadMoreCompanies = (column: string) => {
-    requestSearchCompaniesSuggestion.run(column, companies.currentPage + 1, true);
+    requestSearchCompaniesSuggestion.run(companies.value, column, companies.currentPage + 1, true);
   };
 
   const onSearchCompaniesDebounce = debounce(

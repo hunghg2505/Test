@@ -73,7 +73,6 @@ const CreateCaseForm = ({
       }
     }
   }, [data]);
-  console.log('data', usersData?.data);
 
   return (
     <>
