@@ -79,6 +79,7 @@ export const PERMISSION_ID = {
   deleteSystem: 'PDPA_SystemConfig_Delete',
   editSystem: 'PDPA_SystemConfig_Edit',
   createSystem: 'PDPA_SystemConfig_Create',
+  exportPdf: 'PDPA_CaseManagement_Export',
 };
 
 export const STATUS_CONSENT_DROPDOWN_DATA = [

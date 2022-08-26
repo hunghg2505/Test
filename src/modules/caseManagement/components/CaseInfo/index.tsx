@@ -33,7 +33,8 @@ const ICON_EDIT = (
 );
 
 const CaseInfo = ({ data, onClickEdit, deleteCaseRequest }: any) => {
-  const { isHavePermissionEditCase, isHavePermissionDeleteCase } = useCaseManagementPermission();
+  const { isHavePermissionEditCase, isHavePermissionDeleteCase, isHavePermissionExportPdf } =
+    useCaseManagementPermission();
 
   const showConfirm = useCallback(() => {
     confirm({
@@ -132,39 +133,40 @@ const CaseInfo = ({ data, onClickEdit, deleteCaseRequest }: any) => {
         <Col xs={2}></Col>
       </Row>
       <Row className={styles.flexend}>
-        {(data?.status === 'Rejected' || data?.status === 'Closed') && (
-          <PDFDownloadLink
-            document={
-              <MyDocument
-                caseData={{
-                  dataSubjectRight: data?.action,
-                  description: data?.description,
-                  status: data?.status,
-                  reason: data?.reason,
-                  result: data?.responseStatus,
-                  companyInfo: data?.companyInfo,
-                  responseDate: data?.dateOfResponse
-                    ? dayjs(data?.dateOfResponse).format('DD/MM/YY')
-                    : 'N/A',
-                }}
-              />
-            }
-            fileName='CaseDetail.pdf'
-            style={{
-              backgroundColor: '#CF2A2B',
-              border: 'white',
-              display: 'flex',
-              color: 'white',
-              borderRadius: 100,
-              padding: '8px 16px',
-              alignItems: 'center',
-              justifyContent: 'center',
-              marginRight: 16,
-            }}
-          >
-            {({ loading }) => (loading ? 'Loading document...' : 'Export Pdf')}
-          </PDFDownloadLink>
-        )}
+        {(data?.status.toLowerCase() === 'rejected' || data?.status?.toLowerCase() === 'closed') &&
+          isHavePermissionExportPdf && (
+            <PDFDownloadLink
+              document={
+                <MyDocument
+                  caseData={{
+                    dataSubjectRight: data?.action,
+                    description: data?.description,
+                    status: data?.status,
+                    reason: data?.reason,
+                    result: data?.responseStatus,
+                    companyInfo: data?.companyInfo,
+                    responseDate: data?.dateOfResponse
+                      ? dayjs(data?.dateOfResponse).format('DD/MM/YY')
+                      : 'N/A',
+                  }}
+                />
+              }
+              fileName='CaseDetail.pdf'
+              style={{
+                backgroundColor: '#CF2A2B',
+                border: 'white',
+                display: 'flex',
+                color: 'white',
+                borderRadius: 100,
+                padding: '8px 16px',
+                alignItems: 'center',
+                justifyContent: 'center',
+                marginRight: 16,
+              }}
+            >
+              {({ loading }) => (loading ? 'Loading document...' : 'Export Pdf')}
+            </PDFDownloadLink>
+          )}
         {isHavePermissionEditCase && (
           <Button onClick={onClickEdit} icon={ICON_EDIT} className={styles.editBtn}>
             Edit

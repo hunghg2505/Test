@@ -45,11 +45,20 @@ export default function useCaseManagementPermission() {
     [auth],
   );
 
+  const isHavePermissionExportPdf = useMemo(
+    () =>
+      auth?.user?.roles
+        ?.find((item) => item.name === FEATURE_NAME.caseManagement)
+        ?.permissions.some((item) => item.permissionId === PERMISSION_ID.exportPdf),
+    [auth],
+  );
+
   return {
     isHavePermissionCreateCase,
     isHavePermissionEditCase,
     isHavePermissionDeleteCase,
     isHavePermissionViewSearchCase,
     isHavePermissionViewAssignToCase,
+    isHavePermissionExportPdf,
   };
 }

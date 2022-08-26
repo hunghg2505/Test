@@ -164,7 +164,7 @@ export const MyDocument = ({ caseData }: any) => {
         <View>
           <View style={styles.checkboxContainer}>
             <View style={styles.checkbox}>
-              {caseData.result === 'Accepted' && (
+              {caseData.result?.toLowerCase() === 'accepted' && (
                 <Image
                   style={{ width: 12, height: 12 }}
                   src={`data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAAABmJLR0QA/wD/AP+gvaeTAAABBElEQVRIie3UMUoDQRQG4E8rUTAqRE9iIWij2IhYeQAP4BUEO7EJqJ122ukhbKwsRQRFEARBsQ4WmsQiWQizs5CNs2CRH6aZ9+Z9O7C7jPJPsoNj1KtElvCDDj6wWQUyiccekq0vjKeGjgKkg8vUyDJaAfKJhZTIFJ7lb7OdEoHTCHKRGllHO0DeMJcSqeFV/jYbZYbM4kD3uyjKeQQ5K4PM4LZ3sIm1SM9WBHnBdBnoOhjQxGpfvY73oKcd9AyUm8jT9mNXkfpJWQTmcV+ANSL7T7q/n6FSx11kaLhaWBkWKYMd/hUZBHvARCqoCPvGYkokS/iC7FeBZKlhD7sYqxIaJZdfhYF6R58+xmoAAAAASUVORK5CYII=`}
@@ -174,12 +174,14 @@ export const MyDocument = ({ caseData }: any) => {
             <Text>Accept the request / ยอมรับด ําเนินกํารตํามค ําร้องขอ</Text>
           </View>
           <Text>Actions according to the request / รํายละเอียดกํารด ําเนินกํารตํามค ําขอ</Text>
-          <Text style={styles.text}>{caseData.result === 'Accepted' ? caseData.reason : ''}</Text>
+          <Text style={styles.text}>
+            {caseData.result?.toLowerCase() === 'accepted' ? caseData.reason : ''}
+          </Text>
         </View>
         <View style={{ marginTop: 10, display: 'flex' }}>
           <View style={styles.checkboxContainer}>
             <View style={styles.checkbox}>
-              {caseData.result === 'Rejected' && (
+              {caseData.result?.toLowerCase() === 'rejected' && (
                 <Image
                   style={{ width: 12, height: 12 }}
                   src={`data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAAABmJLR0QA/wD/AP+gvaeTAAABBElEQVRIie3UMUoDQRQG4E8rUTAqRE9iIWij2IhYeQAP4BUEO7EJqJ122ukhbKwsRQRFEARBsQ4WmsQiWQizs5CNs2CRH6aZ9+Z9O7C7jPJPsoNj1KtElvCDDj6wWQUyiccekq0vjKeGjgKkg8vUyDJaAfKJhZTIFJ7lb7OdEoHTCHKRGllHO0DeMJcSqeFV/jYbZYbM4kD3uyjKeQQ5K4PM4LZ3sIm1SM9WBHnBdBnoOhjQxGpfvY73oKcd9AyUm8jT9mNXkfpJWQTmcV+ANSL7T7q/n6FSx11kaLhaWBkWKYMd/hUZBHvARCqoCPvGYkokS/iC7FeBZKlhD7sYqxIaJZdfhYF6R58+xmoAAAAASUVORK5CYII=`}
@@ -189,7 +191,9 @@ export const MyDocument = ({ caseData }: any) => {
             <Text>Reject the request / ปฏิเสธกํารด ําเนินกํารตํามค ําขอ</Text>
           </View>
           <Text>Reason of rejection / เหตุผลในกํารปฏิเสธ:</Text>
-          <Text style={styles.text}>{caseData.result === 'Rejected' ? caseData.reason : ''}</Text>
+          <Text style={styles.text}>
+            {caseData.result?.toLowerCase() === 'rejected' ? caseData.reason : ''}
+          </Text>
         </View>
 
         <View style={{ marginTop: 20 }}>
