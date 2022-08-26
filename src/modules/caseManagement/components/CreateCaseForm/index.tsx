@@ -73,6 +73,7 @@ const CreateCaseForm = ({
       }
     }
   }, [data]);
+  console.log('data', usersData?.data);
 
   return (
     <>
@@ -228,9 +229,8 @@ const CreateCaseForm = ({
                     required
                   >
                     <CustomSelectDropdown
-                      data={data?.resultData}
+                      data={dataDropdown?.resultData}
                       placeholder='Select Result'
-                      allowClear={true}
                     />
                   </Form.Item>
                 </Col>

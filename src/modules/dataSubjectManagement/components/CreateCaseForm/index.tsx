@@ -290,11 +290,7 @@ const CreateCaseForm = ({ visible, onClose, refDataHistory }: IProps) => {
               ]}
               required
             >
-              <CustomSelectDropdown
-                data={data?.resultData}
-                placeholder='Select Result'
-                allowClear={true}
-              />
+              <CustomSelectDropdown data={data?.resultData} placeholder='Select Result' />
             </Form.Item>
           </Col>
           <Col xs={24}>

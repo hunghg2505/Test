@@ -159,7 +159,10 @@ const configRoutes: IRouter[] = [
       },
       {
         path: routePath.ConnectionConfigurationDetail,
-        element: lazy(() => import('modules/SystemConfiguration/ConnectionConfiguration/detail')),
+        element: lazy(
+          () =>
+            import('modules/SystemConfiguration/ConnectionConfiguration/ConnectionConfigDetail'),
+        ),
         name: 'Connection Configuration Detail',
         hiddenMenu: true,
         roles: ['Super Admin', 'DPO', 'Authorized User', 'Administrator'],

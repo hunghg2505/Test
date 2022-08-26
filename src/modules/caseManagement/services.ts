@@ -150,9 +150,9 @@ const getListUserService = async () => {
 
   return {
     data: response?.content?.map(({ sid, name }: any) => ({
-      sid,
+      id: sid,
       label: `${name}`,
-      value: `${name}`,
+      name,
     })),
   };
 };

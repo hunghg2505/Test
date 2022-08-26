@@ -108,7 +108,7 @@ export const CustomSelectDropdown = ({
         {data?.data?.map((item: any, index: number) => (
           <Select.Option
             value={isInModalAdvancedSearch ? item?.appName : Number(item?.id)}
-            key={`${index}${item.id}`}
+            key={`${index}${item?.id}`}
           >
             {item?.appName}
           </Select.Option>
