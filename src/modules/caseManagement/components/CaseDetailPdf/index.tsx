@@ -110,6 +110,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     flexWrap: 'wrap',
+    padding: 8,
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     //@ts-ignore
     wordBreak: 'break-all',
