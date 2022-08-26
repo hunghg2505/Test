@@ -95,17 +95,17 @@ const getExpandRowRender = (record: any, reqUpdatePermissions: any) => {
         return (
           <div key={`${role.id}${index}}`}>
             <Row className={styles.title}>
-              <Col span={4}>{role.permissionName}</Col>
+              <Col span={3}>{role.permissionName}</Col>
               {role.listAction.map((item: any) => (
-                <Col span={4} key={`${item?.id}`}>
+                <Col span={3} key={`${item?.id}`}>
                   {item?.actionName}
                 </Col>
               ))}
             </Row>
             <Row className={styles.checkbox}>
-              <Col span={4}></Col>
+              <Col span={3}></Col>
               {role.listAction.map((item: any, i: number) => (
-                <Col span={4} key={`${item?.id}${i}`}>
+                <Col span={3} key={`${item?.id}${i}`}>
                   <Checkbox
                     defaultChecked={item.permission}
                     onChange={(evt) => onChange(evt, item)}

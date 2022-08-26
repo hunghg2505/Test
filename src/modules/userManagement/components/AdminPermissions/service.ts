@@ -30,6 +30,7 @@ const TEXT_PERMISSIONS: any = {
   PDPA_SystemConfig_View: 'View',
   PDPA_SystemConfig_Edit: 'Edit',
   PDPA_SystemConfig_Create: 'Create',
+  PDPA_CaseManagement_Export: 'Export',
 };
 
 const SORT_PERMISSIONS: any = {
@@ -38,6 +39,7 @@ const SORT_PERMISSIONS: any = {
   PDPA_CaseManagement_Create: 2,
   PDPA_CaseManagement_ViewAssignedTo: 1,
   PDPA_CaseManagement_ViewSearchCase: 1,
+  PDPA_CaseManagement_Export: 3,
   PDPA_ConsentManagement_Edit: 3,
   PDPA_ConsentManagement_View: 1,
   PDPA_ConsentManagement_Create: 2,
