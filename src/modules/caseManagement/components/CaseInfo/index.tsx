@@ -8,6 +8,8 @@ import clsx from 'clsx';
 import dayjs from 'dayjs';
 import styles from './style.module.scss';
 import useCaseManagementPermission from 'hooks/useCaseManagementPermission';
+import { MyDocument } from '../CaseDetailPdf';
+import { PDFDownloadLink } from '@react-pdf/renderer';
 
 const { confirm } = Modal;
 
@@ -80,6 +82,14 @@ const CaseInfo = ({ data, onClickEdit, deleteCaseRequest }: any) => {
         <Col xs={2}></Col>
         <Col xs={11} className={styles.info}>
           <p className={styles.label}>
+            Company name<span className={styles.asterisk}>*</span>
+          </p>
+          <p className={clsx(styles.value, styles.leftSpace)}>{data?.companyInfo?.nameEN}</p>
+        </Col>
+      </Row>
+      <Row>
+        <Col xs={24} className={styles.info}>
+          <p className={styles.label}>
             Description<span className={styles.asterisk}>*</span>
           </p>
           <p className={clsx(styles.value, styles.leftSpace)}>{data?.description}</p>
@@ -122,6 +132,39 @@ const CaseInfo = ({ data, onClickEdit, deleteCaseRequest }: any) => {
         <Col xs={2}></Col>
       </Row>
       <Row className={styles.flexend}>
+        {(data?.status === 'Rejected' || data?.status === 'Closed') && (
+          <PDFDownloadLink
+            document={
+              <MyDocument
+                caseData={{
+                  dataSubjectRight: data?.action,
+                  description: data?.description,
+                  status: data?.status,
+                  reason: data?.reason,
+                  result: data?.responseStatus,
+                  companyInfo: data?.companyInfo,
+                  responseDate: data?.dateOfResponse
+                    ? dayjs(data?.dateOfResponse).format('DD/MM/YY')
+                    : 'N/A',
+                }}
+              />
+            }
+            fileName='CaseDetail.pdf'
+            style={{
+              backgroundColor: '#CF2A2B',
+              border: 'white',
+              display: 'flex',
+              color: 'white',
+              borderRadius: 100,
+              padding: '8px 16px',
+              alignItems: 'center',
+              justifyContent: 'center',
+              marginRight: 16,
+            }}
+          >
+            {({ loading }) => (loading ? 'Loading document...' : 'Export Pdf')}
+          </PDFDownloadLink>
+        )}
         {isHavePermissionEditCase && (
           <Button onClick={onClickEdit} icon={ICON_EDIT} className={styles.editBtn}>
             Edit

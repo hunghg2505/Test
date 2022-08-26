@@ -11,7 +11,10 @@ import { useParams } from 'react-router-dom';
 import CaseInfo from '../CaseInfo';
 import styles from './index.module.scss';
 import { useGetDataDropdown } from 'modules/dataSubjectManagement/components/CreateCaseForm/service';
-import { CustomSelectDropdown } from 'modules/dataSubjectManagement/components/CreateCaseForm';
+import {
+  CustomSelectDropdown,
+  FormItemCompany,
+} from 'modules/dataSubjectManagement/components/CreateCaseForm';
 
 const CreateCaseForm = ({
   data,
@@ -70,6 +73,7 @@ const CreateCaseForm = ({
       }
     }
   }, [data]);
+  console.log('data', usersData?.data);
 
   return (
     <>
@@ -92,6 +96,7 @@ const CreateCaseForm = ({
                 responseStatus: data?.responseStatus,
                 reason: data?.reason,
                 comment: data?.comment,
+                companyId: data?.companyInfo?.id,
               }}
               onFinish={onFinish}
             >
@@ -147,6 +152,21 @@ const CreateCaseForm = ({
                     <CustomSelectDropdown data={usersData?.data} placeholder='Assign to' />
                   </Form.Item>
                 </Col>
+                <Col xs={12}>
+                  <Form.Item
+                    label='Company Name'
+                    name='companyId'
+                    required
+                    rules={[
+                      {
+                        required: true,
+                        message: t('messages.errors.require', { field: 'Company' }),
+                      },
+                    ]}
+                  >
+                    <FormItemCompany />
+                  </Form.Item>
+                </Col>
                 <Col xs={24}>
                   <InputTextAreaForm
                     name='description'
@@ -197,11 +217,20 @@ const CreateCaseForm = ({
                 </Col>
                 <Divider />
                 <Col xs={12}>
-                  <Form.Item label='Result' name='responseStatus'>
+                  <Form.Item
+                    label='Result'
+                    name='responseStatus'
+                    rules={[
+                      {
+                        required: true,
+                        message: t('messages.errors.require', { field: 'Result' }),
+                      },
+                    ]}
+                    required
+                  >
                     <CustomSelectDropdown
                       data={dataDropdown?.resultData}
                       placeholder='Select Result'
-                      allowClear={true}
                     />
                   </Form.Item>
                 </Col>
@@ -212,6 +241,13 @@ const CreateCaseForm = ({
                     placeholder='Reason for Completed or Reject'
                     rows={6}
                     className={styles.textarea}
+                    required
+                    rules={[
+                      {
+                        required: true,
+                        message: t('messages.errors.require', { field: 'Reason' }),
+                      },
+                    ]}
                     maxLength={250}
                   />
                 </Col>

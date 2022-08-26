@@ -1,5 +1,4 @@
 import ContainerLayout from 'libraries/layouts/ContainerLayout';
-import React from 'react';
 
 function Profile() {
   return (
