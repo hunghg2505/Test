@@ -1,19 +1,13 @@
-import {
-  CheckOutlined,
-  DownOutlined,
-  ExclamationCircleOutlined,
-  UpOutlined,
-} from '@ant-design/icons';
+import { DownOutlined, ExclamationCircleOutlined, UpOutlined } from '@ant-design/icons';
 import { useMount } from 'ahooks';
-import { Col, Form, Modal, Row } from 'antd';
+import { Col, Modal, Row } from 'antd';
 import IconDelete from 'assets/icons/icon-delete';
 import IconEdit from 'assets/icons/icon-edit';
 import clsx from 'clsx';
 import useSystemConfigPermission from 'hooks/useSystemConfigPermission';
-import InputForm from 'libraries/form/input/input-form';
 import React, { forwardRef, useCallback, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import { capitalizeFirstLetter, getColorStroke } from 'utils/common.utils';
+import { AddNewApplications } from './Applications';
 
 import styles from './index.module.scss';
 import ModalAddEndpoint from './ModalAddEndPoint';
@@ -160,38 +154,13 @@ const EndpointList = ({
   );
 };
 
-const FormEdit = ({ onFinish, application, editApplicationForm, t }: any) => {
-  return (
-    <Form
-      onFinish={onFinish}
-      layout='vertical'
-      initialValues={{
-        app_name: application?.name,
-      }}
-      form={editApplicationForm}
-      className={styles.editForm}
-    >
-      <InputForm
-        name='app_name'
-        maxLength={55}
-        rules={[
-          {
-            required: true,
-            message: t('messages.errors.require', { field: 'Application Name' }),
-          },
-        ]}
-        autoFocus={true}
-      />
-    </Form>
-  );
-};
-
-export const ApplicationItemMemo = ({ application, deleteApplication, updateApplication }: any) => {
+export const ApplicationItemMemo = ({
+  application,
+  deleteApplication,
+  refreshApplication,
+  companyId,
+}: any) => {
   const [showApp, setShowApp] = useState(false);
-  const [isEdit, setIsEdit] = useState(false);
-  const [editApplicationForm] = Form.useForm();
-
-  const { t } = useTranslation();
 
   const { isHavePermissionCreateSystem, isHavePermissionEditSystem, isHavePermissionDeleteSystem } =
     useSystemConfigPermission();
@@ -207,14 +176,6 @@ export const ApplicationItemMemo = ({ application, deleteApplication, updateAppl
 
   const onShowApp = () => {
     setShowApp(!showApp);
-  };
-
-  const onFinish = (values: any) => {
-    if (values?.app_name?.trim() === application?.name) {
-      return;
-    }
-
-    updateApplication(application?.id, values?.app_name, editApplicationForm.resetFields);
   };
 
   const showConfirm = useCallback(() => {
@@ -243,19 +204,13 @@ export const ApplicationItemMemo = ({ application, deleteApplication, updateAppl
     <div>
       <div className={styles.table}>
         <Row align='middle' justify='space-between'>
-          <Col>
-            {!isEdit ? (
-              <span className={styles.appName}>{application?.name}</span>
-            ) : (
-              <FormEdit
-                onFinish={onFinish}
-                application={application}
-                editApplicationForm={editApplicationForm}
-                t={t}
-              />
-            )}
+          <Col flex='1 1 0'>
+            <span className={styles.appName}>{application?.name}</span>
           </Col>
-          {!isEdit ? (
+          <Col flex='1 1 0'>
+            <span className={styles.appName}>{application?.rolemap}</span>
+          </Col>
+          <Col flex='215px 0 0'>
             <div className={styles.applicationAction}>
               {isHavePermissionDeleteSystem && (
                 <span className={styles.btnDelete} onClick={showConfirm}>
@@ -264,14 +219,16 @@ export const ApplicationItemMemo = ({ application, deleteApplication, updateAppl
               )}
 
               {isHavePermissionEditSystem && (
-                <span
-                  className={styles.btnEdit}
-                  onClick={() => {
-                    setIsEdit(true);
-                  }}
+                <AddNewApplications
+                  isEdit={true}
+                  companyId={companyId}
+                  application={application}
+                  refreshApplication={refreshApplication}
                 >
-                  <IconEdit colorStroke='#828282' colorFill='white' />
-                </span>
+                  <span className={styles.btnEdit}>
+                    <IconEdit colorStroke='#828282' colorFill='white' />
+                  </span>
+                </AddNewApplications>
               )}
 
               {isHavePermissionCreateSystem && (
@@ -283,38 +240,7 @@ export const ApplicationItemMemo = ({ application, deleteApplication, updateAppl
                 {isShowIcon}
               </span>
             </div>
-          ) : (
-            <>
-              <span
-                className={styles.btnDelete}
-                onClick={() => {
-                  editApplicationForm.resetFields();
-                  setIsEdit(false);
-                }}
-                style={{
-                  display: 'block',
-                  marginLeft: 'auto',
-                }}
-              >
-                X
-              </span>
-              <span
-                className={styles.btnEdit}
-                onClick={() => {
-                  if (
-                    editApplicationForm
-                      .getFieldsError()
-                      .filter((item: any) => item?.errors?.length !== 0).length === 0
-                  ) {
-                    setIsEdit(false);
-                    editApplicationForm.submit();
-                  }
-                }}
-              >
-                <CheckOutlined />
-              </span>
-            </>
-          )}
+          </Col>
         </Row>
 
         {showApp && (

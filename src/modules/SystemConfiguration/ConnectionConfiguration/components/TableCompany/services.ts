@@ -54,32 +54,6 @@ export const useApplications = (companyId: any) => {
     },
   );
 
-  const requestUpdateApp = useRequest(
-    async (appId: any, name: string, _callback?: any) => {
-      return ApiUtils.put(APPLICATION_SERVICE_BASE_URL, {
-        id: +appId,
-        companyId: +companyId,
-        name,
-      });
-    },
-    {
-      manual: true,
-      onSuccess: () => {
-        message.success('Edit Application Success');
-        refreshApplication();
-      },
-      onError: (error: any, params: any) => {
-        const callback = params?.[2];
-        if (callback) callback();
-        message.error(
-          error?.content?.messageContent
-            ? `${error?.content?.messageContent}`
-            : 'Edit Application Error',
-        );
-      },
-    },
-  );
-
   const onChange = (page: number) => {
     clearCache(`data-application-${companyId}`);
     run(page);
@@ -94,22 +68,12 @@ export const useApplications = (companyId: any) => {
     }
   };
 
-  const updateApplication = async (idApp: any, name: string, callback?: any) => {
-    try {
-      await requestUpdateApp.runAsync(idApp, name, callback);
-      refreshApplication();
-    } catch (error) {
-      console.log('error', error);
-    }
-  };
-
   return {
     applications: data,
     loading,
     refreshApplication,
     onChange,
     deleteApplication,
-    updateApplication,
   };
 };
 
@@ -141,6 +105,7 @@ export const useEndpoint = (appId: any) => {
   );
 
   const onLoadMore = () => {
+    clearCache(`data-endpoint-${appId}`);
     run(data?.endpoints, (data?.currentPage || 0) + 1);
   };
 
@@ -215,6 +180,7 @@ export const useEndpoint = (appId: any) => {
     try {
       clearCache(`data-endpoint-${appId}`);
       await requestUpdateEndpoint.runAsync(rest, endpointId);
+      run([], 1);
     } catch (error) {
       console.log('error', error);
       run([], 1);

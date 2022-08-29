@@ -17,7 +17,6 @@
 .headerTable {
   background: #d9d9d9;
   text-align: center;
-  height: 100px;
 
   p {
     font-weight: 700;
@@ -27,8 +26,11 @@
   p:first-child {
     flex: 1;
   }
+  p:nth-child(2) {
+    flex: 1;
+  }
   p:last-child {
-    flex: 200px 0 0;
+    flex: 215px 0 0;
   }
 }
 .action {
@@ -58,33 +60,6 @@
     font-size: 12px;
     color: #202225;
     border-bottom: 1px solid #f6f6f6;
-  }
-}
-
-.body {
-  text-align: center;
-  > div {
-    padding: 16px;
-  }
-  .companyName {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    span {
-      font-size: 16px;
-      font-weight: 700;
-      color: black;
-    }
-  }
-
-  .companyCreatedDate {
-    font-weight: 400;
-    font-size: 14px;
-    color: #828282;
-    display: flex;
-    align-items: center;
-    justify-content: center;
   }
 }
 
@@ -174,16 +149,20 @@
 }
 
 .formAddNew {
-  margin-top: 32px;
-
+  h4 {
+    font-size: 20px;
+    margin-bottom: 30px;
+  }
   .divRow {
     gap: 15px;
     flex-flow: nowrap;
+    margin-bottom: 24px;
   }
 
   :global {
     .ant-form-item {
       flex: 1;
+      margin-bottom: 24px;
     }
 
     input {
@@ -234,15 +213,7 @@
 }
 
 .addBtn {
-  background-color: #d6d6d6;
-  margin-top: 7px;
-
-  &:hover,
-  &:focus {
-    background-color: #d6d6d6 !important;
-    color: black;
-    border-color: black;
-  }
+  width: 100%;
 }
 
 .noResultText {
