@@ -134,11 +134,13 @@ export const useCompanies = () => {
 
   const onSearchCompany = (values: any, callback?: () => void) => {
     if (get(values, 'type') === 'enter') refCancelRequest.current = true;
+    console.log(values);
 
     run({
       page: 1,
       advanceSearch: {
         nameEN: values?.name || '',
+        ...values.advanceSearch,
       },
     });
 

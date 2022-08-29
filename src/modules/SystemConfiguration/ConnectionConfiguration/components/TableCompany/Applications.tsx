@@ -45,7 +45,14 @@ const AddNewApplications = ({
   return (
     <>
       <span onClick={onVisible}>{children}</span>
-      <Modal visible={visible} onCancel={onVisible} footer={false}>
+      <Modal
+        visible={visible}
+        onCancel={() => {
+          onVisible();
+          createApplicationForm.resetFields();
+        }}
+        footer={false}
+      >
         <div className={styles.formAddNew}>
           <Form form={createApplicationForm} onFinish={onFinish} layout='vertical'>
             <h4>Add new Application</h4>
@@ -70,21 +77,21 @@ const AddNewApplications = ({
   );
 };
 
-const ApplicationsMemo = ({ companyId }: any) => {
+const ApplicationsMemo = ({ companyId, companyName }: any) => {
   const { applications, refreshApplication, deleteApplication, updateApplication, onChange } =
     useApplications(companyId);
   const { isHavePermissionCreateSystem } = useSystemConfigPermission();
 
   return (
     <div className={styles.applicationWrap}>
-      <h4>Company Name</h4>
+      <h2>{companyName}</h2>
 
       <Row align='middle' justify='space-between' className={styles.header}>
         <p>Application List</p>
 
         {isHavePermissionCreateSystem && (
           <AddNewApplications companyId={`${companyId}`} refreshApplication={refreshApplication}>
-            <ButtonCustom>Create Application</ButtonCustom>
+            <ButtonCustom className={styles.createAppBtn}>Create Application</ButtonCustom>
           </AddNewApplications>
         )}
       </Row>

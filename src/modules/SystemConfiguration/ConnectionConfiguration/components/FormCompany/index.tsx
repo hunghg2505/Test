@@ -191,7 +191,8 @@ const FormCompany = ({ children, onReloadCompanyData, initialValues = {} }: IPro
                 Object.keys(createCompanyForm.getFieldsValue(true)).length === 0 ||
                 Object.values(createCompanyForm.getFieldsValue(true)).every(
                   (item: any) => item.length === 0,
-                )
+                ) ||
+                initialValues?.id
               ) {
                 onVisible();
                 createCompanyForm.resetFields();
