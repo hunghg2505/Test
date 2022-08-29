@@ -111,7 +111,7 @@ const AdvancedSearch = ({ onSearchCompany }: any) => {
                   <InputForm
                     label='DPO Email'
                     name='email'
-                    placeholder='dpo@ascendbit.com'
+                    placeholder='dpo@ascenbit.com'
                     maxLength={55}
                     rules={[
                       {

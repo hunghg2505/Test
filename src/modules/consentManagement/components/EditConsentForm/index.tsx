@@ -48,6 +48,15 @@ export default function EditConsentForm() {
   }, [data]);
 
   const onFinish = (values: any) => {
+    if (data?.product?.deletedAt && values.idProduct === data?.product?.name) {
+      delete values.idProduct;
+    }
+    if (data?.service?.deletedAt && values.serviceId === data?.service?.name) {
+      delete values.serviceId;
+    }
+    if (data?.status?.deletedAt && values.idStatus === data?.status?.name) {
+      delete values.idStatus;
+    }
     updateConsentRequest.run({ ...values, expireOn });
   };
 
