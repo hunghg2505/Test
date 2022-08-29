@@ -22,7 +22,7 @@ const getApplications = async (companyId: any, prevList: any, current = 1) => {
   return {
     total: r?.content?.metadata?.total || 0,
     current: current || 1,
-    pageSize: +r?.content?.metadata?.itemPage || 10,
+    pageSize: 10,
     data: [...prevList, ...currentData],
     isLoadMore: +r?.content?.metadata?.currentPage < +r?.content?.metadata?.lastPage,
     companyId: companyId,

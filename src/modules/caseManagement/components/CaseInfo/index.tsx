@@ -55,7 +55,6 @@ const CaseInfo = ({ data, onClickEdit, deleteCaseRequest }: any) => {
       },
     });
   }, []);
-  console.log(data);
 
   return (
     <div className={styles.caseInfo}>
@@ -148,7 +147,7 @@ const CaseInfo = ({ data, onClickEdit, deleteCaseRequest }: any) => {
                     companyInfo: data?.companyInfo,
                     responseDate: data?.dateOfResponse
                       ? dayjs(data?.dateOfResponse).format('DD/MM/YY')
-                      : 'N/A',
+                      : '',
                   }}
                 />
               }
