@@ -155,7 +155,7 @@ const CaseInfo = ({ data, onClickEdit, deleteCaseRequest }: any) => {
                   }}
                 />
               }
-              fileName={`DSR-${data?.userProfile?.firstNameEn}${data?.userProfile?.lastNameEn}-${
+              fileName={`DSR-${data?.userProfile?.firstNameEn} ${data?.userProfile?.lastNameEn}-${
                 data?.id
               }-${dayjs(Date.now()).format('DDMMYYYYHHMMss')}.pdf`}
               style={{
