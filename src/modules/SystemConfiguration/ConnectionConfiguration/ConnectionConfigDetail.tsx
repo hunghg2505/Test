@@ -1,13 +1,19 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useLocation } from 'react-router-dom';
 import { Applications } from './components/TableCompany/Applications';
+
+interface LocationState {
+  companyNameEn: string;
+}
 
 const ConnectionConfigDetail = () => {
   const { id } = useParams();
+  const location = useLocation();
+  const state = location.state as LocationState;
 
   return (
     <>
-      <Applications companyId={id} />
+      <Applications companyId={id} companyName={state?.companyNameEn} />
     </>
   );
 };

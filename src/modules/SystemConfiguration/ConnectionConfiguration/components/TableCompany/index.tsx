@@ -56,11 +56,13 @@ const TableCompany = ({ data, onChangePage, loading, onReloadCompanyData }: any)
       title: 'Company Name EN',
       dataIndex: 'nameEN',
       key: 'nameEN',
+      ellipsis: true,
     },
     {
       title: 'Company Name TH',
       dataIndex: 'nameTH',
       key: 'nameTH',
+      ellipsis: true,
     },
     {
       title: 'Email',
@@ -71,11 +73,13 @@ const TableCompany = ({ data, onChangePage, loading, onReloadCompanyData }: any)
       title: 'Company Address EN',
       dataIndex: 'addressEN',
       key: 'addressEN',
+      ellipsis: true,
     },
     {
       title: 'Company Address TH',
       dataIndex: 'addressTH',
       key: 'addressTH',
+      ellipsis: true,
     },
     {
       title: 'Created Date',
@@ -86,6 +90,7 @@ const TableCompany = ({ data, onChangePage, loading, onReloadCompanyData }: any)
       title: 'Action',
       key: 'action',
       dataIndex: 'action',
+      width: 190,
       render: (_, record) => (
         <Row
           justify='center'
@@ -115,10 +120,14 @@ const TableCompany = ({ data, onChangePage, loading, onReloadCompanyData }: any)
               </span>
             </FormCompany>
           )}
-          <Link to={`/system-configuration/connection-configuration/${record?.id}`}>Detail</Link>
+          <Link
+            to={`/system-configuration/connection-configuration/${record?.id}`}
+            state={{ companyNameEn: record?.nameEN }}
+          >
+            Detail
+          </Link>
         </Row>
       ),
-      width: 105,
     },
   ];
 

@@ -55,6 +55,7 @@ const CaseInfo = ({ data, onClickEdit, deleteCaseRequest }: any) => {
       },
     });
   }, []);
+  console.log(data);
 
   return (
     <div className={styles.caseInfo}>
@@ -151,7 +152,9 @@ const CaseInfo = ({ data, onClickEdit, deleteCaseRequest }: any) => {
                   }}
                 />
               }
-              fileName='CaseDetail.pdf'
+              fileName={`${data?.userProfile?.firstNameEn}${data?.userProfile?.lastNameEn}-${
+                data?.id
+              }-${dayjs(Date.now()).format('DDMMYYYYHHMMss')}.pdf`}
               style={{
                 backgroundColor: '#CF2A2B',
                 border: 'white',

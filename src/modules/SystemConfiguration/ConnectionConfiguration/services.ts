@@ -33,7 +33,7 @@ const getListCompanyService = async (values: any): Promise<any> => {
   };
 };
 
-const getCompaniesSuggestion = async (value: any, column: string, page = 1) => {
+const getCompaniesSuggestion = async (value: any, _column: string, page = 1) => {
   const params = {
     column: 'nameEN',
     searchString: value || '',
@@ -111,7 +111,7 @@ export const useCompanies = () => {
   };
 
   const onLoadMoreCompanies = (column: string) => {
-    requestSearchCompaniesSuggestion.run(column, companies.currentPage + 1, true);
+    requestSearchCompaniesSuggestion.run(companies.value, column, companies.currentPage + 1, true);
   };
 
   const onSearchCompaniesDebounce = debounce(
@@ -133,11 +133,13 @@ export const useCompanies = () => {
 
   const onSearchCompany = (values: any, callback?: () => void) => {
     if (get(values, 'type') === 'enter') refCancelRequest.current = true;
+    console.log(values);
 
     run({
       page: 1,
       advanceSearch: {
         nameEN: values?.name || '',
+        ...values.advanceSearch,
       },
     });
 

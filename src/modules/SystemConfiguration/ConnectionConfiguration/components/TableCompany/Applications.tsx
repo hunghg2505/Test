@@ -66,7 +66,14 @@ export const AddNewApplications = ({
   return (
     <>
       <span onClick={onVisible}>{children}</span>
-      <Modal visible={visible} onCancel={onVisible} footer={false} centered>
+      <Modal
+        visible={visible}
+        onCancel={() => {
+          onVisible();
+          createApplicationForm.resetFields();
+        }}
+        footer={false}
+      >
         <div className={styles.formAddNew}>
           <Form
             form={form}
@@ -119,14 +126,14 @@ const ApplicationsMemo = ({ companyId }: any) => {
 
   return (
     <div className={styles.applicationWrap}>
-      <h4>Company Name</h4>
+      <h2>{companyName}</h2>
 
       <Row align='middle' justify='space-between' className={styles.header}>
         <p>Application List</p>
 
         {isHavePermissionCreateSystem && (
           <AddNewApplications companyId={`${companyId}`} refreshApplication={refreshApplication}>
-            <ButtonCustom>Create Application</ButtonCustom>
+            <ButtonCustom className={styles.createAppBtn}>Create Application</ButtonCustom>
           </AddNewApplications>
         )}
       </Row>

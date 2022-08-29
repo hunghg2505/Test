@@ -15,7 +15,7 @@
   }
 }
 .headerTable {
-  background: #D9D9D9;
+  background: #d9d9d9;
   text-align: center;
 
   p {
@@ -348,4 +348,10 @@
   background-color: rgba(#2f80ed, 0.07);
   color: #2f80ed;
   border: 1px solid #2f80ed;
+}
+
+.createAppBtn:focus {
+  background-color: $color-primary;
+  border-radius: 100px;
+  color: $color-primary-light;
 }
