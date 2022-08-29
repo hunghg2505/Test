@@ -66,14 +66,7 @@ export const AddNewApplications = ({
   return (
     <>
       <span onClick={onVisible}>{children}</span>
-      <Modal
-        visible={visible}
-        onCancel={() => {
-          onVisible();
-          createApplicationForm.resetFields();
-        }}
-        footer={false}
-      >
+      <Modal visible={visible} onCancel={onVisible} footer={false}>
         <div className={styles.formAddNew}>
           <Form
             form={form}
@@ -120,7 +113,7 @@ export const AddNewApplications = ({
   );
 };
 
-const ApplicationsMemo = ({ companyId }: any) => {
+const ApplicationsMemo = ({ companyId, companyName }: any) => {
   const { applications, refreshApplication, onChange } = useApplications(companyId);
   const { isHavePermissionCreateSystem } = useSystemConfigPermission();
 
