@@ -92,7 +92,7 @@
     color: $color-primary-light;
   }
 
-  &:hover {
+  &:hover, &:active, &:focus, &:focus-visible {
     background-color: $color-primary-dark;
   }
 
@@ -104,7 +104,7 @@
       color: $color-primary;
     }
 
-    &:hover {
+    &:hover, &:active, &:focus, &:focus-visible {
       background-color: $color-primary-dark;
       border-color: $color-primary-dark;
       span {
@@ -121,7 +121,7 @@
     color: $color-white;
   }
 
-  &:hover {
+  &:hover, &:active, &:focus, &:focus-visible {
     background-color: $color-black1;
   }
   &.ghost {
@@ -132,7 +132,7 @@
       color: $color-secondary;
     }
 
-    &:hover {
+    &:hover, &:active, &:focus, &:focus-visible {
       background-color: $color-black1;
       border-color: $color-black1;
       span {

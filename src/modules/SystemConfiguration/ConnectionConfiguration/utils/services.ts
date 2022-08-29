@@ -92,9 +92,7 @@ export const useDeleteCompany = (onFinishSubmitForm: any) => {
         message.success('Delete Company Success');
         if (onFinishSubmitForm) onFinishSubmitForm();
       },
-      onError: (e) => {
-        console.log({ e });
-
+      onError: () => {
         message.error('Delete Company Error');
       },
     },
@@ -104,12 +102,18 @@ export const useDeleteCompany = (onFinishSubmitForm: any) => {
 // Create, Update, Delete Application
 
 interface ICreateApplication {
+  id?: number;
   companyId: number;
   name: string;
+  rolemap: string;
 }
 
 const createApplicationService = async (body: ICreateApplication) => {
   return ApiUtils.post<ICreateApplication, ResponseBase<any>>(API_PATH.CREATE_APPLICATION, body);
+};
+
+const editApplicationService = async (body: ICreateApplication) => {
+  return ApiUtils.put<ICreateApplication, ResponseBase<any>>(API_PATH.CREATE_APPLICATION, body);
 };
 
 export const useCreateApplication = (onFinishSubmitForm: any) => {
@@ -128,6 +132,28 @@ export const useCreateApplication = (onFinishSubmitForm: any) => {
           error?.content?.messageContent
             ? `${error?.content?.messageContent}`
             : 'Create Application Error',
+        );
+      },
+    },
+  );
+};
+
+export const useEditApplication = (onFinishSubmitForm: any) => {
+  return useRequest(
+    async (data: ICreateApplication) => {
+      return editApplicationService(data);
+    },
+    {
+      manual: true,
+      onSuccess: (data) => {
+        message.success(`Edit Application ${data?.content?.data?.name} Success`);
+        onFinishSubmitForm();
+      },
+      onError: (error: any) => {
+        message.error(
+          error?.content?.messageContent
+            ? `${error?.content?.messageContent}`
+            : 'Edit Application Error',
         );
       },
     },
