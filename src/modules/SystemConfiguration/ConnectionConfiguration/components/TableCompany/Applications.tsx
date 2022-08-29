@@ -114,7 +114,8 @@ export const AddNewApplications = ({
 };
 
 const ApplicationsMemo = ({ companyId, companyName }: any) => {
-  const { applications, refreshApplication, onChange } = useApplications(companyId);
+  const { applications, refreshApplication, onChange, deleteApplication } =
+    useApplications(companyId);
   const { isHavePermissionCreateSystem } = useSystemConfigPermission();
 
   return (
@@ -146,6 +147,7 @@ const ApplicationsMemo = ({ companyId, companyName }: any) => {
             application={application}
             refreshApplication={refreshApplication}
             companyId={companyId}
+            deleteApplication={deleteApplication}
           />
         );
       })}

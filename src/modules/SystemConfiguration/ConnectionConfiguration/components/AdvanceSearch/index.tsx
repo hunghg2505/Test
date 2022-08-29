@@ -79,7 +79,7 @@ const AdvancedSearch = ({ onSearchCompany }: any) => {
               <Row gutter={[0, 16]} justify='space-between'>
                 <Col xs={24}>
                   <InputForm
-                    label='Company NameEN'
+                    label='Company Name EN'
                     name='nameEN'
                     placeholder='Company Name EN'
                     maxLength={55}
