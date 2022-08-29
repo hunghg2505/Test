@@ -154,7 +154,7 @@ const CaseInfo = ({ data, onClickEdit, deleteCaseRequest }: any) => {
               }
               fileName={`${data?.userProfile?.firstNameEn}${data?.userProfile?.lastNameEn}-${
                 data?.id
-              }-${dayjs(Date.now()).format('DD-MM-YYYY-HH:MM:ss')}.pdf`}
+              }-${dayjs(Date.now()).format('DDMMYYYYHHMMss')}.pdf`}
               style={{
                 backgroundColor: '#CF2A2B',
                 border: 'white',
