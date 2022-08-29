@@ -109,7 +109,7 @@ const AdvancedSearch = ({ onSearchCompany }: any) => {
 
                 <Col xs={24}>
                   <InputForm
-                    label='DPO Email'
+                    label='DPO Email address'
                     name='email'
                     placeholder='dpo@ascenbit.com'
                     maxLength={55}

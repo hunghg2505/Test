@@ -1,12 +1,11 @@
-import { useCallback, useState } from 'react';
-import { Col, Form, Row, Modal } from 'antd';
-import Button from 'libraries/UI/Button';
-import InputForm from 'libraries/form/input/input-form';
-import styles from './index.module.scss';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
-import { useTranslation } from 'react-i18next';
-import { useCreateCompany, useEditCompany } from '../../utils/services';
+import { Col, Form, Modal, Row } from 'antd';
+import InputForm from 'libraries/form/input/input-form';
+import Button from 'libraries/UI/Button';
+import { useCallback, useState } from 'react';
 import { RegexUtils } from 'utils/regex-helper';
+import { useCreateCompany, useEditCompany } from '../../utils/services';
+import styles from './index.module.scss';
 
 interface IProps {
   initialValues?: {
@@ -24,7 +23,6 @@ interface IProps {
 const { confirm } = Modal;
 
 const FormCompany = ({ children, onReloadCompanyData, initialValues = {} }: IProps) => {
-  const { t } = useTranslation();
   const [createCompanyForm] = Form.useForm();
   const [visible, setVisible] = useState(false);
 
@@ -134,7 +132,7 @@ const FormCompany = ({ children, onReloadCompanyData, initialValues = {} }: IPro
 
             <Col xs={24}>
               <InputForm
-                label={t('email_address')}
+                label={'DPO Email address'}
                 name='email'
                 required
                 maxLength={55}
@@ -149,7 +147,7 @@ const FormCompany = ({ children, onReloadCompanyData, initialValues = {} }: IPro
 
                         if (!isEmail)
                           return Promise.reject(
-                            'Please input correct email format example@domain.com',
+                            'Please input correct email format dpo@ascenbit.com',
                           );
 
                         return Promise.resolve();
@@ -159,7 +157,7 @@ const FormCompany = ({ children, onReloadCompanyData, initialValues = {} }: IPro
                     },
                   },
                 ]}
-                placeholder='example@domain.com'
+                placeholder='dpo@ascenbit.com'
               />
             </Col>
 
