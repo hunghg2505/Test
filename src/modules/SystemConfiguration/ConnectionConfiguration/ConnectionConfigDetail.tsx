@@ -1,19 +1,22 @@
-import React from 'react';
-import { useParams, useLocation } from 'react-router-dom';
+import React, { useMemo } from 'react';
+import { useLocation, useParams } from 'react-router-dom';
 import { Applications } from './components/TableCompany/Applications';
 
-interface LocationState {
-  companyNameEn: string;
-}
-
 const ConnectionConfigDetail = () => {
-  const { id } = useParams();
+  const params = useParams();
   const location = useLocation();
-  const state = location.state as LocationState;
+
+  const companyName = useMemo(() => {
+    try {
+      return decodeURIComponent(location?.search?.split?.('=')?.[1] || '');
+    } catch (error) {
+      return '';
+    }
+  }, [location?.search]);
 
   return (
     <>
-      <Applications companyId={id} companyName={state?.companyNameEn} />
+      <Applications companyId={params?.id} companyName={companyName} />
     </>
   );
 };
