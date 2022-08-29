@@ -75,9 +75,13 @@ export default function EditConsentForm() {
               initialValues={{
                 name: data?.name,
                 applicationId: Number(data?.application?.id),
-                idProduct: Number(data?.product.id),
-                serviceId: Number(data?.service?.id),
-                idStatus: Number(data?.status?.id),
+                idProduct: !data?.product?.deletedAt
+                  ? Number(data?.product.id)
+                  : data?.product?.name,
+                serviceId: !data?.service?.deletedAt
+                  ? Number(data?.service?.id)
+                  : data?.service?.name,
+                idStatus: !data?.status?.deletedAt ? Number(data?.status?.id) : data?.status?.name,
                 version: data?.version,
                 content: data?.content,
                 title: data?.title,

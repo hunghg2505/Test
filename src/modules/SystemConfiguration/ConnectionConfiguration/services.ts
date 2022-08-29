@@ -33,14 +33,13 @@ const getListCompanyService = async (values: any): Promise<any> => {
   };
 };
 
-const getCompaniesSuggestion = async (value: any, column: string, page = 1) => {
+const getCompaniesSuggestion = async (value: any, _column: string, page = 1) => {
   const params = {
     column: 'nameEN',
     searchString: value || '',
     limit: 10,
     page,
   };
-  console.log(page);
 
   const res: any = await ApiUtils.fetch(API_PATH.GET_COMPANY_SUGGESTION, params);
 
