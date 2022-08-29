@@ -69,14 +69,18 @@ export const getDataManagementService = async (values: any): Promise<any> => {
         email: item?.email || '',
         phoneNumber: item?.mobile || '',
         application: 'Application 1 default',
-        action: `${item?.id}`,
+        action: `${item?.businessProfileId}/${item?.idNo}`,
       })),
     params,
   };
 };
 
-const getDataSubjectDetail = async (id: string): Promise<IDataSubjectDetail> => {
-  const r: any = await ApiUtils.fetch(API_PATH.USER_PROFILE_DETAIL(id));
+const getDataSubjectDetail = async (
+  businessProfileId: string,
+  idNo: string,
+): Promise<IDataSubjectDetail> => {
+  const params = { businessProfileId, idNo };
+  const r: any = await ApiUtils.fetch(API_PATH.USER_PROFILE_DETAIL, params);
 
   return {
     userInfo: {
@@ -90,10 +94,10 @@ const getDataSubjectDetail = async (id: string): Promise<IDataSubjectDetail> => 
       address: 'Test Address',
       dateOfBirth: r?.content?.dateOfBirth || '',
       nationality: r?.content?.nationality || '',
-      cardId: r?.content?.cardId || '',
+      cardId: r?.content?.idNo || '',
       passportNo: r?.content?.passportNo || '',
-      laserCode: r?.content?.laserCode || '',
-      mobile: r?.content?.mobile || '',
+      laserCode: r?.content?.thaiIdLaserNo || '',
+      mobile: r?.content?.mobileNo || '',
     },
   };
 };
@@ -217,6 +221,6 @@ export const useDataSubjectManagement = () => {
   };
 };
 
-export const useDataSubjectDetail = (id: string) => {
-  return useRequest(async () => getDataSubjectDetail(id));
+export const useDataSubjectDetail = (businessProfileId: string, idNo: string) => {
+  return useRequest(async () => getDataSubjectDetail(businessProfileId, idNo));
 };

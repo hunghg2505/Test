@@ -9,24 +9,31 @@ import DataSubjectHistory from './components/DataSubjectHistory';
 import UserProfile from './components/UserProfile';
 
 function DataSubjectDetail() {
-  const { id } = useParams();
+  // delete id when done, for testing
+  const { businessProfileId, idNo } = useParams();
   const navigate = useNavigate();
   const refDataHistory: any = useRef(null);
   const { isHavePermissionViewConsent } = useConsentManagementPermission();
   const { isHavePermissionViewProfile } = userProfilePermission();
 
-  if (!id) {
+  if (!businessProfileId || !idNo) {
     navigate('/data-subject');
     return null;
   }
 
   return (
     <ContainerLayout title='Data Subject Detail'>
-      {isHavePermissionViewProfile && <UserProfile id={id} />}
-      {isHavePermissionViewConsent && (
-        <Consents userId={Number(id)} refDataHistory={refDataHistory} />
+      {isHavePermissionViewProfile && (
+        <UserProfile businessProfileId={businessProfileId} idNo={idNo} />
       )}
-      <DataSubjectHistory userId={id || ''} subjectId={id} ref={refDataHistory} />
+      {isHavePermissionViewConsent && (
+        <Consents userId={Number(businessProfileId)} refDataHistory={refDataHistory} />
+      )}
+      <DataSubjectHistory
+        userId={businessProfileId || ''}
+        subjectId={businessProfileId || ''}
+        ref={refDataHistory}
+      />
     </ContainerLayout>
   );
 }
