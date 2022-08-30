@@ -3,6 +3,7 @@
     "success": "Success",
     "errors": {
       "require": "{{field}} must be required.",
+      "blank": "{{field}} can not be blank.",
       "email_invalid": "Invalid email.",
       "max": "Please input less than {{max}} characters",
       "min": "Please input at least {{min}} characters to search.",

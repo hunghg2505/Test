@@ -84,10 +84,11 @@ export const AddNewApplications = ({
               className={styles.input}
               name='name'
               maxLength={55}
+              required
               rules={[
                 {
                   required: true,
-                  message: t('messages.errors.require', { field: 'Application name' }),
+                  message: t('messages.errors.blank', { field: 'Application name' }),
                 },
               ]}
             />
@@ -95,11 +96,12 @@ export const AddNewApplications = ({
               className={styles.input}
               label='Role map'
               name='rolemap'
+              required
               maxLength={55}
               rules={[
                 {
                   required: true,
-                  message: t('messages.errors.require', { field: 'Role map' }),
+                  message: t('messages.errors.blank', { field: 'Role map' }),
                 },
               ]}
             />

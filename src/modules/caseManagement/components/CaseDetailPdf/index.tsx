@@ -1,15 +1,4 @@
-import font from 'assets/NotoSansThai/NotoSansThai-Regular.ttf';
-
-import { Document, Font, Page, StyleSheet, Text, View, Image } from '@react-pdf/renderer';
-
-Font.register({
-  family: 'Noto Sans Thai',
-  fonts: [
-    {
-      src: font,
-    },
-  ],
-});
+import { Document, Image, Page, StyleSheet, Text, View } from '@react-pdf/renderer';
 
 // Create styles
 const styles = StyleSheet.create({
@@ -164,7 +153,7 @@ export const MyDocument = ({ caseData }: any) => {
         <View>
           <View style={styles.checkboxContainer}>
             <View style={styles.checkbox}>
-              {caseData.result?.toLowerCase() === 'accepted' && (
+              {caseData.result?.toLowerCase() === 'completed' && (
                 <Image
                   style={{ width: 12, height: 12 }}
                   src={`data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAAABmJLR0QA/wD/AP+gvaeTAAABBElEQVRIie3UMUoDQRQG4E8rUTAqRE9iIWij2IhYeQAP4BUEO7EJqJ122ukhbKwsRQRFEARBsQ4WmsQiWQizs5CNs2CRH6aZ9+Z9O7C7jPJPsoNj1KtElvCDDj6wWQUyiccekq0vjKeGjgKkg8vUyDJaAfKJhZTIFJ7lb7OdEoHTCHKRGllHO0DeMJcSqeFV/jYbZYbM4kD3uyjKeQQ5K4PM4LZ3sIm1SM9WBHnBdBnoOhjQxGpfvY73oKcd9AyUm8jT9mNXkfpJWQTmcV+ANSL7T7q/n6FSx11kaLhaWBkWKYMd/hUZBHvARCqoCPvGYkokS/iC7FeBZKlhD7sYqxIaJZdfhYF6R58+xmoAAAAASUVORK5CYII=`}
@@ -175,7 +164,7 @@ export const MyDocument = ({ caseData }: any) => {
           </View>
           <Text>Actions according to the request / รํายละเอียดกํารด ําเนินกํารตํามค ําขอ</Text>
           <Text style={styles.text}>
-            {caseData.result?.toLowerCase() === 'accepted' ? caseData.reason : ''}
+            {caseData.result?.toLowerCase() === 'completed' ? caseData.reason : ''}
           </Text>
         </View>
         <View style={{ marginTop: 10, display: 'flex' }}>
