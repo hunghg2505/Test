@@ -1,10 +1,9 @@
 import { Document, Font, Image, Page, StyleSheet, Text, View } from '@react-pdf/renderer';
-import font from 'assets/NotoSansThai/NotoSansThai-Regular.ttf';
 
 Font.register({
   family: 'Noto Sans Thai',
   format: 'truetype',
-  src: font,
+  src: 'https://fonts.gstatic.com/s/notosansthai/v20/iJWnBXeUZi_OHPqn4wq6hQ2_hbJ1xyN9wd43SofNWcd1MKVQt_So_9CdU5RtpzE.ttf',
 });
 
 // Create styles
