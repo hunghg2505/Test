@@ -9,6 +9,7 @@ import moment from 'moment';
 import { disabledFutureDate } from 'utils/common.utils';
 import { RegexUtils } from 'utils/regex-helper';
 import { useCheckParams } from './service';
+import { useState } from 'react';
 
 const assertThaiId = (thaiId: string): boolean => {
   const m = thaiId.match(/(\d{12})(\d)/);
@@ -29,19 +30,20 @@ const assertThaiId = (thaiId: string): boolean => {
 
 export const FormEditUser = ({ form, userInfo, t }: any) => {
   const requestCheckParams = useCheckParams();
+  const [nationalityValue, setNationalityValue] = useState(userInfo?.nationality);
 
   const initialValues = {
     dateOfBirth: moment(userInfo?.dateOfBirth),
-    cardId: userInfo?.cardId || '',
+    // cardId: userInfo?.cardId || '',
     email: userInfo?.email || '',
     firstNameEn: userInfo?.firstNameEn || '',
     firstNameTh: userInfo?.firstNameTh || '',
     laserCode: userInfo?.laserCode || '',
     lastNameEn: userInfo?.lastNameEn || '',
     lastNameTh: userInfo?.lastNameTh || '',
-    mobile: userInfo?.mobile || '',
+    mobileNo: userInfo?.mobile || '',
     nationality: userInfo?.nationality || '',
-    passportNo: userInfo?.passportNo || '',
+    idNo: userInfo?.passportNo || userInfo?.cardId,
   };
 
   return (
@@ -194,7 +196,7 @@ export const FormEditUser = ({ form, userInfo, t }: any) => {
                 },
               },
             ]}
-            maxLength={11}
+            maxLength={12}
           />
         </Col>
 
@@ -203,7 +205,7 @@ export const FormEditUser = ({ form, userInfo, t }: any) => {
             name='idNo'
             placeholder={t('national_card_id')}
             label={t('national_card_id')}
-            disabled={form.getFieldValue('nationality')?.toLowerCase() !== 'thailand'}
+            disabled={nationalityValue?.toLowerCase() !== 'thailand'}
             normalize={(val = '') => val.replace(/\s/, '')}
             rules={[
               {
@@ -258,7 +260,13 @@ export const FormEditUser = ({ form, userInfo, t }: any) => {
               },
             ]}
           >
-            <Select placeholder={t('nationality')} allowClear={true} showSearch>
+            <Select
+              placeholder={t('nationality')}
+              allowClear={true}
+              showSearch
+              value={nationalityValue}
+              onChange={(value) => setNationalityValue(value)}
+            >
               {country
                 .names()
                 .sort()
@@ -277,7 +285,7 @@ export const FormEditUser = ({ form, userInfo, t }: any) => {
             placeholder={t('passport_number')}
             label={t('passport_number')}
             normalize={(val = '') => val.replace(/\s/, '')}
-            disabled={form.getFieldValue('nationality')?.toLowerCase() === 'thailand'}
+            disabled={nationalityValue?.toLowerCase() === 'thailand'}
             rules={[
               {
                 pattern: new RegExp(RegexUtils.RegexConstants.REGEX_PASSPORT),
@@ -292,7 +300,7 @@ export const FormEditUser = ({ form, userInfo, t }: any) => {
                         t('messages.errors.require', { field: t('national_card_id') }),
                       );
 
-                    if (value === initialValues.passportNo) {
+                    if (value === initialValues.idNo) {
                       return Promise.resolve();
                     }
                     const r = await requestCheckParams.runAsync({ passportNo });

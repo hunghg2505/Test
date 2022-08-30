@@ -63,7 +63,14 @@ function UserProfile({
     try {
       if (form.getFieldsError().filter((item: any) => item?.errors?.length !== 0).length === 0) {
         const values = form.getFieldsValue(true);
-        updateUserProfileRequest.run({ ...values, userProfileId: businessProfileId });
+        let idType;
+        if (values?.nationality.toLowerCase() === 'thailand') {
+          idType = 'Thai National ID Card';
+        } else {
+          idType = 'Passport';
+        }
+
+        updateUserProfileRequest.run({ ...values, idType, userProfileId: businessProfileId });
       }
     } catch (error) {
       console.log(error);
