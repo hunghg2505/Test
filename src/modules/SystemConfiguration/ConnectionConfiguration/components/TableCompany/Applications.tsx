@@ -80,7 +80,7 @@ export const AddNewApplications = ({
             <h4>{isEdit ? 'Edit Application' : 'Add new Application'}</h4>
 
             <InputForm
-              label='Application name'
+              label='Application Name'
               className={styles.input}
               name='name'
               maxLength={55}
@@ -88,20 +88,20 @@ export const AddNewApplications = ({
               rules={[
                 {
                   required: true,
-                  message: t('messages.errors.blank', { field: 'Application name' }),
+                  message: t('messages.errors.blank', { field: 'Application Name' }),
                 },
               ]}
             />
             <InputForm
               className={styles.input}
-              label='Role map'
+              label='User Role Map'
               name='rolemap'
               required
               maxLength={55}
               rules={[
                 {
                   required: true,
-                  message: t('messages.errors.blank', { field: 'Role map' }),
+                  message: t('messages.errors.blank', { field: 'User Role Map' }),
                 },
               ]}
             />
