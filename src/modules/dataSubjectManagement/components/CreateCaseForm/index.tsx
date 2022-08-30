@@ -86,7 +86,16 @@ export const CustomSelectDropdown = ({
 };
 
 export const FormItemCompany = (props: any) => {
-  const { data, onLoadMore, onSearchCompanyDebounce: onSearchDebounce } = useGetListCompany();
+  const {
+    data,
+    onLoadMore,
+    onSearchCompanyDebounce: onSearchDebounce,
+    loading,
+  } = useGetListCompany();
+  if (loading) {
+    return null;
+  }
+  console.log('data', data);
 
   return (
     <LoadmoreCustomSelectDropdown

@@ -57,6 +57,9 @@ export default function EditConsentForm() {
     if (data?.status?.deletedAt && values.idStatus === data?.status?.name) {
       delete values.idStatus;
     }
+    if (data?.application?.deletedAt && values.applicationId === data?.application?.name) {
+      delete values.applicationId;
+    }
     updateConsentRequest.run({ ...values, expireOn });
   };
 
@@ -83,7 +86,9 @@ export default function EditConsentForm() {
               disabled={isEdit}
               initialValues={{
                 name: data?.name,
-                applicationId: Number(data?.application?.id),
+                applicationId: !data?.application?.deletedAt
+                  ? Number(data?.application?.id)
+                  : data?.application?.name,
                 idProduct: !data?.product?.deletedAt
                   ? Number(data?.product.id)
                   : data?.product?.name,

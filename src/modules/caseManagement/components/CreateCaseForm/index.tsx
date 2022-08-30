@@ -50,6 +50,10 @@ const CreateCaseForm = ({
       fileComment = refFiles.current.getFileData();
     }
 
+    if (data?.companyInfo?.deletedAt && values.companyId === data?.companyInfo?.name) {
+      delete values.companyId;
+    }
+
     editCaseRequest.run(
       {
         caseId: Number(id),
@@ -95,7 +99,9 @@ const CreateCaseForm = ({
                 responseStatus: data?.responseStatus,
                 reason: data?.reason,
                 comment: data?.comment,
-                companyId: data?.companyInfo?.id,
+                companyId: !data?.companyInfo?.deletedAt
+                  ? Number(data?.companyInfo?.id)
+                  : data?.companyInfo?.name,
               }}
               onFinish={onFinish}
             >
