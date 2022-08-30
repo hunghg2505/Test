@@ -1,4 +1,11 @@
-import { Document, Image, Page, StyleSheet, Text, View } from '@react-pdf/renderer';
+import { Document, Font, Image, Page, StyleSheet, Text, View } from '@react-pdf/renderer';
+import font from 'assets/NotoSansThai/NotoSansThai-Regular.ttf';
+
+Font.register({
+  family: 'Noto Sans Thai',
+  format: 'truetype',
+  src: font,
+});
 
 // Create styles
 const styles = StyleSheet.create({
@@ -9,7 +16,7 @@ const styles = StyleSheet.create({
     paddingBottom: 35,
     paddingHorizontal: 35,
     fontSize: 12,
-    // fontFamily: 'Noto Sans Thai',
+    fontFamily: 'Noto Sans Thai',
   },
   title: {
     fontSize: 24,
