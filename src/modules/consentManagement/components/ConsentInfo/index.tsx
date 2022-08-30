@@ -1,12 +1,10 @@
 import { Col, Divider, Row } from 'antd';
-import React from 'react';
 
-import Button from 'libraries/UI/Button';
 import clsx from 'clsx';
 import dayjs from 'dayjs';
-import styles from './index.module.scss';
-import { capitalizeFirstLetter } from 'utils/common.utils';
 import useConsentManagementPermission from 'hooks/useConsentManagementPermission';
+import Button from 'libraries/UI/Button';
+import styles from './index.module.scss';
 
 const ICON_EDIT = (
   <svg xmlns='http://www.w3.org/2000/svg' width={24} height={24} viewBox='0 0 24 24' fill='white'>
@@ -83,7 +81,7 @@ const ConsentInfo = ({ data, onClickEdit }: any) => {
           <p className={styles.label}>
             Status<span className={styles.asterisk}>*</span>
           </p>
-          <p className={styles.value}>{capitalizeFirstLetter(data?.status?.name)}</p>
+          <p className={styles.value}>{data?.status?.name}</p>
         </Col>
         <Col xs={2}></Col>
         <Col xs={11} className={styles.info}>

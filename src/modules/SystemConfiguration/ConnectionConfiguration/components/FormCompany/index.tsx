@@ -132,7 +132,7 @@ const FormCompany = ({ children, onReloadCompanyData, initialValues = {} }: IPro
 
             <Col xs={24}>
               <InputForm
-                label={'DPO Email address'}
+                label={'DPO Email Address'}
                 name='email'
                 required
                 maxLength={55}
