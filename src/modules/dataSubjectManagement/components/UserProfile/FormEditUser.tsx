@@ -170,7 +170,7 @@ export const FormEditUser = ({ form, userInfo, t }: any) => {
 
         <Col xs={12}>
           <InputForm
-            name='mobile'
+            name='mobileNo'
             placeholder='eg. 66 8 123456789'
             label={t('mobile_number')}
             // normalize={(value, prevValue) => {
@@ -200,9 +200,10 @@ export const FormEditUser = ({ form, userInfo, t }: any) => {
 
         <Col xs={12}>
           <InputForm
-            name='cardId'
+            name='idNo'
             placeholder={t('national_card_id')}
             label={t('national_card_id')}
+            disabled={form.getFieldValue('nationality')?.toLowerCase() !== 'thailand'}
             normalize={(val = '') => val.replace(/\s/, '')}
             rules={[
               {
@@ -272,10 +273,11 @@ export const FormEditUser = ({ form, userInfo, t }: any) => {
 
         <Col xs={12}>
           <InputForm
-            name='passportNo'
+            name='idNo'
             placeholder={t('passport_number')}
             label={t('passport_number')}
             normalize={(val = '') => val.replace(/\s/, '')}
+            disabled={form.getFieldValue('nationality')?.toLowerCase() === 'thailand'}
             rules={[
               {
                 pattern: new RegExp(RegexUtils.RegexConstants.REGEX_PASSPORT),
@@ -311,7 +313,7 @@ export const FormEditUser = ({ form, userInfo, t }: any) => {
 
         <Col xs={12}>
           <InputForm
-            name='laserCode'
+            name='thaiIdLaserNo'
             placeholder={t('laser_code')}
             label={t('laser_code')}
             normalize={(val = '') => val.replace(/\s/, '')}
