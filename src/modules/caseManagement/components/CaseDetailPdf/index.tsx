@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
     paddingBottom: 35,
     paddingHorizontal: 35,
     fontSize: 12,
-    fontFamily: 'Noto Sans Thai',
+    // fontFamily: 'Noto Sans Thai',
   },
   title: {
     fontSize: 24,
