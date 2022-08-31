@@ -1,9 +1,8 @@
-import { PlusCircleOutlined } from '@ant-design/icons';
 import { Form, Modal, Pagination, Row } from 'antd';
 import useSystemConfigPermission from 'hooks/useSystemConfigPermission';
 import InputForm from 'libraries/form/input/input-form';
-import { paginationItemRender } from 'libraries/UI/Pagination';
 import ButtonCustom from 'libraries/UI/Button';
+import { paginationItemRender } from 'libraries/UI/Pagination';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useCreateApplication, useEditApplication } from '../../utils/services';
@@ -33,7 +32,7 @@ export const AddNewApplications = ({
     const timeout = setTimeout(() => {
       form.setFieldsValue({
         name: application?.name || '',
-        rolemap: application?.rolemap || '',
+        roleMap: application?.roleMap || '',
       });
     }, 350);
 
@@ -74,7 +73,7 @@ export const AddNewApplications = ({
             layout='vertical'
             initialValues={{
               name: application?.name,
-              rolemap: application?.rolemap,
+              roleMap: application?.roleMap,
             }}
           >
             <h4>{isEdit ? 'Edit Application' : 'Add new Application'}</h4>
@@ -95,7 +94,7 @@ export const AddNewApplications = ({
             <InputForm
               className={styles.input}
               label='User Role Map'
-              name='rolemap'
+              name='roleMap'
               required
               maxLength={55}
               rules={[
@@ -105,9 +104,15 @@ export const AddNewApplications = ({
                 },
               ]}
             />
-            <ButtonCustom htmlType='submit' className={styles.addBtn}>
-              <PlusCircleOutlined />
-            </ButtonCustom>
+
+            <div className={styles.actions}>
+              <ButtonCustom type='secondary' onClick={onVisible} className={styles.cancelBtn}>
+                Cancel
+              </ButtonCustom>
+              <ButtonCustom htmlType='submit' className={styles.addBtn}>
+                Submit
+              </ButtonCustom>
+            </div>
           </Form>
         </div>
       </Modal>

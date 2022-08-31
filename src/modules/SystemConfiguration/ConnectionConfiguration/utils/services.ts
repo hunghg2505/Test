@@ -105,7 +105,7 @@ interface ICreateApplication {
   id?: number;
   companyId: number;
   name: string;
-  rolemap: string;
+  roleMap: string;
 }
 
 const createApplicationService = async (body: ICreateApplication) => {

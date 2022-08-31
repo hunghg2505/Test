@@ -221,10 +221,6 @@
   }
 }
 
-.addBtn {
-  width: 100%;
-}
-
 .noResultText {
   text-align: center;
   padding: 20px 0;
@@ -363,4 +359,18 @@
   background-color: $color-primary;
   border-radius: 100px;
   color: $color-primary-light;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 5px;
+}
+
+.cancelBtn {
+  background-color: #E0E0E0 !important;
+  span {
+    color: #121212 !important;
+  }
 }
