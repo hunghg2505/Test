@@ -63,6 +63,7 @@ const FormCompany = ({ children, onReloadCompanyData, initialValues = {} }: IPro
       okText: 'Yes',
       cancelText: 'No',
       okType: 'danger',
+      centered: true,
       okButtonProps: {
         className: styles.btnDelete,
       },
@@ -75,6 +76,19 @@ const FormCompany = ({ children, onReloadCompanyData, initialValues = {} }: IPro
       },
     });
   }, []);
+
+  const onCancel = () => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const valInit = Object.values(initialValues);
+    const valForm = Object.values(createCompanyForm.getFieldsValue(true))?.filter((v) => v);
+
+    if (JSON.stringify(valInit) === JSON.stringify(valForm)) {
+      onVisible();
+      createCompanyForm.resetFields();
+      return;
+    }
+    showConfirm();
+  };
 
   return (
     <>
@@ -89,6 +103,7 @@ const FormCompany = ({ children, onReloadCompanyData, initialValues = {} }: IPro
           onVisible();
           createCompanyForm.resetFields();
         }}
+        centered={true}
       >
         <Form
           layout='vertical'
@@ -182,24 +197,7 @@ const FormCompany = ({ children, onReloadCompanyData, initialValues = {} }: IPro
         </Form>
 
         <div className={styles.actions}>
-          <Button
-            className={styles.cancelBtn}
-            onClick={() => {
-              if (
-                Object.keys(createCompanyForm.getFieldsValue(true)).length === 0 ||
-                Object.values(createCompanyForm.getFieldsValue(true)).every(
-                  (item: any) => item.length === 0,
-                ) ||
-                initialValues?.id
-              ) {
-                onVisible();
-                createCompanyForm.resetFields();
-
-                return;
-              }
-              showConfirm();
-            }}
-          >
+          <Button className={styles.cancelBtn} onClick={onCancel}>
             Cancel
           </Button>{' '}
           <Button

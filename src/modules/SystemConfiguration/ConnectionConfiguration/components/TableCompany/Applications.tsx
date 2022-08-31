@@ -1,4 +1,4 @@
-import { Form, Modal, Pagination, Row } from 'antd';
+import { Form, message, Modal, Pagination, Row } from 'antd';
 import useSystemConfigPermission from 'hooks/useSystemConfigPermission';
 import InputForm from 'libraries/form/input/input-form';
 import ButtonCustom from 'libraries/UI/Button';
@@ -45,7 +45,12 @@ export const AddNewApplications = ({
     setVisible(!visible);
   };
 
-  const onFinishCreateApplication = () => {
+  const onFinishCreateApplication = (error: any) => {
+    if (error) {
+      const appName = form.getFieldValue('name');
+      message.error(`Application ${appName} already exist.`);
+      return;
+    }
     form.resetFields();
     refreshApplication();
     onVisible();
@@ -65,7 +70,7 @@ export const AddNewApplications = ({
   return (
     <>
       <span onClick={onVisible}>{children}</span>
-      <Modal visible={visible} onCancel={onVisible} footer={false}>
+      <Modal visible={visible} onCancel={onVisible} footer={false} centered>
         <div className={styles.formAddNew}>
           <Form
             form={form}
