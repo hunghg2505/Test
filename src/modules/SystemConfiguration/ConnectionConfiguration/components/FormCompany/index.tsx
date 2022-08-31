@@ -59,7 +59,9 @@ const FormCompany = ({ children, onReloadCompanyData, initialValues = {} }: IPro
     confirm({
       title: 'Confirm Cancel',
       icon: <ExclamationCircleOutlined style={{ color: 'red' }} />,
-      content: 'Are you sure you want to cancel Company Creation?',
+      content: initialValues?.id
+        ? 'Are you sure you want to cancel Company Edition?'
+        : 'Are you sure you want to cancel Company Creation?',
       okText: 'Yes',
       cancelText: 'No',
       okType: 'danger',
