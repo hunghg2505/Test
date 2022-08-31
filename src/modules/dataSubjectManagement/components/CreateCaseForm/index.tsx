@@ -95,7 +95,6 @@ export const FormItemCompany = (props: any) => {
   if (loading) {
     return null;
   }
-  console.log('data', data);
 
   return (
     <LoadmoreCustomSelectDropdown

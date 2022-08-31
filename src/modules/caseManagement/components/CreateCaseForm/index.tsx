@@ -50,7 +50,7 @@ const CreateCaseForm = ({
       fileComment = refFiles.current.getFileData();
     }
 
-    if (data?.companyInfo?.deletedAt && values.companyId === data?.companyInfo?.name) {
+    if (data?.companyInfo?.deletedAt && values.companyId === data?.companyInfo?.nameEN) {
       delete values.companyId;
     }
 
@@ -101,7 +101,7 @@ const CreateCaseForm = ({
                 comment: data?.comment,
                 companyId: !data?.companyInfo?.deletedAt
                   ? Number(data?.companyInfo?.id)
-                  : data?.companyInfo?.name,
+                  : data?.companyInfo?.nameEN,
               }}
               onFinish={onFinish}
             >
