@@ -123,7 +123,7 @@ export const MyDocument = ({ caseData }: any) => {
         <Text style={styles.title}>Data Subject Rights Responding Form</Text>
         <Text style={styles.subTitle}>แบบฟอร์มแจ้งผลกํารใช้สิทธิของเจ้ําของข้อมูลส่วนบุคคล</Text>
         <Text style={styles.desc}>
-          Following the data subject right request in accordance with Thailand PDPA B.E. 2562,
+          Following the data subject right request in accordance with Thailand PDPA B.E. 2562,{' '}
           {caseData?.companyInfo?.nameEN} would like to inform the result after considering the
           request.
         </Text>

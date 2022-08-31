@@ -140,7 +140,7 @@ const ApplicationsMemo = ({ companyId, companyName }: any) => {
       </Row>
 
       {!!applications?.data?.length && (
-        <Row align='middle' justify='space-between' className={styles.headerTable}>
+        <Row className={styles.headerTable}>
           <p>Application Name</p>
           <p>User Role Map</p>
           <p>Action</p>
