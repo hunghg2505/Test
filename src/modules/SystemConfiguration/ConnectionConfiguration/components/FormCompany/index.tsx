@@ -1,12 +1,11 @@
-import { useCallback, useState } from 'react';
-import { Col, Form, Row, Modal } from 'antd';
-import Button from 'libraries/UI/Button';
-import InputForm from 'libraries/form/input/input-form';
-import styles from './index.module.scss';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
-import { useTranslation } from 'react-i18next';
-import { useCreateCompany, useEditCompany } from '../../utils/services';
+import { Col, Form, Modal, Row } from 'antd';
+import InputForm from 'libraries/form/input/input-form';
+import Button from 'libraries/UI/Button';
+import { useCallback, useState } from 'react';
 import { RegexUtils } from 'utils/regex-helper';
+import { useCreateCompany, useEditCompany } from '../../utils/services';
+import styles from './index.module.scss';
 
 interface IProps {
   initialValues?: {
@@ -24,7 +23,6 @@ interface IProps {
 const { confirm } = Modal;
 
 const FormCompany = ({ children, onReloadCompanyData, initialValues = {} }: IProps) => {
-  const { t } = useTranslation();
   const [createCompanyForm] = Form.useForm();
   const [visible, setVisible] = useState(false);
 
@@ -61,10 +59,13 @@ const FormCompany = ({ children, onReloadCompanyData, initialValues = {} }: IPro
     confirm({
       title: 'Confirm Cancel',
       icon: <ExclamationCircleOutlined style={{ color: 'red' }} />,
-      content: 'Are you sure you want to cancel Company Creation?',
+      content: initialValues?.id
+        ? 'Are you sure you want to cancel Company Edition?'
+        : 'Are you sure you want to cancel Company Creation?',
       okText: 'Yes',
       cancelText: 'No',
       okType: 'danger',
+      centered: true,
       okButtonProps: {
         className: styles.btnDelete,
       },
@@ -77,6 +78,19 @@ const FormCompany = ({ children, onReloadCompanyData, initialValues = {} }: IPro
       },
     });
   }, []);
+
+  const onCancel = () => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const valInit = Object.values(initialValues);
+    const valForm = Object.values(createCompanyForm.getFieldsValue(true))?.filter((v) => v);
+
+    if (JSON.stringify(valInit) === JSON.stringify(valForm)) {
+      onVisible();
+      createCompanyForm.resetFields();
+      return;
+    }
+    showConfirm();
+  };
 
   return (
     <>
@@ -91,6 +105,7 @@ const FormCompany = ({ children, onReloadCompanyData, initialValues = {} }: IPro
           onVisible();
           createCompanyForm.resetFields();
         }}
+        centered={true}
       >
         <Form
           layout='vertical'
@@ -134,7 +149,7 @@ const FormCompany = ({ children, onReloadCompanyData, initialValues = {} }: IPro
 
             <Col xs={24}>
               <InputForm
-                label={t('email_address')}
+                label={'DPO Email Address'}
                 name='email'
                 required
                 maxLength={55}
@@ -149,7 +164,7 @@ const FormCompany = ({ children, onReloadCompanyData, initialValues = {} }: IPro
 
                         if (!isEmail)
                           return Promise.reject(
-                            'Please input correct email format example@domain.com',
+                            'Please input correct email format dpo@ascenbit.com',
                           );
 
                         return Promise.resolve();
@@ -159,7 +174,7 @@ const FormCompany = ({ children, onReloadCompanyData, initialValues = {} }: IPro
                     },
                   },
                 ]}
-                placeholder='example@domain.com'
+                placeholder='dpo@ascenbit.com'
               />
             </Col>
 
@@ -184,24 +199,7 @@ const FormCompany = ({ children, onReloadCompanyData, initialValues = {} }: IPro
         </Form>
 
         <div className={styles.actions}>
-          <Button
-            className={styles.cancelBtn}
-            onClick={() => {
-              if (
-                Object.keys(createCompanyForm.getFieldsValue(true)).length === 0 ||
-                Object.values(createCompanyForm.getFieldsValue(true)).every(
-                  (item: any) => item.length === 0,
-                ) ||
-                initialValues?.id
-              ) {
-                onVisible();
-                createCompanyForm.resetFields();
-
-                return;
-              }
-              showConfirm();
-            }}
-          >
+          <Button className={styles.cancelBtn} onClick={onCancel}>
             Cancel
           </Button>{' '}
           <Button

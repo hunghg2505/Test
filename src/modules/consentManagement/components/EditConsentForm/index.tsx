@@ -48,6 +48,18 @@ export default function EditConsentForm() {
   }, [data]);
 
   const onFinish = (values: any) => {
+    if (data?.product?.deletedAt && values.idProduct === data?.product?.name) {
+      delete values.idProduct;
+    }
+    if (data?.service?.deletedAt && values.serviceId === data?.service?.name) {
+      delete values.serviceId;
+    }
+    if (data?.status?.deletedAt && values.idStatus === data?.status?.name) {
+      delete values.idStatus;
+    }
+    if (data?.application?.deletedAt && values.applicationId === data?.application?.name) {
+      delete values.applicationId;
+    }
     updateConsentRequest.run({ ...values, expireOn });
   };
 
@@ -74,7 +86,9 @@ export default function EditConsentForm() {
               disabled={isEdit}
               initialValues={{
                 name: data?.name,
-                applicationId: Number(data?.application?.id),
+                applicationId: !data?.application?.deletedAt
+                  ? Number(data?.application?.id)
+                  : data?.application?.name,
                 idProduct: !data?.product?.deletedAt
                   ? Number(data?.product.id)
                   : data?.product?.name,

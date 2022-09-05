@@ -20,7 +20,7 @@ import {
 
 const { confirm } = Modal;
 
-const FormFeatureItem = ({ listItem, featureId, refresh, type }: any) => {
+const FormFeatureItem = ({ listItem, featureId, refresh, type, subFeatureName }: any) => {
   const { isHavePermissionCreateSystem, isHavePermissionDeleteSystem } =
     useSystemConfigPermission();
 
@@ -72,7 +72,7 @@ const FormFeatureItem = ({ listItem, featureId, refresh, type }: any) => {
     <div className={styles.content}>
       {isHavePermissionCreateSystem && (
         <Form onFinish={onAddNew} form={addNewForm}>
-          <p className={styles.textAddNew}>Add new Data Subject Rights</p>
+          <p className={styles.textAddNew}>Add new {subFeatureName}</p>
           <Row className={styles.formInput}>
             <InputForm
               name='name'
@@ -118,7 +118,7 @@ const FormFeatureItem = ({ listItem, featureId, refresh, type }: any) => {
         </Form>
       )}
 
-      <h4>Data Subject Rights List</h4>
+      <h4>{subFeatureName} List</h4>
       <div className={styles.list}>
         {listItem?.map((it: any) => {
           return (
@@ -180,6 +180,7 @@ const FeatureItemContent = ({ feature, refresh }: any) => {
             type={feature?.type}
             featureId={feature?.id}
             refresh={refresh}
+            subFeatureName={feature?.subFeatureName}
           />
         </>
       )}

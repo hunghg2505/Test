@@ -16,7 +16,7 @@
 }
 .headerTable {
   background: #d9d9d9;
-  text-align: center;
+  // text-align: center;
 
   p {
     font-weight: 700;
@@ -165,6 +165,15 @@
       margin-bottom: 24px;
     }
 
+    .ant-form-item-label > label {
+      display: flex;
+      flex-direction: row;
+
+      &::before {
+        order: 1;
+      }
+    }
+
     input {
       border-color: #202225 !important;
     }
@@ -210,10 +219,6 @@
       width: 400px;
     }
   }
-}
-
-.addBtn {
-  width: 100%;
 }
 
 .noResultText {
@@ -354,4 +359,18 @@
   background-color: $color-primary;
   border-radius: 100px;
   color: $color-primary-light;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 5px;
+}
+
+.cancelBtn {
+  background-color: #E0E0E0 !important;
+  span {
+    color: #121212 !important;
+  }
 }

@@ -6,7 +6,6 @@ import get from 'lodash/get';
 import { useRef, useState } from 'react';
 import ApiUtils from 'utils/api/api.utils';
 import { API_PATH } from 'utils/api/constant';
-import { capitalizeFirstLetter } from 'utils/common.utils';
 
 export const getConsentManagementService = async (values: any): Promise<any> => {
   const params: any = {
@@ -31,10 +30,12 @@ export const getConsentManagementService = async (values: any): Promise<any> => 
         createdDate: dayjs(item?.createdAt).format('DD/MM/YYYY'),
         appName: item?.application,
         appId: item?.__application__?.id,
-        status: capitalizeFirstLetter(item?.status),
+
         name: item?.consentName,
         contentEn: item?.contentEn,
         contentTh: item?.contentTh,
+
+        status: item?.__status__?.name,
       })) || [],
     appName: params?.appName || '',
     isEqualSearch: params?.isEqualSearch || '',

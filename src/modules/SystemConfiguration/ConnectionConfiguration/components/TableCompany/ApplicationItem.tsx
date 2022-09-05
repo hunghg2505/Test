@@ -208,7 +208,7 @@ export const ApplicationItemMemo = ({
             <span className={styles.appName}>{application?.name}</span>
           </Col>
           <Col flex='1 1 0'>
-            <span className={styles.appName}>{application?.rolemap}</span>
+            <span className={styles.appName}>{application?.roleMap}</span>
           </Col>
           <Col flex='215px 0 0'>
             <div className={styles.applicationAction}>

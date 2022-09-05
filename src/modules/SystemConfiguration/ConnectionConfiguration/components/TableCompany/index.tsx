@@ -121,8 +121,9 @@ const TableCompany = ({ data, onChangePage, loading, onReloadCompanyData }: any)
             </FormCompany>
           )}
           <Link
-            to={`/system-configuration/connection-configuration/${record?.id}`}
-            state={{ companyNameEn: record?.nameEN }}
+            to={`/system-configuration/connection-configuration/${
+              record?.id
+            }?q=${encodeURIComponent(record?.nameEN)}`}
           >
             Detail
           </Link>

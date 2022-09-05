@@ -1,14 +1,9 @@
-import font from 'assets/NotoSansThai/NotoSansThai-Regular.ttf';
-
-import { Document, Font, Page, StyleSheet, Text, View, Image } from '@react-pdf/renderer';
+import { Document, Font, Image, Page, StyleSheet, Text, View } from '@react-pdf/renderer';
 
 Font.register({
   family: 'Noto Sans Thai',
-  fonts: [
-    {
-      src: font,
-    },
-  ],
+  format: 'truetype',
+  src: 'https://fonts.gstatic.com/s/notosansthai/v20/iJWnBXeUZi_OHPqn4wq6hQ2_hbJ1xyN9wd43SofNWcd1MKVQt_So_9CdU5RtpzE.ttf',
 });
 
 // Create styles
@@ -128,7 +123,7 @@ export const MyDocument = ({ caseData }: any) => {
         <Text style={styles.title}>Data Subject Rights Responding Form</Text>
         <Text style={styles.subTitle}>แบบฟอร์มแจ้งผลกํารใช้สิทธิของเจ้ําของข้อมูลส่วนบุคคล</Text>
         <Text style={styles.desc}>
-          Following the data subject right request in accordance with Thailand PDPA B.E. 2562,
+          Following the data subject right request in accordance with Thailand PDPA B.E. 2562,{' '}
           {caseData?.companyInfo?.nameEN} would like to inform the result after considering the
           request.
         </Text>
@@ -164,7 +159,7 @@ export const MyDocument = ({ caseData }: any) => {
         <View>
           <View style={styles.checkboxContainer}>
             <View style={styles.checkbox}>
-              {caseData.result?.toLowerCase() === 'accepted' && (
+              {caseData.result?.toLowerCase() === 'completed' && (
                 <Image
                   style={{ width: 12, height: 12 }}
                   src={`data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAAABmJLR0QA/wD/AP+gvaeTAAABBElEQVRIie3UMUoDQRQG4E8rUTAqRE9iIWij2IhYeQAP4BUEO7EJqJ122ukhbKwsRQRFEARBsQ4WmsQiWQizs5CNs2CRH6aZ9+Z9O7C7jPJPsoNj1KtElvCDDj6wWQUyiccekq0vjKeGjgKkg8vUyDJaAfKJhZTIFJ7lb7OdEoHTCHKRGllHO0DeMJcSqeFV/jYbZYbM4kD3uyjKeQQ5K4PM4LZ3sIm1SM9WBHnBdBnoOhjQxGpfvY73oKcd9AyUm8jT9mNXkfpJWQTmcV+ANSL7T7q/n6FSx11kaLhaWBkWKYMd/hUZBHvARCqoCPvGYkokS/iC7FeBZKlhD7sYqxIaJZdfhYF6R58+xmoAAAAASUVORK5CYII=`}
@@ -175,7 +170,7 @@ export const MyDocument = ({ caseData }: any) => {
           </View>
           <Text>Actions according to the request / รํายละเอียดกํารด ําเนินกํารตํามค ําขอ</Text>
           <Text style={styles.text}>
-            {caseData.result?.toLowerCase() === 'accepted' ? caseData.reason : ''}
+            {caseData.result?.toLowerCase() === 'completed' ? caseData.reason : ''}
           </Text>
         </View>
         <View style={{ marginTop: 10, display: 'flex' }}>

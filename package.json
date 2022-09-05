@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "@react-keycloak/web": "^3.4.0",
-    "@react-pdf/renderer": "^2.3.0",
+    "@react-pdf/renderer": "^3.0.0",
     "@reduxjs/toolkit": "^1.8.2",
     "@testing-library/jest-dom": "^5.16.2",
     "@testing-library/react": "^12.1.4",

@@ -1,9 +1,8 @@
-import { PlusCircleOutlined } from '@ant-design/icons';
-import { Form, Modal, Pagination, Row } from 'antd';
+import { Form, message, Modal, Pagination, Row } from 'antd';
 import useSystemConfigPermission from 'hooks/useSystemConfigPermission';
 import InputForm from 'libraries/form/input/input-form';
-import { paginationItemRender } from 'libraries/UI/Pagination';
 import ButtonCustom from 'libraries/UI/Button';
+import { paginationItemRender } from 'libraries/UI/Pagination';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useCreateApplication, useEditApplication } from '../../utils/services';
@@ -33,7 +32,7 @@ export const AddNewApplications = ({
     const timeout = setTimeout(() => {
       form.setFieldsValue({
         name: application?.name || '',
-        rolemap: application?.rolemap || '',
+        roleMap: application?.roleMap || '',
       });
     }, 350);
 
@@ -46,7 +45,12 @@ export const AddNewApplications = ({
     setVisible(!visible);
   };
 
-  const onFinishCreateApplication = () => {
+  const onFinishCreateApplication = (error: any) => {
+    if (error) {
+      const appName = form.getFieldValue('name');
+      message.error(`Application ${appName} already exist.`);
+      return;
+    }
     form.resetFields();
     refreshApplication();
     onVisible();
@@ -66,7 +70,7 @@ export const AddNewApplications = ({
   return (
     <>
       <span onClick={onVisible}>{children}</span>
-      <Modal visible={visible} onCancel={onVisible} footer={false}>
+      <Modal visible={visible} onCancel={onVisible} footer={false} centered>
         <div className={styles.formAddNew}>
           <Form
             form={form}
@@ -74,38 +78,46 @@ export const AddNewApplications = ({
             layout='vertical'
             initialValues={{
               name: application?.name,
-              rolemap: application?.rolemap,
+              roleMap: application?.roleMap,
             }}
           >
             <h4>{isEdit ? 'Edit Application' : 'Add new Application'}</h4>
 
             <InputForm
-              label='Application name'
+              label='Application Name'
               className={styles.input}
               name='name'
               maxLength={55}
+              required
               rules={[
                 {
                   required: true,
-                  message: t('messages.errors.require', { field: 'Application name' }),
+                  message: t('messages.errors.blank', { field: 'Application Name' }),
                 },
               ]}
             />
             <InputForm
               className={styles.input}
-              label='Role map'
-              name='rolemap'
+              label='User Role Map'
+              name='roleMap'
+              required
               maxLength={55}
               rules={[
                 {
                   required: true,
-                  message: t('messages.errors.require', { field: 'Role map' }),
+                  message: t('messages.errors.blank', { field: 'User Role Map' }),
                 },
               ]}
             />
-            <ButtonCustom htmlType='submit' className={styles.addBtn}>
-              <PlusCircleOutlined />
-            </ButtonCustom>
+
+            <div className={styles.actions}>
+              <ButtonCustom type='secondary' onClick={onVisible} className={styles.cancelBtn}>
+                Cancel
+              </ButtonCustom>
+              <ButtonCustom htmlType='submit' className={styles.addBtn}>
+                Submit
+              </ButtonCustom>
+            </div>
           </Form>
         </div>
       </Modal>
@@ -114,7 +126,8 @@ export const AddNewApplications = ({
 };
 
 const ApplicationsMemo = ({ companyId, companyName }: any) => {
-  const { applications, refreshApplication, onChange } = useApplications(companyId);
+  const { applications, refreshApplication, onChange, deleteApplication } =
+    useApplications(companyId);
   const { isHavePermissionCreateSystem } = useSystemConfigPermission();
 
   return (
@@ -132,7 +145,7 @@ const ApplicationsMemo = ({ companyId, companyName }: any) => {
       </Row>
 
       {!!applications?.data?.length && (
-        <Row align='middle' justify='space-between' className={styles.headerTable}>
+        <Row className={styles.headerTable}>
           <p>Application Name</p>
           <p>User Role Map</p>
           <p>Action</p>
@@ -146,6 +159,7 @@ const ApplicationsMemo = ({ companyId, companyName }: any) => {
             application={application}
             refreshApplication={refreshApplication}
             companyId={companyId}
+            deleteApplication={deleteApplication}
           />
         );
       })}

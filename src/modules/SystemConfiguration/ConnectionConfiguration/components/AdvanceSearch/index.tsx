@@ -79,7 +79,7 @@ const AdvancedSearch = ({ onSearchCompany }: any) => {
               <Row gutter={[0, 16]} justify='space-between'>
                 <Col xs={24}>
                   <InputForm
-                    label='Company NameEN'
+                    label='Company Name EN'
                     name='nameEN'
                     placeholder='Company Name EN'
                     maxLength={55}
@@ -109,9 +109,9 @@ const AdvancedSearch = ({ onSearchCompany }: any) => {
 
                 <Col xs={24}>
                   <InputForm
-                    label='DPO Email'
+                    label='DPO Email Address'
                     name='email'
-                    placeholder='dpo@ascendbit.com'
+                    placeholder='dpo@ascenbit.com'
                     maxLength={55}
                     rules={[
                       {

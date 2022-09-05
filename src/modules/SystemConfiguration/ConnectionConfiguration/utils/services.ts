@@ -105,7 +105,7 @@ interface ICreateApplication {
   id?: number;
   companyId: number;
   name: string;
-  rolemap: string;
+  roleMap: string;
 }
 
 const createApplicationService = async (body: ICreateApplication) => {
@@ -128,11 +128,12 @@ export const useCreateApplication = (onFinishSubmitForm: any) => {
         onFinishSubmitForm();
       },
       onError: (error: any) => {
-        message.error(
-          error?.content?.messageContent
-            ? `${error?.content?.messageContent}`
-            : 'Create Application Error',
-        );
+        onFinishSubmitForm(error);
+        // message.error(
+        //   error?.content?.messageContent
+        //     ? `${error?.content?.messageContent}`
+        //     : 'Create Application Error',
+        // );
       },
     },
   );
@@ -150,11 +151,13 @@ export const useEditApplication = (onFinishSubmitForm: any) => {
         onFinishSubmitForm();
       },
       onError: (error: any) => {
-        message.error(
-          error?.content?.messageContent
-            ? `${error?.content?.messageContent}`
-            : 'Edit Application Error',
-        );
+        onFinishSubmitForm(error);
+
+        // message.error(
+        //   error?.content?.messageContent
+        //     ? `${error?.content?.messageContent}`
+        //     : 'Edit Application Error',
+        // );
       },
     },
   );

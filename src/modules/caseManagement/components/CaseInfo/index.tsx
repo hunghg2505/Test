@@ -114,12 +114,16 @@ const CaseInfo = ({ data, onClickEdit, deleteCaseRequest }: any) => {
       <Divider />
       <Row>
         <Col xs={11} className={styles.info}>
-          <p className={styles.label}>Result</p>
+          <p className={styles.label}>
+            Result <span className={styles.asterisk}>*</span>
+          </p>
           <p className={styles.value}>{data?.responseStatus}</p>
         </Col>
         <Col xs={2}></Col>
         <Col xs={11} className={styles.info}>
-          <p className={styles.label}>Reason</p>
+          <p className={styles.label}>
+            Reason <span className={styles.asterisk}>*</span>
+          </p>
           <p className={clsx(styles.value, styles.leftSpace)}>{data?.reason}</p>
         </Col>
       </Row>
@@ -151,7 +155,7 @@ const CaseInfo = ({ data, onClickEdit, deleteCaseRequest }: any) => {
                   }}
                 />
               }
-              fileName={`${data?.userProfile?.firstNameEn}${data?.userProfile?.lastNameEn}-${
+              fileName={`DSR-${data?.userProfile?.firstNameEn} ${data?.userProfile?.lastNameEn}-${
                 data?.id
               }-${dayjs(Date.now()).format('DDMMYYYYHHMMss')}.pdf`}
               style={{
