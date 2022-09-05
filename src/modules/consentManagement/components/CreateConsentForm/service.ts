@@ -7,17 +7,21 @@ import ApiUtils from 'utils/api/api.utils';
 import { API_PATH, GENERAL_CONFIG_CONSENT_BASE_URL } from 'utils/api/constant';
 
 interface ICreateConsent {
-  name: string;
+  consentName: string;
   consentId: string;
   applicationId: string;
   idProduct: number;
   productName: string;
   serviceId: string;
   idStatus: number;
-  title: string;
+  titleEn: string;
+  titleTh: string;
   version: string;
-  content: string;
+  contentTh: string;
+  contentEn: string;
   expireOn?: Date;
+  activationDate: Date;
+  userRoleMap: string;
 }
 
 interface ICreateConsentResponse {
@@ -75,6 +79,7 @@ const getListApplicationService = async ({
     response?.content?.data?.map((item: any) => ({
       id: item?.id,
       appName: item?.name,
+      roleMap: item?.roleMap,
     })) || [];
 
   return {
