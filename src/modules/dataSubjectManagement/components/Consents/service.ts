@@ -14,6 +14,7 @@ type TConsentService = {
   search?: string;
   userId: string;
   page: number;
+  applicationName?: any;
 };
 
 function capitalizeFirstLetter(string: string) {
@@ -22,7 +23,7 @@ function capitalizeFirstLetter(string: string) {
   return stringLowercase.charAt(0).toUpperCase() + stringLowercase.slice(1);
 }
 export const getConsentService = async (
-  { search, userId, page }: TConsentService,
+  { search, userId, applicationName, page }: TConsentService,
   onlyView = false,
 ): Promise<any> => {
   const params = {
@@ -31,7 +32,7 @@ export const getConsentService = async (
     limit: PAGE_SIZE,
     page: page || 1,
 
-    applicationName: 'sc',
+    applicationName: applicationName || 'sc',
     language: 'en',
     isFilterActive: false,
   };
@@ -49,15 +50,22 @@ export const getConsentService = async (
       name: item?.app_name,
       description: appDes || '',
       list: item?.consents?.map((consent: any) => {
+        const val = {
+          appName: consent.application,
+          consentName: get(consent, 'consentName', ''),
+          version: get(consent, 'version', ''),
+          checked: get(consent, 'status', '') === 'active',
+        };
+
         return {
           id: consent.consent_id,
           title: get(consent, 'consentName', ''),
-          value: `${get(consent, 'consentName', '')}@${consent.application}`,
+          value: JSON.stringify(val),
           description: get(consent, 'content', ''),
           lastUpdated: '',
           version: `Version ${get(consent, 'version', '') || ''}`,
           status: capitalizeFirstLetter(get(consent, 'status', '') || 'draft'),
-          selected: !!consent?.my_consent_id,
+          selected: get(consent, 'status', '') === 'active',
         };
       }),
     };
@@ -74,31 +82,28 @@ export const getConsentService = async (
 };
 
 const getConsentsChecked = ({ content, ConsentList }: any) => {
-  const newConsent: any = {
-    insert: [],
-    update: [],
-    delete: [],
-  };
+  const newConsent: any = [];
 
   Object.keys(content)?.forEach((initialKey) => {
     const consentIniti = content[initialKey];
     const itemSelect = ConsentList?.find((it: any) => it?.name === initialKey);
+
     itemSelect?.list?.forEach((v: any) => {
       const isExist = consentIniti?.find((id: any) => id === v?.value);
+      const parseVal = JSON.parse(v?.value);
+
       if (isExist && !v?.selected) {
-        newConsent.insert.push({
-          consentId: Number(v?.id),
-          data: [
-            {
-              key: `${v?.title}`,
-              value: 'true',
-            },
-          ],
+        newConsent.push({
+          consentName: parseVal?.consentName,
+          version: parseVal?.version,
+          flag: true,
         });
       }
       if (!isExist && v?.selected) {
-        newConsent.delete.push({
-          consentId: Number(v?.id),
+        newConsent.push({
+          consentName: parseVal?.consentName,
+          version: parseVal?.version,
+          flag: false,
         });
       }
     });
@@ -109,23 +114,11 @@ const getConsentsChecked = ({ content, ConsentList }: any) => {
 
 export const updateConsent = async ({ userId, content, ConsentList }: any) => {
   const newConsent = getConsentsChecked({ content, ConsentList });
-  console.log({
-    content,
-    ConsentList,
-  });
 
   const body = {
-    userId: userId,
-    content: newConsent,
     businessProfileId: userId,
-    application: 'string',
-    consents: [
-      {
-        consentName: 'string',
-        version: 'string',
-        flag: true,
-      },
-    ],
+    application: 'sc',
+    consents: newConsent,
   };
 
   // return ApiUtils.post(API_PATH.OPT_OUT_IN, body);
@@ -157,9 +150,11 @@ const getSuggestionConsents = async (userId: any, search: string, page = 1) => {
 export const useConsent = ({
   userId,
   onlyView = false,
+  applicationName,
 }: {
   userId: string;
   onlyView?: boolean;
+  applicationName?: any;
 }) => {
   const refCancelRequest: any = useRef(false);
 
@@ -193,7 +188,7 @@ export const useConsent = ({
   });
 
   useMount(() => {
-    run({ page: 1, userId });
+    run({ page: 1, userId, applicationName });
   });
 
   // suggestion consent
@@ -247,12 +242,12 @@ export const useConsent = ({
   }, 350);
 
   const onChange = (current: number) => {
-    run({ search: data.keyword, page: current, userId });
+    run({ search: data.keyword, page: current, userId, applicationName });
   };
 
   const onSearchConsent = async (search: string, callback?: any) => {
     refCancelRequest.current = true;
-    await runAsync({ search, page: 1, userId });
+    await runAsync({ search, page: 1, userId, applicationName });
 
     if (callback) callback();
     setTimeout(() => {
@@ -265,6 +260,7 @@ export const useConsent = ({
 
     await reqUpdateConsent.runAsync({
       userId,
+      applicationName,
       content: consent,
       ConsentList: data?.listData,
     });
