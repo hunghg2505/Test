@@ -29,11 +29,7 @@ function DataSubjectDetail() {
       {isHavePermissionViewConsent && (
         <Consents userId={Number(businessProfileId)} refDataHistory={refDataHistory} />
       )}
-      <DataSubjectHistory
-        userId={businessProfileId || ''}
-        subjectId={businessProfileId || ''}
-        ref={refDataHistory}
-      />
+      <DataSubjectHistory userId={businessProfileId || ''} idNo={idNo} ref={refDataHistory} />
     </ContainerLayout>
   );
 }

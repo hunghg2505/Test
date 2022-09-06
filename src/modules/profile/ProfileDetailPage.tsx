@@ -2,7 +2,7 @@ import { useRequest, useUnmount } from 'ahooks';
 import UserInfo from 'libraries/components/UserInfo';
 import { ConsentsList } from 'modules/dataSubjectManagement/components/Consents';
 import { useConsent } from 'modules/dataSubjectManagement/components/Consents/service';
-import DataSubjectHistory from 'modules/dataSubjectManagement/components/DataSubjectHistory';
+// import DataSubjectHistory from 'modules/dataSubjectManagement/components/DataSubjectHistory';
 import { useNavigate, useParams } from 'react-router-dom';
 import ApiUtils from 'utils/api/api.utils';
 import { API_PATH } from 'utils/api/constant';
@@ -79,7 +79,7 @@ const ProfileDetailPage = () => {
     <div className={styles.container}>
       <UserInfo userInfo={data} isChangeProfile={false} />
       <Consents userId={data?.id || ''} />
-      <DataSubjectHistory userId={data?.id || ''} subjectId={data?.id} onlyView={true} />
+      {/* <DataSubjectHistory userId={data?.id || ''} onlyView={true} /> */}
     </div>
   );
 };
