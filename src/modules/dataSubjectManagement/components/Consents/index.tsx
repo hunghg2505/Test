@@ -323,7 +323,7 @@ export const ConsentsList = ({
   );
 };
 
-function Consents({ userId, refDataHistory }: { userId: number; refDataHistory: any }) {
+function Consents({ userId, refDataHistory }: { userId: string; refDataHistory: any }) {
   const {
     data,
     loading,
