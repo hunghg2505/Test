@@ -323,7 +323,15 @@ export const ConsentsList = ({
   );
 };
 
-function Consents({ userId, refDataHistory }: { userId: number; refDataHistory: any }) {
+function Consents({
+  userId,
+  applicationName,
+  refDataHistory,
+}: {
+  userId: string;
+  applicationName: any;
+  refDataHistory: any;
+}) {
   const {
     data,
     loading,
@@ -335,7 +343,7 @@ function Consents({ userId, refDataHistory }: { userId: number; refDataHistory: 
     onSuggestionConsentsDebounce,
     onLoadMoreSuggestionConsents,
     onResetSuggestionConsents,
-  } = useConsent({ userId });
+  } = useConsent({ userId, applicationName });
 
   const onSearch = (search: string, callback?: any) => {
     onSearchConsent(search, callback);
