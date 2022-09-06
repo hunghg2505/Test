@@ -22,6 +22,7 @@ export type IUserInfo = {
   nationality?: string;
   passportNo?: string;
   laserCode?: string;
+  application?: string;
 };
 
 export type TKeyUserInfo = keyof IUserInfo;
@@ -94,10 +95,11 @@ const getDataSubjectDetail = async (
       address: 'Test Address',
       dateOfBirth: r?.content?.dateOfBirth || '',
       nationality: r?.content?.nationality || '',
-      cardId: r?.content?.idType === 'Thai National ID Card' ? r?.content?.idNo : '',
-      passportNo: r?.content?.idType === 'Passport' ? r?.content?.idNo : '',
+      cardId: r?.content?.idType === 'thai-id' ? r?.content?.idNo : '',
+      passportNo: r?.content?.idType === 'passport' ? r?.content?.idNo : '',
       laserCode: r?.content?.thaiIdLaserNo || '',
       mobile: r?.content?.mobileNo || '',
+      application: r?.content?.application,
     },
   };
 };

@@ -17,6 +17,8 @@ interface ICreateCase {
   userProfileId: string | number;
   companyId: string;
   comment?: string;
+  dsName?: string;
+  application?: string;
 }
 
 const createCaseService = async (body: ICreateCase) => {

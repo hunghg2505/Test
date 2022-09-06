@@ -65,9 +65,9 @@ function UserProfile({
         const values = form.getFieldsValue(true);
         let idType;
         if (values?.nationality.toLowerCase() === 'thailand') {
-          idType = 'Thai National ID Card';
+          idType = 'thai-id';
         } else {
-          idType = 'Passport';
+          idType = 'passport';
         }
 
         updateUserProfileRequest.run({ ...values, idType, userProfileId: businessProfileId });

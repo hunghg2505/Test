@@ -215,7 +215,7 @@ const configRoutes: IRouter[] = [
   {
     path: routePath.ProfileHash,
     element: lazy(() => import('modules/profile/ProfileDetailPage')),
-    isAuth: false,
+    isAuth: true,
     roles: ['@'],
   },
   // Not Found
