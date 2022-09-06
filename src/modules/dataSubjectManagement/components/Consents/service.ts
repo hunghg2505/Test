@@ -32,7 +32,7 @@ export const getConsentService = async (
     limit: PAGE_SIZE,
     page: page || 1,
 
-    applicationName: applicationName || 'sc',
+    applicationName: applicationName,
     language: 'en',
     isFilterActive: false,
   };
@@ -285,7 +285,7 @@ export const useGenerateLink = (userId: any) => {
   return useRequest(
     async () => {
       const res: any = await ApiUtils.post(API_PATH.GENERATE_LINK, {
-        userId: `${userId}`,
+        businessProfileID: `${userId}`,
       });
       return `${window?.location?.origin}/${res?.content}` || '';
     },

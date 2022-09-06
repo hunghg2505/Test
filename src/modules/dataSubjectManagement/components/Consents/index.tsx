@@ -332,6 +332,10 @@ function Consents({
   applicationName: any;
   refDataHistory: any;
 }) {
+  if (!applicationName) {
+    return null;
+  }
+
   const {
     data,
     loading,

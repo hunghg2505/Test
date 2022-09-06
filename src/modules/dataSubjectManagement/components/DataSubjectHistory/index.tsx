@@ -105,6 +105,11 @@ function DataSubjectHistory(
   ref: any,
 ) {
   const { data: dataUserInfo } = useDataSubjectDetail(`${userId}`, `${idNo}`);
+
+  if (!dataUserInfo?.userInfo?.application) {
+    return null;
+  }
+
   const { data, loading, onChange, subjectHistoryData, refresh } = useDataSubjectHistory({
     userId,
     application: dataUserInfo?.userInfo?.application,
