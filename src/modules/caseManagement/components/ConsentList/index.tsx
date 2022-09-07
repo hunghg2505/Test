@@ -186,7 +186,7 @@ const Consents = ({ data, loading, onChange, onSearchConsent }: any) => {
 };
 
 function ConsentList({ userId }: { userId: string | undefined }) {
-  const { data, loading, onChange, onSearchConsent } = useConsent({ userId: Number(userId) });
+  const { data, loading, onChange, onSearchConsent } = useConsent({ userId: `${userId}` });
 
   return (
     <div className={styles.consentsWrap}>

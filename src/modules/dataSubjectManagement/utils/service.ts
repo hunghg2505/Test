@@ -22,6 +22,7 @@ export type IUserInfo = {
   nationality?: string;
   passportNo?: string;
   laserCode?: string;
+  application?: string;
 };
 
 export type TKeyUserInfo = keyof IUserInfo;
@@ -68,15 +69,19 @@ export const getDataManagementService = async (values: any): Promise<any> => {
         company: 'ABC Company default',
         email: item?.email || '',
         phoneNumber: item?.mobile || '',
-        application: 'Application 1 default',
-        action: `${item?.id}`,
+        application: item?.application,
+        action: `${item?.businessProfileId}/${item?.idNo}/${item?.application}`,
       })),
     params,
   };
 };
 
-const getDataSubjectDetail = async (id: string): Promise<IDataSubjectDetail> => {
-  const r: any = await ApiUtils.fetch(API_PATH.USER_PROFILE_DETAIL(id));
+const getDataSubjectDetail = async (
+  businessProfileId: string,
+  idNo: string,
+): Promise<IDataSubjectDetail> => {
+  const params = { businessProfileId, idNo };
+  const r: any = await ApiUtils.fetch(API_PATH.USER_PROFILE_DETAIL, params);
 
   return {
     userInfo: {
@@ -90,10 +95,11 @@ const getDataSubjectDetail = async (id: string): Promise<IDataSubjectDetail> => 
       address: 'Test Address',
       dateOfBirth: r?.content?.dateOfBirth || '',
       nationality: r?.content?.nationality || '',
-      cardId: r?.content?.cardId || '',
-      passportNo: r?.content?.passportNo || '',
-      laserCode: r?.content?.laserCode || '',
-      mobile: r?.content?.mobile || '',
+      cardId: r?.content?.idType === 'thai-id' ? r?.content?.idNo : '',
+      passportNo: r?.content?.idType === 'passport' ? r?.content?.idNo : '',
+      laserCode: r?.content?.thaiIdLaserNo || '',
+      mobile: r?.content?.mobileNo || '',
+      application: r?.content?.application,
     },
   };
 };
@@ -217,6 +223,6 @@ export const useDataSubjectManagement = () => {
   };
 };
 
-export const useDataSubjectDetail = (id: string) => {
-  return useRequest(async () => getDataSubjectDetail(id));
+export const useDataSubjectDetail = (businessProfileId: string, idNo: string) => {
+  return useRequest(async () => getDataSubjectDetail(businessProfileId, idNo));
 };

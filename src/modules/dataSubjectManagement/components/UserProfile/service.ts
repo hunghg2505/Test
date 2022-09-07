@@ -12,18 +12,18 @@ interface IEditUserProfile {
   lastNameTh?: string;
   dateOfBirth?: string;
   email?: string;
-  mobile?: string;
-  cardId?: string;
+  mobileNo?: string;
+  idType?: string;
+  idNo?: string;
   nationality?: string;
-  passportNo?: string;
-  laserCode?: string;
+  thaiIdLaserNo?: string;
 }
 
 export const checkParams = async (values: any) => {
   let params: any = {
     email: values?.email,
     cardId: values?.cardId,
-    laserCode: values?.laserCode,
+    thaiIdLaserNo: values?.thaiIdLaserNo,
     passportNo: values?.passportNo,
   };
 

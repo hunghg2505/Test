@@ -18,7 +18,7 @@ export const API_PATH = {
 
   // Data Subject Management
   FORGET_ME: (id: string | number) => `/data-subject/forget-me/${id}`,
-  USER_PROFILE_DETAIL: (id: string | number) => `/data-subject/user-profiles/${id}`,
+  USER_PROFILE_DETAIL: `/data-subject/business-profile`,
   USER_PROFILES: '/data-subject/user-profiles',
   SUBJECT_HISTORY: '/data-subject/subject-histories',
   SEARCH_USERS: '/data-subject/data-autocomplete',

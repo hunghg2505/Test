@@ -36,9 +36,17 @@ const IconEdit = (
   </svg>
 );
 
-function UserProfile({ id, isChangeProfile = true }: { id: any; isChangeProfile?: boolean }) {
+function UserProfile({
+  idNo,
+  businessProfileId,
+  isChangeProfile = true,
+}: {
+  idNo: any;
+  businessProfileId: any;
+  isChangeProfile?: boolean;
+}) {
   const { t } = useTranslation();
-  const { loading, data, refresh } = useDataSubjectDetail(`${id}`);
+  const { loading, data, refresh } = useDataSubjectDetail(`${businessProfileId}`, `${idNo}`);
   const { isHavePermissionEditProfile } = useDataSubjectManagementPermission();
   const [formDisabled, setFormDisabled] = useState(true);
   const [form] = Form.useForm();
@@ -55,7 +63,14 @@ function UserProfile({ id, isChangeProfile = true }: { id: any; isChangeProfile?
     try {
       if (form.getFieldsError().filter((item: any) => item?.errors?.length !== 0).length === 0) {
         const values = form.getFieldsValue(true);
-        updateUserProfileRequest.run({ ...values, userProfileId: id });
+        let idType;
+        if (values?.nationality.toLowerCase() === 'thailand') {
+          idType = 'thai-id';
+        } else {
+          idType = 'passport';
+        }
+
+        updateUserProfileRequest.run({ ...values, idType, userProfileId: businessProfileId });
       }
     } catch (error) {
       console.log(error);

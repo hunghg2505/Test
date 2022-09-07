@@ -17,6 +17,7 @@ import {
   useGetListDataDropDropdown,
 } from './service';
 import { CustomSelectDropdown as LoadmoreCustomSelectDropdown } from 'modules/consentManagement/components/CreateConsentForm';
+import { useDataSubjectDetail } from 'modules/dataSubjectManagement/utils/service';
 
 interface IProps {
   visible: boolean;
@@ -111,7 +112,8 @@ const { confirm } = Modal;
 
 const CreateCaseForm = ({ visible, onClose, refDataHistory }: IProps) => {
   const { t } = useTranslation();
-  const { id } = useParams();
+  const { businessProfileId, idNo } = useParams();
+  const { data: dataUserProfile } = useDataSubjectDetail(`${businessProfileId}`, `${idNo}`);
 
   const [acceptedDate, setAcceptedDate] = useState(moment());
   const [dateOfResponse, setDateOfResponse] = useState(null);
@@ -135,9 +137,12 @@ const CreateCaseForm = ({ visible, onClose, refDataHistory }: IProps) => {
   const onFinish = (values: any) => {
     createCaseFormRequest.run({
       ...values,
-      userProfileId: Number(id),
+      businessProfileId,
+      idNo,
       acceptedDate,
       dateOfResponse,
+      application: dataUserProfile?.userInfo?.application,
+      dsName: `${dataUserProfile?.userInfo?.firstNameEn} ${dataUserProfile?.userInfo?.lastNameEn}`,
     });
     setDateOfResponse(null);
     setAcceptedDate(moment());

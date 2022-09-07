@@ -17,7 +17,7 @@ test('Test value constant', () => {
 
   // Data Subject Management
   expect(API_PATH.FORGET_ME('1')).toBe(`/data-subject/forget-me/1`),
-    expect(API_PATH.USER_PROFILE_DETAIL('1')).toBe(`/data-subject/user-profiles/1`);
+    expect(API_PATH.USER_PROFILE_DETAIL).toBe(`/data-subject/business-profile`);
   expect(API_PATH.USER_PROFILES).toBe('/data-subject/user-profiles');
   expect(API_PATH.SUBJECT_HISTORY).toBe('/data-subject/subject-histories');
   expect(API_PATH.SEARCH_USERS).toBe('/data-subject/data-autocomplete');

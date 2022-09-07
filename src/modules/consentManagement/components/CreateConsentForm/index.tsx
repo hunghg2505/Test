@@ -1,12 +1,15 @@
 import { useCallback, useRef, useState } from 'react';
 
+import { CloseOutlined } from '@ant-design/icons';
 import ExclamationCircleOutlined from '@ant-design/icons/lib/icons/ExclamationCircleOutlined';
 import { useClickAway, useDebounceFn } from 'ahooks';
 import { Col, DatePicker, Divider, Form, Modal, Row } from 'antd';
+import dayjs from 'dayjs';
 import InputForm from 'libraries/form/input/input-form';
 import InputTextAreaForm from 'libraries/form/input/input-textarea-form';
 import Button from 'libraries/UI/Button';
 import Select from 'libraries/UI/Select';
+import { CustomSelectDropdown as DynamicSelectDropdown } from 'modules/dataSubjectManagement/components/CreateCaseForm';
 import moment from 'moment';
 import { useTranslation } from 'react-i18next';
 import { RegexUtils } from 'utils/regex-helper';
@@ -17,8 +20,6 @@ import {
   useGetListApplication,
   useGetListService,
 } from './service';
-import { CloseOutlined } from '@ant-design/icons';
-import { CustomSelectDropdown as DynamicSelectDropdown } from 'modules/dataSubjectManagement/components/CreateCaseForm';
 
 interface IProps {
   visible: boolean;
@@ -37,6 +38,7 @@ export const CustomSelectDropdown = ({
   isInModalAdvancedSearch,
   onClearValue,
   placeholder,
+  isRequired = false,
 }: any) => {
   const { t } = useTranslation();
   const [visible, setVisible] = useState(false);
@@ -88,7 +90,7 @@ export const CustomSelectDropdown = ({
         open={visible}
         onMouseDown={run}
         filterOption={false}
-        allowClear={isInModalAdvancedSearch ? true : false}
+        allowClear={isInModalAdvancedSearch && !isRequired ? true : false}
         clearIcon={<CloseOutlined onMouseDown={clearValue} />}
         dropdownRender={(menu: any) => (
           <>
@@ -154,13 +156,17 @@ const CreateConsentForm = ({ visible, onClose, onReloadConsentData }: IProps) =>
   const { t } = useTranslation();
   const [createConsentForm] = Form.useForm();
   const [expireOn, setExpireOn] = useState(null);
+  const [activationDate, setActivationDate] = useState(null);
+
   const [productId, setProductId] = useState('');
   const { data } = useGetDataDropdownConsent();
+  const { data: dataApplication } = useGetListApplication();
 
   const onFinishSubmitForm = () => {
     onClose();
     createConsentForm.resetFields();
     setExpireOn(null);
+    setActivationDate(null);
     onReloadConsentData();
     setProductId('');
   };
@@ -175,6 +181,9 @@ const CreateConsentForm = ({ visible, onClose, onReloadConsentData }: IProps) =>
     createConsentRequest.run({
       ...values,
       expireOn,
+      activationDate: dayjs(activationDate).format('YYYY-MM-DD'),
+      userRoleMap: dataApplication?.data?.find((item) => item.appName === values?.application)
+        ?.roleMap,
     });
     setExpireOn(null);
   };
@@ -222,7 +231,7 @@ const CreateConsentForm = ({ visible, onClose, onReloadConsentData }: IProps) =>
           <Col xs={12}>
             <InputForm
               label='Consent Name'
-              name='name'
+              name='consentName'
               required
               maxLength={55}
               rules={[
@@ -237,7 +246,7 @@ const CreateConsentForm = ({ visible, onClose, onReloadConsentData }: IProps) =>
           <Col xs={12}>
             <Form.Item
               label='Application'
-              name='applicationId'
+              name='application'
               required
               rules={[
                 {
@@ -246,7 +255,7 @@ const CreateConsentForm = ({ visible, onClose, onReloadConsentData }: IProps) =>
                 },
               ]}
             >
-              <FormItemApplication />
+              <FormItemApplication isRequired={true} isInModalAdvancedSearch={true} />
             </Form.Item>
           </Col>
           <Col xs={12} className={styles.info}>
@@ -310,37 +319,6 @@ const CreateConsentForm = ({ visible, onClose, onReloadConsentData }: IProps) =>
             </Form.Item>
           </Col>
           <Col xs={12}>
-            <p className={styles.datePickerLabel}>Expiry Date</p>
-            <DatePicker
-              getPopupContainer={(trigger: any) => trigger.parentElement}
-              format='DD/MM/YYYY'
-              style={{ width: '100%' }}
-              size='large'
-              onChange={(date: any) => setExpireOn(date)}
-              value={expireOn}
-              placeholder='dd/mm/yyyy'
-              disabledDate={disabledDate}
-              superPrevIcon={null}
-              prevIcon={null}
-              dropdownClassName={styles.datePickerDropdown}
-            />
-          </Col>
-          <Col xs={12}>
-            <InputForm
-              label='Title'
-              name='title'
-              required
-              maxLength={55}
-              rules={[
-                {
-                  required: true,
-                  message: t('messages.errors.require', { field: 'Title' }),
-                },
-              ]}
-              placeholder='Title'
-            />
-          </Col>
-          <Col xs={12}>
             <InputForm
               label='Version'
               name='version'
@@ -364,11 +342,67 @@ const CreateConsentForm = ({ visible, onClose, onReloadConsentData }: IProps) =>
               ]}
             />
           </Col>
+          <Col xs={12}>
+            <p className={styles.datePickerLabel}>
+              Activation Date <span style={{ color: 'red' }}>*</span>
+            </p>
+            <DatePicker
+              getPopupContainer={(trigger: any) => trigger.parentElement}
+              format='DD/MM/YYYY'
+              style={{ width: '100%' }}
+              size='large'
+              onChange={(date: any) => setActivationDate(date)}
+              value={activationDate}
+              placeholder='dd/mm/yyyy'
+            />
+          </Col>
+          <Col xs={12}>
+            <p className={styles.datePickerLabel}>Expiry Date</p>
+            <DatePicker
+              getPopupContainer={(trigger: any) => trigger.parentElement}
+              format='DD/MM/YYYY'
+              style={{ width: '100%' }}
+              size='large'
+              onChange={(date: any) => setExpireOn(date)}
+              value={expireOn}
+              placeholder='dd/mm/yyyy'
+              disabledDate={disabledDate}
+              superPrevIcon={null}
+              prevIcon={null}
+              dropdownClassName={styles.datePickerDropdown}
+            />
+          </Col>
+          <Col xs={12}>
+            <InputForm label='Title EN' name='titleEn' maxLength={55} placeholder='Title En' />
+          </Col>
+          <Col xs={12}>
+            <InputForm label='Title TH' name='titleTh' maxLength={55} placeholder='Title Th' />
+          </Col>
+
           <Col xs={24}>
             <InputTextAreaForm
-              name='content'
+              name='contentEn'
               label='Content'
-              placeholder='Consent content'
+              placeholder='Consent content En'
+              rows={6}
+              className={styles.textarea}
+              classNameFormInput={styles.errorMessage}
+              maxLength={500}
+              required
+              showCount={true}
+              rules={[
+                {
+                  required: true,
+                  message: t('messages.errors.require', { field: 'Content' }),
+                },
+              ]}
+            />
+          </Col>
+          <Col xs={24} style={{ marginTop: 24, marginBottom: 24 }}>
+            <InputTextAreaForm
+              name='contentTh'
+              label='Content'
+              placeholder='Consent content Th'
               rows={6}
               className={styles.textarea}
               classNameFormInput={styles.errorMessage}

@@ -47,7 +47,9 @@ const ProfileDetailPage = () => {
     );
 
     return {
-      id: r?.content?.id,
+      id: r?.content?.businessProfileId,
+      application: r?.content?.application,
+      idNo: getDataById(r?.content?.idNo),
       imageUrl: '',
       firstNameEn: getDataById(r?.content?.firstNameEn),
       lastNameEn: getDataById(r?.content?.lastNameEn),
@@ -57,10 +59,10 @@ const ProfileDetailPage = () => {
       address: 'Test Address',
       dateOfBirth: getDataById(r?.content?.dateOfBirth),
       nationality: getDataById(r?.content?.nationality),
-      cardId: getDataById(r?.content?.cardId),
-      passportNo: getDataById(r?.content?.passportNo),
-      laserCode: getDataById(r?.content?.laserCode),
-      mobile: getDataById(r?.content?.mobile),
+      cardId: r?.content?.idType === 'thai-id' ? getDataById(r?.content?.idNo) : '',
+      passportNo: r?.content?.idType === 'passport' ? getDataById(r?.content?.idNo) : '',
+      laserCode: getDataById(r?.content?.thaiIdLaserNo),
+      mobile: getDataById(r?.content?.mobileNo),
     };
   });
 
@@ -78,8 +80,12 @@ const ProfileDetailPage = () => {
   return (
     <div className={styles.container}>
       <UserInfo userInfo={data} isChangeProfile={false} />
-      <Consents userId={data?.id || ''} />
-      <DataSubjectHistory userId={data?.id || ''} subjectId={data?.id} onlyView={true} />
+      {data?.application && (
+        <>
+          <Consents userId={data?.id || ''} applicationName={data?.application} />
+          <DataSubjectHistory userId={data?.id || ''} idNo={data?.idNo} onlyView={true} />
+        </>
+      )}
     </div>
   );
 };
