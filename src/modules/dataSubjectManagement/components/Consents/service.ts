@@ -111,16 +111,16 @@ const getConsentsChecked = ({ content, ConsentList }: any) => {
   return newConsent;
 };
 
-export const updateConsent = async ({ userId, content, ConsentList }: any) => {
+export const updateConsent = async ({ userId, content, ConsentList, applicationName }: any) => {
   const newConsent = getConsentsChecked({ content, ConsentList });
 
   const body = {
     businessProfileId: userId,
-    application: 'sc',
+    application: applicationName,
     consents: newConsent,
   };
 
-  // return ApiUtils.post(API_PATH.OPT_OUT_IN, body);
+  return ApiUtils.post(API_PATH.OPT_OUT_IN, body);
 };
 
 const getSuggestionConsents = async (userId: any, search: string, page = 1) => {
@@ -156,6 +156,9 @@ export const useConsent = ({
   applicationName?: any;
 }) => {
   const refCancelRequest: any = useRef(false);
+  console.log({
+    applicationName,
+  });
 
   const [consentSuggest, setConsentSuggest] = useState<{
     data: any[];
