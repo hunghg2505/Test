@@ -28,8 +28,13 @@ export const getConsentManagementService = async (values: any): Promise<any> => 
         key: `${item?.id}`,
         updatedDate: dayjs(item?.updatedAt).format('DD/MM/YYYY'),
         createdDate: dayjs(item?.createdAt).format('DD/MM/YYYY'),
-        appName: item?.__application__?.name,
+        appName: item?.application,
         appId: item?.__application__?.id,
+
+        name: item?.consentName,
+        contentEn: item?.contentEn,
+        contentTh: item?.contentTh,
+
         status: item?.__status__?.name,
       })) || [],
     appName: params?.appName || '',

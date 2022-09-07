@@ -89,8 +89,14 @@ const columns: ColumnsType<DataType> = [
     width: 100,
   },
   {
-    title: 'Consent Content',
-    dataIndex: 'content',
+    title: 'Consent Content EN',
+    dataIndex: 'contentEn',
+    key: 'description',
+    width: 546,
+  },
+  {
+    title: 'Consent Content TH',
+    dataIndex: 'contentTh',
     key: 'description',
     width: 546,
   },

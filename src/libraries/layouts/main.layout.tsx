@@ -4,11 +4,12 @@ import Sider from 'antd/lib/layout/Sider';
 import { ItemType } from 'antd/lib/menu/hooks/useItems';
 import IconInfo from 'assets/icons/icon-info';
 import Logo from 'assets/icons/logo';
+import clsx from 'clsx';
 import useAuth from 'hooks/redux/auth/useAuth';
 import withAuthClient from 'middlewares/withAuthClient';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { Outlet, useLocation, useNavigate, useParams } from 'react-router-dom';
 import configRoutes from 'routing/config.routing';
 import { getMenu } from 'utils/get-menu.utils';
 import MainHeader from './header/MainHeader';
@@ -21,6 +22,7 @@ function MainLayout() {
   const navigate = useNavigate();
   const { auth, onLogout } = useAuth();
   const location = useLocation();
+  const { hash } = useParams();
   const screens = useBreakpoint();
   const { t } = useTranslation();
 
@@ -78,12 +80,27 @@ function MainLayout() {
     );
   };
 
+  const checkHiddenMenu = useMemo(
+    () =>
+      !location.pathname?.includes('consent') &&
+      !location.pathname?.includes('data-subject') &&
+      !location.pathname?.includes('user-management') &&
+      !location.pathname?.includes('system-configuration') &&
+      hash,
+    [location.pathname],
+  );
+
   return (
     <Layout className='min-height'>
       <SEO />
 
       <Layout className={styles.container}>
-        <Sider width={285} className={styles.siderView}>
+        <Sider
+          width={285}
+          className={clsx(styles.siderView, {
+            [styles.hiddenMenu]: checkHiddenMenu,
+          })}
+        >
           <div className={styles.logo}>
             <Logo />
           </div>

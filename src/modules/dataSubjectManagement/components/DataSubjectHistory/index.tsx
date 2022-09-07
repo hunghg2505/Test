@@ -100,12 +100,18 @@ const ICON_GRID = (
 );
 
 function DataSubjectHistory(
-  { userId, subjectId, onlyView }: { userId: string; subjectId: string; onlyView?: boolean },
+  {
+    userId,
+    onlyView,
+    applicationName,
+  }: { userId: string; idNo: string; onlyView?: boolean; applicationName?: any },
   ref: any,
 ) {
+  // const { data: dataUserInfo } = useDataSubjectDetail(`${userId}`, `${idNo}`);
+
   const { data, loading, onChange, subjectHistoryData, refresh } = useDataSubjectHistory({
     userId,
-    subjectId,
+    application: applicationName,
     onlyView,
   });
 
@@ -114,6 +120,10 @@ function DataSubjectHistory(
       refreshDataHistory: refresh,
     };
   });
+
+  if (!applicationName) {
+    return null;
+  }
 
   return (
     <div className={styles.dsHistoryWrap}>
