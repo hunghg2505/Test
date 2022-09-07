@@ -70,7 +70,7 @@ export const getDataManagementService = async (values: any): Promise<any> => {
         email: item?.email || '',
         phoneNumber: item?.mobile || '',
         application: item?.application,
-        action: `${item?.businessProfileId}/${item?.idNo}`,
+        action: `${item?.businessProfileId}/${item?.idNo}/${item?.application}`,
       })),
     params,
   };

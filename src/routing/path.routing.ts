@@ -4,7 +4,7 @@ export const routePath = {
   ProfileHash: '/:hash',
   Reports: '/reports',
   DataSubjectManagement: '/data-subject',
-  DataSubjectDetail: '/data-subject/:businessProfileId/:idNo',
+  DataSubjectDetail: '/data-subject/:businessProfileId/:idNo/:application',
   CaseManagement: '/case-management',
   CaseManagementDetail: '/case-management/:id',
   AssignToYou: '/case-management/assign-to-you',

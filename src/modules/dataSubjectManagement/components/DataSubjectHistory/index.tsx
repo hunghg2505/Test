@@ -2,7 +2,6 @@ import { Row, Table, Tooltip } from 'antd';
 import { ColumnsType } from 'antd/lib/table';
 import clsx from 'clsx';
 import { paginationItemRender } from 'libraries/UI/Pagination';
-import { useDataSubjectDetail } from 'modules/dataSubjectManagement/utils/service';
 import { forwardRef, useImperativeHandle } from 'react';
 import styles from './index.module.scss';
 import { useDataSubjectHistory } from './service';
@@ -101,14 +100,18 @@ const ICON_GRID = (
 );
 
 function DataSubjectHistory(
-  { userId, idNo, onlyView }: { userId: string; idNo: string; onlyView?: boolean },
+  {
+    userId,
+    onlyView,
+    applicationName,
+  }: { userId: string; idNo: string; onlyView?: boolean; applicationName?: any },
   ref: any,
 ) {
-  const { data: dataUserInfo } = useDataSubjectDetail(`${userId}`, `${idNo}`);
+  // const { data: dataUserInfo } = useDataSubjectDetail(`${userId}`, `${idNo}`);
 
   const { data, loading, onChange, subjectHistoryData, refresh } = useDataSubjectHistory({
     userId,
-    application: dataUserInfo?.userInfo?.application,
+    application: applicationName,
     onlyView,
   });
 
@@ -118,7 +121,7 @@ function DataSubjectHistory(
     };
   });
 
-  if (!dataUserInfo?.userInfo?.application) {
+  if (!applicationName) {
     return null;
   }
 
