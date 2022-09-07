@@ -129,11 +129,11 @@ export const useCreateApplication = (onFinishSubmitForm: any) => {
       },
       onError: (error: any) => {
         onFinishSubmitForm(error);
-        // message.error(
-        //   error?.content?.messageContent
-        //     ? `${error?.content?.messageContent}`
-        //     : 'Create Application Error',
-        // );
+        message.error(
+          error?.content?.messageContent
+            ? `${error?.content?.messageContent}`
+            : 'Create Application Error',
+        );
       },
     },
   );
@@ -153,11 +153,11 @@ export const useEditApplication = (onFinishSubmitForm: any) => {
       onError: (error: any) => {
         onFinishSubmitForm(error);
 
-        // message.error(
-        //   error?.content?.messageContent
-        //     ? `${error?.content?.messageContent}`
-        //     : 'Edit Application Error',
-        // );
+        message.error(
+          error?.content?.messageContent
+            ? `${error?.content?.messageContent}`
+            : 'Edit Application Error',
+        );
       },
     },
   );
