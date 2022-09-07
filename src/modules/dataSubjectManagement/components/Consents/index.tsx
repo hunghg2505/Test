@@ -332,10 +332,6 @@ function Consents({
   applicationName: any;
   refDataHistory: any;
 }) {
-  if (!applicationName) {
-    return null;
-  }
-
   const {
     data,
     loading,
@@ -348,6 +344,10 @@ function Consents({
     onLoadMoreSuggestionConsents,
     onResetSuggestionConsents,
   } = useConsent({ userId, applicationName });
+
+  if (!applicationName) {
+    return null;
+  }
 
   const onSearch = (search: string, callback?: any) => {
     onSearchConsent(search, callback);

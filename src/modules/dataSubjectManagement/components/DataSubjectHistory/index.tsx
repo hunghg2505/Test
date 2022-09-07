@@ -106,10 +106,6 @@ function DataSubjectHistory(
 ) {
   const { data: dataUserInfo } = useDataSubjectDetail(`${userId}`, `${idNo}`);
 
-  if (!dataUserInfo?.userInfo?.application) {
-    return null;
-  }
-
   const { data, loading, onChange, subjectHistoryData, refresh } = useDataSubjectHistory({
     userId,
     application: dataUserInfo?.userInfo?.application,
@@ -121,6 +117,10 @@ function DataSubjectHistory(
       refreshDataHistory: refresh,
     };
   });
+
+  if (!dataUserInfo?.userInfo?.application) {
+    return null;
+  }
 
   return (
     <div className={styles.dsHistoryWrap}>

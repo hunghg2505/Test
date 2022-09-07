@@ -185,6 +185,13 @@ const configRoutes: IRouter[] = [
       //   name: 'Consent Management',
       //   hiddenMenu: true
       // },
+      // test
+      {
+        path: routePath.ProfileHash,
+        element: lazy(() => import('modules/profile/ProfileDetailPage')),
+        isAuth: true,
+        roles: ['@'],
+      },
 
       // Not Found
       {
@@ -212,12 +219,7 @@ const configRoutes: IRouter[] = [
   },
 
   // Profile hash
-  {
-    path: routePath.ProfileHash,
-    element: lazy(() => import('modules/profile/ProfileDetailPage')),
-    isAuth: true,
-    roles: ['@'],
-  },
+
   // Not Found
   {
     path: '*',

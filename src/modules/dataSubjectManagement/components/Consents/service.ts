@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { useMount, useRequest } from 'ahooks';
 import { message } from 'antd';
-import dayjs from 'dayjs';
 import debounce from 'lodash/debounce';
 import get from 'lodash/get';
 import { useRef, useState } from 'react';

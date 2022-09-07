@@ -4,11 +4,12 @@ import Sider from 'antd/lib/layout/Sider';
 import { ItemType } from 'antd/lib/menu/hooks/useItems';
 import IconInfo from 'assets/icons/icon-info';
 import Logo from 'assets/icons/logo';
+import clsx from 'clsx';
 import useAuth from 'hooks/redux/auth/useAuth';
 import withAuthClient from 'middlewares/withAuthClient';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { Outlet, useLocation, useNavigate, useParams } from 'react-router-dom';
 import configRoutes from 'routing/config.routing';
 import { getMenu } from 'utils/get-menu.utils';
 import MainHeader from './header/MainHeader';
@@ -21,6 +22,7 @@ function MainLayout() {
   const navigate = useNavigate();
   const { auth, onLogout } = useAuth();
   const location = useLocation();
+  const { hash } = useParams();
   const screens = useBreakpoint();
   const { t } = useTranslation();
 
@@ -29,6 +31,7 @@ function MainLayout() {
   const [defaultSelected, setDefaultSelected] = useState<string[]>([]);
 
   const [showSider, setShowSider] = useState(true);
+  const [hiddenMenu, setHiddenMenu] = useState(false);
 
   useEffect(() => {
     if (screens.md) {
@@ -54,6 +57,20 @@ function MainLayout() {
       setDefaultSelected(newDefaultSelected);
     }
   }, [location.pathname, menus]);
+
+  useEffect(() => {
+    const path = location?.pathname;
+
+    if (
+      !path?.includes('consent') &&
+      !path?.includes('data-subject') &&
+      !path?.includes('user-management') &&
+      !path?.includes('system-configuration') &&
+      hash
+    ) {
+      setHiddenMenu(true);
+    }
+  }, [location.pathname]);
 
   const onClickMenu = (event: any) => {
     navigate(event.key);
@@ -83,7 +100,12 @@ function MainLayout() {
       <SEO />
 
       <Layout className={styles.container}>
-        <Sider width={285} className={styles.siderView}>
+        <Sider
+          width={285}
+          className={clsx(styles.siderView, {
+            [styles.hiddenMenu]: hiddenMenu,
+          })}
+        >
           <div className={styles.logo}>
             <Logo />
           </div>
