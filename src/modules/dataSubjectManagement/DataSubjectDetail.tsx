@@ -10,7 +10,7 @@ import UserProfile from './components/UserProfile';
 
 function DataSubjectDetail() {
   // delete id when done, for testing
-  const { businessProfileId, idNo } = useParams();
+  const { businessProfileId, idNo, application } = useParams();
   const navigate = useNavigate();
   const refDataHistory: any = useRef(null);
   const { isHavePermissionViewConsent } = useConsentManagementPermission();
@@ -29,11 +29,16 @@ function DataSubjectDetail() {
       {isHavePermissionViewConsent && (
         <Consents
           userId={businessProfileId}
-          applicationName={null}
+          applicationName={application}
           refDataHistory={refDataHistory}
         />
       )}
-      <DataSubjectHistory userId={businessProfileId || ''} idNo={idNo} ref={refDataHistory} />
+      <DataSubjectHistory
+        userId={businessProfileId || ''}
+        applicationName={application}
+        idNo={idNo}
+        ref={refDataHistory}
+      />
     </ContainerLayout>
   );
 }
