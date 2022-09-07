@@ -1,9 +1,9 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useClickAway } from 'ahooks';
-import { Checkbox, Col, Collapse, Form, message, Pagination, Row } from 'antd';
+import { Checkbox, Col, Form, message, Pagination, Row } from 'antd';
 
-import ArrowDownCollapse from 'assets/icons/icon-arrow-down-collapse';
-import ArrowUpCollapse from 'assets/icons/icon-arrow-up-collapse';
 import IconSearch from 'assets/icons/icon-search';
+import clsx from 'clsx';
 import useCaseManagementPermission from 'hooks/useCaseManagementPermission';
 import useCopyToClipboard from 'hooks/useCopyToClipboard';
 import useDataSubjectManagementPermission from 'hooks/useDataSubjectManagementPermission';
@@ -18,21 +18,16 @@ import styles from './index.module.scss';
 import { useConsent, useGenerateLink } from './service';
 import SuggestConsents from './SuggestConsents';
 
-const { Panel } = Collapse;
-
 export interface DataType {
-  key: string;
+  id: number;
   name: string;
   lastUpdated: string;
   version: string;
   status: string;
   description: string;
-  list?: {
-    title: string;
-    description: string;
-    value: string;
-  }[];
-  defaultValue: { [key: string]: string };
+  selected: boolean;
+  value: string;
+  title: string;
 }
 
 const SearchBox = ({
@@ -159,45 +154,6 @@ const SearchBox = ({
   );
 };
 
-const ConsentOption = ({
-  value,
-  onChange,
-  dataConsent,
-  isHavePermissionSaveConsent,
-  onlyView,
-}: any) => {
-  const onChangeValues = (checkedValues: any) => {
-    onChange(checkedValues);
-  };
-
-  let disable = !isHavePermissionSaveConsent;
-  if (onlyView) disable = true;
-
-  if (!dataConsent?.length) {
-    return null;
-  }
-
-  return (
-    <Checkbox.Group onChange={onChangeValues} defaultValue={value} disabled={disable}>
-      {dataConsent.map((item: any) => {
-        return (
-          <Checkbox key={item.value} value={item.value}>
-            <h4>{item.title}</h4>
-            <Row className={styles.consentInfo}>
-              <Col>{item?.lastUpdated}</Col>
-              <Col>{item?.version}</Col>
-              <Col className={item?.status === 'Published' ? styles.active : ''}>
-                {item?.status}
-              </Col>
-            </Row>
-            <div>{item.description}</div>
-          </Checkbox>
-        );
-      })}
-    </Checkbox.Group>
-  );
-};
-
 export const ConsentsList = ({
   data,
   loading,
@@ -215,12 +171,10 @@ export const ConsentsList = ({
   const requestGenerateLink = useGenerateLink(userId);
 
   const initialValues = data?.data?.reduce((acc: any, v: any) => {
-    acc[v?.name] = [];
-    v?.list?.forEach((it: any) => {
-      if (it?.selected) acc[v?.name].push(it?.value);
-    });
-
-    return acc;
+    return {
+      ...acc,
+      [v?.id]: v?.selected,
+    };
   }, {});
 
   const onUpdateConsent = (value: any) => {
@@ -235,6 +189,9 @@ export const ConsentsList = ({
       console.log('err', err);
     }
   };
+
+  let disable = !isHavePermissionSaveConsent;
+  if (onlyView) disable = true;
 
   if (loading) return null;
 
@@ -252,34 +209,44 @@ export const ConsentsList = ({
           <p className={styles.noResultText}>{t('no_result_found')}</p>
         ) : (
           <div className={styles.listConsent}>
-            <Collapse
-              // accordion
-              expandIcon={({ isActive }) => {
-                return isActive ? ArrowUpCollapse : ArrowDownCollapse;
-              }}
-            >
-              {data?.data?.map((it: DataType) => {
-                return (
-                  <Panel
-                    key={it?.key}
-                    header={
-                      <div className={styles.panelHeader}>
-                        <div className={styles.name}>{it?.name}</div>
-                        <div className={styles.description}>{it?.description}</div>
-                      </div>
-                    }
-                  >
-                    <Form.Item className={styles.panelContent} name={`${it?.key}`}>
-                      <ConsentOption
-                        dataConsent={it?.list}
-                        isHavePermissionSaveConsent={isHavePermissionSaveConsent}
-                        onlyView={onlyView}
-                      />
+            {data?.data?.map((it: DataType) => {
+              return (
+                <Row
+                  key={it?.id}
+                  className={styles.consentItem}
+                  align='middle'
+                  justify='space-between'
+                >
+                  <Col flex='1'>
+                    <p className={styles.name}>{it?.title}</p>
+                    <Row className={styles.consentInfo} align='middle'>
+                      <p>{it?.lastUpdated}</p>
+
+                      <p>{it?.version}</p>
+
+                      <p
+                        className={clsx(styles.status, {
+                          [styles.statusActive]: it?.status === 'Published',
+                        })}
+                      >
+                        {it?.status}
+                      </p>
+                    </Row>
+                    <p className={styles.description}>{it?.description}</p>
+                  </Col>
+                  <Col>
+                    <Form.Item
+                      className={styles.panelContent}
+                      name={`${it?.id}`}
+                      valuePropName='checked'
+                    >
+                      <Checkbox disabled={disable} />
                     </Form.Item>
-                  </Panel>
-                );
-              })}
-            </Collapse>
+                  </Col>
+                </Row>
+              );
+            })}
+
             <Row justify='space-between'>
               <Pagination
                 className={styles.pagination}
