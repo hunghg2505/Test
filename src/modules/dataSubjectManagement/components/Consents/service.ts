@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useMount, useRequest } from 'ahooks';
 import { message } from 'antd';
 import debounce from 'lodash/debounce';
@@ -179,9 +178,7 @@ export const useConsent = ({
     onSuccess: () => {
       message.success('Update Consent Success');
     },
-    onError: (e) => {
-      console.log(e);
-
+    onError: () => {
       message.error('Update Consent Fail');
     },
   });
@@ -192,6 +189,7 @@ export const useConsent = ({
 
   // suggestion consent
   const requestSuggestionConsents = useRequest(
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     async (value: string, page = 1, _isLoadMore = false) => {
       if (refCancelRequest.current) throw new Error('Cancel Request');
 
