@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useMount, useRequest } from 'ahooks';
 import { message } from 'antd';
 import debounce from 'lodash/debounce';
@@ -35,41 +34,31 @@ export const getConsentService = async (
     language: 'en',
     isFilterActive: false,
   };
+
   if (!applicationName) {
     return;
   }
+
   const PATH = !onlyView ? API_PATH.CONSENTS : API_PATH.CONSENT_ONLY_VIEW;
   const r: any = await ApiUtils.fetch(PATH, params);
 
   const formatConsents = r?.content?.data?.map((item: any) => {
-    const appDes = item?.consents
-      ?.map((consent: any) => get(consent, 'title', ''))
-      ?.filter((v: any) => v)
-      ?.join(', ');
+    const val = {
+      appName: item.application,
+      consentName: get(item, 'consentName', ''),
+      version: get(item, 'version', ''),
+      checked: get(item, 'status', '') === 'active',
+    };
 
     return {
-      key: `${item?.app_name}`,
-      name: item?.app_name,
-      description: appDes || '',
-      list: item?.consents?.map((consent: any) => {
-        const val = {
-          appName: consent.application,
-          consentName: get(consent, 'consentName', ''),
-          version: get(consent, 'version', ''),
-          checked: get(consent, 'status', '') === 'active',
-        };
-
-        return {
-          id: consent.consent_id,
-          title: get(consent, 'consentName', ''),
-          value: JSON.stringify(val),
-          description: get(consent, 'content', ''),
-          lastUpdated: '',
-          version: `Version ${get(consent, 'version', '') || ''}`,
-          status: capitalizeFirstLetter(get(consent, 'status', '') || 'draft'),
-          selected: get(consent, 'status', '') === 'active',
-        };
-      }),
+      id: item.no,
+      title: get(item, 'consentName', ''),
+      value: JSON.stringify(val),
+      description: get(item, 'content', ''),
+      lastUpdated: '',
+      version: `Version ${get(item, 'version', '') || ''}`,
+      status: capitalizeFirstLetter(get(item, 'status', '') || 'draft'),
+      selected: get(item, 'status', '') === 'active',
     };
   });
 
@@ -86,29 +75,26 @@ export const getConsentService = async (
 const getConsentsChecked = ({ content, ConsentList }: any) => {
   const newConsent: any = [];
 
-  Object.keys(content)?.forEach((initialKey) => {
-    const consentIniti = content[initialKey];
-    const itemSelect = ConsentList?.find((it: any) => it?.name === initialKey);
+  Object.keys(content)?.forEach((consentId) => {
+    const valSelection = content[consentId];
 
-    itemSelect?.list?.forEach((v: any) => {
-      const isExist = consentIniti?.find((id: any) => id === v?.value);
-      const parseVal = JSON.parse(v?.value);
+    const consentItemInList = ConsentList?.find((it: any) => `${it?.id}` === `${consentId}`);
 
-      if (isExist && !v?.selected) {
+    if (consentItemInList.selected !== valSelection) {
+      if (consentItemInList.selected) {
         newConsent.push({
-          consentName: parseVal?.consentName,
-          version: parseVal?.version,
+          consentName: consentItemInList?.title,
+          version: consentItemInList?.version,
+          flag: false,
+        });
+      } else {
+        newConsent.push({
+          consentName: consentItemInList?.title,
+          version: consentItemInList?.version,
           flag: true,
         });
       }
-      if (!isExist && v?.selected) {
-        newConsent.push({
-          consentName: parseVal?.consentName,
-          version: parseVal?.version,
-          flag: false,
-        });
-      }
-    });
+    }
   });
 
   return newConsent;
@@ -126,19 +112,27 @@ export const updateConsent = async ({ userId, content, ConsentList, applicationN
   return ApiUtils.post(API_PATH.OPT_OUT_IN, body);
 };
 
-const getSuggestionConsents = async (userId: any, search: string, page = 1) => {
+const getSuggestionConsents = async (
+  userId: any,
+  search: string,
+  applicationName: any,
+  page = 1,
+) => {
   const params = {
     keyword: search,
-    userId: userId,
+    businessProfileID: userId,
     limit: 10,
     page,
+    applicationName: applicationName,
+    language: 'en',
+    isFilterActive: false,
   };
 
   const res: any = await ApiUtils.fetch(API_PATH.CONSENTS, params);
 
   const dataUnique = res?.content?.data?.map((v: any, idx: any) => ({
     id: idx,
-    name: v?.app_name,
+    name: v?.consentName,
   }));
 
   return {
@@ -159,9 +153,6 @@ export const useConsent = ({
   applicationName?: any;
 }) => {
   const refCancelRequest: any = useRef(false);
-  console.log({
-    applicationName,
-  });
 
   const [consentSuggest, setConsentSuggest] = useState<{
     data: any[];
@@ -198,10 +189,11 @@ export const useConsent = ({
 
   // suggestion consent
   const requestSuggestionConsents = useRequest(
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     async (value: string, page = 1, _isLoadMore = false) => {
       if (refCancelRequest.current) throw new Error('Cancel Request');
 
-      return getSuggestionConsents(userId, value, page);
+      return getSuggestionConsents(userId, value, applicationName, page);
     },
     {
       manual: true,
@@ -269,7 +261,7 @@ export const useConsent = ({
       content: consent,
       ConsentList: data?.listData,
     });
-    // refresh();
+    refresh();
   };
 
   return {
