@@ -7,6 +7,9 @@ import { API_PATH } from 'utils/api/constant';
 import { formatIdSubjectHistory } from 'utils/common.utils';
 
 export const getDataSubjectHistoryService = async (value: any): Promise<any> => {
+  if (!value.application) {
+    return;
+  }
   const PATH = !value?.onlyView ? API_PATH.SUBJECT_HISTORY : API_PATH.SUBJECT_HISTORY_ONLY_VIEW;
 
   const r: any = await ApiUtils.fetch(PATH, {

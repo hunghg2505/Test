@@ -35,6 +35,9 @@ export const getConsentService = async (
     language: 'en',
     isFilterActive: false,
   };
+  if (!applicationName) {
+    return;
+  }
   const PATH = !onlyView ? API_PATH.CONSENTS : API_PATH.CONSENT_ONLY_VIEW;
   const r: any = await ApiUtils.fetch(PATH, params);
 
