@@ -7,7 +7,7 @@ import Logo from 'assets/icons/logo';
 import clsx from 'clsx';
 import useAuth from 'hooks/redux/auth/useAuth';
 import withAuthClient from 'middlewares/withAuthClient';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Outlet, useLocation, useNavigate, useParams } from 'react-router-dom';
 import configRoutes from 'routing/config.routing';
@@ -31,7 +31,6 @@ function MainLayout() {
   const [defaultSelected, setDefaultSelected] = useState<string[]>([]);
 
   const [showSider, setShowSider] = useState(true);
-  const [hiddenMenu, setHiddenMenu] = useState(false);
 
   useEffect(() => {
     if (screens.md) {
@@ -58,20 +57,6 @@ function MainLayout() {
     }
   }, [location.pathname, menus]);
 
-  useEffect(() => {
-    const path = location?.pathname;
-
-    if (
-      !path?.includes('consent') &&
-      !path?.includes('data-subject') &&
-      !path?.includes('user-management') &&
-      !path?.includes('system-configuration') &&
-      hash
-    ) {
-      setHiddenMenu(true);
-    }
-  }, [location.pathname]);
-
   const onClickMenu = (event: any) => {
     navigate(event.key);
   };
@@ -95,6 +80,16 @@ function MainLayout() {
     );
   };
 
+  const checkHiddenMenu = useMemo(
+    () =>
+      !location.pathname?.includes('consent') &&
+      !location.pathname?.includes('data-subject') &&
+      !location.pathname?.includes('user-management') &&
+      !location.pathname?.includes('system-configuration') &&
+      hash,
+    [location.pathname],
+  );
+
   return (
     <Layout className='min-height'>
       <SEO />
@@ -103,7 +98,7 @@ function MainLayout() {
         <Sider
           width={285}
           className={clsx(styles.siderView, {
-            [styles.hiddenMenu]: hiddenMenu,
+            [styles.hiddenMenu]: checkHiddenMenu,
           })}
         >
           <div className={styles.logo}>
