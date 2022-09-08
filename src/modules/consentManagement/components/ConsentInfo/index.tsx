@@ -85,6 +85,23 @@ const ConsentInfo = ({ data, onClickEdit }: any) => {
         </Col>
         <Col xs={2}></Col>
         <Col xs={11} className={styles.info}>
+          <p className={styles.label}>
+            Version <span className={styles.asterisk}>*</span>
+          </p>
+          <p className={styles.value}>{data?.version}</p>
+        </Col>
+      </Row>
+      <Row>
+        <Col xs={11} className={styles.info}>
+          <p className={styles.label}>
+            Activation Date<span className={styles.asterisk}>*</span>
+          </p>
+          <p className={styles.value}>
+            {data?.activationDate ? dayjs(data?.activationDate).format('DD/MM/YY') : 'N/A'}
+          </p>
+        </Col>
+        <Col xs={2}></Col>
+        <Col xs={11} className={styles.info}>
           <p className={styles.label}>Expiry Date</p>
           <p className={clsx(styles.value, styles.leftSpace)}>
             {data?.expireOn ? dayjs(data?.expireOn).format('DD/MM/YY') : 'N/A'}
@@ -94,25 +111,35 @@ const ConsentInfo = ({ data, onClickEdit }: any) => {
       <Row>
         <Col xs={11} className={styles.info}>
           <p className={styles.label}>
-            Title <span className={styles.asterisk}>*</span>
+            Title EN<span className={styles.asterisk}>*</span>
           </p>
-          <p className={styles.value}>{data?.title}</p>
+          <p className={styles.value}>{data?.titleEn}</p>
         </Col>
         <Col xs={2}></Col>
         <Col xs={11} className={styles.info}>
           <p className={styles.label}>
-            Version <span className={styles.asterisk}>*</span>
+            Title TH <span className={styles.asterisk}>*</span>
           </p>
-          <p className={styles.value}>{data?.version}</p>
+          <p className={styles.value}>{data?.titleTh}</p>
         </Col>
       </Row>
       <Row>
         <Col xs={24} className={clsx(styles.info, styles.content)}>
           <p className={styles.label}>
-            Content<span className={styles.asterisk}>*</span>
+            Content EN<span className={styles.asterisk}>*</span>
           </p>
           <p className={styles.value} style={{ lineHeight: 1.5 }}>
-            {data?.content}
+            {data?.contentEn}
+          </p>
+        </Col>
+      </Row>
+      <Row>
+        <Col xs={24} className={clsx(styles.info, styles.content)}>
+          <p className={styles.label}>
+            Content TH<span className={styles.asterisk}>*</span>
+          </p>
+          <p className={styles.value} style={{ lineHeight: 1.5 }}>
+            {data?.contentTh}
           </p>
         </Col>
       </Row>
