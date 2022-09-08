@@ -38,7 +38,7 @@ export const formatIdSubjectHistory = (
     formattedId = `${new Date(createdDate).getFullYear()}WD${id}`;
     return formattedId;
   }
-  if (requestType.includes('Not to be subject to automate decision making')) {
+  if (requestType.includes('Not to be subject to automated decision making')) {
     formattedId = `${new Date(createdDate).getFullYear()}NA${id}`;
     return formattedId;
   }

@@ -5,7 +5,7 @@ import IconSearch from 'assets/icons/icon-search';
 import { useFadeEffect, _popoverStyles, _popoverVisibleStyles } from 'hooks/useFadeEffect';
 import InputForm from 'libraries/form/input/input-form';
 import Button from 'libraries/UI/Button';
-import Select from 'libraries/UI/Select';
+import { FormItemApplication } from 'modules/consentManagement/components/CreateConsentForm';
 import React, { useRef } from 'react';
 import styles from '../../index.module.scss';
 
@@ -39,6 +39,10 @@ const SearchUsersAdvance = ({ onSearchDataSubject, t }: any) => {
 
   const onVisibleSearch = () => {
     setIsShowSearch(!isShowSearch);
+  };
+
+  const onClearValue = () => {
+    formSearch.resetFields(['application']);
   };
 
   return (
@@ -294,11 +298,11 @@ const SearchUsersAdvance = ({ onSearchDataSubject, t }: any) => {
                       }),
                     ]}
                   >
-                    <Select placeholder='Please Select'>
-                      <Select.Option value={null}>Please Select</Select.Option>
-                      <Select.Option value={0}>Lucy</Select.Option>
-                      <Select.Option value={1}>Lucy1</Select.Option>
-                    </Select>
+                    <FormItemApplication
+                      isRequired={false}
+                      isInModalAdvancedSearch={true}
+                      onClearValue={onClearValue}
+                    />
                   </Form.Item>
                 </Col>
               </Row>
