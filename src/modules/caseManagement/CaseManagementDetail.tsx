@@ -38,14 +38,24 @@ function CaseManagementDetail() {
         <div className={styles.wrap}>
           {isHavePermissionViewDSM && (
             <Row justify='end'>
-              <Button onClick={() => navigate(`/data-subject/${data?.userProfile?.id}`)}>
+              <Button
+                onClick={() =>
+                  navigate(
+                    `/data-subject/${data?.businessProfileId}/${data?.idNo}${
+                      data?.application ? `?application=${data?.application}` : ''
+                    }`,
+                  )
+                }
+              >
                 View DSM Detail
               </Button>
             </Row>
           )}
 
           <UserInfo userInfo={data?.userProfile} />
-          {isHavePermissionViewConsent && <ConsentList userId={data?.userProfile?.id} />}
+          {isHavePermissionViewConsent && data?.application && (
+            <ConsentList userId={data?.businessProfileId} application={data?.application} />
+          )}
           <CreateCaseForm
             data={data}
             loading={loading}

@@ -6,7 +6,7 @@ test('Test routing', () => {
   expect(routePath.ProfileHash).toBe('/:hash');
   expect(routePath.Reports).toBe('/reports');
   expect(routePath.DataSubjectManagement).toBe('/data-subject');
-  expect(routePath.DataSubjectDetail).toBe('/data-subject/:businessProfileId/:idNo/:application');
+  expect(routePath.DataSubjectDetail).toBe('/data-subject/:businessProfileId/:idNo');
   expect(routePath.CaseManagement).toBe('/case-management');
   expect(routePath.CaseManagementDetail).toBe('/case-management/:id');
   expect(routePath.AssignToYou).toBe('/case-management/assign-to-you');

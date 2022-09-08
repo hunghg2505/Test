@@ -1,8 +1,7 @@
-import { Checkbox, Col, Collapse, Form, Pagination, Row } from 'antd';
+import { Checkbox, Col, Form, Pagination, Row } from 'antd';
 
-import ArrowDownCollapse from 'assets/icons/icon-arrow-down-collapse';
-import ArrowUpCollapse from 'assets/icons/icon-arrow-up-collapse';
 import IconSearch from 'assets/icons/icon-search';
+import clsx from 'clsx';
 import Loading from 'libraries/components/loading';
 import Button from 'libraries/UI/Button';
 import Input from 'libraries/UI/Input';
@@ -12,64 +11,26 @@ import { useConsent } from 'modules/dataSubjectManagement/components/Consents/se
 import { useTranslation } from 'react-i18next';
 import styles from './index.module.scss';
 
-const { Panel } = Collapse;
-
 export interface DataType {
-  key: string;
+  id: number;
   name: string;
   lastUpdated: string;
   version: string;
   status: string;
   description: string;
-  list?: {
-    title: string;
-    description: string;
-    value: string;
-  }[];
-  defaultValue: { [key: string]: string };
+  selected: boolean;
+  value: string;
+  title: string;
 }
-
-const ConsentOption = ({ value, onChange, dataConsent }: any) => {
-  const onChangeValues = (checkedValues: any) => {
-    onChange(checkedValues);
-  };
-
-  if (!dataConsent?.length) {
-    return null;
-  }
-
-  return (
-    <Checkbox.Group onChange={onChangeValues} defaultValue={value} disabled={true}>
-      {dataConsent.map((item: any) => {
-        return (
-          <Checkbox key={item.value} value={item.value}>
-            <h4>{item.title}</h4>
-            <Row className={styles.consentInfo}>
-              <Col>{item?.lastUpdated}</Col>
-              <Col>{item?.version}</Col>
-              <Col className={item?.status === 'Published' ? styles.active : ''}>
-                {item?.status}
-              </Col>
-            </Row>
-            <div>{item.description}</div>
-          </Checkbox>
-        );
-      })}
-    </Checkbox.Group>
-  );
-};
 
 const Consents = ({ data, loading, onChange, onSearchConsent }: any) => {
   const { t } = useTranslation();
-  const [formConsent] = Form.useForm();
 
   const initialValues = data?.data?.reduce((acc: any, v: any) => {
-    acc[v?.name] = [];
-    v?.list?.forEach((it: any) => {
-      if (it?.selected) acc[v?.name].push(it?.value);
-    });
-
-    return acc;
+    return {
+      ...acc,
+      [v?.id]: v?.selected,
+    };
   }, {});
 
   const onFinish = (values: any) => {
@@ -82,7 +43,7 @@ const Consents = ({ data, loading, onChange, onSearchConsent }: any) => {
   return (
     <div className={styles.consentWrap}>
       <Row className={styles.consentsSearch} align='middle'>
-        <Form onFinish={onFinish}>
+        <Form onFinish={onFinish} initialValues={initialValues}>
           <div
             style={{
               position: 'relative',
@@ -122,58 +83,60 @@ const Consents = ({ data, loading, onChange, onSearchConsent }: any) => {
         </Form>
       </Row>
       <div className={styles.formWrap}>
-        {!data?.data?.length ? (
+        {data?.data?.length === 0 ? (
           <p className={styles.noResultText}>{t('no_result_found')}</p>
         ) : (
-          <Form
-            className={styles.formConsent}
-            // onFinish={onUpdateConsent}
-            form={formConsent}
-            initialValues={initialValues}
-          >
-            {data?.data?.length === 0 ? (
-              <p className={styles.noResultText}>{t('no_result_found')}</p>
-            ) : (
-              <div className={styles.listConsent}>
-                <Collapse
-                  // accordion
-                  expandIcon={({ isActive }) => {
-                    return isActive ? ArrowUpCollapse : ArrowDownCollapse;
-                  }}
+          <div className={styles.listConsent}>
+            {data?.data?.map((it: DataType) => {
+              return (
+                <Row
+                  key={it?.id}
+                  className={styles.consentItem}
+                  align='middle'
+                  justify='space-between'
                 >
-                  {data?.data?.map((it: DataType) => {
-                    const content = (
-                      <Panel
-                        key={it?.key}
-                        header={
-                          <div className={styles.panelHeader}>
-                            <div className={styles.name}>{it?.name}</div>
-                            <div className={styles.description}>{it?.description}</div>
-                          </div>
-                        }
+                  <Col flex='1'>
+                    <p className={styles.name}>{it?.title}</p>
+                    <Row className={styles.consentInfo} align='middle'>
+                      <p>{it?.lastUpdated}</p>
+
+                      <p>{it?.version}</p>
+
+                      <p
+                        className={clsx(styles.status, {
+                          [styles.statusActive]: it?.status === 'Published',
+                        })}
                       >
-                        <Form.Item className={styles.panelContent} name={`${it?.key}`}>
-                          <ConsentOption dataConsent={it?.list} />
-                        </Form.Item>
-                      </Panel>
-                    );
-                    return content;
-                  })}
-                </Collapse>
-                <Row justify='space-between'>
-                  <Pagination
-                    className={styles.pagination}
-                    current={data?.current}
-                    onChange={onChange}
-                    total={data?.total}
-                    defaultPageSize={data?.pageSize}
-                    itemRender={paginationItemRender}
-                    showSizeChanger={false}
-                  />
+                        {it?.status}
+                      </p>
+                    </Row>
+                    <p className={styles.description}>{it?.description}</p>
+                  </Col>
+                  <Col>
+                    <Form.Item
+                      className={styles.panelContent}
+                      name={`${it?.id}`}
+                      valuePropName='checked'
+                    >
+                      <Checkbox disabled={true} />
+                    </Form.Item>
+                  </Col>
                 </Row>
-              </div>
-            )}
-          </Form>
+              );
+            })}
+
+            <Row justify='space-between'>
+              <Pagination
+                className={styles.pagination}
+                current={data?.current}
+                onChange={onChange}
+                total={data?.total}
+                defaultPageSize={data?.pageSize}
+                itemRender={paginationItemRender}
+                showSizeChanger={false}
+              />
+            </Row>
+          </div>
         )}
         {loading && (
           <div className={styles.loading}>
@@ -185,8 +148,11 @@ const Consents = ({ data, loading, onChange, onSearchConsent }: any) => {
   );
 };
 
-function ConsentList({ userId }: { userId: string | undefined }) {
-  const { data, loading, onChange, onSearchConsent } = useConsent({ userId: `${userId}` });
+function ConsentList({ userId, application }: { userId: string | undefined; application?: any }) {
+  const { data, loading, onChange, onSearchConsent } = useConsent({
+    userId: `${userId}`,
+    applicationName: application,
+  });
 
   return (
     <div className={styles.consentsWrap}>
