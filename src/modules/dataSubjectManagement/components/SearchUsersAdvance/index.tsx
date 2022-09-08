@@ -94,9 +94,9 @@ const SearchUsersAdvance = ({ onSearchDataSubject, t }: any) => {
                           if (
                             !value &&
                             !getFieldValue('lastNameEn') &&
-                            !getFieldValue('company') &&
+                            !getFieldValue('companyNameEn') &&
                             !getFieldValue('email') &&
-                            !getFieldValue('mobile') &&
+                            !getFieldValue('mobileNumber') &&
                             !getFieldValue('application')
                           ) {
                             return Promise.reject(
@@ -160,7 +160,7 @@ const SearchUsersAdvance = ({ onSearchDataSubject, t }: any) => {
                 <Col xs={24}>
                   <InputForm
                     label='Company'
-                    name='company'
+                    name='companyNameEn'
                     placeholder='Company'
                     maxLength={55}
                     rules={[
@@ -235,7 +235,7 @@ const SearchUsersAdvance = ({ onSearchDataSubject, t }: any) => {
                 <Col xs={24}>
                   <InputForm
                     label='Mobile number'
-                    name='mobile'
+                    name='mobileNumber'
                     placeholder='Mobile number'
                     maxLength={55}
                     rules={[
