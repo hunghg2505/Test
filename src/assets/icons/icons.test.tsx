@@ -22,6 +22,8 @@ import IconUserManagement from './icon-user-management';
 import IconUser from './icon-user';
 import LogoWhite from './logo-white';
 import Logo from './logo';
+import IconEdit from './icon-edit';
+import IconPlus from './icon-plus';
 
 test('Test Icon render without crash', () => {
   const { container } = render(<IconArrowDown2 />);
@@ -140,5 +142,15 @@ test('Test Icon render without crash', () => {
 
 test('Test Icon render without crash', () => {
   const { container } = render(<Logo />);
+  expect(container.firstChild).toBeInTheDocument();
+});
+
+test('Test Icon render without crash', () => {
+  const { container } = render(<IconEdit />);
+  expect(container.firstChild).toBeInTheDocument();
+});
+
+test('Test Icon render without crash', () => {
+  const { container } = render(<IconPlus />);
   expect(container.firstChild).toBeInTheDocument();
 });
