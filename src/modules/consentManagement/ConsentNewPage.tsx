@@ -1,7 +1,8 @@
 import ContainerLayout from 'libraries/layouts/ContainerLayout';
 import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import EditConsentForm from './components/EditConsentForm';
+import ConsentInfo from './components/ConsentInfo';
+
 import styles from './index.module.scss';
 
 export default function ConsentNewPage() {
@@ -16,7 +17,7 @@ export default function ConsentNewPage() {
   return (
     <ContainerLayout title='Consent Detail'>
       <div className={styles.wrap}>
-        <EditConsentForm />
+        <ConsentInfo />
       </div>
     </ContainerLayout>
   );

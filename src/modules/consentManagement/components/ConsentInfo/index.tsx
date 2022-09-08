@@ -97,7 +97,7 @@ const ConsentInfo = ({ data, onClickEdit }: any) => {
             Activation Date<span className={styles.asterisk}>*</span>
           </p>
           <p className={styles.value}>
-            {data?.activationDate ? dayjs(data?.activationDate).format('DD/MM/YY') : 'N/A'}
+            {data?.activationDate ? dayjs(data?.activationDateTime).format('DD/MM/YY') : 'N/A'}
           </p>
         </Col>
         <Col xs={2}></Col>
