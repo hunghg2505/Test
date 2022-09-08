@@ -59,6 +59,24 @@ const getDetailCaseService = async (caseId: string | undefined): Promise<IDetial
     idNo: response?.content?.data?.idNo,
   });
 
+  const userProfile = {
+    id: r?.content?.id,
+    imageUrl: '',
+    firstNameEn: r?.content?.firstNameEn || '',
+    lastNameEn: r?.content?.lastNameEn || '',
+    firstNameTh: r?.content?.firstNameTh || '',
+    lastNameTh: r?.content?.lastNameTh || '',
+    email: r?.content?.email || '',
+    address: 'Test Address',
+    dateOfBirth: r?.content?.dateOfBirth || '',
+    nationality: r?.content?.nationality || '',
+    cardId: r?.content?.idType === 'thai-id' ? r?.content?.idNo : '',
+    passportNo: r?.content?.idType === 'passport' ? r?.content?.idNo : '',
+    laserCode: r?.content?.thaiIdLaserNo || '',
+    mobile: r?.content?.mobileNo || '',
+    application: r?.content?.application,
+  };
+
   return {
     id: response?.content?.data?.id,
     action: response?.content?.data?.action,
@@ -75,23 +93,7 @@ const getDetailCaseService = async (caseId: string | undefined): Promise<IDetial
     businessProfileId: response?.content?.data?.businessProfileId,
     idNo: response?.content?.data?.idNo,
     application: response?.content?.data?.application,
-    userProfile: {
-      id: r?.content?.id,
-      imageUrl: '',
-      firstNameEn: r?.content?.firstNameEn || '',
-      lastNameEn: r?.content?.lastNameEn || '',
-      firstNameTh: r?.content?.firstNameTh || '',
-      lastNameTh: r?.content?.lastNameTh || '',
-      email: r?.content?.email || '',
-      address: 'Test Address',
-      dateOfBirth: r?.content?.dateOfBirth || '',
-      nationality: r?.content?.nationality || '',
-      cardId: r?.content?.idType === 'thai-id' ? r?.content?.idNo : '',
-      passportNo: r?.content?.idType === 'passport' ? r?.content?.idNo : '',
-      laserCode: r?.content?.thaiIdLaserNo || '',
-      mobile: r?.content?.mobileNo || '',
-      application: r?.content?.application,
-    },
+    userProfile,
     companyInfo: response?.content?.data?.__companyInfo__,
     redirect: false,
   };
