@@ -154,10 +154,6 @@ function ConsentList({ userId, application }: { userId: string | undefined; appl
     applicationName: application,
   });
 
-  console.log({
-    data,
-  });
-
   return (
     <div className={styles.consentsWrap}>
       <h2>Consent</h2>

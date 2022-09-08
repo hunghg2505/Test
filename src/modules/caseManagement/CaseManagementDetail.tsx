@@ -31,9 +31,6 @@ function CaseManagementDetail() {
     navigate('/');
     return null;
   }
-  console.log({
-    data,
-  });
 
   return (
     <ContainerLayout title='Case Management Detail'>
