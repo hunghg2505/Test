@@ -56,7 +56,7 @@ const getListSuggestionApp = async (value: string, page: number) => {
     data: response?.content?.data.map((item: any, index: number) => {
       return {
         key: `${item?.id}${index}`,
-        name: item.appName,
+        name: item.name,
       };
     }),
     isLoadMore: +response?.content?.metadata?.currentPage < +response?.content?.metadata?.lastPage,
