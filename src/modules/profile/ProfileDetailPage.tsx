@@ -13,7 +13,7 @@ const getDataById = (value: any, defaultVal = '') => {
   return value || defaultVal;
 };
 
-const Consents = ({ userId }: any) => {
+const Consents = ({ userId, applicationName }: any) => {
   const { data, loading, onChange } = useConsent({ userId, onlyView: true });
 
   if (loading || !data) return null;
@@ -27,6 +27,7 @@ const Consents = ({ userId }: any) => {
         onChange={onChange}
         userId={data?.id || ''}
         onlyView={true}
+        application={applicationName}
       />
     </div>
   );
@@ -83,7 +84,12 @@ const ProfileDetailPage = () => {
       {data?.application && (
         <>
           <Consents userId={data?.id || ''} applicationName={data?.application} />
-          <DataSubjectHistory userId={data?.id || ''} idNo={data?.idNo} onlyView={true} />
+          <DataSubjectHistory
+            userId={data?.id || ''}
+            idNo={data?.idNo}
+            onlyView={true}
+            applicationName={data?.application}
+          />
         </>
       )}
     </div>

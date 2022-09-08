@@ -162,13 +162,15 @@ export const ConsentsList = ({
   loadingUpdateConsent,
   userId,
   onlyView = false,
+  application,
 }: any) => {
   const { t } = useTranslation();
   const [formConsent] = Form.useForm();
   const [, copy] = useCopyToClipboard();
   const { isHavePermissionSaveConsent, isHavePermissionCreateLink } =
     useDataSubjectManagementPermission();
-  const requestGenerateLink = useGenerateLink(userId);
+
+  const requestGenerateLink = useGenerateLink(userId, application);
 
   const initialValues = data?.data?.reduce((acc: any, v: any) => {
     return {
@@ -346,6 +348,7 @@ function Consents({
         onSaveConsent={onSave}
         loadingUpdateConsent={loadingUpdateConsent}
         userId={userId}
+        application={applicationName}
       />
     </div>
   );

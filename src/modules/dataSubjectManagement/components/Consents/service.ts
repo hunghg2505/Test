@@ -278,11 +278,12 @@ export const useConsent = ({
   };
 };
 
-export const useGenerateLink = (userId: any) => {
+export const useGenerateLink = (userId: any, application: any) => {
   return useRequest(
     async () => {
       const res: any = await ApiUtils.post(API_PATH.GENERATE_LINK, {
         businessProfileID: `${userId}`,
+        application,
       });
       return `${window?.location?.origin}/${res?.content}` || '';
     },

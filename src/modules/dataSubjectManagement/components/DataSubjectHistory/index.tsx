@@ -107,8 +107,6 @@ function DataSubjectHistory(
   }: { userId: string; idNo: string; onlyView?: boolean; applicationName?: any },
   ref: any,
 ) {
-  // const { data: dataUserInfo } = useDataSubjectDetail(`${userId}`, `${idNo}`);
-
   const { data, loading, onChange, subjectHistoryData, refresh } = useDataSubjectHistory({
     userId,
     application: applicationName,
