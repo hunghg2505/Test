@@ -66,7 +66,7 @@ export const getDataManagementService = async (values: any): Promise<any> => {
         noId: `${(current - 1) * 10 + idx + 1 || idx}`,
         firstName: item?.firstNameEn || '',
         lastName: item?.lastNameEn || '',
-        company: 'ABC Company default',
+        company: item?.companyNameEn,
         email: item?.email || '',
         phoneNumber: item?.mobile || '',
         application: item?.application,

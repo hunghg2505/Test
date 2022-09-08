@@ -35,7 +35,7 @@ export const getConsentManagementService = async (values: any): Promise<any> => 
         contentEn: item?.contentEn,
         contentTh: item?.contentTh,
 
-        status: item?.__status__?.name,
+        status: item?.status,
       })) || [],
     appName: params?.appName || '',
     isEqualSearch: params?.isEqualSearch || '',

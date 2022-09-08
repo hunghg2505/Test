@@ -7,23 +7,6 @@ import { ResponseBase } from 'utils/api/api.types';
 import ApiUtils from 'utils/api/api.utils';
 import { API_PATH } from 'utils/api/constant';
 
-interface IUserInfo {
-  id?: string;
-  imageUrl?: string;
-  email?: string;
-  address: string;
-
-  firstNameEn?: string;
-  lastNameEn?: string;
-  firstNameTh?: string;
-  lastNameTh?: string;
-  dateOfBirth?: string;
-  mobile?: string;
-  cardId?: string;
-  nationality?: string;
-  passportNo?: string;
-  laserCode?: string;
-}
 interface IDetialCase {
   id: number;
   action: string;
@@ -36,10 +19,13 @@ interface IDetialCase {
   status?: string;
   dateOfResponse?: string;
   comment?: string;
-  userProfile?: IUserInfo;
+  userProfile?: any;
   fileUrl?: string;
   redirect?: boolean;
   companyInfo?: any;
+  businessProfileId?: string;
+  idNo?: string;
+  application?: string;
 }
 
 interface IEditCase {
@@ -68,6 +54,11 @@ const getDetailCaseService = async (caseId: string | undefined): Promise<IDetial
     limit: 1,
   });
 
+  const r: any = await ApiUtils.fetch(API_PATH.USER_PROFILE_DETAIL, {
+    businessProfileId: response?.content?.data?.businessProfileId,
+    idNo: response?.content?.data?.idNo,
+  });
+
   return {
     id: response?.content?.data?.id,
     action: response?.content?.data?.action,
@@ -81,7 +72,26 @@ const getDetailCaseService = async (caseId: string | undefined): Promise<IDetial
     comment: response?.content?.data?.comment,
     acceptedDate: response?.content?.data?.acceptedDate,
     fileUrl: response?.content?.data?.fileUrl,
-    userProfile: response?.content?.data?.__userProfile__,
+    businessProfileId: response?.content?.data?.businessProfileId,
+    idNo: response?.content?.data?.idNo,
+    application: response?.content?.data?.application,
+    userProfile: {
+      id: r?.content?.id,
+      imageUrl: '',
+      firstNameEn: r?.content?.firstNameEn || '',
+      lastNameEn: r?.content?.lastNameEn || '',
+      firstNameTh: r?.content?.firstNameTh || '',
+      lastNameTh: r?.content?.lastNameTh || '',
+      email: r?.content?.email || '',
+      address: 'Test Address',
+      dateOfBirth: r?.content?.dateOfBirth || '',
+      nationality: r?.content?.nationality || '',
+      cardId: r?.content?.idType === 'thai-id' ? r?.content?.idNo : '',
+      passportNo: r?.content?.idType === 'passport' ? r?.content?.idNo : '',
+      laserCode: r?.content?.thaiIdLaserNo || '',
+      mobile: r?.content?.mobileNo || '',
+      application: r?.content?.application,
+    },
     companyInfo: response?.content?.data?.__companyInfo__,
     redirect: false,
   };

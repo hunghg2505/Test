@@ -112,7 +112,7 @@ const { confirm } = Modal;
 
 const CreateCaseForm = ({ visible, onClose, refDataHistory }: IProps) => {
   const { t } = useTranslation();
-  const { businessProfileId, idNo } = useParams();
+  const { businessProfileId, idNo, application } = useParams();
   const { data: dataUserProfile } = useDataSubjectDetail(`${businessProfileId}`, `${idNo}`);
 
   const [acceptedDate, setAcceptedDate] = useState(moment());
@@ -141,7 +141,7 @@ const CreateCaseForm = ({ visible, onClose, refDataHistory }: IProps) => {
       idNo,
       acceptedDate,
       dateOfResponse,
-      application: dataUserProfile?.userInfo?.application,
+      application,
       dsName: `${dataUserProfile?.userInfo?.firstNameEn} ${dataUserProfile?.userInfo?.lastNameEn}`,
     });
     setDateOfResponse(null);

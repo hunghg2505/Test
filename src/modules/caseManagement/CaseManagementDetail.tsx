@@ -1,22 +1,23 @@
 import ContainerLayout from 'libraries/layouts/ContainerLayout';
+import ActivityLog from './components/ActivityLog';
 import ConsentList from './components/ConsentList';
 import UserInfo from './components/UserInfo';
-import ActivityLog from './components/ActivityLog';
 
-import styles from './index.module.scss';
-import CreateCaseForm from './components/CreateCaseForm';
-import { useNavigate, useParams } from 'react-router-dom';
-import { useCaseDetail } from './services';
-import { useRef } from 'react';
-import Button from 'libraries/UI/Button';
 import { Row } from 'antd';
 import useConsentManagementPermission from 'hooks/useConsentManagementPermission';
 import useDataSubjectManagementPermission from 'hooks/useDataSubjectManagementPermission';
+import Button from 'libraries/UI/Button';
+import { useRef } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import CreateCaseForm from './components/CreateCaseForm';
+import styles from './index.module.scss';
+import { useCaseDetail } from './services';
 
 function CaseManagementDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
   const { data, loading, refresh, deleteCaseRequest } = useCaseDetail(id);
+
   const refActivityLog: any = useRef(null);
   const { isHavePermissionViewConsent } = useConsentManagementPermission();
   const { isHavePermissionViewDSM } = useDataSubjectManagementPermission();
