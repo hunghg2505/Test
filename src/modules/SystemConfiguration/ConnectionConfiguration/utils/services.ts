@@ -45,7 +45,7 @@ export const useCreateCompany = (onFinishSubmitForm: any) => {
     {
       manual: true,
       onSuccess: (data) => {
-        message.success(`Create Company ${data?.content?.data?.name} Success`);
+        message.success(`Create Company ${data?.content?.data?.nameEN} Success`);
         onFinishSubmitForm();
       },
       onError: (error: any) => {

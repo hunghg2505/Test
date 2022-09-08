@@ -373,10 +373,34 @@ const CreateConsentForm = ({ visible, onClose, onReloadConsentData }: IProps) =>
             />
           </Col>
           <Col xs={12}>
-            <InputForm label='Title EN' name='titleEn' maxLength={55} placeholder='Title En' />
+            <InputForm
+              label='Title EN'
+              name='titleEn'
+              maxLength={55}
+              placeholder='Title En'
+              required
+              rules={[
+                {
+                  required: true,
+                  message: t('messages.errors.require', { field: 'Title EN' }),
+                },
+              ]}
+            />
           </Col>
           <Col xs={12}>
-            <InputForm label='Title TH' name='titleTh' maxLength={55} placeholder='Title Th' />
+            <InputForm
+              label='Title TH'
+              name='titleTh'
+              maxLength={55}
+              placeholder='Title Th'
+              required
+              rules={[
+                {
+                  required: true,
+                  message: t('messages.errors.require', { field: 'Title TH' }),
+                },
+              ]}
+            />
           </Col>
 
           <Col xs={24}>

@@ -207,7 +207,7 @@ const CreateCaseForm = ({ visible, onClose, refDataHistory }: IProps) => {
               rules={[
                 {
                   required: true,
-                  message: t('messages.errors.require', { field: 'Department' }),
+                  message: t('messages.errors.require', { field: 'Related Department' }),
                 },
               ]}
             >
@@ -223,7 +223,7 @@ const CreateCaseForm = ({ visible, onClose, refDataHistory }: IProps) => {
               name='assignTo'
               required
               rules={[
-                { required: true, message: t('messages.errors.require', { field: 'Assign' }) },
+                { required: true, message: t('messages.errors.require', { field: 'Assign to' }) },
               ]}
             >
               <CustomSelectDropdown data={usersData?.data} placeholder='Assign to' />
@@ -237,7 +237,7 @@ const CreateCaseForm = ({ visible, onClose, refDataHistory }: IProps) => {
               rules={[
                 {
                   required: true,
-                  message: t('messages.errors.require', { field: 'Company' }),
+                  message: t('messages.errors.require', { field: 'Company Name' }),
                 },
               ]}
             >
