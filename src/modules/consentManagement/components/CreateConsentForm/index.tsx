@@ -186,6 +186,8 @@ const CreateConsentForm = ({ visible, onClose, onReloadConsentData }: IProps) =>
         ?.roleMap,
     });
     setExpireOn(null);
+    setActivationDate(null);
+    setProductId('');
   };
 
   const showConfirm = useCallback(() => {
@@ -206,6 +208,8 @@ const CreateConsentForm = ({ visible, onClose, onReloadConsentData }: IProps) =>
         onClose();
         createConsentForm.resetFields();
         setExpireOn(null);
+        setActivationDate(null);
+        setProductId('');
       },
     });
   }, []);
@@ -406,7 +410,7 @@ const CreateConsentForm = ({ visible, onClose, onReloadConsentData }: IProps) =>
           <Col xs={24}>
             <InputTextAreaForm
               name='contentEn'
-              label='Content'
+              label='Content EN'
               placeholder='Consent content En'
               rows={6}
               className={styles.textarea}
@@ -425,7 +429,7 @@ const CreateConsentForm = ({ visible, onClose, onReloadConsentData }: IProps) =>
           <Col xs={24} style={{ marginTop: 24, marginBottom: 24 }}>
             <InputTextAreaForm
               name='contentTh'
-              label='Content'
+              label='Content TH'
               placeholder='Consent content Th'
               rows={6}
               className={styles.textarea}
@@ -457,6 +461,8 @@ const CreateConsentForm = ({ visible, onClose, onReloadConsentData }: IProps) =>
               onClose();
               createConsentForm.resetFields();
               setExpireOn(null);
+              setActivationDate(null);
+              setProductId('');
               return;
             }
             showConfirm();
