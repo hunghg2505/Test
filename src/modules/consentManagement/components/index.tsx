@@ -1,12 +1,12 @@
 import { Form, Row, Table } from 'antd';
 import type { ColumnsType } from 'antd/lib/table';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import InputForm from 'libraries/form/input/input-form';
 import ContainerLayout from 'libraries/layouts/ContainerLayout';
 
-import { useConsentManagement } from './utils/service';
+import { setConsentToLocalStorage, useConsentManagement } from './utils/service';
 
 import { useClickAway } from 'ahooks';
 import IconSearch from 'assets/icons/icon-search';
@@ -57,80 +57,12 @@ export interface DataType {
   action: number;
 }
 
-const columns: ColumnsType<DataType> = [
-  {
-    title: 'Consent ID',
-    dataIndex: 'id',
-    key: 'id',
-    width: 110,
-  },
-  {
-    title: 'Consent Name',
-    dataIndex: 'name',
-    key: 'name',
-    width: 110,
-  },
-  {
-    title: 'App ID',
-    dataIndex: 'appId',
-    key: 'appId',
-    width: 110,
-  },
-  {
-    title: 'Application Name',
-    dataIndex: 'appName',
-    key: 'appName',
-    width: 283,
-  },
-  {
-    title: 'Consent Version',
-    dataIndex: 'version',
-    key: 'consentVersion',
-    width: 100,
-  },
-  {
-    title: 'Consent Content EN',
-    dataIndex: 'contentEn',
-    key: 'description',
-    width: 546,
-  },
-  {
-    title: 'Consent Content TH',
-    dataIndex: 'contentTh',
-    key: 'description',
-    width: 546,
-  },
-  {
-    title: 'Status',
-    dataIndex: 'status',
-    key: 'Status',
-    width: 110,
-  },
-  {
-    title: 'Activation Date',
-    dataIndex: 'activationDateTime',
-    key: 'activationDateTime',
-    width: 170,
-  },
-
-  {
-    title: 'Action',
-    key: 'id',
-    dataIndex: 'id',
-    render: (value) => (
-      <Row justify='center' align='middle' style={{ flexFlow: 'nowrap' }} className={styles.action}>
-        <Link to={`/consent/${value}`}>Detail</Link>
-      </Row>
-    ),
-    width: 178,
-  },
-];
-
 function ConsentManagement() {
   const { t } = useTranslation();
   const refListUsers: any = useRef();
   const refForm: any = useRef();
   const { isHavePermissionCreateConsent } = useConsentManagementPermission();
+  const navigate = useNavigate();
 
   const {
     data,
@@ -168,6 +100,87 @@ function ConsentManagement() {
       if (refListUsers.current?.openListUser) refListUsers.current.openListUser();
     });
   };
+
+  const columns: ColumnsType<DataType> = [
+    {
+      title: 'Consent ID',
+      dataIndex: 'id',
+      key: 'id',
+      width: 110,
+    },
+    {
+      title: 'Consent Name',
+      dataIndex: 'name',
+      key: 'name',
+      width: 110,
+    },
+    {
+      title: 'App ID',
+      dataIndex: 'appId',
+      key: 'appId',
+      width: 110,
+    },
+    {
+      title: 'Application Name',
+      dataIndex: 'appName',
+      key: 'appName',
+      width: 283,
+    },
+    {
+      title: 'Consent Version',
+      dataIndex: 'version',
+      key: 'consentVersion',
+      width: 100,
+    },
+    {
+      title: 'Consent Content EN',
+      dataIndex: 'contentEn',
+      key: 'description',
+      width: 546,
+    },
+    {
+      title: 'Consent Content TH',
+      dataIndex: 'contentTh',
+      key: 'description',
+      width: 546,
+    },
+    {
+      title: 'Status',
+      dataIndex: 'status',
+      key: 'Status',
+      width: 110,
+    },
+    {
+      title: 'Activation Date',
+      dataIndex: 'activationDateTime',
+      key: 'activationDateTime',
+      width: 170,
+    },
+
+    {
+      title: 'Action',
+      key: 'id',
+      dataIndex: 'id',
+      render: (value, record) => {
+        const onDetail = () => {
+          setConsentToLocalStorage(record);
+          navigate(`/consent/${value}`);
+        };
+
+        return (
+          <Row
+            justify='center'
+            align='middle'
+            style={{ flexFlow: 'nowrap' }}
+            className={styles.action}
+          >
+            <p onClick={onDetail}>Detail</p>
+          </Row>
+        );
+      },
+      width: 178,
+    },
+  ];
 
   return (
     <ContainerLayout title='Consent Management'>

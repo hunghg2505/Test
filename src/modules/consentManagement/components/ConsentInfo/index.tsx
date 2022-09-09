@@ -2,32 +2,9 @@ import { Col, Divider, Row } from 'antd';
 
 import clsx from 'clsx';
 import dayjs from 'dayjs';
-import useConsentManagementPermission from 'hooks/useConsentManagementPermission';
-import Button from 'libraries/UI/Button';
 import styles from './index.module.scss';
 
-const ICON_EDIT = (
-  <svg xmlns='http://www.w3.org/2000/svg' width={24} height={24} viewBox='0 0 24 24' fill='white'>
-    <path
-      d='M3.5 21H21.5'
-      stroke='white'
-      strokeWidth={2}
-      strokeLinecap='round'
-      strokeLinejoin='round'
-    />
-    <path
-      d='M5.5 13.36V17H9.1586L19.5 6.65405L15.8476 3L5.5 13.36Z'
-      fill='#CF2A2B'
-      stroke='white'
-      strokeWidth={2}
-      strokeLinejoin='round'
-    />
-  </svg>
-);
-
-const ConsentInfo = ({ data, onClickEdit }: any) => {
-  const { isHavePermissionEditConsent } = useConsentManagementPermission();
-
+const ConsentInfo = ({ data }: any) => {
   return (
     <div className={styles.consentInfo}>
       <Row>
@@ -35,14 +12,14 @@ const ConsentInfo = ({ data, onClickEdit }: any) => {
           <p className={styles.label}>
             Consent Name<span className={styles.asterisk}>*</span>
           </p>
-          <p className={styles.value}>{data?.name}</p>
+          <p className={styles.value}>{data?.consentName}</p>
         </Col>
         <Col xs={2}></Col>
         <Col xs={11} className={styles.info}>
           <p className={styles.label}>
             Consent ID<span className={styles.asterisk}>*</span>
           </p>
-          <p className={styles.value}>{data?.consentId}</p>
+          <p className={styles.value}>{data?.id}</p>
         </Col>
       </Row>
       <Row>
@@ -57,7 +34,7 @@ const ConsentInfo = ({ data, onClickEdit }: any) => {
           <p className={styles.label}>
             Application<span className={styles.asterisk}>*</span>
           </p>
-          <p className={styles.value}>{data?.application?.name}</p>
+          <p className={styles.value}>{data?.application}</p>
         </Col>
       </Row>
       <Row>
@@ -81,7 +58,7 @@ const ConsentInfo = ({ data, onClickEdit }: any) => {
           <p className={styles.label}>
             Status<span className={styles.asterisk}>*</span>
           </p>
-          <p className={styles.value}>{data?.status?.name}</p>
+          <p className={styles.value}>{data?.status}</p>
         </Col>
         <Col xs={2}></Col>
         <Col xs={11} className={styles.info}>
@@ -143,13 +120,6 @@ const ConsentInfo = ({ data, onClickEdit }: any) => {
           </p>
         </Col>
       </Row>
-      {isHavePermissionEditConsent && (
-        <Row className={styles.flexend}>
-          <Button onClick={onClickEdit} icon={ICON_EDIT} className={styles.editBtn}>
-            Edit
-          </Button>
-        </Row>
-      )}
     </div>
   );
 };
