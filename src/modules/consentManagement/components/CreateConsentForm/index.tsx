@@ -158,7 +158,6 @@ const CreateConsentForm = ({ visible, onClose, onReloadConsentData }: IProps) =>
   const [expireOn, setExpireOn] = useState(null);
   const [activationDate, setActivationDate] = useState(null);
 
-  const [productId, setProductId] = useState('');
   const { data } = useGetDataDropdownConsent();
   const { data: dataApplication } = useGetListApplication();
 
@@ -168,30 +167,28 @@ const CreateConsentForm = ({ visible, onClose, onReloadConsentData }: IProps) =>
     setExpireOn(null);
     setActivationDate(null);
     onReloadConsentData();
-    setProductId('');
-  };
-
-  const onSelectChange = (value: string) => {
-    const itemSelected = data?.productData?.find((item: any) => item?.name === value);
-
-    setProductId(itemSelected?.id);
   };
 
   const createConsentRequest = useCreateConsent(onFinishSubmitForm);
 
   const onFinish = (values: any) => {
     const statusObj = data?.statusData?.find((status: any) => status?.name === values?.idStatus);
+    const productSelected = data?.productData?.find(
+      (item: any) => item?.name === values?.idProduct,
+    );
+
     createConsentRequest.run({
       ...values,
       expireOn,
       activationDate: dayjs(activationDate).format('YYYY-MM-DD'),
       userRoleMap: dataApplication?.data?.find((item) => item.appName === values?.application)
         ?.roleMap,
-      idStatus: statusObj?.id,
+      idStatus: Number(statusObj?.id),
+      idProduct: Number(productSelected?.id),
     });
+
     setExpireOn(null);
     setActivationDate(null);
-    setProductId('');
   };
 
   const showConfirm = useCallback(() => {
@@ -213,7 +210,6 @@ const CreateConsentForm = ({ visible, onClose, onReloadConsentData }: IProps) =>
         createConsentForm.resetFields();
         setExpireOn(null);
         setActivationDate(null);
-        setProductId('');
       },
     });
   }, []);
@@ -270,7 +266,15 @@ const CreateConsentForm = ({ visible, onClose, onReloadConsentData }: IProps) =>
             <p className={styles.label}>
               Product ID<span className={styles.asterisk}>*</span>
             </p>
-            <p className={styles.value}>{productId}</p>
+            <Form.Item noStyle dependencies={['idProduct']}>
+              {({ getFieldValue }) => {
+                const itemSelected = data?.productData?.find(
+                  (item: any) => item?.name === getFieldValue('idProduct'),
+                );
+
+                return <p className={styles.value}>{itemSelected?.id}</p>;
+              }}
+            </Form.Item>
           </Col>
           <Col xs={12}>
             <Form.Item
@@ -284,12 +288,7 @@ const CreateConsentForm = ({ visible, onClose, onReloadConsentData }: IProps) =>
                 },
               ]}
             >
-              <DynamicSelectDropdown
-                data={data?.productData}
-                placeholder='Select Product'
-                isOnConsentForm
-                onChange={onSelectChange}
-              />
+              <DynamicSelectDropdown data={data?.productData} placeholder='Select Product' />
             </Form.Item>
           </Col>
           <Col xs={24}>
@@ -319,11 +318,7 @@ const CreateConsentForm = ({ visible, onClose, onReloadConsentData }: IProps) =>
                 },
               ]}
             >
-              <DynamicSelectDropdown
-                data={data?.statusData}
-                placeholder='Select Status'
-                isOnConsentForm
-              />
+              <DynamicSelectDropdown data={data?.statusData} placeholder='Select Status' />
             </Form.Item>
           </Col>
           <Col xs={12}>
@@ -466,7 +461,6 @@ const CreateConsentForm = ({ visible, onClose, onReloadConsentData }: IProps) =>
               createConsentForm.resetFields();
               setExpireOn(null);
               setActivationDate(null);
-              setProductId('');
               return;
             }
             showConfirm();
