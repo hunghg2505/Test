@@ -172,7 +172,9 @@ const CreateConsentForm = ({ visible, onClose, onReloadConsentData }: IProps) =>
   };
 
   const onSelectChange = (value: string) => {
-    setProductId(value);
+    const itemSelected = data?.productData?.find((item: any) => item?.name === value);
+
+    setProductId(itemSelected?.id);
   };
 
   const createConsentRequest = useCreateConsent(onFinishSubmitForm);
