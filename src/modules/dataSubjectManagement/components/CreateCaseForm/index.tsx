@@ -7,6 +7,8 @@ import { useTranslation } from 'react-i18next';
 import { CloseOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
 import { useClickAway, useDebounceFn } from 'ahooks';
 import Button from 'libraries/UI/Button';
+import { CustomSelectDropdown as LoadmoreCustomSelectDropdown } from 'modules/consentManagement/components/CreateConsentForm';
+import { useDataSubjectDetail } from 'modules/dataSubjectManagement/utils/service';
 import moment from 'moment';
 import { useParams } from 'react-router-dom';
 import styles from './index.module.scss';
@@ -16,8 +18,6 @@ import {
   useGetListCompany,
   useGetListDataDropDropdown,
 } from './service';
-import { CustomSelectDropdown as LoadmoreCustomSelectDropdown } from 'modules/consentManagement/components/CreateConsentForm';
-import { useDataSubjectDetail } from 'modules/dataSubjectManagement/utils/service';
 
 interface IProps {
   visible: boolean;
@@ -111,7 +111,9 @@ const { confirm } = Modal;
 
 const CreateCaseForm = ({ visible, onClose, refDataHistory }: IProps) => {
   const { t } = useTranslation();
-  const { businessProfileId, idNo, application } = useParams();
+  const { businessProfileId, idNo } = useParams();
+  const application = location?.search?.split('=')?.[1];
+
   const { data: dataUserProfile } = useDataSubjectDetail(`${businessProfileId}`, `${idNo}`);
 
   const [acceptedDate, setAcceptedDate] = useState(moment());

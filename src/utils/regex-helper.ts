@@ -7,7 +7,7 @@ export class RegexUtils {
     static REGEX_NUMBER = /^\+?([1-9]\d*)$/;
 
     //eslint-disable-next-line
-    static REGEX_PHONE = /^[0-9\+]{10,12}$/;
+    static REGEX_PHONE = /^[0-9\s]*$/;
 
     static REGEX_PASSWORD = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?\d)(?=.*?[#?!@$ %^&*-]).{8,}$/;
 
@@ -15,7 +15,7 @@ export class RegexUtils {
 
     static REGEX_MOBILE_NUMBER = /^(66)[6|8|9]\d{8}$/g;
 
-    static REGEX_PASSPORT = /^(AA)\d{7}$/g;
+    static REGEX_PASSPORT = /^[aA-zZ0-9-]+$/g;
 
     static REGEX_LASER_CODE = /^(AA)\d{10}$/g;
 

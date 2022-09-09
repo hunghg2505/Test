@@ -26,6 +26,7 @@ interface IDetialCase {
   businessProfileId?: string;
   idNo?: string;
   application?: string;
+  createdAt?: string;
 }
 
 interface IEditCase {
@@ -96,6 +97,7 @@ const getDetailCaseService = async (caseId: string | undefined): Promise<IDetial
     userProfile,
     companyInfo: response?.content?.data?.__companyInfo__,
     redirect: false,
+    createdAt: response?.content?.data?.createdAt,
   };
 };
 

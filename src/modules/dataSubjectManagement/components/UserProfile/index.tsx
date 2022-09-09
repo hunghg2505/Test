@@ -70,7 +70,12 @@ function UserProfile({
           idType = 'passport';
         }
 
-        updateUserProfileRequest.run({ ...values, idType, userProfileId: businessProfileId });
+        updateUserProfileRequest.run({
+          ...values,
+          idType,
+          idNo: values?.nationality.toLowerCase() === 'thailand' ? values.cardId : values.passport,
+          userProfileId: businessProfileId,
+        });
       }
     } catch (error) {
       console.log(error);

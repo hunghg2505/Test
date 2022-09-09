@@ -10,6 +10,7 @@ import { disabledFutureDate } from 'utils/common.utils';
 import { RegexUtils } from 'utils/regex-helper';
 import { useCheckParams } from './service';
 import { useState } from 'react';
+import { useUpdateEffect } from 'ahooks';
 
 const assertThaiId = (thaiId: string): boolean => {
   const m = thaiId.match(/(\d{12})(\d)/);
@@ -43,8 +44,29 @@ export const FormEditUser = ({ form, userInfo, t }: any) => {
     lastNameTh: userInfo?.lastNameTh || '',
     mobileNo: userInfo?.mobile || '',
     nationality: userInfo?.nationality || '',
-    idNo: userInfo?.passportNo || userInfo?.cardId,
+    passport: userInfo?.passportNo,
+    cardId: userInfo?.cardId,
   };
+
+  useUpdateEffect(() => {
+    if (nationalityValue?.toLowerCase() === 'thailand') {
+      form.setFieldValue('passport', '');
+      form.setFields([
+        {
+          name: 'passport',
+          errors: [],
+        },
+      ]);
+    } else {
+      form.setFieldValue('cardId', '');
+      form.setFields([
+        {
+          name: 'cardId',
+          errors: [],
+        },
+      ]);
+    }
+  }, [nationalityValue]);
 
   return (
     <Form
@@ -182,7 +204,7 @@ export const FormEditUser = ({ form, userInfo, t }: any) => {
             rules={[
               {
                 pattern: new RegExp(RegexUtils.RegexConstants.REGEX_MOBILE_NUMBER),
-                message: `${t('messages.errors.invalid_mobile_number')}`,
+                message: `Only allows Digit and Space`,
               },
               {
                 validator: async (_, value) => {
@@ -196,13 +218,13 @@ export const FormEditUser = ({ form, userInfo, t }: any) => {
                 },
               },
             ]}
-            maxLength={11}
+            maxLength={30}
           />
         </Col>
 
         <Col xs={12}>
           <InputForm
-            name='idNo'
+            name='cardId'
             placeholder={t('national_card_id')}
             label={t('national_card_id')}
             disabled={nationalityValue?.toLowerCase() !== 'thailand'}
@@ -229,7 +251,7 @@ export const FormEditUser = ({ form, userInfo, t }: any) => {
                       return Promise.reject(`${t('messages.errors.invalid_national_code')}`);
                     }
 
-                    if (value === initialValues.nationality) {
+                    if (value === initialValues.cardId) {
                       return Promise.resolve();
                     }
 
@@ -262,7 +284,6 @@ export const FormEditUser = ({ form, userInfo, t }: any) => {
           >
             <Select
               placeholder={t('nationality')}
-              allowClear={true}
               showSearch
               value={nationalityValue}
               onChange={(value) => setNationalityValue(value)}
@@ -281,7 +302,7 @@ export const FormEditUser = ({ form, userInfo, t }: any) => {
 
         <Col xs={12}>
           <InputForm
-            name='idNo'
+            name='passport'
             placeholder={t('passport_number')}
             label={t('passport_number')}
             normalize={(val = '') => val.replace(/\s/, '')}
@@ -289,7 +310,7 @@ export const FormEditUser = ({ form, userInfo, t }: any) => {
             rules={[
               {
                 pattern: new RegExp(RegexUtils.RegexConstants.REGEX_PASSPORT),
-                message: `${t('messages.errors.invalid_passport')}`,
+                message: `Only allows Alphabetical, Digits and Hyphen`,
               },
               {
                 validator: async (_, value) => {
@@ -300,7 +321,7 @@ export const FormEditUser = ({ form, userInfo, t }: any) => {
                         t('messages.errors.require', { field: t('national_card_id') }),
                       );
 
-                    if (value === initialValues.idNo) {
+                    if (value === initialValues.passport) {
                       return Promise.resolve();
                     }
                     const r = await requestCheckParams.runAsync({ passportNo });
@@ -315,7 +336,7 @@ export const FormEditUser = ({ form, userInfo, t }: any) => {
                 },
               },
             ]}
-            maxLength={9}
+            maxLength={30}
           />
         </Col>
 
