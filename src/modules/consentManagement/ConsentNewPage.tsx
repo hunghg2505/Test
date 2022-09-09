@@ -14,13 +14,12 @@ export default function ConsentNewPage() {
   const { data } = useRequest(async () => {
     const [application, consentName, version] = `${id}`.split('-');
     const consents = getConsentFromLocalStorage();
-    const consentSelected = consents?.find(
+    return consents?.find(
       (consent: any) =>
         consent.application === application &&
         consent?.consentName === consentName &&
         consent?.version === version,
     );
-    return consentSelected;
   });
 
   if (!id) {

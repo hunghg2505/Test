@@ -14,7 +14,7 @@ const getDataById = (value: any, defaultVal = '') => {
 };
 
 const Consents = ({ userId, applicationName }: any) => {
-  const { data, loading, onChange } = useConsent({ userId, onlyView: true });
+  const { data, loading, onChange } = useConsent({ userId, onlyView: true, applicationName });
 
   if (loading || !data) return null;
 
