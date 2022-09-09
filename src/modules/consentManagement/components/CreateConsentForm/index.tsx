@@ -187,7 +187,8 @@ const CreateConsentForm = ({ visible, onClose, onReloadConsentData }: IProps) =>
       activationDate: dayjs(activationDate).format('YYYY-MM-DD'),
       userRoleMap: dataApplication?.data?.find((item) => item.appName === values?.application)
         ?.roleMap,
-      idStatus: statusObj?.id,
+      idStatus: Number(statusObj?.id),
+      idProduct: Number(productId),
     });
     setExpireOn(null);
     setActivationDate(null);
