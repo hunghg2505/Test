@@ -56,6 +56,7 @@ export const getConsentService = async (
       value: JSON.stringify(val),
       description: get(item, 'content', ''),
       lastUpdated: '',
+      versionNum: get(item, 'version', ''),
       version: `Version ${get(item, 'version', '') || ''}`,
       status: capitalizeFirstLetter(get(item, 'status', '') || 'draft'),
       selected: get(item, 'status', '') === 'active',
@@ -90,7 +91,7 @@ const getConsentsChecked = ({ content, ConsentList }: any) => {
       } else {
         newConsent.push({
           consentName: consentItemInList?.title,
-          version: consentItemInList?.version,
+          version: consentItemInList?.versionNum,
           flag: true,
         });
       }
