@@ -20,8 +20,6 @@ const ModalSearchAdvance = ({ onSearchConsent }: any) => {
   const [isShowSearch, setIsShowSearch] = useState(false);
   const [createdStartDate, setCreatedStartDate] = useState<any>(null);
   const [createdEndDate, setCreatedEndDate] = useState<any>(null);
-  const [updatedStartDate, setUpdatedStartDate] = useState<any>(null);
-  const [updatedEndDate, setUpdatedEndDate] = useState<any>(null);
   const [_isTransitioning, shouldBeVisible, refFormModal] = useFadeEffect(isShowSearch);
   const refSearch: any = useRef();
   const { data } = useGetListStatusConsent();
@@ -32,26 +30,19 @@ const ModalSearchAdvance = ({ onSearchConsent }: any) => {
   }, refSearch);
 
   const formatDateParam = () => {
-    const createdAt =
+    const activationDate =
       createdStartDate || createdEndDate
         ? {
             startDate: createdStartDate ? moment(createdStartDate).toISOString() : null,
             endDate: createdEndDate ? moment(createdEndDate).toISOString() : null,
           }
         : undefined;
-    const updatedAt =
-      updatedStartDate || updatedEndDate
-        ? {
-            startDate: updatedStartDate ? moment(updatedStartDate).toISOString() : null,
-            endDate: updatedEndDate ? moment(updatedEndDate).toISOString() : null,
-          }
-        : undefined;
 
-    return { createdAt, updatedAt };
+    return { activationDate };
   };
 
   const onFinish = (values: any) => {
-    const { createdAt, updatedAt } = formatDateParam();
+    const { activationDate } = formatDateParam();
     onSearchConsent({
       appName: values?.application_name || '',
       advanceSearch: {
@@ -60,8 +51,7 @@ const ModalSearchAdvance = ({ onSearchConsent }: any) => {
         appId: values?.application_id || undefined,
         status: values?.status || undefined,
         version: values?.version || undefined,
-        createdAt,
-        updatedAt,
+        activationDate,
       },
     });
     setIsShowSearch(false);
@@ -163,6 +153,7 @@ const ModalSearchAdvance = ({ onSearchConsent }: any) => {
                       allowClear
                       onClearValue={onClearSearch}
                       isOnConsentForm
+                      placeholder='Select Status'
                     />
                   </Form.Item>
                 </Col>
@@ -182,7 +173,7 @@ const ModalSearchAdvance = ({ onSearchConsent }: any) => {
                   />
                 </Col>
                 <Col xs={24}>
-                  <p className={styles.datePickerLabel}>Created Date</p>
+                  <p className={styles.datePickerLabel}>Activation Date</p>
                 </Col>
                 <Col xs={11}>
                   <p className={styles.datePickerLabel}>From</p>
@@ -208,35 +199,6 @@ const ModalSearchAdvance = ({ onSearchConsent }: any) => {
                     value={createdEndDate}
                     placeholder='dd/mm/yyyy'
                     disabledDate={(current) => disabledEndedDate(current)(createdStartDate)}
-                  />
-                </Col>
-                <Col xs={24}>
-                  <p className={styles.datePickerLabel}>Updated Date</p>
-                </Col>
-                <Col xs={11}>
-                  <p className={styles.datePickerLabel}>From</p>
-                  <DatePicker
-                    getPopupContainer={(trigger: any) => trigger.parentElement}
-                    format='DD/MM/YYYY'
-                    style={{ width: '100%' }}
-                    size='large'
-                    onChange={(date: any) => setUpdatedStartDate(date)}
-                    value={updatedStartDate}
-                    placeholder='dd/mm/yyyy'
-                    disabledDate={(current) => disabledStartedDate(current)(updatedEndDate)}
-                  />
-                </Col>
-                <Col xs={11}>
-                  <p className={styles.datePickerLabel}>To</p>
-                  <DatePicker
-                    getPopupContainer={(trigger: any) => trigger.parentElement}
-                    format='DD/MM/YYYY'
-                    style={{ width: '100%' }}
-                    size='large'
-                    onChange={(date: any) => setUpdatedEndDate(date)}
-                    value={updatedEndDate}
-                    placeholder='dd/mm/yyyy'
-                    disabledDate={(current) => disabledEndedDate(current)(updatedStartDate)}
                   />
                 </Col>
               </Row>
