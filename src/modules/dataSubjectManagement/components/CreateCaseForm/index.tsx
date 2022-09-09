@@ -31,7 +31,6 @@ export const CustomSelectDropdown = ({
   allowClear,
   value,
   onChange,
-  isOnConsentForm,
   onClearValue,
 }: any) => {
   const [visible, setVisible] = useState(false);
@@ -77,7 +76,7 @@ export const CustomSelectDropdown = ({
         clearIcon={<CloseOutlined onMouseDown={clearValue} />}
       >
         {data?.map((item: any) => (
-          <Select.Option value={isOnConsentForm ? Number(item?.id) : item?.name} key={item?.id}>
+          <Select.Option value={item?.name} key={item?.name}>
             {item?.name}
           </Select.Option>
         ))}

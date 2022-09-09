@@ -41,7 +41,7 @@ test('Test FormatIdSubjectHistory', () => {
 
   expect(
     formatIdSubjectHistory(1, 1, 'Not to be subject to automate decision making', '1', now),
-  ).toBe(`${new Date(now).getFullYear()}NA${'1'}`);
+  ).toBe(`2`);
 
   expect(formatIdSubjectHistory(1, 1, 'ZZZ', '1', now)).toBe('2');
 });
