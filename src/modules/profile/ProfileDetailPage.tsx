@@ -20,7 +20,7 @@ const Consents = ({ userId, applicationName }: any) => {
 
   return (
     <div className={styles.consentsWrap}>
-      <h3>Consents</h3>
+      <h3>{applicationName}</h3>
       <ConsentsList
         data={data}
         loading={loading}
