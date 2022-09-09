@@ -107,17 +107,12 @@ const columns: ColumnsType<DataType> = [
     width: 110,
   },
   {
-    title: 'Created Date',
-    dataIndex: 'createdDate',
-    key: 'createdAt',
+    title: 'Activation Date',
+    dataIndex: 'activationDateTime',
+    key: 'activationDateTime',
     width: 170,
   },
-  {
-    title: 'Updated Date',
-    dataIndex: 'updatedDate',
-    key: 'updatedAt',
-    width: 170,
-  },
+
   {
     title: 'Action',
     key: 'id',
