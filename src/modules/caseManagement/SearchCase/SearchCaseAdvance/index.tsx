@@ -33,7 +33,7 @@ const SearchCaseAdvance = ({ onSearchDataSubject, t }: any) => {
   };
 
   const onClearValue = () => {
-    formSearch.resetFields(['companyId']);
+    formSearch.resetFields(['companyName']);
   };
 
   return (
@@ -96,6 +96,15 @@ const SearchCaseAdvance = ({ onSearchDataSubject, t }: any) => {
                     ...conditions,
                     assignTo: {
                       searchString: values?.assignTo || '',
+                      isEqualSearch: false,
+                    },
+                  };
+                }
+                if (values?.companyName) {
+                  conditions = {
+                    ...conditions,
+                    companyName: {
+                      searchString: values?.companyName || '',
                       isEqualSearch: false,
                     },
                   };
@@ -176,8 +185,12 @@ const SearchCaseAdvance = ({ onSearchDataSubject, t }: any) => {
                   />
                 </Col>
                 <Col xs={24}>
-                  <Form.Item label='Company Name' name='companyId'>
-                    <FormItemCompany allowClear onClearValue={onClearValue} />
+                  <Form.Item label='Company Name' name='companyName'>
+                    <FormItemCompany
+                      isInModalAdvancedSearch
+                      allowClear
+                      onClearValue={onClearValue}
+                    />
                   </Form.Item>
                 </Col>
               </Row>

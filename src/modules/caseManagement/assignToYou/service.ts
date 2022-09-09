@@ -35,6 +35,7 @@ const getListAssignToYou = async (values: any, username: string) => {
         assignTo: item?.assignTo,
         caseStatus: item?.status,
         createdDate: dayjs(item?.createdAt).format('MMM DD, YYYY'),
+        companyName: item?.__companyInfo__?.nameEN,
       })) || [],
     value: username,
   };

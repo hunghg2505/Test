@@ -36,6 +36,7 @@ const getListCaseManagementService = async (values: any): Promise<any> => {
         assignTo: item?.assignTo,
         caseStatus: item?.status,
         createdDate: dayjs(item?.createdAt).format('MMM DD, YYYY'),
+        companyName: item?.__companyInfo__?.nameEN,
       })) || [],
     searchString: params?.searchString || '',
     isEqualSearch: params?.isEqualSearch || '',

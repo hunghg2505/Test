@@ -74,6 +74,12 @@ const columns: ColumnsType<DataType> = [
     width: 204,
   },
   {
+    title: 'Company Name',
+    dataIndex: 'companyName',
+    key: 'companyName',
+    width: 185,
+  },
+  {
     title: 'Created Date',
     dataIndex: 'createdDate',
     key: 'createdDate',
