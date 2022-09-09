@@ -1,15 +1,18 @@
-import { Form, message, Modal, Pagination, Row } from 'antd';
+import ExclamationCircleOutlined from '@ant-design/icons/lib/icons/ExclamationCircleOutlined';
+import { Form, Modal, Pagination, Row } from 'antd';
 import useSystemConfigPermission from 'hooks/useSystemConfigPermission';
 import InputForm from 'libraries/form/input/input-form';
 import ButtonCustom from 'libraries/UI/Button';
 import { paginationItemRender } from 'libraries/UI/Pagination';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useCreateApplication, useEditApplication } from '../../utils/services';
 import { ApplicationItem } from './ApplicationItem';
 
 import styles from './index.module.scss';
 import { useApplications } from './services';
+
+const { confirm } = Modal;
 
 export const AddNewApplications = ({
   companyId,
@@ -28,6 +31,48 @@ export const AddNewApplications = ({
   const [visible, setVisible] = useState(false);
   const { t } = useTranslation();
 
+  const showConfirm = useCallback(() => {
+    confirm({
+      title: 'Confirm Cancel',
+      icon: <ExclamationCircleOutlined style={{ color: 'red' }} />,
+      content: isEdit
+        ? 'Are you sure you want to cancel Application Edition?'
+        : 'Are you sure you want to cancel Application Creation?',
+      okText: 'Yes',
+      cancelText: 'No',
+      okType: 'danger',
+      centered: true,
+      okButtonProps: {
+        className: styles.btnDelete,
+      },
+      cancelButtonProps: {
+        className: styles.btnCancel,
+      },
+      onOk() {
+        setVisible(false);
+        form.resetFields();
+      },
+    });
+  }, []);
+
+  const initialValues = {
+    name: application?.name,
+    roleMap: application?.roleMap,
+  };
+
+  const onCancel = () => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const valInit = Object.values(initialValues);
+    const valForm = Object.values(form.getFieldsValue(true))?.filter((v) => v);
+
+    if (JSON.stringify(valInit) === JSON.stringify(valForm)) {
+      onVisible();
+      form.resetFields();
+      return;
+    }
+    showConfirm();
+  };
+
   useEffect(() => {
     const timeout = setTimeout(() => {
       form.setFieldsValue({
@@ -45,12 +90,7 @@ export const AddNewApplications = ({
     setVisible(!visible);
   };
 
-  const onFinishCreateApplication = (error: any) => {
-    if (error) {
-      const appName = form.getFieldValue('name');
-      message.error(`Application ${appName} already exist.`);
-      return;
-    }
+  const onFinishCreateApplication = () => {
     form.resetFields();
     refreshApplication();
     onVisible();
@@ -72,15 +112,7 @@ export const AddNewApplications = ({
       <span onClick={onVisible}>{children}</span>
       <Modal visible={visible} onCancel={onVisible} footer={false} centered>
         <div className={styles.formAddNew}>
-          <Form
-            form={form}
-            onFinish={onFinish}
-            layout='vertical'
-            initialValues={{
-              name: application?.name,
-              roleMap: application?.roleMap,
-            }}
-          >
+          <Form form={form} onFinish={onFinish} layout='vertical' initialValues={initialValues}>
             <h4>{isEdit ? 'Edit Application' : 'Add new Application'}</h4>
 
             <InputForm
@@ -111,7 +143,7 @@ export const AddNewApplications = ({
             />
 
             <div className={styles.actions}>
-              <ButtonCustom type='secondary' onClick={onVisible} className={styles.cancelBtn}>
+              <ButtonCustom type='secondary' onClick={onCancel} className={styles.cancelBtn}>
                 Cancel
               </ButtonCustom>
               <ButtonCustom htmlType='submit' className={styles.addBtn}>

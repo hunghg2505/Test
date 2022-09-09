@@ -317,9 +317,7 @@ export const FormEditUser = ({ form, userInfo, t }: any) => {
                   try {
                     const passportNo = `${value}`?.trim();
                     if (!passportNo)
-                      return Promise.reject(
-                        t('messages.errors.require', { field: t('national_card_id') }),
-                      );
+                      return Promise.reject(t('messages.errors.require', { field: 'Passport' }));
 
                     if (value === initialValues.passport) {
                       return Promise.resolve();
