@@ -5,7 +5,10 @@ import IconSearch from 'assets/icons/icon-search';
 import { useFadeEffect, _popoverStyles, _popoverVisibleStyles } from 'hooks/useFadeEffect';
 import InputForm from 'libraries/form/input/input-form';
 import Button from 'libraries/UI/Button';
-import { CustomSelectDropdown } from 'modules/dataSubjectManagement/components/CreateCaseForm';
+import {
+  CustomSelectDropdown,
+  FormItemCompany,
+} from 'modules/dataSubjectManagement/components/CreateCaseForm';
 import React, { useRef } from 'react';
 import styles from './index.module.scss';
 import { useGetListStatus } from './service';
@@ -27,6 +30,10 @@ const SearchCaseAdvance = ({ onSearchDataSubject, t }: any) => {
 
   const onClearSearch = () => {
     formSearch.resetFields(['status']);
+  };
+
+  const onClearValue = () => {
+    formSearch.resetFields(['companyId']);
   };
 
   return (
@@ -167,6 +174,11 @@ const SearchCaseAdvance = ({ onSearchDataSubject, t }: any) => {
                     ]}
                     placeholder='Search Assigned to'
                   />
+                </Col>
+                <Col xs={24}>
+                  <Form.Item label='Company Name' name='companyId'>
+                    <FormItemCompany allowClear onClearValue={onClearValue} />
+                  </Form.Item>
                 </Col>
               </Row>
 

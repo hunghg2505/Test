@@ -228,6 +228,8 @@ const CreateConsentForm = ({ visible, onClose, onReloadConsentData }: IProps) =>
       onCancel={() => {
         onClose();
         createConsentForm.resetFields();
+        setExpireOn(null);
+        setActivationDate(null);
       }}
     >
       <Form layout='vertical' form={createConsentForm} onFinish={onFinish}>
