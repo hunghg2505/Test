@@ -172,7 +172,7 @@
 
 .btnActions {
   div,
-  a {
+  p {
     padding: 8px;
     border-radius: 4px;
     display: inline-flex;
@@ -185,13 +185,13 @@
     background-color: rgba(207, 42, 43, 0.1);
     margin-right: 8px;
   }
-  a {
+  p {
     background-color: $color-gray5;
   }
 }
 
 .action {
-  a {
+  p {
     background: rgba(207, 42, 43, 0.1);
     border-radius: 4px;
     padding: 5.5px 16px;
@@ -199,6 +199,7 @@
     font-size: 14px;
     line-height: 150%;
     color: #cf2a2b;
+    cursor: pointer;
   }
 }
 
