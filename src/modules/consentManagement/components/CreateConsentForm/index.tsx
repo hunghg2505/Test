@@ -180,12 +180,14 @@ const CreateConsentForm = ({ visible, onClose, onReloadConsentData }: IProps) =>
   const createConsentRequest = useCreateConsent(onFinishSubmitForm);
 
   const onFinish = (values: any) => {
+    const statusObj = data?.statusData?.find((status: any) => status?.name === values?.idStatus);
     createConsentRequest.run({
       ...values,
       expireOn,
       activationDate: dayjs(activationDate).format('YYYY-MM-DD'),
       userRoleMap: dataApplication?.data?.find((item) => item.appName === values?.application)
         ?.roleMap,
+      idStatus: statusObj?.id,
     });
     setExpireOn(null);
     setActivationDate(null);
