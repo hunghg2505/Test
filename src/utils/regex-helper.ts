@@ -13,7 +13,7 @@ export class RegexUtils {
 
     static REGEX_VERSION = /^(\d+)\.{1}(\d+)$/;
 
-    static REGEX_MOBILE_NUMBER = /^(66)[6|8|9]\d{9}$/g;
+    static REGEX_MOBILE_NUMBER = /^(66)[6|8|9]\d{8}$/g;
 
     static REGEX_PASSPORT = /^(AA)\d{7}$/g;
 
