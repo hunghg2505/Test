@@ -152,7 +152,6 @@ const ModalSearchAdvance = ({ onSearchConsent }: any) => {
                       data={data}
                       allowClear
                       onClearValue={onClearSearch}
-                      isOnConsentForm
                       placeholder='Select Status'
                     />
                   </Form.Item>
