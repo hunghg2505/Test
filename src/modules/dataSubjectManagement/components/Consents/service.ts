@@ -85,7 +85,7 @@ const getConsentsChecked = ({ content, ConsentList }: any) => {
       if (consentItemInList.selected) {
         newConsent.push({
           consentName: consentItemInList?.title,
-          version: consentItemInList?.version,
+          version: consentItemInList?.versionNum,
           flag: false,
         });
       } else {
