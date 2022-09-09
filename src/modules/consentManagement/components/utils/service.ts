@@ -30,7 +30,7 @@ export const getConsentManagementService = async (values: any): Promise<any> => 
         createdDate: dayjs(item?.createdAt).format('DD/MM/YYYY'),
         appName: item?.application,
         appId: item?.__application__?.id,
-        id: `${item?.application}${item?.consentName}${item?.version}`,
+        id: `${item?.application}-${item?.consentName}-${item?.version}`,
         name: item?.consentName,
         contentEn: item?.contentEn,
         contentTh: item?.contentTh,
@@ -192,4 +192,27 @@ export const useConsentManagement = () => {
     onLoadMoreApplications,
     onResetApplication,
   };
+};
+
+export const setConsentToLocalStorage = (record: any) => {
+  try {
+    let consents: any = localStorage.getItem('CONSENTS') || JSON.stringify([]);
+
+    consents = JSON.parse(consents);
+
+    consents.push(record);
+
+    localStorage.setItem('CONSENTS', JSON.stringify(consents));
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getConsentFromLocalStorage = () => {
+  try {
+    const consents: any = localStorage.getItem('CONSENTS') || JSON.stringify([]);
+    return JSON.parse(consents);
+  } catch (error) {
+    console.log(error);
+  }
 };
