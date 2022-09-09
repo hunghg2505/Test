@@ -32,6 +32,8 @@ function CaseManagementDetail() {
     return null;
   }
 
+  const query = data?.application ? `?application=${data?.application}` : '';
+
   return (
     <ContainerLayout title='Case Management Detail'>
       {data?.userProfile && (
@@ -40,11 +42,7 @@ function CaseManagementDetail() {
             <Row justify='end'>
               <Button
                 onClick={() =>
-                  navigate(
-                    `/data-subject/${data?.businessProfileId}/${data?.idNo}${
-                      data?.application ? `?application=${data?.application}` : ''
-                    }`,
-                  )
+                  navigate(`/data-subject/${data?.businessProfileId}/${data?.idNo}${query}`)
                 }
               >
                 View DSM Detail

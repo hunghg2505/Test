@@ -10,6 +10,7 @@ import styles from './style.module.scss';
 import useCaseManagementPermission from 'hooks/useCaseManagementPermission';
 import { MyDocument } from '../CaseDetailPdf';
 import { PDFDownloadLink } from '@react-pdf/renderer';
+import { formatId } from 'utils/common.utils';
 
 const { confirm } = Modal;
 
@@ -155,9 +156,11 @@ const CaseInfo = ({ data, onClickEdit, deleteCaseRequest }: any) => {
                   }}
                 />
               }
-              fileName={`DSR-${data?.userProfile?.firstNameEn} ${data?.userProfile?.lastNameEn}-${
-                data?.id
-              }-${dayjs(Date.now()).format('DDMMYYYYHHMMss')}.pdf`}
+              fileName={`DSR-${data?.userProfile?.firstNameEn} ${
+                data?.userProfile?.lastNameEn
+              }-${formatId(data?.action, data?.id, data?.createdAt)}-${dayjs(Date.now()).format(
+                'DDMMYYYYHHMMss',
+              )}.pdf`}
               style={{
                 backgroundColor: '#CF2A2B',
                 border: 'white',

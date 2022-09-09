@@ -37,6 +37,7 @@ const SearchBox = ({
   onLoadMoreSuggestionConsents,
   onResetSuggestionConsents,
   refDataHistory,
+  applicationName,
 }: {
   onSearchConsent: (search: string, callback?: any) => void;
   suggestionConsents: any;
@@ -44,6 +45,7 @@ const SearchBox = ({
   onLoadMoreSuggestionConsents: (value: string) => void;
   onResetSuggestionConsents: () => void;
   refDataHistory: any;
+  applicationName: any;
 }) => {
   const { t } = useTranslation();
   const refForm: any = useRef();
@@ -79,7 +81,7 @@ const SearchBox = ({
 
   return (
     <Row className={styles.consentsSearch} align='middle'>
-      <h3>{t('consent')}</h3>
+      <h3>{applicationName}</h3>
 
       <Form onFinish={onFinish} onFieldsChange={onFieldsChange} form={formSearchConsent}>
         <div
@@ -339,6 +341,7 @@ function Consents({
         onLoadMoreSuggestionConsents={onLoadMoreSuggestionConsents}
         onResetSuggestionConsents={onResetSuggestionConsents}
         refDataHistory={refDataHistory}
+        applicationName={applicationName}
       />
 
       <ConsentsList

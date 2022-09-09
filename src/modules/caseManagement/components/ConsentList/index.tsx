@@ -156,7 +156,7 @@ function ConsentList({ userId, application }: { userId: string | undefined; appl
 
   return (
     <div className={styles.consentsWrap}>
-      <h2>Consent</h2>
+      <h2>{application}</h2>
       <Consents
         data={data}
         loading={loading}

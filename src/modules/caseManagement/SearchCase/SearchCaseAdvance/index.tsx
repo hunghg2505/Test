@@ -105,7 +105,12 @@ const SearchCaseAdvance = ({ onSearchDataSubject, t }: any) => {
               <Row gutter={[0, 16]}>
                 <Col xs={24}>
                   <Form.Item label='Case Status' name='status'>
-                    <CustomSelectDropdown data={data} allowClear onClearValue={onClearSearch} />
+                    <CustomSelectDropdown
+                      data={data}
+                      allowClear
+                      onClearValue={onClearSearch}
+                      placeholder='Search Case Status'
+                    />
                   </Form.Item>
                 </Col>
                 <Col xs={24}>
@@ -149,7 +154,6 @@ const SearchCaseAdvance = ({ onSearchDataSubject, t }: any) => {
                   <InputForm
                     label='Assign To'
                     name='assignTo'
-                    placeholder='Assign To'
                     maxLength={55}
                     rules={[
                       {
@@ -161,6 +165,7 @@ const SearchCaseAdvance = ({ onSearchDataSubject, t }: any) => {
                         message: t('messages.errors.max', { max: 55 }),
                       },
                     ]}
+                    placeholder='Search Assigned to'
                   />
                 </Col>
               </Row>
