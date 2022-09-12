@@ -47,7 +47,7 @@ const ModalSearchAdvance = ({ onSearchConsent }: any) => {
       appName: values?.application_name || '',
       advanceSearch: {
         name: values?.consent_name || undefined,
-        id: values?.consent_id || undefined,
+        consentId: values?.consent_id || undefined,
         appId: values?.application_id || undefined,
         status: values?.status || undefined,
         version: values?.version || undefined,
