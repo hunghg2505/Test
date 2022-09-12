@@ -27,7 +27,7 @@ const assertThaiId = (thaiId: string): boolean => {
   return true;
 };
 
-export const FormEditUser = ({ form, userInfo, t }: any) => {
+export const FormEditUser = ({ form, userInfo, t, businessProfileId }: any) => {
   const requestCheckParams = useCheckParams();
   const [nationalityValue, setNationalityValue] = useState(userInfo?.nationality);
 
@@ -175,7 +175,7 @@ export const FormEditUser = ({ form, userInfo, t }: any) => {
                       return Promise.resolve();
                     }
 
-                    const r = await requestCheckParams.runAsync({ email });
+                    const r = await requestCheckParams.runAsync({ email, businessProfileId });
 
                     if (r?.existed)
                       return Promise.reject('Email already exist, please use another email');
@@ -257,7 +257,10 @@ export const FormEditUser = ({ form, userInfo, t }: any) => {
                       return Promise.resolve();
                     }
 
-                    const r = await requestCheckParams.runAsync({ cardId });
+                    const r = await requestCheckParams.runAsync({
+                      idNo: cardId,
+                      businessProfileId,
+                    });
 
                     if (r?.existed)
                       return Promise.reject('National Card ID already exist, please check again');
@@ -326,7 +329,10 @@ export const FormEditUser = ({ form, userInfo, t }: any) => {
                     if (value === initialValues.passport) {
                       return Promise.resolve();
                     }
-                    const r = await requestCheckParams.runAsync({ passportNo });
+                    const r = await requestCheckParams.runAsync({
+                      idNo: passportNo,
+                      businessProfileId,
+                    });
 
                     if (r?.existed)
                       return Promise.reject('Passport number already exist, please check again');
@@ -367,7 +373,7 @@ export const FormEditUser = ({ form, userInfo, t }: any) => {
                       return Promise.resolve();
                     }
 
-                    const r = await requestCheckParams.runAsync({ laserCode });
+                    const r = await requestCheckParams.runAsync({ laserCode, businessProfileId });
 
                     if (r?.existed)
                       return Promise.reject('Laser code already exist, please check again');
