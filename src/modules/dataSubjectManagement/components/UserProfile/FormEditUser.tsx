@@ -37,7 +37,7 @@ export const FormEditUser = ({ form, userInfo, t }: any) => {
     email: userInfo?.email || '',
     firstNameEn: userInfo?.firstNameEn || '',
     firstNameTh: userInfo?.firstNameTh || '',
-    laserCode: userInfo?.laserCode || '',
+    thaiIdLaserNo: userInfo?.laserCode || '',
     lastNameEn: userInfo?.lastNameEn || '',
     lastNameTh: userInfo?.lastNameTh || '',
     mobileNo: userInfo?.mobile || '',
@@ -359,7 +359,7 @@ export const FormEditUser = ({ form, userInfo, t }: any) => {
                         t('messages.errors.require', { field: t('laser_code') }),
                       );
 
-                    if (value === initialValues.laserCode) {
+                    if (value === initialValues.thaiIdLaserNo) {
                       return Promise.resolve();
                     }
 

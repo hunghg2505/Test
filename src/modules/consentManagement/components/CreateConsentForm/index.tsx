@@ -39,6 +39,7 @@ export const CustomSelectDropdown = ({
   onClearValue,
   placeholder,
   isRequired = false,
+  isFormIteamApplication,
 }: any) => {
   const { t } = useTranslation();
   const [visible, setVisible] = useState(false);
@@ -109,7 +110,13 @@ export const CustomSelectDropdown = ({
       >
         {data?.data?.map((item: any, index: number) => (
           <Select.Option
-            value={isInModalAdvancedSearch ? item?.appName : Number(item?.id)}
+            value={
+              isInModalAdvancedSearch
+                ? isFormIteamApplication
+                  ? item?.value
+                  : item?.appName
+                : Number(item?.id)
+            }
             key={`${index}${item?.id}`}
           >
             {item?.appName}
@@ -157,9 +164,9 @@ const CreateConsentForm = ({ visible, onClose, onReloadConsentData }: IProps) =>
   const [createConsentForm] = Form.useForm();
   const [expireOn, setExpireOn] = useState(null);
   const [activationDate, setActivationDate] = useState(null);
+  const [application, setApplication] = useState();
 
   const { data } = useGetDataDropdownConsent();
-  const { data: dataApplication } = useGetListApplication();
 
   const onFinishSubmitForm = () => {
     onClose();
@@ -177,12 +184,17 @@ const CreateConsentForm = ({ visible, onClose, onReloadConsentData }: IProps) =>
       (item: any) => item?.name === values?.idProduct,
     );
 
+    const application = values.application.split('-')[0];
+    const userRoleMap = values.application.split('-')[1];
+
     createConsentRequest.run({
       ...values,
       expireOn,
       activationDate: dayjs(activationDate).format('YYYY-MM-DD'),
-      userRoleMap: dataApplication?.data?.find((item) => item.appName === values?.application)
-        ?.roleMap,
+      // userRoleMap: dataApplication?.data?.find((item) => item.appName === values?.application)
+      //   ?.roleMap,
+      application,
+      userRoleMap,
       idStatus: Number(statusObj?.id),
       idProduct: Number(productSelected?.id),
     });
@@ -261,7 +273,13 @@ const CreateConsentForm = ({ visible, onClose, onReloadConsentData }: IProps) =>
                 },
               ]}
             >
-              <FormItemApplication isRequired={true} isInModalAdvancedSearch={true} />
+              <FormItemApplication
+                value={application}
+                onChange={(value: any) => setApplication(value)}
+                isRequired={true}
+                isInModalAdvancedSearch={true}
+                isFormIteamApplication
+              />
             </Form.Item>
           </Col>
           <Col xs={12} className={styles.info}>

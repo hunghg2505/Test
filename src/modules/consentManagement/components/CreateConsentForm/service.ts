@@ -80,6 +80,7 @@ const getListApplicationService = async ({
       id: item?.id,
       appName: item?.name,
       roleMap: item?.roleMap,
+      value: `${item?.name}-${item?.roleMap}`,
     })) || [];
 
   return {
