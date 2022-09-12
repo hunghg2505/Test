@@ -60,7 +60,7 @@ const FormCompany = ({ children, onReloadCompanyData, initialValues = {} }: IPro
       title: 'Confirm Cancel',
       icon: <ExclamationCircleOutlined style={{ color: 'red' }} />,
       content: initialValues?.id
-        ? 'Are you sure you want to cancel Company Edition?'
+        ? 'Are you sure you want to Cancel Editing?'
         : 'Are you sure you want to cancel Company Creation?',
       okText: 'Yes',
       cancelText: 'No',
