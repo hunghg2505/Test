@@ -36,7 +36,7 @@ export const AddNewApplications = ({
       title: 'Confirm Cancel',
       icon: <ExclamationCircleOutlined style={{ color: 'red' }} />,
       content: isEdit
-        ? 'Are you sure you want to cancel Application Edition?'
+        ? 'Are you sure you want to Cancel Editing?'
         : 'Are you sure you want to cancel Application Creation?',
       okText: 'Yes',
       cancelText: 'No',
