@@ -2,13 +2,11 @@ import { Grid, Layout, Menu } from 'antd';
 import { Content } from 'antd/lib/layout/layout';
 import Sider from 'antd/lib/layout/Sider';
 import { ItemType } from 'antd/lib/menu/hooks/useItems';
-import IconInfo from 'assets/icons/icon-info';
 import Logo from 'assets/icons/logo';
 import clsx from 'clsx';
 import useAuth from 'hooks/redux/auth/useAuth';
 import withAuthClient from 'middlewares/withAuthClient';
 import { useEffect, useMemo, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import { Outlet, useLocation, useNavigate, useParams } from 'react-router-dom';
 import configRoutes from 'routing/config.routing';
 import { getMenu } from 'utils/get-menu.utils';
@@ -24,7 +22,6 @@ function MainLayout() {
   const location = useLocation();
   const { hash } = useParams();
   const screens = useBreakpoint();
-  const { t } = useTranslation();
 
   const [menus, setMenus] = useState<ItemType[]>([]);
 
@@ -69,13 +66,7 @@ function MainLayout() {
           if (e.key === '/logout') return onLogout();
           navigate(e.key);
         }}
-        items={[
-          {
-            label: <>{t('help')}</>,
-            icon: <IconInfo />,
-            key: '/help',
-          },
-        ]}
+        items={[]}
       />
     );
   };

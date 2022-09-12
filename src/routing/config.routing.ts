@@ -1,13 +1,11 @@
 // Layout
-import React, { lazy } from 'react';
-import { routePath } from './path.routing';
 import { HomeOutlined } from '@ant-design/icons';
-import IconProfile from 'assets/icons/icon-profile';
-import IconReports from 'assets/icons/icon-reports';
-import IconDataSubject from 'assets/icons/icon-data-subject';
 import IconCaseManagement from 'assets/icons/icon-case-management';
 import IconConsent from 'assets/icons/icon-consent';
+import IconDataSubject from 'assets/icons/icon-data-subject';
 import IconUserManagement from 'assets/icons/icon-user-management';
+import React, { lazy } from 'react';
+import { routePath } from './path.routing';
 
 export interface IRouter {
   icons?: JSX.Element | string | any;
@@ -34,20 +32,6 @@ const configRoutes: IRouter[] = [
     isAuth: true,
     roles: ['@'],
     children: [
-      {
-        path: routePath.Profile,
-        element: lazy(() => import('modules/profile')),
-        name: 'Profile',
-        icons: React.createElement(IconProfile),
-        roles: ['Super Admin', 'DPO', 'Authorized User'],
-      },
-      {
-        path: routePath.Reports,
-        element: lazy(() => import('modules/reports')),
-        name: 'Reports',
-        icons: React.createElement(IconReports),
-        roles: ['@'],
-      },
       {
         path: routePath.DataSubjectManagement,
         element: lazy(() => import('modules/dataSubjectManagement/index')),

@@ -24,11 +24,13 @@
     font-size: 24px;
     line-height: 36px;
     color: $color-secondary;
+    margin-right: 20px;
   }
 
   .avatarView {
     display: flex;
     align-items: center;
+    margin-left: auto;
 
     .profileUser {
       position: relative;
