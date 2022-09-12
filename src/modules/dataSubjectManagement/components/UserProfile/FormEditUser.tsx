@@ -229,6 +229,10 @@ export const FormEditUser = ({ form, userInfo, t }: any) => {
             normalize={(val = '') => val.replace(/\s/, '')}
             rules={[
               {
+                pattern: new RegExp(RegexUtils.RegexConstants.REGEX_NATIONAL_ID_CARD),
+                message: `${t('messages.errors.invalid_national_code')}`,
+              },
+              {
                 validator: async (_, value) => {
                   try {
                     const cardId = `${value}`?.trim();
