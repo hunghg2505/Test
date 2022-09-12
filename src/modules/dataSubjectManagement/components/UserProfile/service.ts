@@ -21,10 +21,10 @@ interface IEditUserProfile {
 
 export const checkParams = async (values: any) => {
   let params: any = {
+    businessProfileID: values?.businessProfileId,
     email: values?.email,
-    cardId: values?.cardId,
-    thaiIdLaserNo: values?.thaiIdLaserNo,
-    passportNo: values?.passportNo,
+    laserCode: values?.laserCode,
+    idNo: values?.idNo,
   };
 
   params = Object.keys(params).reduce((acc: any, k: any) => {
@@ -40,7 +40,7 @@ export const checkParams = async (values: any) => {
 export const useCheckParams = () => {
   return useRequest(checkParams, {
     manual: true,
-    debounceWait: 300,
+    debounceWait: 400,
   });
 };
 

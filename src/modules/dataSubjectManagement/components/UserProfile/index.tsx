@@ -163,7 +163,12 @@ function UserProfile({
           {formDisabled ? (
             <FromDisplayUser userInfo={userInfo} />
           ) : (
-            <FormEditUser form={form} userInfo={userInfo} t={t} />
+            <FormEditUser
+              form={form}
+              userInfo={userInfo}
+              t={t}
+              businessProfileId={businessProfileId}
+            />
           )}
         </Col>
       </Row>

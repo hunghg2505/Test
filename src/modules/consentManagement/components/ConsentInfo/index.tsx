@@ -74,7 +74,7 @@ const ConsentInfo = ({ data }: any) => {
             Activation Date<span className={styles.asterisk}>*</span>
           </p>
           <p className={styles.value}>
-            {data?.activationDate ? dayjs(data?.activationDateTime).format('DD/MM/YY') : 'N/A'}
+            {data?.activationDateTime ? dayjs(data?.activationDateTime).format('DD/MM/YY') : 'N/A'}
           </p>
         </Col>
         <Col xs={2}></Col>
