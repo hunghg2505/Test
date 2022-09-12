@@ -13,16 +13,14 @@ import { useState } from 'react';
 import { useUpdateEffect } from 'ahooks';
 
 const assertThaiId = (thaiId: string): boolean => {
-  const m = thaiId.match(/(\d{12})(\d)/);
-  if (!m) {
-    throw new Error('thai-id-must-be-13-digits');
-  }
-  const digits = m[1].split('');
-  const sum = digits.reduce((total: number, digit: string, i: number) => {
+  const digits = thaiId.split('');
+  const sum = digits.slice(0, -1).reduce((total: number, digit: string, i: number) => {
     return total + (13 - i) * +digit;
   }, 0);
+
   const lastDigit = `${(11 - (sum % 11)) % 10}`;
-  const inputLastDigit = m[2];
+  const inputLastDigit = thaiId[thaiId.length - 1];
+
   if (lastDigit !== inputLastDigit) {
     return false;
   }
@@ -203,7 +201,7 @@ export const FormEditUser = ({ form, userInfo, t }: any) => {
             // }}
             rules={[
               {
-                pattern: new RegExp(RegexUtils.RegexConstants.REGEX_MOBILE_NUMBER),
+                pattern: new RegExp(RegexUtils.RegexConstants.REGEX_PHONE),
                 message: `Only allows Digit and Space`,
               },
               {
@@ -317,7 +315,9 @@ export const FormEditUser = ({ form, userInfo, t }: any) => {
                   try {
                     const passportNo = `${value}`?.trim();
                     if (!passportNo)
-                      return Promise.reject(t('messages.errors.require', { field: 'Passport' }));
+                      return Promise.reject(
+                        t('messages.errors.require', { field: 'Passport Number' }),
+                      );
 
                     if (value === initialValues.passport) {
                       return Promise.resolve();
