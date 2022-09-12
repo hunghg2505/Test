@@ -17,11 +17,11 @@ export type IUserInfo = {
   firstNameTh?: string;
   lastNameTh?: string;
   dateOfBirth?: string;
-  mobile?: string;
+  mobileNo?: string;
   cardId?: string;
   nationality?: string;
-  passportNo?: string;
-  laserCode?: string;
+  passport?: string;
+  thaiIdLaserNo?: string;
   application?: string;
 };
 
@@ -98,9 +98,9 @@ const getDataSubjectDetail = async (
       dateOfBirth: r?.content?.dateOfBirth || '',
       nationality: r?.content?.nationality || '',
       cardId: r?.content?.idType === 'thai-id' ? r?.content?.idNo : '',
-      passportNo: r?.content?.idType === 'passport' ? r?.content?.idNo : '',
-      laserCode: r?.content?.thaiIdLaserNo || '',
-      mobile: r?.content?.mobileNo || '',
+      passport: r?.content?.idType === 'passport' ? r?.content?.idNo : '',
+      thaiIdLaserNo: r?.content?.thaiIdLaserNo || '',
+      mobileNo: r?.content?.mobileNo || '',
       application: r?.content?.application,
     },
   };

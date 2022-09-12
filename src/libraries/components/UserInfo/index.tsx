@@ -46,7 +46,7 @@ function UserInfo({ userInfo }: { userInfo?: IUserInfo; isChangeProfile?: boolea
 
           <Col xs={12}>
             <div className={styles.label}>{t('mobile_number')}</div>
-            <div className={styles.content}>{userInfo.mobile}</div>
+            <div className={styles.content}>{userInfo.mobileNo}</div>
           </Col>
           <Col xs={12}>
             <div className={styles.label}>{t('birthday')}</div>
@@ -70,12 +70,12 @@ function UserInfo({ userInfo }: { userInfo?: IUserInfo; isChangeProfile?: boolea
 
           <Col xs={12}>
             <div className={styles.label}>{t('passport_number')}</div>
-            <div className={styles.content}>{userInfo.passportNo}</div>
+            <div className={styles.content}>{userInfo.passport}</div>
           </Col>
 
           <Col xs={24}>
             <div className={styles.label}>{t('laser_code')}</div>
-            <div className={styles.content}>{userInfo.laserCode}</div>
+            <div className={styles.content}>{userInfo.thaiIdLaserNo}</div>
           </Col>
         </Row>
       </Col>

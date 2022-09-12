@@ -297,6 +297,7 @@ const SearchUsersAdvance = ({ onSearchDataSubject, t }: any) => {
                         },
                       }),
                     ]}
+                    className={styles.applicationField}
                   >
                     <FormItemApplication
                       isRequired={false}

@@ -37,12 +37,12 @@ export const FormEditUser = ({ form, userInfo, t }: any) => {
     email: userInfo?.email || '',
     firstNameEn: userInfo?.firstNameEn || '',
     firstNameTh: userInfo?.firstNameTh || '',
-    thaiIdLaserNo: userInfo?.laserCode || '',
+    thaiIdLaserNo: userInfo?.thaiIdLaserNo || '',
     lastNameEn: userInfo?.lastNameEn || '',
     lastNameTh: userInfo?.lastNameTh || '',
-    mobileNo: userInfo?.mobile || '',
+    mobileNo: userInfo?.mobileNo || '',
     nationality: userInfo?.nationality || '',
-    passport: userInfo?.passportNo,
+    passport: userInfo?.passport,
     cardId: userInfo?.cardId,
   };
 
