@@ -65,7 +65,7 @@ export const FromDisplayUser = ({ userInfo }: any) => {
           <Col className={styles.txtLabel} span={12}>
             Mobile Number
           </Col>
-          <Col className={styles.txtContent}>{userInfo?.mobile}</Col>
+          <Col className={styles.txtContent}>{userInfo?.mobileNo}</Col>
         </Row>
       </Col>
       <Col span={12}>
@@ -90,7 +90,7 @@ export const FromDisplayUser = ({ userInfo }: any) => {
           <Col className={styles.txtLabel} span={12}>
             Passpord Number
           </Col>
-          <Col className={styles.txtContent}>{userInfo?.passportNo}</Col>
+          <Col className={styles.txtContent}>{userInfo?.passport}</Col>
         </Row>
       </Col>
 
@@ -99,7 +99,7 @@ export const FromDisplayUser = ({ userInfo }: any) => {
           <Col className={styles.txtLabel} span={12}>
             Laser Code
           </Col>
-          <Col className={styles.txtContent}>{userInfo?.laserCode}</Col>
+          <Col className={styles.txtContent}>{userInfo?.thaiIdLaserNo}</Col>
         </Row>
       </Col>
     </Row>

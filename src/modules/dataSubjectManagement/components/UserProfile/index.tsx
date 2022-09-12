@@ -85,11 +85,9 @@ function UserProfile({
   const showConfirm = useCallback(() => {
     let isChange = false;
     const userInfor: any = { ...userInfo };
-    console.log('userinfo', userInfor);
 
     const values: any = form.getFieldsValue(true);
 
-    console.log('values', values);
     Object.keys(values)?.forEach((key: string) => {
       if (values[key] !== userInfor[key] && key !== 'dateOfBirth') isChange = true;
       if (moment(values['dateOfBirth']).diff(moment(userInfo['dateOfBirth'])) !== 0)
@@ -99,7 +97,6 @@ function UserProfile({
     if (!isChange) {
       setFormDisabled(true);
       form.resetFields();
-      console.log('no change');
 
       return;
     }

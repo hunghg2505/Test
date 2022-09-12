@@ -228,10 +228,10 @@ export const FormEditUser = ({ form, userInfo, t, businessProfileId }: any) => {
             disabled={nationalityValue?.toLowerCase() !== 'thailand'}
             normalize={(val = '') => val.replace(/\s/, '')}
             rules={[
-              {
-                pattern: new RegExp(RegexUtils.RegexConstants.REGEX_NATIONAL_ID_CARD),
-                message: `${t('messages.errors.invalid_national_code')}`,
-              },
+              // {
+              //   pattern: new RegExp(RegexUtils.RegexConstants.REGEX_NATIONAL_ID_CARD),
+              //   message: `${t('messages.errors.invalid_national_code')}`,
+              // },
               {
                 validator: async (_, value) => {
                   try {
@@ -248,8 +248,11 @@ export const FormEditUser = ({ form, userInfo, t, businessProfileId }: any) => {
                     }
 
                     const isValid = assertThaiId(valueNoDash);
+                    const isValidRegex = cardId.match(
+                      RegexUtils.RegexConstants.REGEX_NATIONAL_ID_CARD,
+                    );
 
-                    if (!isValid) {
+                    if (!isValid || !isValidRegex) {
                       return Promise.reject(`${t('messages.errors.invalid_national_code')}`);
                     }
 
