@@ -6,7 +6,7 @@ import { formatIdSubjectHistory } from 'utils/common.utils';
 import dayjs from 'dayjs';
 
 const getListAssignToYou = async (values: any, username: string) => {
-  const response: any = await ApiUtils.post(API_PATH.GET_LIST_CASE_MANAGEMENT_ASSIGN_TO, {
+  const r: any = await ApiUtils.post(API_PATH.GET_LIST_CASE_MANAGEMENT_ASSIGN_TO, {
     userId: 1,
     limit: 10,
     page: values?.page || 1,
@@ -20,17 +20,17 @@ const getListAssignToYou = async (values: any, username: string) => {
     },
   });
 
-  const current = response?.content?.metadata?.currentPage || 1;
+  const currentItem = r?.content?.metadata?.currentPage || 1;
 
   return {
-    total: response?.content?.metadata?.total || 0,
-    current: +response?.content?.metadata?.currentPage || 1,
-    pageSize: +response?.content?.metadata?.itemPage || 10,
+    total: r?.content?.metadata?.total || 0,
+    current: +r?.content?.metadata?.currentPage || 1,
+    pageSize: +r?.content?.metadata?.itemPage || 10,
     data:
-      response?.content?.data?.map((item: any, idx: number) => ({
+      r?.content?.data?.map((item: any, idx: number) => ({
         ...item,
         key: `${item?.id}`,
-        noId: formatIdSubjectHistory(current, idx, item.action, item.id, item.createdAt),
+        noId: formatIdSubjectHistory(currentItem, idx, item.action, item.id, item.createdAt),
         description: item?.description,
         assignTo: item?.assignTo,
         caseStatus: item?.status,
