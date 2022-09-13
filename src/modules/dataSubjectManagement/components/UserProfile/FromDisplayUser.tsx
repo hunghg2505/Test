@@ -2,7 +2,7 @@ import { Col, Row } from 'antd';
 
 import styles from './index.module.scss';
 
-import moment from 'moment';
+import dayjs from 'dayjs';
 
 export const FromDisplayUser = ({ userInfo }: any) => {
   return (
@@ -47,7 +47,9 @@ export const FromDisplayUser = ({ userInfo }: any) => {
             Date of Birth
           </Col>
           <Col className={styles.txtContent}>
-            {moment(userInfo?.dateOfBirth).format('MM/DD/YYYY')}
+            {dayjs(userInfo.dateOfBirth).format('DD/MM/YYYY') === 'Invalid date'
+              ? userInfo.dateOfBirth
+              : dayjs(userInfo.dateOfBirth).format('DD/MM/YYYY')}
           </Col>
         </Row>
       </Col>

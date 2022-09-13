@@ -9,6 +9,7 @@ function UserInfo({ userInfo }: { userInfo?: IUserInfo; isChangeProfile?: boolea
   const { t } = useTranslation();
 
   if (!userInfo) return null;
+  console.log(dayjs(userInfo.dateOfBirth).format('DD/MM/YYYY') === 'Invalid date');
 
   return (
     <Row className={styles.userInfoWrap}>
@@ -50,7 +51,11 @@ function UserInfo({ userInfo }: { userInfo?: IUserInfo; isChangeProfile?: boolea
           </Col>
           <Col xs={12}>
             <div className={styles.label}>{t('birthday')}</div>
-            <div className={styles.content}>{dayjs(userInfo.dateOfBirth).format('DD/MM/YYYY')}</div>
+            <div className={styles.content}>
+              {dayjs(userInfo.dateOfBirth).format('DD/MM/YYYY') === 'Invalid date'
+                ? userInfo.dateOfBirth
+                : dayjs(userInfo.dateOfBirth).format('DD/MM/YYYY')}
+            </div>
           </Col>
 
           <Col xs={12}>
