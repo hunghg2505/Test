@@ -5,6 +5,8 @@ import styles from './index.module.scss';
 import dayjs from 'dayjs';
 
 export const FromDisplayUser = ({ userInfo }: any) => {
+  console.log(dayjs(userInfo.dateOfBirth).format('DD/MM/YYYY'));
+
   return (
     <Row className={styles.userInfoDisplay}>
       <Col span={12}>
@@ -47,7 +49,7 @@ export const FromDisplayUser = ({ userInfo }: any) => {
             Date of Birth
           </Col>
           <Col className={styles.txtContent}>
-            {dayjs(userInfo.dateOfBirth).format('DD/MM/YYYY') === 'Invalid date'
+            {dayjs(userInfo.dateOfBirth).format('DD/MM/YYYY') === 'Invalid Date'
               ? userInfo.dateOfBirth
               : dayjs(userInfo.dateOfBirth).format('DD/MM/YYYY')}
           </Col>
