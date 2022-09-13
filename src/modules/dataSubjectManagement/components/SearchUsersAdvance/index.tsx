@@ -19,7 +19,7 @@ const formatAdvancedSearchObject = (obj: any) => {
         conditions[key] = obj[key];
       }
     }
-    if (obj[key] && key !== 'firstname') {
+    if (obj[key] && key !== 'firstname' && key !== 'application') {
       conditions[key] = { searchString: obj[key], isEqualSearch: false };
     }
   }
