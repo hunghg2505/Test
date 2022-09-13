@@ -50,7 +50,7 @@ function UserInfo({ userInfo }: { userInfo?: IUserInfo; isChangeProfile?: boolea
           </Col>
           <Col xs={12}>
             <div className={styles.label}>{t('birthday')}</div>
-            <div className={styles.content}>{dayjs(userInfo.dateOfBirth).format('MM/DD/YYYY')}</div>
+            <div className={styles.content}>{dayjs(userInfo.dateOfBirth).format('DD/MM/YYYY')}</div>
           </Col>
 
           <Col xs={12}>

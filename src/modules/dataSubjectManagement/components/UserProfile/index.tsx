@@ -6,15 +6,16 @@ import { useTranslation } from 'react-i18next';
 import useDataSubjectManagementPermission from 'hooks/useDataSubjectManagementPermission';
 import styles from './index.module.scss';
 
-import CustomButton from 'libraries/UI/Button';
-import { useState, useCallback } from 'react';
-import ImgUserProfile from '../../../../assets/images/user-profile.png';
-import { FromDisplayUser } from './FromDisplayUser';
-import { FormEditUser } from './FormEditUser';
-import { useUpdateConsent } from './service';
-import Loading from 'libraries/components/loading';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
+import Loading from 'libraries/components/loading';
+import CustomButton from 'libraries/UI/Button';
 import moment from 'moment';
+import { useCallback, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import ImgUserProfile from '../../../../assets/images/user-profile.png';
+import { FormEditUser } from './FormEditUser';
+import { FromDisplayUser } from './FromDisplayUser';
+import { useUpdateConsent } from './service';
 
 const { confirm } = Modal;
 
@@ -51,9 +52,19 @@ function UserProfile({
   const [formDisabled, setFormDisabled] = useState(true);
   const [form] = Form.useForm();
   const userInfo = data?.userInfo as IUserInfo;
+  const location = useLocation();
+  const navigate = useNavigate();
 
+  const application = location?.search?.split('=')?.[1];
   const onFinishSubmitForm = () => {
     setFormDisabled(true);
+
+    const values = form.getFieldsValue(true);
+    const idNo = values?.nationality.toLowerCase() === 'thailand' ? values.cardId : values.passport;
+    const navigateLink = application
+      ? `/data-subject/${businessProfileId}/${idNo}?application=${application || ''}`
+      : `/data-subject/${businessProfileId}/${idNo}`;
+    navigate(navigateLink);
     refresh();
   };
 
