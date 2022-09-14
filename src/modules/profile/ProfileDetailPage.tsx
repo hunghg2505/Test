@@ -61,7 +61,7 @@ const ProfileDetailPage = () => {
       dateOfBirth: getDataById(r?.content?.dateOfBirth),
       nationality: getDataById(r?.content?.nationality),
       cardId: r?.content?.idType === 'thai-id' ? getDataById(r?.content?.idNo) : '',
-      passportNo: r?.content?.idType === 'passport' ? getDataById(r?.content?.idNo) : '',
+      passport: r?.content?.idType === 'passport' ? getDataById(r?.content?.idNo) : '',
       thaiIdLaserNo: getDataById(r?.content?.thaiIdLaserNo),
       mobileNo: getDataById(r?.content?.mobileNo),
     };
