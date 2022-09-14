@@ -62,8 +62,8 @@ const ProfileDetailPage = () => {
       nationality: getDataById(r?.content?.nationality),
       cardId: r?.content?.idType === 'thai-id' ? getDataById(r?.content?.idNo) : '',
       passportNo: r?.content?.idType === 'passport' ? getDataById(r?.content?.idNo) : '',
-      laserCode: getDataById(r?.content?.thaiIdLaserNo),
-      mobile: getDataById(r?.content?.mobileNo),
+      thaiIdLaserNo: getDataById(r?.content?.thaiIdLaserNo),
+      mobileNo: getDataById(r?.content?.mobileNo),
     };
   });
 
