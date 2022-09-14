@@ -1,4 +1,3 @@
-import useConsentManagementPermission from 'hooks/useConsentManagementPermission';
 import userProfilePermission from 'hooks/userProfilePermission';
 import ContainerLayout from 'libraries/layouts/ContainerLayout';
 import { useRef } from 'react';
@@ -14,7 +13,7 @@ function DataSubjectDetail() {
   const location = useLocation();
   const navigate = useNavigate();
   const refDataHistory: any = useRef(null);
-  const { isHavePermissionViewConsent } = useConsentManagementPermission();
+
   const { isHavePermissionViewProfile } = userProfilePermission();
 
   const application = location?.search?.split('=')?.[1];
@@ -29,13 +28,13 @@ function DataSubjectDetail() {
       {isHavePermissionViewProfile && (
         <UserProfile businessProfileId={businessProfileId} idNo={idNo} />
       )}
-      {isHavePermissionViewConsent && (
-        <Consents
-          userId={businessProfileId}
-          applicationName={application}
-          refDataHistory={refDataHistory}
-        />
-      )}
+
+      <Consents
+        userId={businessProfileId}
+        applicationName={application}
+        refDataHistory={refDataHistory}
+      />
+
       <DataSubjectHistory
         userId={businessProfileId || ''}
         applicationName={application}
