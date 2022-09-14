@@ -1,3 +1,4 @@
+import { useUpdateEffect } from 'ahooks';
 import { Checkbox, Col, Form, Pagination, Row } from 'antd';
 
 import IconSearch from 'assets/icons/icon-search';
@@ -25,25 +26,27 @@ export interface DataType {
 
 const Consents = ({ data, loading, onChange, onSearchConsent }: any) => {
   const { t } = useTranslation();
+  const [form] = Form.useForm();
 
-  const initialValues = data?.data?.reduce((acc: any, v: any) => {
-    return {
-      ...acc,
-      [v?.id]: v?.selected,
-    };
-  }, {});
+  useUpdateEffect(() => {
+    const initialValues = data?.data?.reduce((acc: any, v: any) => {
+      return {
+        ...acc,
+        [v?.id]: v?.selected,
+      };
+    }, {});
+    form.setFieldsValue(initialValues);
+  }, [data?.data]);
 
   const onFinish = (values: any) => {
     const value = get(values, 'search', '');
     onSearchConsent(value);
   };
 
-  // if (loading) return null;
-
   return (
     <div className={styles.consentWrap}>
       <Row className={styles.consentsSearch} align='middle'>
-        <Form onFinish={onFinish} initialValues={initialValues}>
+        <Form onFinish={onFinish}>
           <div
             style={{
               position: 'relative',
@@ -82,68 +85,71 @@ const Consents = ({ data, loading, onChange, onSearchConsent }: any) => {
           </div>
         </Form>
       </Row>
-      <div className={styles.formWrap}>
-        {data?.data?.length === 0 ? (
-          <p className={styles.noResultText}>{t('no_result_found')}</p>
-        ) : (
-          <div className={styles.listConsent}>
-            {data?.data?.map((it: DataType) => {
-              return (
-                <Row
-                  key={it?.id}
-                  className={styles.consentItem}
-                  align='middle'
-                  justify='space-between'
-                >
-                  <Col flex='1'>
-                    <p className={styles.name}>{it?.title}</p>
-                    <Row className={styles.consentInfo} align='middle'>
-                      <p>{it?.lastUpdated}</p>
 
-                      <p>{it?.version}</p>
+      <Form form={form}>
+        <div className={styles.formWrap}>
+          {data?.data?.length === 0 ? (
+            <p className={styles.noResultText}>{t('no_result_found')}</p>
+          ) : (
+            <div className={styles.listConsent}>
+              {data?.data?.map((it: DataType) => {
+                return (
+                  <Row
+                    key={it?.id}
+                    className={styles.consentItem}
+                    align='middle'
+                    justify='space-between'
+                  >
+                    <Col flex='1'>
+                      <p className={styles.name}>{it?.title}</p>
+                      <Row className={styles.consentInfo} align='middle'>
+                        <p>{it?.lastUpdated}</p>
 
-                      <p
-                        className={clsx(styles.status, {
-                          [styles.statusActive]: it?.status === 'Published',
-                        })}
+                        <p>{it?.version}</p>
+
+                        <p
+                          className={clsx(styles.status, {
+                            [styles.statusActive]: it?.status === 'Published',
+                          })}
+                        >
+                          {it?.status}
+                        </p>
+                      </Row>
+                      <p className={styles.description}>{it?.description}</p>
+                    </Col>
+                    <Col>
+                      <Form.Item
+                        className={styles.panelContent}
+                        name={`${it?.id}`}
+                        valuePropName='checked'
                       >
-                        {it?.status}
-                      </p>
-                    </Row>
-                    <p className={styles.description}>{it?.description}</p>
-                  </Col>
-                  <Col>
-                    <Form.Item
-                      className={styles.panelContent}
-                      name={`${it?.id}`}
-                      valuePropName='checked'
-                    >
-                      <Checkbox disabled={true} />
-                    </Form.Item>
-                  </Col>
-                </Row>
-              );
-            })}
+                        <Checkbox disabled={true} />
+                      </Form.Item>
+                    </Col>
+                  </Row>
+                );
+              })}
 
-            <Row justify='space-between'>
-              <Pagination
-                className={styles.pagination}
-                current={data?.current}
-                onChange={onChange}
-                total={data?.total}
-                defaultPageSize={data?.pageSize}
-                itemRender={paginationItemRender}
-                showSizeChanger={false}
-              />
-            </Row>
-          </div>
-        )}
-        {loading && (
-          <div className={styles.loading}>
-            <Loading />
-          </div>
-        )}
-      </div>
+              <Row justify='space-between'>
+                <Pagination
+                  className={styles.pagination}
+                  current={data?.current}
+                  onChange={onChange}
+                  total={data?.total}
+                  defaultPageSize={data?.pageSize}
+                  itemRender={paginationItemRender}
+                  showSizeChanger={false}
+                />
+              </Row>
+            </div>
+          )}
+          {loading && (
+            <div className={styles.loading}>
+              <Loading />
+            </div>
+          )}
+        </div>
+      </Form>
     </div>
   );
 };
