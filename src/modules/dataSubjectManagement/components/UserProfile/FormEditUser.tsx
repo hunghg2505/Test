@@ -32,7 +32,7 @@ export const FormEditUser = ({ form, userInfo, t, businessProfileId }: any) => {
   const [nationalityValue, setNationalityValue] = useState(userInfo?.nationality);
 
   const initialValues = {
-    dateOfBirth: moment(userInfo?.dateOfBirth),
+    dateOfBirth: moment.utc(userInfo?.dateOfBirth),
     // cardId: userInfo?.cardId || '',
     email: userInfo?.email || '',
     firstNameEn: userInfo?.firstNameEn || '',
