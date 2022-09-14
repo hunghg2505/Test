@@ -80,63 +80,7 @@ const SearchBox = ({
   }, refForm);
 
   return (
-    <Row className={styles.consentsSearch} align='middle'>
-      <h3>{applicationName}</h3>
-
-      <Form onFinish={onFinish} onFieldsChange={onFieldsChange} form={formSearchConsent}>
-        <div
-          ref={refForm}
-          style={{
-            position: 'relative',
-            maxWidth: 680,
-            marginLeft: 'auto',
-          }}
-        >
-          <Row align='middle' className={styles.searchBox}>
-            <Row align='middle' className={styles.searchContent}>
-              <IconSearch />
-              <Form.Item
-                name='search'
-                className={styles.formSearchItem}
-                rules={[
-                  {
-                    min: 3,
-                    message: t('messages.errors.min', { min: 3 }),
-                  },
-                  {
-                    max: 55,
-                    message: t('messages.errors.max_search_firstname', { max: 55 }),
-                  },
-                ]}
-              >
-                <Input placeholder='Search' maxLength={55} />
-              </Form.Item>
-            </Row>
-            <Button
-              htmlType='submit'
-              size='middle'
-              className={styles.btnSearch}
-              icon={<IconSearch />}
-              type='secondary'
-            >
-              {t('search')}
-            </Button>
-            <SuggestConsents
-              ref={refListConsents}
-              onSearchConsent={(val: string) => {
-                formSearchConsent.setFieldsValue({
-                  search: val,
-                });
-                onSearchConsent(val);
-              }}
-              suggestionConsents={suggestionConsents}
-              onLoadMoreSuggestionConsents={onLoadMoreSuggestionConsents}
-              onResetSuggestionConsents={onResetSuggestionConsents}
-            />
-          </Row>
-        </div>
-      </Form>
-
+    <>
       {isHavePermissionCreateCase && (
         <Button
           size='middle'
@@ -147,12 +91,70 @@ const SearchBox = ({
           {t('create_case')}
         </Button>
       )}
-      <CreateCaseForm
-        visible={isOpenCreateCaseForm}
-        onClose={() => setIsOpenCreateCaseForm(false)}
-        refDataHistory={refDataHistory}
-      />
-    </Row>
+      <Row className={styles.consentsSearch} align='middle'>
+        <h3>{applicationName}</h3>
+
+        <Form onFinish={onFinish} onFieldsChange={onFieldsChange} form={formSearchConsent}>
+          <div
+            ref={refForm}
+            style={{
+              position: 'relative',
+              maxWidth: 680,
+              marginLeft: 'auto',
+            }}
+          >
+            <Row align='middle' className={styles.searchBox}>
+              <Row align='middle' className={styles.searchContent}>
+                <IconSearch />
+                <Form.Item
+                  name='search'
+                  className={styles.formSearchItem}
+                  rules={[
+                    {
+                      min: 3,
+                      message: t('messages.errors.min', { min: 3 }),
+                    },
+                    {
+                      max: 55,
+                      message: t('messages.errors.max_search_firstname', { max: 55 }),
+                    },
+                  ]}
+                >
+                  <Input placeholder='Search' maxLength={55} />
+                </Form.Item>
+              </Row>
+              <Button
+                htmlType='submit'
+                size='middle'
+                className={styles.btnSearch}
+                icon={<IconSearch />}
+                type='secondary'
+              >
+                {t('search')}
+              </Button>
+              <SuggestConsents
+                ref={refListConsents}
+                onSearchConsent={(val: string) => {
+                  formSearchConsent.setFieldsValue({
+                    search: val,
+                  });
+                  onSearchConsent(val);
+                }}
+                suggestionConsents={suggestionConsents}
+                onLoadMoreSuggestionConsents={onLoadMoreSuggestionConsents}
+                onResetSuggestionConsents={onResetSuggestionConsents}
+              />
+            </Row>
+          </div>
+        </Form>
+
+        <CreateCaseForm
+          visible={isOpenCreateCaseForm}
+          onClose={() => setIsOpenCreateCaseForm(false)}
+          refDataHistory={refDataHistory}
+        />
+      </Row>
+    </>
   );
 };
 
