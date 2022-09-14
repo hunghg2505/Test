@@ -101,7 +101,7 @@ function UserProfile({
 
     Object.keys(values)?.forEach((key: string) => {
       if (values[key] !== userInfor[key] && key !== 'dateOfBirth') isChange = true;
-      if (moment(values['dateOfBirth']).diff(moment(userInfo['dateOfBirth'])) !== 0)
+      if (moment.utc(values['dateOfBirth']).diff(moment.utc(userInfo['dateOfBirth'])) !== 0)
         isChange = true;
     });
 

@@ -5,6 +5,7 @@ import debounce from 'lodash/debounce';
 import { useRef, useState } from 'react';
 import ApiUtils from 'utils/api/api.utils';
 import { API_PATH } from 'utils/api/constant';
+import moment from 'moment';
 
 export type IUserInfo = {
   id?: string;
@@ -85,6 +86,11 @@ const getDataSubjectDetail = async (
   const params = { businessProfileId, idNo };
   const r: any = await ApiUtils.fetch(API_PATH.USER_PROFILE_DETAIL, params);
 
+  const dob = r?.content?.dateOfBirth;
+
+  let dateOfBirth = dob ? moment.utc(dob).toISOString() : dob;
+  if (dob?.length <= 10) dateOfBirth = dob ? moment.utc(dob, 'DD/MM/YYYY').toISOString() : dob;
+
   return {
     userInfo: {
       id: r?.content?.id,
@@ -95,7 +101,7 @@ const getDataSubjectDetail = async (
       lastNameTh: r?.content?.lastNameTh || '',
       email: r?.content?.email || '',
       address: 'Test Address',
-      dateOfBirth: r?.content?.dateOfBirth || '',
+      dateOfBirth,
       nationality: r?.content?.nationality || '',
       cardId: r?.content?.idType === 'thai-id' ? r?.content?.idNo : '',
       passport: r?.content?.idType === 'passport' ? r?.content?.idNo : '',
