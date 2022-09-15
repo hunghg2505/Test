@@ -21,7 +21,7 @@ export default function MainHeader({ user }: Props) {
     <div className={styles.mainHeader}>
       <div className={styles.avatarView}>
         <p className={styles.welcomeUser}>
-          {user?.email || keycloak?.tokenParsed?.preferred_username}
+          {keycloak?.tokenParsed?.preferred_username || user?.email}
         </p>
         <Button onClick={onLogout} className={styles.btnLogout} suffixIcon={<IconLogout />}>
           {t('logout')}
